@@ -38,6 +38,12 @@ stages:
     - curl -fsSL https://pkgs.tailscale.com/stable/debian/sid.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
     - apt-get update && apt-get install -y tailscale
 
+  - name: disable-privileged-ports # Allow anyone, including non-root users, to start services on ports below 1024
+    type: shell
+    commands:
+    - mkdir -p --mode=0755 /etc/sysctl.d/
+    - echo "net.ipv4.ip_unprivileged_port_start = 0" | tee /etc/sysctl.d/disable-privileged-ports.conf 
+
   - name: example-commands # Sample module demonstrating the Shell module with custom commands
     type: shell
     commands:
