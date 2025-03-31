@@ -28,6 +28,7 @@ stages:
     source:
       packages:
       - vim
+      - pmbootstrap
 
   - name: tailscale # Install Tailscale
     # Based on GitHub user RickBrewer's tailscale install section
