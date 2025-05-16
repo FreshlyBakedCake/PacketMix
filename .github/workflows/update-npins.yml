@@ -22,11 +22,19 @@ jobs:
 
       - run: cd $GITHUB_WORKSPACE
 
+      - name: Set up a cachix cache
+        uses: cachix/cachix-action@0fc020193b5a1fa3ac4575aa3a7d3aa6a35435ad
+        with:
+          # Name of a cachix cache to push and pull/substitute
+          name: "freshlybakedcake"
+          authToken: "${{ secrets.CACHIX_TOKEN }}"
+
       - name: Run npins update
         run: nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'npins update'
 
       - name: Create a pull request
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e
+        id: pull-request
         with:
           branch: auto/update-npins
           commit-message: "chore: bump npins dependencies"
@@ -35,3 +43,8 @@ jobs:
           body: |
             This is an automated npins dependency bump
 
+      - if: steps.pull-request.outputs.pull-request-operation == 'created'
+        name: Automerge pull request
+        run: gh pr merge --merge --auto "${{ steps.pull-request.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
