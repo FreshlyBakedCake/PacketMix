@@ -143,6 +143,8 @@
     ghostty
     npins
     thunderbird
+    difftastic
+    meld
   ];
 
   networking.hosts = {
