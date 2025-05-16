@@ -25,9 +25,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "6bf057fc8326e83bda05a669fc08d106547679fb",
-      "url": "https://github.com/nix-community/home-manager/archive/6bf057fc8326e83bda05a669fc08d106547679fb.tar.gz",
-      "hash": "15frrybphs875s3s95al5jmm4bh5y56126brwgsp6xafndkfd1p0"
+      "revision": "d2263ce5f4c251c0f7608330e8fdb7d1f01f0667",
+      "url": "https://github.com/nix-community/home-manager/archive/d2263ce5f4c251c0f7608330e8fdb7d1f01f0667.tar.gz",
+      "hash": "1chmjv28x3x3cjnjxqh289rlmz4j1zblzw0w2gdm4ax6k82xlgr5"
     },
     "lix-module": {
       "type": "GitRelease",
