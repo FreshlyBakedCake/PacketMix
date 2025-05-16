@@ -34,11 +34,12 @@ in
         systems = [ "x86_64-linux" ];
 
         # Define our shell environment.
-        shell = { system, mkShell, hello, ... }:
+        shell = { system, npins, mkShell, hello, ... }:
           mkShell {
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
+              npins
             ];
           };
       };

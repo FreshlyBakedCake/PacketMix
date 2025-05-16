@@ -1,0 +1,33 @@
+name: Update npins dependencies
+# This is inspired by https://github.com/getchoo/update-npins - though I wrote it from scratch
+# I'm not using it as I need to run the npins command in a shell
+
+on:
+  schedule:
+  - cron: "48 02 * * *" # Time is pretty arbitrary - the only important thing is that it's unlikely to be a peak time...
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@526118121621777ccd86f79b04685a9319637641
+        with:
+          extra_nix_config: "experimental-features = nix-command"
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Run npins update
+        run: nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'npins update'
+
+      - name: Create a pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: auto/update-npins
+          commit-message: "chore: bump npins dependencies"
+
