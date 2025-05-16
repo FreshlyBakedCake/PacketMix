@@ -11,6 +11,7 @@ in {
       ./common/inputs.nix
       ./common/nilla-nix.nix
       ./common/packetmix.nix
+      ./common/sysctl.nix
       ./redhead/android.nix
       ./redhead/hardware-configuration.nix
       ./redhead/office.nix
@@ -30,6 +31,7 @@ in {
       ./common/inputs.nix
       ./common/nilla-nix.nix
       ./common/packetmix.nix
+      ./common/sysctl.nix
       ./emden/hardware-configuration.nix
       ./emden/steam.nix
     ];
