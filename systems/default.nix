@@ -8,8 +8,8 @@ in {
         networking.hostName = "redhead";
       }
       ./common/configuration.nix
+      ./common/inputs.nix
       ./common/nilla-nix.nix
-      ./common/nixpkgs.nix
       ./common/packetmix.nix
       ./redhead/hardware-configuration.nix
     ];
@@ -25,8 +25,8 @@ in {
         networking.hostName = "emden";
       }
       ./common/configuration.nix
+      ./common/inputs.nix
       ./common/nilla-nix.nix
-      ./common/nixpkgs.nix
       ./common/packetmix.nix
       ./emden/hardware-configuration.nix
       ./emden/steam.nix
