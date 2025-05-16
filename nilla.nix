@@ -10,8 +10,10 @@ let
 in
   nilla.create ({ config }: {
     includes = [
+      ./homes
       ./lib
       ./systems
+      "${pins.nilla-home}/modules/home.nix" # We can't use config.inputs here without infinitely-recursing
       "${pins.nilla-nixos}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
     ];
 
@@ -38,6 +40,24 @@ in
         };
       };
 
+      packages.allHomes = {
+        systems = [ "x86_64-linux" ];
+
+        package = { system, stdenv }: stdenv.mkDerivation {
+          name = "all-homes";
+
+          dontUnpack = true;
+
+          buildPhase = ''
+            mkdir -p $out
+          '' + (builtins.concatStringsSep "\n" (
+            config.lib.attrs.mapToList
+              (name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"'')
+              (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
+          ));
+        };
+      };
+
       # With a package set defined, we can create a shell.
       shells.default = {
         # Declare what systems the shell can be used on.
@@ -48,6 +68,7 @@ in
           mkShell {
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
+              config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
               npins
             ];

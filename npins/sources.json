@@ -1,5 +1,34 @@
 {
   "pins": {
+    "home": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "home"
+      },
+      "pre_releases": true,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.1-alpha",
+      "revision": "712fa53d332f4915b33a199e801993b5a42de62f",
+      "url": "https://api.github.com/repos/nilla-nix/home/tarball/v0.0.1-alpha",
+      "hash": "10wb4b1zlbniifzrxcfalbkrsgbww0jqncxjvz33js8njvr1z98p"
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "6bf057fc8326e83bda05a669fc08d106547679fb",
+      "url": "https://github.com/nix-community/home-manager/archive/6bf057fc8326e83bda05a669fc08d106547679fb.tar.gz",
+      "hash": "15frrybphs875s3s95al5jmm4bh5y56126brwgsp6xafndkfd1p0"
+    },
     "lix-module": {
       "type": "GitRelease",
       "repository": {
@@ -45,6 +74,19 @@
       "revision": "31008653e37b1c2a5b56a5a8bacbe8f3ef1604e6",
       "url": "https://github.com/nilla-nix/cli/archive/31008653e37b1c2a5b56a5a8bacbe8f3ef1604e6.tar.gz",
       "hash": "0rp3xyxrnff9jjd0absn5jmiwd1k4gdmqbssg2h32rfmy5h5f1v7"
+    },
+    "nilla-home": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "home"
+      },
+      "branch": "private/skyler/push-unysrsvrnryq",
+      "submodules": false,
+      "revision": "8c908b6bccc0656af87539757af3952b9ab81993",
+      "url": "https://github.com/nilla-nix/home/archive/8c908b6bccc0656af87539757af3952b9ab81993.tar.gz",
+      "hash": "10wb4b1zlbniifzrxcfalbkrsgbww0jqncxjvz33js8njvr1z98p"
     },
     "nilla-nixos": {
       "type": "Git",
