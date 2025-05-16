@@ -14,7 +14,6 @@ in {
       ./redhead/android.nix
       ./redhead/hardware-configuration.nix
       ./redhead/office.nix
-      ./redhead/spice.nix
     ];
     args = {
       system = "x86_64-linux";

@@ -76,14 +76,11 @@
   users.users.minion = {
     isNormalUser = true;
     description = "Skyler Grey";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
-
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
 
   # Install firefox.
   programs.firefox.enable = true;

@@ -1,3 +1,0 @@
-{
-  virtualisation.spiceUSBRedirection.enable = true;
-}
