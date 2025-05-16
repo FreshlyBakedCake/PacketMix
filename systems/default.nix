@@ -6,7 +6,7 @@ in {
     modules = [
       ./redhead/configuration.nix
       ./redhead/hardware-configuration.nix
-      ./redhead/nilla.nix
+      ./redhead/nilla-nix.nix
       ./redhead/packetmix.nix
     ];
     args = {
