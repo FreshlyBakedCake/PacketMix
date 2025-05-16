@@ -145,6 +145,7 @@
     thunderbird
     difftastic
     meld
+    wl-clipboard
   ];
 
   networking.hosts = {
