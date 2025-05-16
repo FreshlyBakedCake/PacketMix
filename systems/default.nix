@@ -9,6 +9,7 @@ in {
       }
       ./common/configuration.nix
       ./common/nilla-nix.nix
+      ./common/nixpkgs.nix
       ./common/packetmix.nix
       ./redhead/hardware-configuration.nix
     ];
@@ -25,6 +26,7 @@ in {
       }
       ./common/configuration.nix
       ./common/nilla-nix.nix
+      ./common/nixpkgs.nix
       ./common/packetmix.nix
       ./emden/hardware-configuration.nix
     ];
