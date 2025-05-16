@@ -7,6 +7,7 @@ in {
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
+      ./minion/direnv.nix
     ];
     args = {
       system = "x86_64-linux";
