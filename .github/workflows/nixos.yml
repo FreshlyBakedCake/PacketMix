@@ -1,0 +1,42 @@
+name: Build and cache NixOS systems
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@526118121621777ccd86f79b04685a9319637641
+        with:
+          extra_nix_config: "experimental-features = nix-command"
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Set up a cachix cache
+        uses: cachix/cachix-action@0fc020193b5a1fa3ac4575aa3a7d3aa6a35435ad
+        with:
+          # Name of a cachix cache to push and pull/substitute
+          name: "freshlybakedcake"
+          authToken: "${{ secrets.CACHIX_TOKEN }}"
+
+      - name: Build all systems
+        run: nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux
+
+      - if: github.event_name == 'push'
+        name: Push to release branch
+        run: |
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
+          git push -f origin HEAD:release
