@@ -1,0 +1,56 @@
+{
+  "pins": {
+    "cli": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "cli"
+      },
+      "branch": "main",
+      "revision": "3cf22075a47bfadd408725037390249826e42080",
+      "url": "https://github.com/nilla-nix/cli/archive/3cf22075a47bfadd408725037390249826e42080.tar.gz",
+      "hash": "0ppb01lf1zf7yl1kw3558ij6dcxmvla7iaixk6l94ds1h0h5bvn1"
+    },
+    "nilla": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "nilla"
+      },
+      "pre_releases": true,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "version": "v0.0.0-alpha.8",
+      "revision": "7bfa979f35bade61dfa9a13cd265d2a0eb4aea13",
+      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.8",
+      "hash": "0qildn3qciz4w4fdwi2whqq2l2qhjj9zxdfznnayh1m5cg5db251"
+    },
+    "nixos": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "nixos"
+      },
+      "branch": "main",
+      "revision": "6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d",
+      "url": "https://github.com/nilla-nix/nixos/archive/6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d.tar.gz",
+      "hash": "1dwkilaz8324rp3kcxnx5r2jjsx0lavm7xhg5xwrklawlyvk5r7q"
+    },
+    "nixos-24.11": {
+      "type": "Channel",
+      "name": "nixos-24.11",
+      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717525.330d0a416792/nixexprs.tar.xz",
+      "hash": "0if26mfgk9kda5b8sr3wzpvfrb7mb8yaycy6825lpq9i0ld1h3s1"
+    },
+    "nixos-unstable": {
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05pre791210.5461b7fa65f3/nixexprs.tar.xz",
+      "hash": "0ymvgy29mdlir88g4w99r4f18l51gni9gccq48kszq9ri4x553f2"
+    }
+  },
+  "version": 3
+}
