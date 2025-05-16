@@ -16,6 +16,7 @@ in {
       })
       ./minion/direnv.nix
       ./minion/ripgrep.nix
+      ./minion/zoxide.nix
     ];
     args = {
       system = "x86_64-linux";
