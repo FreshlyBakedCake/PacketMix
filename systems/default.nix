@@ -7,6 +7,7 @@ in {
       ./redhead/configuration.nix
       ./redhead/hardware-configuration.nix
       ./redhead/nilla.nix
+      ./redhead/packetmix.nix
     ];
     args = {
       system = "x86_64-linux";

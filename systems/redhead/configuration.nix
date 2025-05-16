@@ -153,6 +153,12 @@
   };
 
   nix.settings.experimental-features = [ "nix-command" ];
+  nix.settings.substituters = [
+    "https://cache.nixos.org"
+  ];
+  nix.settings.trusted-public-keys = [
+    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
