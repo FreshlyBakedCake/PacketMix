@@ -4,10 +4,29 @@ in {
   config.systems.nixos."redhead" = {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
     modules = [
-      ./redhead/configuration.nix
+      {
+        networking.hostName = "redhead";
+      }
+      ./common/configuration.nix
+      ./common/nilla-nix.nix
+      ./common/packetmix.nix
       ./redhead/hardware-configuration.nix
-      ./redhead/nilla-nix.nix
-      ./redhead/packetmix.nix
+    ];
+    args = {
+      system = "x86_64-linux";
+      monorepo = config;
+    };
+  };
+  config.systems.nixos."emden" = {
+    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    modules = [
+      {
+        networking.hostName = "emden";
+      }
+      ./common/configuration.nix
+      ./common/nilla-nix.nix
+      ./common/packetmix.nix
+      ./emden/hardware-configuration.nix
     ];
     args = {
       system = "x86_64-linux";
