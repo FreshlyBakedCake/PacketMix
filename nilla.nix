@@ -12,6 +12,7 @@ in
     includes = [
       ./lib
       ./systems
+      "${pins.nilla-nixos}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
     ];
 
     config = {

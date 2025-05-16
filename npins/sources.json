@@ -28,11 +28,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.0.0-alpha.8",
-      "revision": "7bfa979f35bade61dfa9a13cd265d2a0eb4aea13",
-      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.8",
-      "hash": "0qildn3qciz4w4fdwi2whqq2l2qhjj9zxdfznnayh1m5cg5db251",
-      "frozen": true
+      "version": "v0.0.0-alpha.12",
+      "revision": "5d3e509727f387a3000d9ac32031836661f233c9",
+      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.12",
+      "hash": "0y70c9p4ln0jd673k2ifi28s92pgphjdykgar71s20bv2qzg8naz"
     },
     "nilla-cli": {
       "type": "Git",
