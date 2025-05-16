@@ -1,5 +1,22 @@
 {
   "pins": {
+    "lix-module": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://git.lix.systems/",
+        "owner": "lix-project",
+        "repo": "nixos-module"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "2.93.0",
+      "revision": "cd2a9c028df820a83ca2807dc6c6e7abc3dfa7fc",
+      "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/2.93.0.tar.gz",
+      "hash": "1pz4j93rwgf3hv3za3q16300kp9b74aglb1mbr5qpiw0g0mphm6p"
+    },
     "nilla": {
       "type": "GitRelease",
       "repository": {

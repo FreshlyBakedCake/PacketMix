@@ -15,6 +15,7 @@ in {
       ./redhead/android.nix
       ./redhead/hardware-configuration.nix
       ./redhead/office.nix
+      config.inputs.lix-module.result.nixosModules.default
     ];
     args = {
       system = "x86_64-linux";
@@ -34,6 +35,7 @@ in {
       ./common/sysctl.nix
       ./emden/hardware-configuration.nix
       ./emden/steam.nix
+      config.inputs.lix-module.result.nixosModules.default
     ];
     args = {
       system = "x86_64-linux";
