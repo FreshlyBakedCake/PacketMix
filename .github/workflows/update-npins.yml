@@ -47,4 +47,4 @@ jobs:
         name: Automerge pull request
         run: gh pr merge --merge --auto "${{ steps.pull-request.outputs.pull-request-number }}"
         env:
-          GH_TOKEN: ${{ secrets.PAT }}
+          GH_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
