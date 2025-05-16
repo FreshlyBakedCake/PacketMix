@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  update-npins:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,12 @@ jobs:
         run: nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'npins update'
 
       - name: Create a pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e
         with:
           branch: auto/update-npins
           commit-message: "chore: bump npins dependencies"
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          title: "chore: bump npins dependencies"
+          body: |
+            This is an automated npins dependency bump
 
