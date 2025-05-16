@@ -8,6 +8,7 @@ in {
         home.homeDirectory = "/home/minion";
       }
       ./minion/direnv.nix
+      ./minion/ripgrep.nix
     ];
     args = {
       system = "x86_64-linux";

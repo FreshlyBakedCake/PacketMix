@@ -93,7 +93,6 @@
     git
     helix
     jujutsu
-    ripgrep
     chromium
     (pkgs.gtimelog.overrideAttrs (oldAttrs: {
       src = builtins.fetchGit {
