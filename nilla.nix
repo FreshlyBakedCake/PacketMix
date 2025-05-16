@@ -10,9 +10,9 @@ in
 
     config = {
       # Add Nixpkgs as an input (match the name you used when pinning).
-      inputs.nixpkgs.src = pins.nixos-unstable;
-      inputs.nilla-nixos.src = pins.nixos;
       inputs.nilla-cli.src = pins.cli;
+      inputs.nilla-nixos.src = pins.nixos;
+      inputs.nixpkgs.src = pins.nixos-unstable;
 
       # With a package set defined, we can create a shell.
       shells.default = {
@@ -24,8 +24,8 @@ in
           mkShell {
             packages = [
               hello
-              config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
+              config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
             ];
           };
       };
