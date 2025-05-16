@@ -45,8 +45,8 @@
     "nixos-24.11": {
       "type": "Channel",
       "name": "nixos-24.11",
-      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717703.5b35d248e920/nixexprs.tar.xz",
-      "hash": "0jwyhk0js2vnxgiaalsbab1k82wl2vrfwzn08j8fs590gyivanjz"
+      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717738.1d3aeb5a193b/nixexprs.tar.xz",
+      "hash": "09zzczsv7gjcr02hvmyyrwg0n3jjcnb308cl1fb45xkyk3jyzvl8"
     },
     "nixpkgs": {
       "type": "Channel",
