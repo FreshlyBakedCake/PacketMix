@@ -12,6 +12,7 @@ in {
       ./common/nilla-nix.nix
       ./common/packetmix.nix
       ./redhead/hardware-configuration.nix
+      ./redhead/spice.nix
     ];
     args = {
       system = "x86_64-linux";
