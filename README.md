@@ -22,7 +22,7 @@ Our auto-updates will always require a reboot to finish installing.
 ## Opinionated
 
 We build this because we want this. Any configuration that is no longer used
-will be removed. We will remorcelessly set defaults (e.g. `--smart-case` for
+will be removed. We will ruthlessly set defaults (e.g. `--smart-case` for
 `ripgrep`) to align with our preferences. If you disagree with our choices,
 override our config or pull a module out of our tree and maintain it yourself.
 
