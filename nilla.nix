@@ -10,9 +10,7 @@ in
 
     config = {
       # Add Nixpkgs as an input (match the name you used when pinning).
-      inputs.nilla-cli.src = pins.cli;
-      inputs.nilla-nixos.src = pins.nixos;
-      inputs.nixpkgs.src = pins.nixos-unstable;
+      inputs = builtins.mapAttrs (_: value: { src = value; }) pins;
 
       # With a package set defined, we can create a shell.
       shells.default = {

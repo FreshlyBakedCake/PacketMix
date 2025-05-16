@@ -1,6 +1,6 @@
 {
   "pins": {
-    "cli": {
+    "nilla-cli": {
       "type": "Git",
       "repository": {
         "type": "GitHub",
@@ -29,7 +29,7 @@
       "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.8",
       "hash": "0qildn3qciz4w4fdwi2whqq2l2qhjj9zxdfznnayh1m5cg5db251"
     },
-    "nixos": {
+    "nilla-nixos": {
       "type": "Git",
       "repository": {
         "type": "GitHub",
@@ -48,7 +48,7 @@
       "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717525.330d0a416792/nixexprs.tar.xz",
       "hash": "0if26mfgk9kda5b8sr3wzpvfrb7mb8yaycy6825lpq9i0ld1h3s1"
     },
-    "nixos-unstable": {
+    "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
       "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05pre791210.5461b7fa65f3/nixexprs.tar.xz",
