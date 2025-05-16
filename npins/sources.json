@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.0.0-alpha.8",
-      "revision": "7bfa979f35bade61dfa9a13cd265d2a0eb4aea13",
-      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.8",
-      "hash": "0qildn3qciz4w4fdwi2whqq2l2qhjj9zxdfznnayh1m5cg5db251"
+      "version": "v0.0.0-alpha.9",
+      "revision": "2b6448a7e00773076b51ce71a1e9de1584993ddf",
+      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.9",
+      "hash": "17yb2jwpwvw9jqrzdbh6qmf82vi8a6mh6zcf9ll2ans15r4lvp04"
     },
     "nilla-cli": {
       "type": "Git",
@@ -45,8 +45,8 @@
     "nixos-24.11": {
       "type": "Channel",
       "name": "nixos-24.11",
-      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717822.0c0bf9c05738/nixexprs.tar.xz",
-      "hash": "10lhpdmyp0v3ds3f2fxnh6c5lfq8c5ifn8jx8q6kysqny5byrg36"
+      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717837.a39ed32a651f/nixexprs.tar.xz",
+      "hash": "0b373ivlgynwbj0707510v5fvf80n0m39waxxn5izkb97y7m03h4"
     },
     "nixpkgs": {
       "type": "Channel",
