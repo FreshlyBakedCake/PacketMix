@@ -13,6 +13,7 @@ in {
       ./common/packetmix.nix
       ./redhead/android.nix
       ./redhead/hardware-configuration.nix
+      ./redhead/office.nix
       ./redhead/spice.nix
     ];
     args = {
