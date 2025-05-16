@@ -1,18 +1,5 @@
 {
   "pins": {
-    "nilla-cli": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nilla-nix",
-        "repo": "cli"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "3cf22075a47bfadd408725037390249826e42080",
-      "url": "https://github.com/nilla-nix/cli/archive/3cf22075a47bfadd408725037390249826e42080.tar.gz",
-      "hash": "0ppb01lf1zf7yl1kw3558ij6dcxmvla7iaixk6l94ds1h0h5bvn1"
-    },
     "nilla": {
       "type": "GitRelease",
       "repository": {
@@ -28,6 +15,19 @@
       "revision": "7bfa979f35bade61dfa9a13cd265d2a0eb4aea13",
       "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.8",
       "hash": "0qildn3qciz4w4fdwi2whqq2l2qhjj9zxdfznnayh1m5cg5db251"
+    },
+    "nilla-cli": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "cli"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "3cf22075a47bfadd408725037390249826e42080",
+      "url": "https://github.com/nilla-nix/cli/archive/3cf22075a47bfadd408725037390249826e42080.tar.gz",
+      "hash": "0ppb01lf1zf7yl1kw3558ij6dcxmvla7iaixk6l94ds1h0h5bvn1"
     },
     "nilla-nixos": {
       "type": "Git",
@@ -45,14 +45,14 @@
     "nixos-24.11": {
       "type": "Channel",
       "name": "nixos-24.11",
-      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717525.330d0a416792/nixexprs.tar.xz",
-      "hash": "0if26mfgk9kda5b8sr3wzpvfrb7mb8yaycy6825lpq9i0ld1h3s1"
+      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717586.3e362ce63e16/nixexprs.tar.xz",
+      "hash": "0ycn3y1c2zzwcjx62b49cm0qfvazxy998lhzh2kisksfhwx98hw6"
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05pre791210.5461b7fa65f3/nixexprs.tar.xz",
-      "hash": "0ymvgy29mdlir88g4w99r4f18l51gni9gccq48kszq9ri4x553f2"
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05pre793008.f02fddb8acef/nixexprs.tar.xz",
+      "hash": "0nhff2yxgg9qiznl1jy18cvqjgwr97wpm7rsbh7ymldq21zhnc1m"
     }
   },
   "version": 5
