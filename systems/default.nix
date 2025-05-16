@@ -29,6 +29,7 @@ in {
       ./common/nixpkgs.nix
       ./common/packetmix.nix
       ./emden/hardware-configuration.nix
+      ./emden/steam.nix
     ];
     args = {
       system = "x86_64-linux";
