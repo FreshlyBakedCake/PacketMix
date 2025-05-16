@@ -23,7 +23,6 @@ in
         shell = { system, mkShell, hello, ... }:
           mkShell {
             packages = [
-              hello
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
             ];
