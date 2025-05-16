@@ -11,6 +11,7 @@ in {
       ./common/inputs.nix
       ./common/nilla-nix.nix
       ./common/packetmix.nix
+      ./redhead/android.nix
       ./redhead/hardware-configuration.nix
       ./redhead/spice.nix
     ];
