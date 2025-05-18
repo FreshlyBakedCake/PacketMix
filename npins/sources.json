@@ -101,17 +101,17 @@
       "url": "https://github.com/nilla-nix/nixos/archive/6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d.tar.gz",
       "hash": "1dwkilaz8324rp3kcxnx5r2jjsx0lavm7xhg5xwrklawlyvk5r7q"
     },
-    "nixos-24.11": {
+    "nixos-unstable": {
       "type": "Channel",
-      "name": "nixos-24.11",
-      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.717984.ba8b70ee098b/nixexprs.tar.xz",
-      "hash": "1h6ma51dgp55rp8znn8jfywqb09yqkizdmy7jjmfqa96r1i115wx"
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre802366.292fa7d4f651/nixexprs.tar.xz",
+      "hash": "0f00z6pvhn74vl08zagapx4byn9ps4jpzlsr1cmsrvpcnpp3mrqr"
     },
     "nixpkgs": {
       "type": "Channel",
-      "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05pre801034.e06158e58f3a/nixexprs.tar.xz",
-      "hash": "0pxn4gapgjyr36lmb032nj8abaglhg1md74jw5qwmbl7rmp7fpfh"
+      "name": "nixos-25.05",
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05beta801537.2e1496bf8652/nixexprs.tar.xz",
+      "hash": "1xw4ifbpjsqivckd045mazsgw2h9shqf197hkabl5ifnm9aj7kxq"
     }
   },
   "version": 5
