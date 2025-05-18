@@ -37,4 +37,16 @@ in {
       monorepo = config;
     };
   };
+  config.systems.nixos."teal" = {
+    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    modules = [
+      ./common
+      ./teal
+      ./server
+    ];
+    args = {
+      system = "x86_64-linux";
+      monorepo = config;
+    };
+  };
 }
