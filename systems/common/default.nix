@@ -1,5 +1,6 @@
 {
   imports = [
+    ./boot.nix
     ./fonts.nix
     ./impermanence.nix
     ./inputs.nix
