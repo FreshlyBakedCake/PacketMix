@@ -36,10 +36,10 @@ jobs:
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
       - name: Build all systems
-        run: nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux
+        run: nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux --show-trace
 
       - name: Build all homes
-        run: nix build -f ./nilla.nix packages.allHomes.result.x86_64-linux
+        run: nix build -f ./nilla.nix packages.allHomes.result.x86_64-linux --show-trace
 
       - if: github.event_name == 'push'
         name: Push to release branch
