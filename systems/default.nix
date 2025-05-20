@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 { config, ... }: let
   nixpkgs = config.inputs.nixpkgs.result;
 in {

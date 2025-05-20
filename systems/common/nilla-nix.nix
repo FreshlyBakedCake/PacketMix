@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 { monorepo, system, ... }: {
   environment.systemPackages = [
     monorepo.inputs.nilla-cli.result.packages.nilla-cli.result.${system}

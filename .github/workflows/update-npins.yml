@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 name: Update npins dependencies
 # This is inspired by https://github.com/getchoo/update-npins - though I wrote it from scratch
 # I'm not using it as I need to run the npins command in a shell
