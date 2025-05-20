@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 /*
   packetmix.nix: packetmix support configuration, including our binary cache and auto-updating
 */

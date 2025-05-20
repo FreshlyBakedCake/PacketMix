@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2024 Clicks Codes
 # SPDX-FileCopyrightText: 2020 Nix Community Projects
+# SPDX-FileCopyrightText: 2024 Clicks Codes
 #
 # SPDX-License-Identifier: MIT
 # postDeviceCommands based of code from https://github.com/nix-community/impermanence/tree/d5f1ed7141fa407880ff5956ded2c88a307ca940?tab=readme-ov-file#btrfs-subvolumes

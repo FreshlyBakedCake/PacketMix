@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 {
   boot.initrd.availableKernelModules = [
     "nvme"

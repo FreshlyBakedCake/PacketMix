@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 { pkgs, lib, ...}: {
   fonts.packages = [
     pkgs.cantarell-fonts
