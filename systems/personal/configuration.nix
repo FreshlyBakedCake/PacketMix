@@ -125,11 +125,6 @@
     wl-clipboard
   ];
 
-  networking.hosts = {
-    "172.22.64.177" = [ "cpci.cbg.collabora.co.uk" ];
-    "172.22.64.54" = [ "bee.cbg.collabora.co.uk" ];
-  };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
