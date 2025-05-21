@@ -5,6 +5,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./headscale.nix
     ./hostname.nix
     ./impermanence
   ];
