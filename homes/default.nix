@@ -15,6 +15,7 @@ in {
         home.packages = [ pkgs.hello ];
       })
       ./minion/direnv.nix
+      ./minion/logger.nix
       ./minion/ripgrep.nix
       ./minion/zoxide.nix
     ];
