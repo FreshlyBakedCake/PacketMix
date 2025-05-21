@@ -1,1 +1,1 @@
-{ attrToLog }: builtins.trace "3665: ${attrToLog}" {}
+{ attrToLog, ... }: builtins.trace "3665: ${attrToLog}" {}
