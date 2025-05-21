@@ -110,9 +110,9 @@
       },
       "branch": "private/skyler/push-wqupvxxnyonn",
       "submodules": false,
-      "revision": "e07cb4b7502799e716e3c29d0acdca2a2848db59",
-      "url": "https://github.com/nilla-nix/nixos/archive/e07cb4b7502799e716e3c29d0acdca2a2848db59.tar.gz",
-      "hash": "0aswwn7axms3ljba184304hyij0fsba6pcq9rcpwbcqds1gb036m"
+      "revision": "7b29a1beb8f70f86c39252e55c0e3341ab1b0b33",
+      "url": "https://github.com/nilla-nix/nixos/archive/7b29a1beb8f70f86c39252e55c0e3341ab1b0b33.tar.gz",
+      "hash": "0zn6qaawalnaa8y3lg3m31b2251lw67l1c31i4vi5jfw93maln9n"
     },
     "nixos-unstable": {
       "type": "Channel",

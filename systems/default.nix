@@ -12,6 +12,7 @@ in {
       ./personal
       ./redhead
     ];
+    homes = [ "minion:x86_64-linux" ];
     args = {
       system = "x86_64-linux";
       monorepo = config;
