@@ -11,6 +11,9 @@ in {
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
+      ({ pkgs, ... }: {
+        home.packages = [ pkgs.hello ];
+      })
       ./minion/direnv.nix
       ./minion/ripgrep.nix
     ];
