@@ -3,8 +3,5 @@
 # SPDX-License-Identifier: MIT
 
 {
-  imports = [
-    ./configuration.nix
-    ./tailscale.nix
-  ];
+  baked.tailscale.enable = true;
 }

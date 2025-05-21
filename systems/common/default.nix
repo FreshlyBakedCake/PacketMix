@@ -13,5 +13,6 @@
     ./nixos.nix
     ./packetmix.nix
     ./sysctl.nix
+    ./tailscale.nix
   ];
 }
