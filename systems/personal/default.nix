@@ -7,5 +7,6 @@
     ./bluetooth.nix
     ./configuration.nix
     ./homes.nix
+    ./tailscale.nix
   ];
 }
