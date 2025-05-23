@@ -114,6 +114,22 @@
       "url": "https://github.com/nilla-nix/nixos/archive/6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d.tar.gz",
       "hash": "1dwkilaz8324rp3kcxnx5r2jjsx0lavm7xhg5xwrklawlyvk5r7q"
     },
+    "catppuccin": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "nix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.2.1",
+      "revision": "c986bf3b4958898a7719b24018c8895358f49a46",
+      "url": "https://api.github.com/repos/catppuccin/nix/tarball/v1.2.1",
+      "hash": "1sb9mvr96v4rhbm8nfxm0zg2cvc3rfs7zq9rcbcsn70h45vghm88"
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
