@@ -25,9 +25,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f9186c64fcc6ee5f0114547acf9e814c806a640b",
-      "url": "https://github.com/nix-community/home-manager/archive/f9186c64fcc6ee5f0114547acf9e814c806a640b.tar.gz",
-      "hash": "0gnhicmsg8gwhxdcpwr8xwwss76r0iy4xbmjv2xdr19193i73mdm"
+      "revision": "a868570581f0dbdef7e33c8c9bb34b735dfcbacf",
+      "url": "https://github.com/nix-community/home-manager/archive/a868570581f0dbdef7e33c8c9bb34b735dfcbacf.tar.gz",
+      "hash": "054kn4qh8bs777gk9bggw6i9gq8c902r6rgh3anlsdq6l4ah3ah0"
     },
     "impermanence": {
       "type": "Git",
