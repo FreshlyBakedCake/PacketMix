@@ -23,4 +23,22 @@ in {
       project = config;
     };
   };
+  config.homes."coded:x86_64-linux" = {
+    modules = [
+      {
+        home.stateVersion = "25.05";
+        home.homeDirectory = "/home/coded";
+      }
+      (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./coded
+      ./common
+      ./development
+      ./gaming
+      (import ./niri { inherit (config.inputs) niri walker; })
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+  };
 }
