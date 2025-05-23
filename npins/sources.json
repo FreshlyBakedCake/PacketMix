@@ -125,6 +125,22 @@
       "url": "https://github.com/sodiboo/niri-flake/archive/fba861e81d6fe8c0a8ba9fb2ed8d5e6df4a6ad78.tar.gz",
       "hash": "sha256-cfrRFN9j340Wlgwe3k2oWB/0LI63JyUZab7apN72xd8="
     },
+    "catppuccin": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "nix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.2.1",
+      "revision": "c986bf3b4958898a7719b24018c8895358f49a46",
+      "url": "https://api.github.com/repos/catppuccin/nix/tarball/v1.2.1",
+      "hash": "1sb9mvr96v4rhbm8nfxm0zg2cvc3rfs7zq9rcbcsn70h45vghm88"
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
