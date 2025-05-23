@@ -3,10 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 {
-  imports = [
-    ./bash.nix
-    ./ghostty.nix
-    ./helix.nix
-    ./zoxide.nix
-  ];
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+  };
 }
