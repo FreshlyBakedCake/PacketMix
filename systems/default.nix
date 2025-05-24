@@ -16,6 +16,7 @@ in {
       system = "x86_64-linux";
       monorepo = config;
     };
+    homes = [ "minion:x86_64-linux" ];
   };
   config.systems.nixos."emden" = {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
@@ -52,5 +53,6 @@ in {
       system = "x86_64-linux";
       monorepo = config;
     };
+    homes = [ "minion:x86_64-linux" ];
   };
 }
