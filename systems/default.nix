@@ -11,7 +11,7 @@ in {
       ./common
       ./personal
       ./redhead
-      { home-manager.extraSpecialArgs.attrToLog = "it might work!"; }
+#      { home-manager.extraSpecialArgs.attrToLog = "it might work!"; }
     ];
     homes = [ "minion:x86_64-linux" ];
     args = {

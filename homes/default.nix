@@ -21,7 +21,7 @@ in {
     ];
     args = {
       system = "x86_64-linux";
-      monorepo = config;
+#      monorepo = config;
       attrToLog = "it works!";
     };
   };
