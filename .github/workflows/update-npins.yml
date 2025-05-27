@@ -17,6 +17,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate GitHub token for RoboPâtissière
+        uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ secrets.CUSTOM_GITHUB_APP_ID }}
+          private-key: ${{ secrets.CUSTOM_GITHUB_APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
 
       - name: Install Nix
@@ -42,7 +49,7 @@ jobs:
         with:
           branch: auto/update-npins
           commit-message: "chore: bump npins dependencies"
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
           title: "chore: bump npins dependencies"
           body: |
             This is an automated npins dependency bump
