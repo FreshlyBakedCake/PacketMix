@@ -6,6 +6,7 @@
   imports = [
     ./boot.nix
     ./fonts.nix
+    ./images.nix
     ./impermanence.nix
     ./inputs.nix
     ./lix.nix
