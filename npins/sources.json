@@ -123,8 +123,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.802674.7848cd8c982f/nixexprs.tar.xz",
-      "hash": "0gplw4nn5xlfk8lkcc6814386ynlrf9z3h4lckldp94vj5663p5l"
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.802746.7282cb574e06/nixexprs.tar.xz",
+      "hash": "1wzh6wsfn3zhk8rzjzy36hj7nzgz4qmampplask77jm9zsbv3fzr"
     }
   },
   "version": 5
