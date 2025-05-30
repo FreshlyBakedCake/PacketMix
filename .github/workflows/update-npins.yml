@@ -51,6 +51,8 @@ jobs:
           commit-message: "chore: bump npins dependencies"
           token: ${{ steps.generate-token.outputs.token }}
           title: "chore: bump npins dependencies"
+          author: "RoboPâtissière[bot] <213641064+robopatissiere[bot]@users.noreply.github.com>"
+          committer: "RoboPâtissière[bot] <213641064+robopatissiere[bot]@users.noreply.github.com>"
           body: |
             This is an automated npins dependency bump
 
