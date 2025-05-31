@@ -1,1 +1,3 @@
-{ attrToLog, ... }: builtins.trace "3665: ${attrToLog}" {}
+{ attrToLog, ... }: {
+  home.packages = builtins.trace attrToLog [];
+}
