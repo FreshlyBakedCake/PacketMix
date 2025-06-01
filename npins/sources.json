@@ -25,9 +25,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "6d09fd37a7d4110251c1c03cb09fbf6321fbe10d",
-      "url": "https://github.com/nix-community/home-manager/archive/6d09fd37a7d4110251c1c03cb09fbf6321fbe10d.tar.gz",
-      "hash": "1lw8qvhjqix2ylqwsdn45f9gff3hiz2dbsyvpmbs80bac3agl6fz"
+      "revision": "5675a9686851d9626560052a032c4e14e533c1fa",
+      "url": "https://github.com/nix-community/home-manager/archive/5675a9686851d9626560052a032c4e14e533c1fa.tar.gz",
+      "hash": "0d4ssvcjf1n2x1lyk181mcxr9zrn7b5qv9yn2vxyk9qxnrnc2jz6"
     },
     "impermanence": {
       "type": "Git",
@@ -70,10 +70,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.0.0-alpha.12",
-      "revision": "5d3e509727f387a3000d9ac32031836661f233c9",
-      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.12",
-      "hash": "0y70c9p4ln0jd673k2ifi28s92pgphjdykgar71s20bv2qzg8naz"
+      "version": "v0.0.0-alpha.13",
+      "revision": "9070014ab7fcd0b6ef3b901a2047c06dcb975538",
+      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.13",
+      "hash": "150jc4g5xjn2p0m0d9lqvnf6xl1v8wfdz9npkdnx30gd69nz68pf"
     },
     "nilla-cli": {
       "type": "Git",
@@ -84,9 +84,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "49bc4527cd0ecd9f5a107611ae1614e9e653647b",
-      "url": "https://github.com/nilla-nix/cli/archive/49bc4527cd0ecd9f5a107611ae1614e9e653647b.tar.gz",
-      "hash": "1ikiwbx5giwqgcf1mgjz1ivw5sjm8y1adw84nlg3by85hhva5md3"
+      "revision": "79822ed96b182190df3a84658626b899c9dfc73c",
+      "url": "https://github.com/nilla-nix/cli/archive/79822ed96b182190df3a84658626b899c9dfc73c.tar.gz",
+      "hash": "0yddl1dfbcanazgpqsrv6iq3bq5bvf24qn2hslgrar6771f0l4mz"
     },
     "nilla-home": {
       "type": "Git",
@@ -110,9 +110,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d",
-      "url": "https://github.com/nilla-nix/nixos/archive/6e13605fbc1cbfd3ee4b474c01d93a7f2942c61d.tar.gz",
-      "hash": "1dwkilaz8324rp3kcxnx5r2jjsx0lavm7xhg5xwrklawlyvk5r7q"
+      "revision": "52c623ae89fe77de669a981c7e92b1504cd99eac",
+      "url": "https://github.com/nilla-nix/nixos/archive/52c623ae89fe77de669a981c7e92b1504cd99eac.tar.gz",
+      "hash": "0bjbkyd7c1cp7daf8j4h7x339ngrghnjq5wgqq0fbk269rhrvmpf"
     },
     "nixos-unstable": {
       "type": "Channel",
