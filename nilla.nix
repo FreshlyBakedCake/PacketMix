@@ -17,8 +17,9 @@ in
       ./homes
       ./lib
       ./systems
-      "${pins.nilla-home}/modules/home.nix" # We can't use config.inputs here without infinitely-recursing
-      "/home/minion/Code/Nilla/nixos/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
+      "/home/minion/Code/Nilla/home/modules/home.nix" # We can't use config.inputs here without infinitely-recursing
+      "/home/minion/Code/Nilla/home/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
+      "${pins.nilla-nixos}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
     ];
 
     config = {

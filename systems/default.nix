@@ -13,7 +13,7 @@ in {
       ./redhead
 #      { home-manager.extraSpecialArgs.attrToLog = "it might work!"; }
     ];
-    homes = [ config.homes."minion:x86_64-linux" ];
+#    homes = [ config.homes."minion:x86_64-linux" ];
     args = {
       system = "x86_64-linux";
       monorepo = config;
