@@ -14,7 +14,7 @@
       "version": "v0.0.1-alpha",
       "revision": "712fa53d332f4915b33a199e801993b5a42de62f",
       "url": "https://api.github.com/repos/nilla-nix/home/tarball/v0.0.1-alpha",
-      "hash": "10wb4b1zlbniifzrxcfalbkrsgbww0jqncxjvz33js8njvr1z98p"
+      "hash": "sha256-F6Uf8pYWaTnG37IziyXgfD2d56LKsZ6/i9Eu+sMii4M="
     },
     "home-manager": {
       "type": "Git",
@@ -27,7 +27,7 @@
       "submodules": false,
       "revision": "c7fdb7e90bff1a51b79c1eed458fb39e6649a82a",
       "url": "https://github.com/nix-community/home-manager/archive/c7fdb7e90bff1a51b79c1eed458fb39e6649a82a.tar.gz",
-      "hash": "199hn3p4gdqr1y0ymw9c436hx6m1vs1n4qhnmdd3xl6ah76qn7qh"
+      "hash": "sha256-EB+LzYHK0D5aqxZiYoPeoZoOzSAs8eqBDxm3R+6wMKU="
     },
     "impermanence": {
       "type": "Git",
@@ -40,7 +40,7 @@
       "submodules": false,
       "revision": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
-      "hash": "04l16szln2x0ajq2x799krb53ykvc6vm44x86ppy1jg9fr82161c"
+      "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
     "lix": {
       "type": "Git",
@@ -54,7 +54,7 @@
       "submodules": false,
       "revision": "019b17f4e93c098f99a9bc691be1f1c4df026c7d",
       "url": "https://git.lix.systems/lix-project/lix/archive/019b17f4e93c098f99a9bc691be1f1c4df026c7d.tar.gz",
-      "hash": "1n6yff2qhnm4jkziwzxygy7542813iv2mfb7vm455kn8m8flcgan"
+      "hash": "sha256-Vj1GHarIzlJI3We5KnYcAQlSjn++fx7/lKRaiIVz3tg="
     },
     "lix-module": {
       "type": "Git",
@@ -68,7 +68,7 @@
       "submodules": false,
       "revision": "3c23c6ae2aecc1f76ae7993efe1a78b5316f0700",
       "url": "https://git.lix.systems/lix-project/nixos-module/archive/3c23c6ae2aecc1f76ae7993efe1a78b5316f0700.tar.gz",
-      "hash": "1yv1d45jgfzjxcg23m2qwis5rxx2v45vfid8b0lm1sl6p66h4hpc"
+      "hash": "sha256-7EICjbmG6lApWKhFtwvZovdcdORY1CEe6/K7JwtpYfs="
     },
     "nilla": {
       "type": "GitRelease",
@@ -84,7 +84,7 @@
       "version": "v0.0.0-alpha.13",
       "revision": "9070014ab7fcd0b6ef3b901a2047c06dcb975538",
       "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/v0.0.0-alpha.13",
-      "hash": "150jc4g5xjn2p0m0d9lqvnf6xl1v8wfdz9npkdnx30gd69nz68pf"
+      "hash": "sha256-7iLzbTLtgdFtm9em3xxHO9BunN2YpgYquMLKXh5hEpQ="
     },
     "nilla-cli": {
       "type": "Git",
@@ -97,7 +97,7 @@
       "submodules": false,
       "revision": "79822ed96b182190df3a84658626b899c9dfc73c",
       "url": "https://github.com/nilla-nix/cli/archive/79822ed96b182190df3a84658626b899c9dfc73c.tar.gz",
-      "hash": "0yddl1dfbcanazgpqsrv6iq3bq5bvf24qn2hslgrar6771f0l4mz"
+      "hash": "sha256-vxIKXDjHZJUf1VBYTITbq+A1cDQ7a3zfV1ax5VqgrXk="
     },
     "nilla-home": {
       "type": "Git",
@@ -110,7 +110,7 @@
       "submodules": false,
       "revision": "8c908b6bccc0656af87539757af3952b9ab81993",
       "url": "https://github.com/nilla-nix/home/archive/8c908b6bccc0656af87539757af3952b9ab81993.tar.gz",
-      "hash": "10wb4b1zlbniifzrxcfalbkrsgbww0jqncxjvz33js8njvr1z98p"
+      "hash": "sha256-F6Uf8pYWaTnG37IziyXgfD2d56LKsZ6/i9Eu+sMii4M="
     },
     "nilla-nixos": {
       "type": "Git",
@@ -123,19 +123,19 @@
       "submodules": false,
       "revision": "52c623ae89fe77de669a981c7e92b1504cd99eac",
       "url": "https://github.com/nilla-nix/nixos/archive/52c623ae89fe77de669a981c7e92b1504cd99eac.tar.gz",
-      "hash": "0bjbkyd7c1cp7daf8j4h7x339ngrghnjq5wgqq0fbk269rhrvmpf"
+      "hash": "sha256-7tadYU5GzOUAxo8XLC18+dk0Rj+QSORUO5cFdpqfSy4="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
       "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre808478.910796cabe43/nixexprs.tar.xz",
-      "hash": "15xx0n7gpsfmfg5w3dfb0bw8zaffk6gbpgk1h8rv5xf5zfzqz3vx"
+      "hash": "sha256-fY+Pv/vF9bIzgmG+u56ZzqmP+ALLtcHLc9Xp+44FvZc="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
       "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803297.10d7f8d34e5e/nixexprs.tar.xz",
-      "hash": "17ns1gwk6f2g4km9y3hwvr593gwlkskivnp5bd8rpynz5g5p32jm"
+      "hash": "sha256-VYpxyyvf+ptRW+XaHaeelL+RSt4cDp/qJE84M/kL2p4="
     },
     "npins": {
       "type": "Git",
@@ -148,8 +148,8 @@
       "submodules": false,
       "revision": "eed27459effed464376369c9ab7e2972889fb821",
       "url": "https://github.com/andir/npins/archive/eed27459effed464376369c9ab7e2972889fb821.tar.gz",
-      "hash": "0jhkcwl3z7n70cbnm9m8q2pv7k6yh25x12vxx4w51h7vi1jl032r"
+      "hash": "sha256-WQxAZYj7wFA46X2L0IuA3syzr8CopmoXA8eePyhnE0o="
     }
   },
-  "version": 5
+  "version": 6
 }
