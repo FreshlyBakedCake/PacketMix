@@ -4,7 +4,7 @@
 
 { monorepo, ... }: {
   imports = [
-    monorepo.inputs.lix-module.result.nixosModules.default
+    (import "${monorepo.inputs.lix-module.result}/module.nix" { lix = monorepo.inputs.lix.src; })
   ];
 
   nix.settings.experimental-features = [ "nix-command" ];

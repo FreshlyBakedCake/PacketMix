@@ -68,13 +68,13 @@ in
         systems = [ "x86_64-linux" ];
 
         # Define our shell environment.
-        shell = { system, npins, mkShell, reuse, ... }:
+        shell = { pkgs, system, npins, mkShell, reuse, ... }:
           mkShell {
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
-              npins
+              (config.inputs.npins.result { inherit pkgs system; })
               reuse
             ];
           };
