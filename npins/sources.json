@@ -42,22 +42,33 @@
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
       "hash": "04l16szln2x0ajq2x799krb53ykvc6vm44x86ppy1jg9fr82161c"
     },
+    "lix": {
+      "type": "Git",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://git.lix.systems/",
+        "owner": "lix-project",
+        "repo": "lix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "019b17f4e93c098f99a9bc691be1f1c4df026c7d",
+      "url": "https://git.lix.systems/lix-project/lix/archive/019b17f4e93c098f99a9bc691be1f1c4df026c7d.tar.gz",
+      "hash": "1n6yff2qhnm4jkziwzxygy7542813iv2mfb7vm455kn8m8flcgan"
+    },
     "lix-module": {
-      "type": "GitRelease",
+      "type": "Git",
       "repository": {
         "type": "Forgejo",
         "server": "https://git.lix.systems/",
         "owner": "lix-project",
         "repo": "nixos-module"
       },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "main",
       "submodules": false,
-      "version": "2.93.0",
-      "revision": "cd2a9c028df820a83ca2807dc6c6e7abc3dfa7fc",
-      "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/2.93.0.tar.gz",
-      "hash": "1pz4j93rwgf3hv3za3q16300kp9b74aglb1mbr5qpiw0g0mphm6p"
+      "revision": "3c23c6ae2aecc1f76ae7993efe1a78b5316f0700",
+      "url": "https://git.lix.systems/lix-project/nixos-module/archive/3c23c6ae2aecc1f76ae7993efe1a78b5316f0700.tar.gz",
+      "hash": "1yv1d45jgfzjxcg23m2qwis5rxx2v45vfid8b0lm1sl6p66h4hpc"
     },
     "nilla": {
       "type": "GitRelease",
@@ -125,6 +136,19 @@
       "name": "nixos-25.05",
       "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803297.10d7f8d34e5e/nixexprs.tar.xz",
       "hash": "17ns1gwk6f2g4km9y3hwvr593gwlkskivnp5bd8rpynz5g5p32jm"
+    },
+    "npins": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "andir",
+        "repo": "npins"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "eed27459effed464376369c9ab7e2972889fb821",
+      "url": "https://github.com/andir/npins/archive/eed27459effed464376369c9ab7e2972889fb821.tar.gz",
+      "hash": "0jhkcwl3z7n70cbnm9m8q2pv7k6yh25x12vxx4w51h7vi1jl032r"
     }
   },
   "version": 5
