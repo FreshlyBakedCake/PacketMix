@@ -12,6 +12,7 @@ in {
         home.homeDirectory = "/home/minion";
       }
       ./minion/direnv.nix
+      ./minion/ghostty.nix
       ./minion/ripgrep.nix
     ];
     args = {
