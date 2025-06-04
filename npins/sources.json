@@ -23,11 +23,11 @@
         "owner": "nix-community",
         "repo": "home-manager"
       },
-      "branch": "master",
+      "branch": "release-25.05",
       "submodules": false,
-      "revision": "86b95fc1ed2b9b04a451a08ccf13d78fb421859c",
-      "url": "https://github.com/nix-community/home-manager/archive/86b95fc1ed2b9b04a451a08ccf13d78fb421859c.tar.gz",
-      "hash": "sha256-gGGLujmeWU+ZjFzfMvFMI0hp9xONsSbm88187wJr82Q="
+      "revision": "282e1e029cb6ab4811114fc85110613d72771dea",
+      "url": "https://github.com/nix-community/home-manager/archive/282e1e029cb6ab4811114fc85110613d72771dea.tar.gz",
+      "hash": "sha256-RMhjnPKWtCoIIHiuR9QKD7xfsKb3agxzMfJY8V9MOew="
     },
     "impermanence": {
       "type": "Git",
