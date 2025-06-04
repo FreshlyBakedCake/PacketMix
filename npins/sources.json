@@ -25,9 +25,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "c7fdb7e90bff1a51b79c1eed458fb39e6649a82a",
-      "url": "https://github.com/nix-community/home-manager/archive/c7fdb7e90bff1a51b79c1eed458fb39e6649a82a.tar.gz",
-      "hash": "sha256-EB+LzYHK0D5aqxZiYoPeoZoOzSAs8eqBDxm3R+6wMKU="
+      "revision": "34a13086148cbb3ae65a79f753eb451ce5cac3d3",
+      "url": "https://github.com/nix-community/home-manager/archive/34a13086148cbb3ae65a79f753eb451ce5cac3d3.tar.gz",
+      "hash": "sha256-mKYwYcO9RmA2AcAFIXGDBOw5iv/fbjw6adWvMbnfIuk="
     },
     "impermanence": {
       "type": "Git",
@@ -95,9 +95,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "79822ed96b182190df3a84658626b899c9dfc73c",
-      "url": "https://github.com/nilla-nix/cli/archive/79822ed96b182190df3a84658626b899c9dfc73c.tar.gz",
-      "hash": "sha256-vxIKXDjHZJUf1VBYTITbq+A1cDQ7a3zfV1ax5VqgrXk="
+      "revision": "947962d937bbb96d5134a707a2c0fce274f75076",
+      "url": "https://github.com/nilla-nix/cli/archive/947962d937bbb96d5134a707a2c0fce274f75076.tar.gz",
+      "hash": "sha256-wnTA9X2vwDrmKKcqA4fC+y7v6rFFpJXV5no+5cdsdj8="
     },
     "nilla-home": {
       "type": "Git",
