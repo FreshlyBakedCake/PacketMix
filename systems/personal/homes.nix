@@ -3,8 +3,5 @@
 # SPDX-License-Identifier: MIT
 
 {
-  imports = [
-    ./configuration.nix
-    ./homes.nix
-  ];
+  home-manager.backupFileExtension = "backup";
 }
