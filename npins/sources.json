@@ -112,6 +112,19 @@
       "url": "https://github.com/nilla-nix/nixos/archive/52c623ae89fe77de669a981c7e92b1504cd99eac.tar.gz",
       "hash": "sha256-7tadYU5GzOUAxo8XLC18+dk0Rj+QSORUO5cFdpqfSy4="
     },
+    "niri": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "sodiboo",
+        "repo": "niri-flake"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e6db401ff0aa3b03507b4819f9a44deab3cfcf2f",
+      "url": "https://github.com/sodiboo/niri-flake/archive/e6db401ff0aa3b03507b4819f9a44deab3cfcf2f.tar.gz",
+      "hash": "sha256-vwr2vLETE4CSi4c6SFoQyP+uBUnvwPPQmn+1D1207ts="
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
@@ -136,6 +149,22 @@
       "revision": "eed27459effed464376369c9ab7e2972889fb821",
       "url": "https://github.com/andir/npins/archive/eed27459effed464376369c9ab7e2972889fb821.tar.gz",
       "hash": "sha256-WQxAZYj7wFA46X2L0IuA3syzr8CopmoXA8eePyhnE0o="
+    },
+    "walker": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "abenz1267",
+        "repo": "walker"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.12.23",
+      "revision": "45d35be8dee9b69c8433296e401defd69c7b670d",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.23",
+      "hash": "sha256-DUbOu45ls/h0Nnrrue/t0R12yNOhL6GegjGL1pV6BAQ="
     }
   },
   "version": 6
