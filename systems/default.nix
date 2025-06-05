@@ -14,7 +14,7 @@ in {
     ];
     args = {
       system = "x86_64-linux";
-      monorepo = config;
+      project = config;
     };
     homes = { inherit (config.homes) "minion:x86_64-linux"; };
   };
@@ -27,7 +27,7 @@ in {
     ];
     args = {
       system = "x86_64-linux";
-      monorepo = config;
+      project = config;
     };
     homes = { inherit (config.homes) "minion:x86_64-linux"; };
   };
@@ -40,7 +40,7 @@ in {
     ];
     args = {
       system = "x86_64-linux";
-      monorepo = config;
+      project = config;
     };
   };
   config.systems.nixos."teal" = {
@@ -52,7 +52,7 @@ in {
     ];
     args = {
       system = "x86_64-linux";
-      monorepo = config;
+      project = config;
     };
   };
 }

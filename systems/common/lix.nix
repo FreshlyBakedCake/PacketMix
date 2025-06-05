@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ monorepo, ... }: {
+{ project, ... }: {
   imports = [
-    (import "${monorepo.inputs.lix-module.result}/module.nix" { lix = monorepo.inputs.lix.src; })
+    (import "${project.inputs.lix-module.result}/module.nix" { lix = project.inputs.lix.src; })
   ];
 
   nix.settings.experimental-features = [ "nix-command" ];

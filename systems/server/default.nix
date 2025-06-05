@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ monorepo, ... }: {
+{ project, ... }: {
   imports = [
-    monorepo.inputs.impermanence.result.nixosModules.impermanence
+    project.inputs.impermanence.result.nixosModules.impermanence
     ./locale.nix
     ./ssh.nix
   ];
