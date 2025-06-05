@@ -6,7 +6,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ monorepo, config, system, pkgs, ... }:
+{ project, config, system, pkgs, ... }:
 {
   # Enable networking
   networking.networkmanager.enable = true;
@@ -122,7 +122,7 @@
     }))
     dogdns
     ghostty
-    (monorepo.inputs.npins.result { inherit pkgs system; })
+    (project.inputs.npins.result { inherit pkgs system; })
     thunderbird
     difftastic
     meld
