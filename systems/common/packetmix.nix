@@ -23,10 +23,19 @@
   };
 
   systemd.services.nixos-upgrade.preStart = ''
+    ${pkgs.networkmanager}/bin/nm-online -s -q # wait until the internet is online, as esp. if we go offline we need to wait to retry...
     cd /etc/nixos
     ${pkgs.git}/bin/git fetch
     ${pkgs.git}/bin/git checkout origin/release
   '';
+
+  systemd.services.nixos-upgrade.serviceConfig = {
+    Restart = "on-failure";
+    RestartSec = 5;
+    RestartSteps = 5;
+    RestartMaxDelaySec = 86400;
+  };
+    
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
