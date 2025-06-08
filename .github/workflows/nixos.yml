@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+# SPDX-FileCopyrightText: 2022 Markus Dobel
 #
 # SPDX-License-Identifier: MIT
 
@@ -17,6 +18,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clean up runner
+        run: |
+          # Commands taken from https://github.com/easimon/maximize-build-space/blob/master/action.yml
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+      
       - uses: actions/checkout@v4
 
       - name: Install Lix
