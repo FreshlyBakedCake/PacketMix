@@ -71,17 +71,20 @@
       "hash": "sha256-7EICjbmG6lApWKhFtwvZovdcdORY1CEe6/K7JwtpYfs="
     },
     "nilla": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
         "owner": "nilla-nix",
         "repo": "nilla"
       },
-      "branch": "private/skyler/push-vsumrmrmvktt",
+      "pre_releases": true,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "c780262b7d25208a7a4d6d4ea5bd6235412690b0",
-      "url": "https://github.com/nilla-nix/nilla/archive/c780262b7d25208a7a4d6d4ea5bd6235412690b0.tar.gz",
-      "hash": "sha256-OX3v2wv2bk/K3OlOc+3EgktmLSzWfufZ6yj3zGpfDd8="
+      "version": "v0.0.0-alpha.14",
+      "revision": "2e98ae315a592ad6b6de44670514c048dcc88dc7",
+      "url": "https://api.github.com/repos/nilla-nix/nilla/tarball/refs/tags/v0.0.0-alpha.14",
+      "hash": "sha256-15lwhWcMonJH6UholMMHDc+p2BoSpGA4AYGrsXQA9Do="
     },
     "nilla-cli": {
       "type": "Git",
@@ -97,17 +100,20 @@
       "hash": "sha256-wnTA9X2vwDrmKKcqA4fC+y7v6rFFpJXV5no+5cdsdj8="
     },
     "nilla-home": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
         "owner": "nilla-nix",
         "repo": "home"
       },
-      "branch": "private/skyler/push-mutykqtkuuwv",
+      "pre_releases": true,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "2f3d8131e32bb3432e5f6e5f96a14ec5595b30fa",
-      "url": "https://github.com/nilla-nix/home/archive/2f3d8131e32bb3432e5f6e5f96a14ec5595b30fa.tar.gz",
-      "hash": "sha256-+AsmTE9b4gilAKzIL5kQlnc6W6Q26dF/OLDoFZcB4rw="
+      "version": "v0.1.0-alpha",
+      "revision": "1fa4188436530df61344c0f260a046be574ece0b",
+      "url": "https://api.github.com/repos/nilla-nix/home/tarball/refs/tags/v0.1.0-alpha",
+      "hash": "sha256-MISHLQhmC2qyZrTH0E4suoaKTaqoA1I5XDpRflaFjxQ="
     },
     "nilla-nixos": {
       "type": "Git",
