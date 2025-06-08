@@ -1,21 +1,5 @@
 {
   "pins": {
-    "home": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nilla-nix",
-        "repo": "home"
-      },
-      "pre_releases": true,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.0.1-alpha",
-      "revision": "712fa53d332f4915b33a199e801993b5a42de62f",
-      "url": "https://api.github.com/repos/nilla-nix/home/tarball/v0.0.1-alpha",
-      "hash": "sha256-F6Uf8pYWaTnG37IziyXgfD2d56LKsZ6/i9Eu+sMii4M="
-    },
     "home-manager": {
       "type": "Git",
       "repository": {
