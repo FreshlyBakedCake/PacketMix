@@ -167,23 +167,23 @@
       };
 
       outputs = {
-        "eDP-1" = {
+        "eDP-1" = { # frame.work laptop internal monitor
           position = {
             x = 0;
             y = 0;
           };
         };
-        "DP-5" = {
+        "Hewlett Packard LA2405 CN40370NRF" = { # work right monitor
           position = {
-            x = 2256;
-            y = -1956;
+            x = 1504;
+            y = -1200;
           };
           transform.rotation = 90;
         };
-        "DP-7" = {
+        "Hewlett Packard LA2405 CN40500PYR" = { # work left monitor
           position = {
-            x = 336;
-            y = -1080;
+            x = -416;
+            y = -1200;
           };
         };
       };
