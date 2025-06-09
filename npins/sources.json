@@ -128,14 +128,14 @@
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre811203.d3d2d80a2191/nixexprs.tar.xz",
-      "hash": "sha256-+w+VydE8NSQXu8RSNLhn0fVMaEoFPgUbNYa8m1rewuM="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre811950.3e3afe5174c5/nixexprs.tar.xz",
+      "hash": "sha256-qYyUe0adJrvE1imY6TDUgCao1WR2g6vIYzJ8SGcf3l0="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803471.4792576cb003/nixexprs.tar.xz",
-      "hash": "sha256-xpJsyRzAdaQ+wjdGweeRe3qAC03vpP6NjeDvvWRI0zk="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803579.70c74b02eac4/nixexprs.tar.xz",
+      "hash": "sha256-0RxtgAd4gHYPFFwICal8k8hvJBOkCeTjFkh4HsqYDbE="
     },
     "npins": {
       "type": "Git",
