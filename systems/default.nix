@@ -9,6 +9,7 @@ in {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
     modules = [
       ./common
+      ./javelin
       ./niri
       ./personal
       ./redhead
@@ -23,6 +24,7 @@ in {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
     modules = [
       ./common
+      ./javelin
       ./emden
       ./niri
       ./personal
