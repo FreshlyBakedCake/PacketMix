@@ -186,6 +186,26 @@
             y = -1200;
           };
         };
+        "Dell Inc. DELL P2715Q V7WP95AV914L" = { # emden mid-monitor
+          position = {
+            x = 0;
+            y = 0;
+          };
+          scale = 1.5;
+        };
+        "PNP(AOC) 2460G5 0x00014634" = { # emden left monitor
+          position = {
+            x = -1080;
+            y = -120;
+          };
+          transform.rotation = 270;
+        };
+        "PNP(AOC) 2460G5 0x00023C3F" = { # emden right monitor
+          position = {
+            x = 2560;
+            y = 180;
+          };
+        };
       };
 
       layout = {
