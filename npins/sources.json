@@ -36,9 +36,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b70bbbe680ff5f5ab6e35a21a091d0f845278cda",
-      "url": "https://git.lix.systems/lix-project/lix/archive/b70bbbe680ff5f5ab6e35a21a091d0f845278cda.tar.gz",
-      "hash": "sha256-s+dF/43F7a2VwGidUxNVyAjpd7paBpEAJ7cfpwH93k4="
+      "revision": "d8b1bb58622ee7af6cfa260d32d84859b3dc2ea2",
+      "url": "https://git.lix.systems/lix-project/lix/archive/d8b1bb58622ee7af6cfa260d32d84859b3dc2ea2.tar.gz",
+      "hash": "sha256-a1KdOuDF2NJj+tM/2fufIyW5dDX0cHdmXWjli+0GRh4="
     },
     "lix-module": {
       "type": "Git",
@@ -79,9 +79,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "947962d937bbb96d5134a707a2c0fce274f75076",
-      "url": "https://github.com/nilla-nix/cli/archive/947962d937bbb96d5134a707a2c0fce274f75076.tar.gz",
-      "hash": "sha256-wnTA9X2vwDrmKKcqA4fC+y7v6rFFpJXV5no+5cdsdj8="
+      "revision": "6acb9c2170efe1abb4dcdccd049944f9a5c53fad",
+      "url": "https://github.com/nilla-nix/cli/archive/6acb9c2170efe1abb4dcdccd049944f9a5c53fad.tar.gz",
+      "hash": "sha256-ZTPGrIW6lFola0sUQG/j1ViImpBFUWq/0Ra/9jzXyuk="
     },
     "nilla-home": {
       "type": "GitRelease",
@@ -121,9 +121,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "e6db401ff0aa3b03507b4819f9a44deab3cfcf2f",
-      "url": "https://github.com/sodiboo/niri-flake/archive/e6db401ff0aa3b03507b4819f9a44deab3cfcf2f.tar.gz",
-      "hash": "sha256-vwr2vLETE4CSi4c6SFoQyP+uBUnvwPPQmn+1D1207ts="
+      "revision": "9c6c994cad6c5d5079d0affa570beeab22648f03",
+      "url": "https://github.com/sodiboo/niri-flake/archive/9c6c994cad6c5d5079d0affa570beeab22648f03.tar.gz",
+      "hash": "sha256-n4qouY1cHRvXxsYVPgoULEnUfCemuxjl37grfNsImII="
     },
     "nixos-unstable": {
       "type": "Channel",
