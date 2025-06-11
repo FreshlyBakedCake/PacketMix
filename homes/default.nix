@@ -15,6 +15,7 @@ in {
       ./minion/ghostty.nix
       (import ./minion/niri.nix { inherit (config.inputs) niri walker; })
       ./minion/ripgrep.nix
+      ./minion/sd.nix
       ./minion/zoxide.nix
     ];
     args = {
