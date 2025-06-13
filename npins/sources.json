@@ -79,9 +79,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "6acb9c2170efe1abb4dcdccd049944f9a5c53fad",
-      "url": "https://github.com/nilla-nix/cli/archive/6acb9c2170efe1abb4dcdccd049944f9a5c53fad.tar.gz",
-      "hash": "sha256-ZTPGrIW6lFola0sUQG/j1ViImpBFUWq/0Ra/9jzXyuk="
+      "revision": "f07ebceebaf2ab7ebea69e3f8f2a3c6f2bed74df",
+      "url": "https://github.com/nilla-nix/cli/archive/f07ebceebaf2ab7ebea69e3f8f2a3c6f2bed74df.tar.gz",
+      "hash": "sha256-RqoAOYHXJ/dN7dR8oKHSf8oB8XFq1ZEXpkU8rVQgCHQ="
     },
     "nilla-home": {
       "type": "GitRelease",
@@ -121,9 +121,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "8beb9f0a2734533c95c7612bca6d5bd54267f24a",
-      "url": "https://github.com/sodiboo/niri-flake/archive/8beb9f0a2734533c95c7612bca6d5bd54267f24a.tar.gz",
-      "hash": "sha256-TrjbrkeWBPh5VEmalFysZuBeVO/B1hQngIpH9oI1EOQ="
+      "revision": "3308d82c470d2614530536b8a69169ebc61eb1b5",
+      "url": "https://github.com/sodiboo/niri-flake/archive/3308d82c470d2614530536b8a69169ebc61eb1b5.tar.gz",
+      "hash": "sha256-4np99yTzIyosbx8hUvkOaaMoLuQpWIwNmkcYR2F8uXM="
     },
     "nixos-unstable": {
       "type": "Channel",
@@ -134,8 +134,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803751.88331c17ba43/nixexprs.tar.xz",
-      "hash": "sha256-rRKvfM4JGmbEAWL/HwMhh00W0zoYVAoEqajQ9Iao1MU="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.803882.fd4871834379/nixexprs.tar.xz",
+      "hash": "sha256-wRAlD/P6PplFRhPqHrnieshnxSSlRkXiTpzTLWsO3FE="
     },
     "npins": {
       "type": "Git",
