@@ -63,6 +63,14 @@ in
         };
       };
 
+      packages.helix = {
+        systems = [ "x86_64-linux" ];
+
+        package = { helix }: helix.overrideAttrs ({ patches ? [], ... }: {
+          patches = patches ++ [ ./patches/helix/3958-labels-for-config-menus.patch ];
+        });
+      };
+
       # With a package set defined, we can create a shell.
       shells.default = {
         # Declare what systems the shell can be used on.

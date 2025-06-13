@@ -1,0 +1,928 @@
+From c92e341ee42b33c4c6dcb4e8287a12c03434c164 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Fri, 23 Sep 2022 21:37:23 -0400
+Subject: [PATCH 01/15] Add support for labels in custom menu keymaps
+
+---
+ helix-term/src/config.rs | 33 +++++++++++++++++++++++++++++++++
+ helix-term/src/keymap.rs | 17 +++++++++++++----
+ 2 files changed, 46 insertions(+), 4 deletions(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index bcba8d8e1d45..91738f3ef562 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -174,6 +174,39 @@ mod tests {
+         );
+     }
+ 
++    #[test]
++    fn parsing_menus() {
++        use crate::keymap;
++        use crate::keymap::Keymap;
++        use helix_core::hashmap;
++        use helix_view::document::Mode;
++
++        let sample_keymaps = r#"
++            [keys.normal]
++            f = { f = "file_picker", c = "wclose" }
++            b = { label = "buffer", b = "buffer_picker", n = "goto_next_buffer" }
++        "#;
++
++        assert_eq!(
++            toml::from_str::<Config>(sample_keymaps).unwrap(),
++            Config {
++                keys: hashmap! {
++                    Mode::Normal => Keymap::new(keymap!({ "Normal mode"
++                        "f" => { ""
++                            "f" => file_picker,
++                            "c" => wclose,
++                        },
++                        "b" => { "buffer"
++                            "b" => buffer_picker,
++                            "n" => goto_next_buffer,
++                        },
++                    })),
++                },
++                ..Default::default()
++            }
++        );
++    }
++
+     #[test]
+     fn keys_resolve_to_correct_defaults() {
+         // From serde default
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index 020ecaf40f0f..01abd708604e 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -197,13 +197,22 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+     where
+         M: serde::de::MapAccess<'de>,
+     {
++        let mut name = "";
+         let mut mapping = HashMap::new();
+         let mut order = Vec::new();
+-        while let Some((key, value)) = map.next_entry::<KeyEvent, KeyTrie>()? {
+-            mapping.insert(key, value);
+-            order.push(key);
++
++        while let Some(key) = map.next_key::<&str>()? {
++            match key {
++                "label" => name = map.next_value::<&str>()?,
++                _ => {
++                    let key_event = key.parse::<KeyEvent>().map_err(serde::de::Error::custom)?;
++                    let key_trie = map.next_value::<KeyTrie>()?;
++                    mapping.insert(key_event, key_trie);
++                    order.push(key_event);
++                }
++            }
+         }
+-        Ok(KeyTrie::Node(KeyTrieNode::new("", mapping, order)))
++        Ok(KeyTrie::Node(KeyTrieNode::new(name, mapping, order)))
+     }
+ }
+ 
+
+From be13c26c803ce887fec065ecf817306e89022f1e Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Fri, 23 Sep 2022 23:03:56 -0400
+Subject: [PATCH 02/15] Add support for labels on typable commands
+
+---
+ helix-term/src/config.rs | 38 ++++++++++++++++++++++++++++++++++++++
+ helix-term/src/keymap.rs | 28 +++++++++++++++++++++++++---
+ 2 files changed, 63 insertions(+), 3 deletions(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index 91738f3ef562..92b4fb8565ce 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -207,6 +207,44 @@ mod tests {
+         );
+     }
+ 
++    #[test]
++    fn parsing_typable_commands() {
++        use crate::keymap;
++        use crate::keymap::MappableCommand;
++        use helix_view::document::Mode;
++        use helix_view::input::KeyEvent;
++        use std::str::FromStr;
++
++        let sample_keymaps = r#"
++            [keys.normal]
++            o = { label = "Edit Config", command = ":open ~/.config" }
++            c = ":buffer-close" 
++        "#;
++
++        let config = toml::from_str::<Config>(sample_keymaps).unwrap();
++
++        let tree = config.keys.get(&Mode::Normal).unwrap().root();
++
++        if let keymap::KeyTrie::Node(node) = tree {
++            let open_node = node.get(&KeyEvent::from_str("o").unwrap()).unwrap();
++
++            if let keymap::KeyTrie::Leaf(MappableCommand::Typable { doc, .. }) = open_node {
++                assert_eq!(doc, "Edit Config");
++            } else {
++                panic!("Edit Config did not parse to typable command");
++            }
++
++            let close_node = node.get(&KeyEvent::from_str("c").unwrap()).unwrap();
++            if let keymap::KeyTrie::Leaf(MappableCommand::Typable { doc, .. }) = close_node {
++                assert_eq!(doc, ":buffer-close []");
++            } else {
++                panic!(":buffer-close command did not parse to typable command");
++            }
++        } else {
++            panic!("Config did not parse to trie");
++        }
++    }
++
+     #[test]
+     fn keys_resolve_to_correct_defaults() {
+         // From serde default
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index 01abd708604e..f157e2fee0dc 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -197,13 +197,15 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+     where
+         M: serde::de::MapAccess<'de>,
+     {
+-        let mut name = "";
++        let mut label = "";
++        let mut command = None;
+         let mut mapping = HashMap::new();
+         let mut order = Vec::new();
+ 
+         while let Some(key) = map.next_key::<&str>()? {
+             match key {
+-                "label" => name = map.next_value::<&str>()?,
++                "label" => label = map.next_value::<&str>()?,
++                "command" => command = Some(map.next_value::<MappableCommand>()?),
+                 _ => {
+                     let key_event = key.parse::<KeyEvent>().map_err(serde::de::Error::custom)?;
+                     let key_trie = map.next_value::<KeyTrie>()?;
+@@ -212,7 +214,27 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+                 }
+             }
+         }
+-        Ok(KeyTrie::Node(KeyTrieNode::new(name, mapping, order)))
++
++        match command {
++            None => Ok(KeyTrie::Node(KeyTrieNode::new(label, mapping, order))),
++            Some(cmd) => {
++                if label.is_empty() {
++                    Ok(KeyTrie::Leaf(cmd))
++                } else {
++                    match cmd {
++                        MappableCommand::Typable { name, args, .. } => {
++                            Ok(MappableCommand::Typable {
++                                name,
++                                args,
++                                doc: label.to_string(),
++                            })
++                            .map(KeyTrie::Leaf)
++                        }
++                        MappableCommand::Static { .. } => Ok(KeyTrie::Leaf(cmd)),
++                    }
++                }
++            }
++        }
+     }
+ }
+ 
+
+From 73d8700f601fd0e8bedd19daf1bb094e1e5c0d0b Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Sat, 24 Sep 2022 21:31:15 -0400
+Subject: [PATCH 03/15] refactor keymap map visitor to reduce # of cases
+
+---
+ helix-term/src/keymap.rs | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index f157e2fee0dc..98521eb3de08 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -218,20 +218,16 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+         match command {
+             None => Ok(KeyTrie::Node(KeyTrieNode::new(label, mapping, order))),
+             Some(cmd) => {
+-                if label.is_empty() {
+-                    Ok(KeyTrie::Leaf(cmd))
++                let status = (cmd, label.is_empty());
++                if let (MappableCommand::Typable { name, args, .. }, false) = status {
++                    Ok(MappableCommand::Typable {
++                        name,
++                        args,
++                        doc: label.to_string(),
++                    })
++                    .map(KeyTrie::Leaf)
+                 } else {
+-                    match cmd {
+-                        MappableCommand::Typable { name, args, .. } => {
+-                            Ok(MappableCommand::Typable {
+-                                name,
+-                                args,
+-                                doc: label.to_string(),
+-                            })
+-                            .map(KeyTrie::Leaf)
+-                        }
+-                        MappableCommand::Static { .. } => Ok(KeyTrie::Leaf(cmd)),
+-                    }
++                    Ok(KeyTrie::Leaf(status.0))
+                 }
+             }
+         }
+
+From a1c746cdb98a3d492bd81c2d80def81d45463091 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Tue, 4 Oct 2022 19:18:22 -0400
+Subject: [PATCH 04/15] Simplify labelled command pattern match
+
+Co-authored-by: Michael Davis <mcarsondavis@gmail.com>
+---
+ helix-term/src/keymap.rs | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index 98521eb3de08..cdad51a32567 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -217,19 +217,14 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+ 
+         match command {
+             None => Ok(KeyTrie::Node(KeyTrieNode::new(label, mapping, order))),
+-            Some(cmd) => {
+-                let status = (cmd, label.is_empty());
+-                if let (MappableCommand::Typable { name, args, .. }, false) = status {
+-                    Ok(MappableCommand::Typable {
+-                        name,
+-                        args,
+-                        doc: label.to_string(),
+-                    })
+-                    .map(KeyTrie::Leaf)
+-                } else {
+-                    Ok(KeyTrie::Leaf(status.0))
+-                }
++            Some(MappableCommand::Typable { name, args, .. }) if !label.is_empty() => {
++                Ok(KeyTrie::Leaf(MappableCommand::Typable {
++                    name,
++                    args,
++                    doc: label.to_string(),
++                }))
+             }
++            Some(command) => Ok(KeyTrie::Leaf(command)),
+         }
+     }
+ }
+
+From 789af1ec9fb522a4f3ef70f19f001729a6a0dd25 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Mon, 17 Oct 2022 20:15:27 -0400
+Subject: [PATCH 05/15] Add some basic docs
+
+---
+ book/src/remapping.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/book/src/remapping.md b/book/src/remapping.md
+index e3efdf16f851..a0c8acada596 100644
+--- a/book/src/remapping.md
++++ b/book/src/remapping.md
+@@ -19,6 +19,13 @@ w = "move_line_up" # Maps the 'w' key move_line_up
+ g = { a = "code_action" } # Maps `ga` to show possible code actions
+ "ret" = ["open_below", "normal_mode"] # Maps the enter key to open_below then re-enter normal mode
+ 
++# You can create labeled sub-menus and provide friendly labels for typeable commands
++[keys.normal.space.f] # Registering multiple mappings under a single entry creates a sub-menu (accesed by 'space', 'f' in this case)
++label = "File" # The menu is called file and within  it:
++f = "file_picker" # 'f' opens the file picker
++s = { label = "Save", command = ":write" } # 's' saves the current file
++c = { label = "Edit Config", command = ":open ~/.config/helix/config.toml" } # 'c' opens the helix config file
++
+ [keys.insert]
+ "A-x" = "normal_mode"     # Maps Alt-X to enter normal mode
+ j = { k = "normal_mode" } # Maps `jk` to exit insert mode
+
+From c1b77b541803a41a2aa0a96a000993eb68b03ef7 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Tue, 15 Nov 2022 18:42:36 -0500
+Subject: [PATCH 06/15] fix typos in menu label docs
+
+---
+ book/src/remapping.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/book/src/remapping.md b/book/src/remapping.md
+index a0c8acada596..4fb92109e448 100644
+--- a/book/src/remapping.md
++++ b/book/src/remapping.md
+@@ -20,8 +20,8 @@ g = { a = "code_action" } # Maps `ga` to show possible code actions
+ "ret" = ["open_below", "normal_mode"] # Maps the enter key to open_below then re-enter normal mode
+ 
+ # You can create labeled sub-menus and provide friendly labels for typeable commands
+-[keys.normal.space.f] # Registering multiple mappings under a single entry creates a sub-menu (accesed by 'space', 'f' in this case)
+-label = "File" # The menu is called file and within  it:
++[keys.normal.space.f] # Registering multiple mappings under a single entry creates a sub-menu (accessed by 'space', 'f' in this case)
++label = "File" # The menu is called file and within it:
+ f = "file_picker" # 'f' opens the file picker
+ s = { label = "Save", command = ":write" } # 's' saves the current file
+ c = { label = "Edit Config", command = ":open ~/.config/helix/config.toml" } # 'c' opens the helix config file
+
+From fa8c2372b359674dc1874561351701b95b1b8d02 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Tue, 15 Nov 2022 21:20:39 -0500
+Subject: [PATCH 07/15] return errors for ambiguous and unsupported labels in
+ menus
+
+---
+ helix-term/src/keymap.rs | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index cdad51a32567..d4eb41176de6 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -217,6 +217,12 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+ 
+         match command {
+             None => Ok(KeyTrie::Node(KeyTrieNode::new(label, mapping, order))),
++            Some(_command) if !order.is_empty() => {
++                Err(serde::de::Error::custom("ambiguous mapping: 'command' is only valid with 'label', but I found other keys"))
++            }
++            Some(MappableCommand::Static { .. }) if !label.is_empty() => {
++                Err(serde::de::Error::custom("custom labels are only available for typable commands (the ones starting with ':')"))
++            }
+             Some(MappableCommand::Typable { name, args, .. }) if !label.is_empty() => {
+                 Ok(KeyTrie::Leaf(MappableCommand::Typable {
+                     name,
+
+From fb649610ebd6097789a64a5013d2cb1ef6f04de6 Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Sat, 10 Jun 2023 19:31:36 -0400
+Subject: [PATCH 08/15] Fix runtime config parse issues after rebase on latest
+ master
+
+---
+ helix-term/src/config.rs | 34 ++++++++++++++++++++--------------
+ helix-term/src/keymap.rs | 10 +++++-----
+ 2 files changed, 25 insertions(+), 19 deletions(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index 92b4fb8565ce..0363311c4d5a 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -187,21 +187,27 @@ mod tests {
+             b = { label = "buffer", b = "buffer_picker", n = "goto_next_buffer" }
+         "#;
+ 
++        let mut keys = keymap::default();
++        merge_keys(
++            &mut keys,
++            hashmap! {
++                Mode::Normal => Keymap::new(keymap!({ "Normal mode"
++                    "f" => { ""
++                        "f" => file_picker,
++                        "c" => wclose,
++                    },
++                    "b" => { "buffer"
++                        "b" => buffer_picker,
++                        "n" => goto_next_buffer,
++                    },
++                })),
++            },
++        );
++
+         assert_eq!(
+-            toml::from_str::<Config>(sample_keymaps).unwrap(),
++            Config::load_test(sample_keymaps),
+             Config {
+-                keys: hashmap! {
+-                    Mode::Normal => Keymap::new(keymap!({ "Normal mode"
+-                        "f" => { ""
+-                            "f" => file_picker,
+-                            "c" => wclose,
+-                        },
+-                        "b" => { "buffer"
+-                            "b" => buffer_picker,
+-                            "n" => goto_next_buffer,
+-                        },
+-                    })),
+-                },
++                keys,
+                 ..Default::default()
+             }
+         );
+@@ -221,7 +227,7 @@ mod tests {
+             c = ":buffer-close" 
+         "#;
+ 
+-        let config = toml::from_str::<Config>(sample_keymaps).unwrap();
++        let config = Config::load_test(sample_keymaps);
+ 
+         let tree = config.keys.get(&Mode::Normal).unwrap().root();
+ 
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index d4eb41176de6..8b4247f03211 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -197,14 +197,14 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+     where
+         M: serde::de::MapAccess<'de>,
+     {
+-        let mut label = "";
++        let mut label = String::from("");
+         let mut command = None;
+         let mut mapping = HashMap::new();
+         let mut order = Vec::new();
+ 
+-        while let Some(key) = map.next_key::<&str>()? {
+-            match key {
+-                "label" => label = map.next_value::<&str>()?,
++        while let Some(key) = map.next_key::<String>()? {
++            match &key as &str {
++                "label" => label = map.next_value::<String>()?,
+                 "command" => command = Some(map.next_value::<MappableCommand>()?),
+                 _ => {
+                     let key_event = key.parse::<KeyEvent>().map_err(serde::de::Error::custom)?;
+@@ -216,7 +216,7 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+         }
+ 
+         match command {
+-            None => Ok(KeyTrie::Node(KeyTrieNode::new(label, mapping, order))),
++            None => Ok(KeyTrie::Node(KeyTrieNode::new(label.as_str(), mapping, order))),
+             Some(_command) if !order.is_empty() => {
+                 Err(serde::de::Error::custom("ambiguous mapping: 'command' is only valid with 'label', but I found other keys"))
+             }
+
+From e652d01e0c4b5d1a0f2d784711d2631a914994cb Mon Sep 17 00:00:00 2001
+From: Matthew Cheely <matt_cheely@fastmail.com>
+Date: Sun, 22 Oct 2023 13:16:40 +1300
+Subject: [PATCH 09/15] Fix build after latest rebase
+
+---
+ helix-term/src/keymap.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index 8b4247f03211..f4c1b9e7e8dd 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -224,13 +224,13 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+                 Err(serde::de::Error::custom("custom labels are only available for typable commands (the ones starting with ':')"))
+             }
+             Some(MappableCommand::Typable { name, args, .. }) if !label.is_empty() => {
+-                Ok(KeyTrie::Leaf(MappableCommand::Typable {
++                Ok(KeyTrie::MappableCommand(MappableCommand::Typable {
+                     name,
+                     args,
+                     doc: label.to_string(),
+                 }))
+             }
+-            Some(command) => Ok(KeyTrie::Leaf(command)),
++            Some(command) => Ok(KeyTrie::MappableCommand(command)),
+         }
+     }
+ }
+
+From 029f7b441464aa3335c48a53d90ca73aee20e458 Mon Sep 17 00:00:00 2001
+From: Vulpesx <potaytochipgamer@gmail.com>
+Date: Thu, 6 Jun 2024 11:58:19 +1000
+Subject: [PATCH 10/15] fix: tests after merging master
+
+---
+ helix-term/src/config.rs | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index 0363311c4d5a..1cec5c139741 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -177,7 +177,6 @@ mod tests {
+     #[test]
+     fn parsing_menus() {
+         use crate::keymap;
+-        use crate::keymap::Keymap;
+         use helix_core::hashmap;
+         use helix_view::document::Mode;
+ 
+@@ -191,7 +190,7 @@ mod tests {
+         merge_keys(
+             &mut keys,
+             hashmap! {
+-                Mode::Normal => Keymap::new(keymap!({ "Normal mode"
++                Mode::Normal => keymap!({ "Normal mode"
+                     "f" => { ""
+                         "f" => file_picker,
+                         "c" => wclose,
+@@ -200,7 +199,7 @@ mod tests {
+                         "b" => buffer_picker,
+                         "n" => goto_next_buffer,
+                     },
+-                })),
++                }),
+             },
+         );
+ 
+@@ -229,19 +228,23 @@ mod tests {
+ 
+         let config = Config::load_test(sample_keymaps);
+ 
+-        let tree = config.keys.get(&Mode::Normal).unwrap().root();
++        let tree = config.keys.get(&Mode::Normal).unwrap();
+ 
+         if let keymap::KeyTrie::Node(node) = tree {
+             let open_node = node.get(&KeyEvent::from_str("o").unwrap()).unwrap();
+ 
+-            if let keymap::KeyTrie::Leaf(MappableCommand::Typable { doc, .. }) = open_node {
++            if let keymap::KeyTrie::MappableCommand(MappableCommand::Typable { doc, .. }) =
++                open_node
++            {
+                 assert_eq!(doc, "Edit Config");
+             } else {
+                 panic!("Edit Config did not parse to typable command");
+             }
+ 
+             let close_node = node.get(&KeyEvent::from_str("c").unwrap()).unwrap();
+-            if let keymap::KeyTrie::Leaf(MappableCommand::Typable { doc, .. }) = close_node {
++            if let keymap::KeyTrie::MappableCommand(MappableCommand::Typable { doc, .. }) =
++                close_node
++            {
+                 assert_eq!(doc, ":buffer-close []");
+             } else {
+                 panic!(":buffer-close command did not parse to typable command");
+
+From 6764c3374c5716a8952b8759317dfb9403f2edf9 Mon Sep 17 00:00:00 2001
+From: Vulpesx <potaytochipgamer@gmail.com>
+Date: Thu, 6 Jun 2024 15:17:35 +1000
+Subject: [PATCH 11/15] feat: labels for sequences
+
+---
+ helix-term/src/config.rs | 28 ++++++++++++
+ helix-term/src/keymap.rs | 93 +++++++++++++++++++++++++++++++---------
+ 2 files changed, 100 insertions(+), 21 deletions(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index 1cec5c139741..f9d6966d6ef9 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -224,6 +224,8 @@ mod tests {
+             [keys.normal]
+             o = { label = "Edit Config", command = ":open ~/.config" }
+             c = ":buffer-close" 
++            h = ["vsplit", "normal_mode", "swap_view_left"]
++            j = {command = ["hsplit", "normal_mode", {}], label = "split down"}
+         "#;
+ 
+         let config = Config::load_test(sample_keymaps);
+@@ -249,6 +251,32 @@ mod tests {
+             } else {
+                 panic!(":buffer-close command did not parse to typable command");
+             }
++
++            let split_left = node.get(&KeyEvent::from_str("h").unwrap()).unwrap();
++            if let keymap::KeyTrie::Sequence(label, cmds) = split_left {
++                assert_eq!(label, KeyTrie::DEFAULT_SEQUENCE_LABEL);
++                assert_eq!(
++                    *cmds,
++                    vec![
++                        MappableCommand::vsplit,
++                        MappableCommand::normal_mode,
++                        MappableCommand::swap_view_left
++                    ]
++                );
++            }
++
++            let split_down = node.get(&KeyEvent::from_str("j").unwrap()).unwrap();
++            if let keymap::KeyTrie::Sequence(label, cmds) = split_down {
++                assert_eq!(label, "split down");
++                assert_eq!(
++                    *cmds,
++                    vec![
++                        MappableCommand::hsplit,
++                        MappableCommand::normal_mode,
++                        MappableCommand::swap_view_down
++                    ]
++                );
++            }
+         } else {
+             panic!("Config did not parse to trie");
+         }
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index f4c1b9e7e8dd..77a8bc58695b 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -12,6 +12,7 @@ use std::{
+     borrow::Cow,
+     collections::{BTreeSet, HashMap},
+     ops::{Deref, DerefMut},
++    str::FromStr,
+     sync::Arc,
+ };
+ 
+@@ -83,7 +84,7 @@ impl KeyTrieNode {
+                     cmd.doc()
+                 }
+                 KeyTrie::Node(n) => &n.name,
+-                KeyTrie::Sequence(_) => "[Multiple commands]",
++                KeyTrie::Sequence(..) => KeyTrie::DEFAULT_SEQUENCE_LABEL,
+             };
+             match body.iter().position(|(_, d)| d == &desc) {
+                 Some(pos) => {
+@@ -133,10 +134,18 @@ impl DerefMut for KeyTrieNode {
+ #[derive(Debug, Clone, PartialEq)]
+ pub enum KeyTrie {
+     MappableCommand(MappableCommand),
+-    Sequence(Vec<MappableCommand>),
++    Sequence(String, Vec<MappableCommand>),
+     Node(KeyTrieNode),
+ }
+ 
++impl KeyTrie {
++    pub const DEFAULT_SEQUENCE_LABEL: &'static str = "[Multiple commands]";
++
++    pub fn sequence(commands: Vec<MappableCommand>) -> Self {
++        Self::Sequence(Self::DEFAULT_SEQUENCE_LABEL.to_string(), commands)
++    }
++}
++
+ impl<'de> Deserialize<'de> for KeyTrie {
+     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+     where
+@@ -190,7 +199,10 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+             ));
+         }
+ 
+-        Ok(KeyTrie::Sequence(commands))
++        Ok(KeyTrie::Sequence(
++            KeyTrie::DEFAULT_SEQUENCE_LABEL.to_string(),
++            commands,
++        ))
+     }
+ 
+     fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+@@ -205,7 +217,35 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+         while let Some(key) = map.next_key::<String>()? {
+             match &key as &str {
+                 "label" => label = map.next_value::<String>()?,
+-                "command" => command = Some(map.next_value::<MappableCommand>()?),
++                "command" => {
++                    command = Some(match map.next_value::<toml::Value>()? {
++                        toml::Value::String(s) => {
++                            vec![MappableCommand::from_str(&s).map_err(serde::de::Error::custom)?]
++                        }
++                        toml::Value::Array(arr) => {
++                            let mut vec = Vec::with_capacity(arr.len());
++                            for value in arr {
++                                let toml::Value::String(s) = value else {
++                                    return Err(serde::de::Error::invalid_type(
++                                        serde::de::Unexpected::Other(value.type_str()),
++                                        &"string",
++                                    ));
++                                };
++                                vec.push(
++                                    MappableCommand::from_str(&s)
++                                        .map_err(serde::de::Error::custom)?,
++                                );
++                            }
++                            vec
++                        }
++                        value => {
++                            return Err(serde::de::Error::invalid_type(
++                                serde::de::Unexpected::Other(value.type_str()),
++                                &"string or array",
++                            ))
++                        }
++                    });
++                }
+                 _ => {
+                     let key_event = key.parse::<KeyEvent>().map_err(serde::de::Error::custom)?;
+                     let key_trie = map.next_value::<KeyTrie>()?;
+@@ -220,17 +260,28 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+             Some(_command) if !order.is_empty() => {
+                 Err(serde::de::Error::custom("ambiguous mapping: 'command' is only valid with 'label', but I found other keys"))
+             }
+-            Some(MappableCommand::Static { .. }) if !label.is_empty() => {
+-                Err(serde::de::Error::custom("custom labels are only available for typable commands (the ones starting with ':')"))
+-            }
+-            Some(MappableCommand::Typable { name, args, .. }) if !label.is_empty() => {
+-                Ok(KeyTrie::MappableCommand(MappableCommand::Typable {
+-                    name,
+-                    args,
+-                    doc: label.to_string(),
+-                }))
++            Some(mut commands) if commands.len() == 1 => match commands.pop() {
++                None => Err(serde::de::Error::custom("UNREACHABLE!, vec is empty after checking len == 1")),
++                Some(MappableCommand::Static { .. }) if !label.is_empty() => {
++                    Err(serde::de::Error::custom("custom labels are only available for typable commands (the ones starting with ':')"))
++                }
++                Some(MappableCommand::Typable { name, args, .. }) if !label.is_empty() => {
++                    Ok(KeyTrie::MappableCommand(MappableCommand::Typable {
++                        name,
++                        args,
++                        doc: label,
++                    }))
++                }
++                Some(command) => Ok(KeyTrie::MappableCommand(command)),
+             }
+-            Some(command) => Ok(KeyTrie::MappableCommand(command)),
++            Some(commands) => {
++                let label = if label.is_empty() {
++                    KeyTrie::DEFAULT_SEQUENCE_LABEL.to_string()
++                } else {
++                    label
++                };
++                Ok(KeyTrie::Sequence(label, commands))
++            },
+         }
+     }
+ }
+@@ -254,7 +305,7 @@ impl KeyTrie {
+                         keys.pop();
+                     }
+                 }
+-                KeyTrie::Sequence(_) => {}
++                KeyTrie::Sequence(..) => {}
+             };
+         }
+ 
+@@ -266,14 +317,14 @@ impl KeyTrie {
+     pub fn node(&self) -> Option<&KeyTrieNode> {
+         match *self {
+             KeyTrie::Node(ref node) => Some(node),
+-            KeyTrie::MappableCommand(_) | KeyTrie::Sequence(_) => None,
++            KeyTrie::MappableCommand(_) | KeyTrie::Sequence(..) => None,
+         }
+     }
+ 
+     pub fn node_mut(&mut self) -> Option<&mut KeyTrieNode> {
+         match *self {
+             KeyTrie::Node(ref mut node) => Some(node),
+-            KeyTrie::MappableCommand(_) | KeyTrie::Sequence(_) => None,
++            KeyTrie::MappableCommand(_) | KeyTrie::Sequence(..) => None,
+         }
+     }
+ 
+@@ -290,7 +341,7 @@ impl KeyTrie {
+             trie = match trie {
+                 KeyTrie::Node(map) => map.get(key),
+                 // leaf encountered while keys left to process
+-                KeyTrie::MappableCommand(_) | KeyTrie::Sequence(_) => None,
++                KeyTrie::MappableCommand(_) | KeyTrie::Sequence(..) => None,
+             }?
+         }
+         Some(trie)
+@@ -380,7 +431,7 @@ impl Keymaps {
+             Some(KeyTrie::MappableCommand(ref cmd)) => {
+                 return KeymapResult::Matched(cmd.clone());
+             }
+-            Some(KeyTrie::Sequence(ref cmds)) => {
++            Some(KeyTrie::Sequence(_, ref cmds)) => {
+                 return KeymapResult::MatchedSequence(cmds.clone());
+             }
+             None => return KeymapResult::NotFound,
+@@ -400,7 +451,7 @@ impl Keymaps {
+                 self.state.clear();
+                 KeymapResult::Matched(cmd.clone())
+             }
+-            Some(KeyTrie::Sequence(cmds)) => {
++            Some(KeyTrie::Sequence(_, cmds)) => {
+                 self.state.clear();
+                 KeymapResult::MatchedSequence(cmds.clone())
+             }
+@@ -625,7 +676,7 @@ mod tests {
+         let expectation = KeyTrie::Node(KeyTrieNode::new(
+             "",
+             hashmap! {
+-                key => KeyTrie::Sequence(vec!{
++                key => KeyTrie::sequence(vec!{
+                     MappableCommand::select_all,
+                     MappableCommand::Typable {
+                         name: "pipe".to_string(),
+
+From bb8a44cec0cfcff0cd4eba3b3c4157b65bddcc86 Mon Sep 17 00:00:00 2001
+From: Vulpesx <potaytochipgamer@gmail.com>
+Date: Thu, 6 Jun 2024 15:48:56 +1000
+Subject: [PATCH 12/15] fix: forgor to tell helix to display sequence labels
+
+---
+ helix-term/src/keymap.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index 77a8bc58695b..f47160e73b2f 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -84,7 +84,7 @@ impl KeyTrieNode {
+                     cmd.doc()
+                 }
+                 KeyTrie::Node(n) => &n.name,
+-                KeyTrie::Sequence(..) => KeyTrie::DEFAULT_SEQUENCE_LABEL,
++                KeyTrie::Sequence(l, ..) => l,
+             };
+             match body.iter().position(|(_, d)| d == &desc) {
+                 Some(pos) => {
+
+From e625945398dbbae475f13a2375a0a6b427a4ff16 Mon Sep 17 00:00:00 2001
+From: Nylme <nylme@protonmail.com>
+Date: Tue, 19 Nov 2024 08:09:21 +1100
+Subject: [PATCH 13/15] Fixed deserializing macro labels/names from .toml
+ keymap
+
+---
+ helix-term/src/keymap.rs | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/helix-term/src/keymap.rs b/helix-term/src/keymap.rs
+index f47160e73b2f..a01a05f866bb 100644
+--- a/helix-term/src/keymap.rs
++++ b/helix-term/src/keymap.rs
+@@ -272,6 +272,15 @@ impl<'de> serde::de::Visitor<'de> for KeyTrieVisitor {
+                         doc: label,
+                     }))
+                 }
++
++                // To label/name macro commands from config
++                Some(MappableCommand::Macro { keys, .. }) if !label.is_empty() => {
++                    Ok(KeyTrie::MappableCommand(MappableCommand::Macro {
++                        keys,
++                        name: label
++                    }))
++                }
++
+                 Some(command) => Ok(KeyTrie::MappableCommand(command)),
+             }
+             Some(commands) => {
+
+From af83072ebf66a04f8033cbbfcb7ca0a454c8c6f2 Mon Sep 17 00:00:00 2001
+From: Nylme <nylme@protonmail.com>
+Date: Tue, 19 Nov 2024 22:29:26 +1100
+Subject: [PATCH 14/15] parsing_typeable_commands: fixed test
+
+---
+ helix-term/src/config.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index f9d6966d6ef9..abc6784486cb 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -225,7 +225,7 @@ mod tests {
+             o = { label = "Edit Config", command = ":open ~/.config" }
+             c = ":buffer-close" 
+             h = ["vsplit", "normal_mode", "swap_view_left"]
+-            j = {command = ["hsplit", "normal_mode", {}], label = "split down"}
++            j = {command = ["hsplit", "normal_mode", "swap_view_down"], label = "split down"}
+         "#;
+ 
+         let config = Config::load_test(sample_keymaps);
+
+From 8e7e1283a572379bef40e5b8deb3ecef4e7962ac Mon Sep 17 00:00:00 2001
+From: Nylme <nylme@protonmail.com>
+Date: Tue, 19 Nov 2024 22:32:20 +1100
+Subject: [PATCH 15/15] parsing_typeable_commands: added test for macro command
+ labels
+
+---
+ helix-term/src/config.rs | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/helix-term/src/config.rs b/helix-term/src/config.rs
+index abc6784486cb..4c2340e91226 100644
+--- a/helix-term/src/config.rs
++++ b/helix-term/src/config.rs
+@@ -226,6 +226,7 @@ mod tests {
+             c = ":buffer-close" 
+             h = ["vsplit", "normal_mode", "swap_view_left"]
+             j = {command = ["hsplit", "normal_mode", "swap_view_down"], label = "split down"}
++            n = { label = "Delete word", command = "@wd" }
+         "#;
+ 
+         let config = Config::load_test(sample_keymaps);
+@@ -277,6 +278,20 @@ mod tests {
+                     ]
+                 );
+             }
++
++            let macro_keys = node.get(&KeyEvent::from_str("n").unwrap()).unwrap();
++            if let keymap::KeyTrie::MappableCommand(MappableCommand::Macro { name, keys }) =
++                macro_keys
++            {
++                assert_eq!(name, "Delete word");
++                assert_eq!(
++                    keys,
++                    &vec![
++                        KeyEvent::from_str("w").unwrap(),
++                        KeyEvent::from_str("d").unwrap()
++                    ]
++                );
++            }
+         } else {
+             panic!("Config did not parse to trie");
+         }
+
