@@ -13,6 +13,7 @@ in {
       }
       ./minion/direnv.nix
       ./minion/ghostty.nix
+      ./minion/helix.nix
       (import ./minion/niri.nix { inherit (config.inputs) niri walker; })
       ./minion/ripgrep.nix
       ./minion/sd.nix
