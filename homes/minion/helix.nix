@@ -29,6 +29,7 @@
           other-lines = "error";
         };
 
+        auto-save.focus-lost = true;
         whitespace.render = {
           space = "none";
           tab = "all";
