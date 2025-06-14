@@ -15,7 +15,7 @@
     package = project.packages.helix.result.${system};
 
     settings = {
-      theme = "catppuccin_latte";
+      theme = "catppuccin_latte_packetmix";
 
       editor = {
         bufferline = "multiple";
@@ -28,6 +28,19 @@
           cursor-line = "warning";
           other-lines = "error";
         };
+
+        whitespace.render = {
+          space = "none";
+          tab = "all";
+          nbsp = "all";
+          nnbsp = "all";
+          newline = "none";
+        };
+        whitespace.characters = {
+          tabpad = "-";
+          tab = "-";
+        };
+        indent-guides.render = true;
       };
 
       keys.normal = {
@@ -39,6 +52,13 @@
           command = ":reflow";
           label = "Hard-wrap (rEflow) selected text";
         };
+      };
+    };
+
+    themes = {
+      catppuccin_latte_packetmix = {
+        inherits = "catppuccin_latte";
+        "ui.virtual.whitespace" = "surface0"; # The default catppuccin_latte theme displays rendered whitespace way too harshly...
       };
     };
 
