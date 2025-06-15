@@ -2,10 +2,17 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ niri, walker }: { project, config, pkgs, lib, ... }: {
+{ niri, walker }: { project, options, config, pkgs, lib, ... }: {
   imports = [ niri.result.homeModules.niri walker.result.homeManagerModules.walker ];
 
-  programs.niri = {
+  options.niri = {
+    wallpaper = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to the desktop wallpaper you'd like to use";
+    };
+  };
+
+  config.programs.niri = {
     enable = true;
 
     package = project.inputs.niri.result.packages.${pkgs.system}.niri-unstable;
@@ -20,13 +27,8 @@
         track-layout = "window";
         repeat-delay = 200;
         repeat-rate = 25;
-        xkb = {
-          layout = "us";
-          variant = "dvorak";
-        };
       };
 
-      input.mouse.natural-scroll = true;
       input.touchpad.natural-scroll = true;
 
       input.warp-mouse-to-focus = true;
@@ -43,7 +45,7 @@
         mod = "Super";
         mod1 = "Alt";
 
-        lock = ''${pkgs.swaylock}/bin/swaylock -i ${./wallpaper.png} -s fill'';
+        lock = ''${pkgs.swaylock}/bin/swaylock -i ${config.niri.wallpaper} -s fill'';
 
         generateWorkspaceBindings = workspaceNumber: {
           "${mod}+${builtins.toString (lib.mod workspaceNumber 10)}".action.focus-workspace = [workspaceNumber];
@@ -166,48 +168,6 @@
         };
       };
 
-      outputs = {
-        "eDP-1" = { # frame.work laptop internal monitor
-          position = {
-            x = 0;
-            y = 0;
-          };
-        };
-        "Hewlett Packard LA2405 CN40370NRF" = { # work right monitor
-          position = {
-            x = 1504;
-            y = -1200;
-          };
-          transform.rotation = 90;
-        };
-        "Hewlett Packard LA2405 CN40500PYR" = { # work left monitor
-          position = {
-            x = -416;
-            y = -1200;
-          };
-        };
-        "Dell Inc. DELL P2715Q V7WP95AV914L" = { # emden mid-monitor
-          position = {
-            x = 0;
-            y = 0;
-          };
-          scale = 1.5;
-        };
-        "PNP(AOC) 2460G5 0x00014634" = { # emden left monitor
-          position = {
-            x = -1080;
-            y = -120;
-          };
-          transform.rotation = 270;
-        };
-        "PNP(AOC) 2460G5 0x00023C3F" = { # emden right monitor
-          position = {
-            x = 2560;
-            y = 180;
-          };
-        };
-      };
-
       layout = {
         gaps = 16;
 
@@ -231,7 +191,7 @@
           command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
         }
         {
-          command = [ "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpaper.png}" "-m" "fill" ];
+          command = [ "${pkgs.swaybg}/bin/swaybg" "-i" "${config.niri.wallpaper}" "-m" "fill" ];
         }
       ];
     };

@@ -1,3 +1,7 @@
+# depends on niri flavor
+# depends on catppuccin flavor
+# depends on development flavor
+
 {
   imports = [
     ./atuin.nix
