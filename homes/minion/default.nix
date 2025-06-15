@@ -3,9 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 # depends on niri flavor
+# depends on catppuccin flavor
 {
     imports = [
-        ./ghostty.nix
+        ./catppuccin.nix
         ./helix.nix
         ./niri.nix
     ];

@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{
+{ lib, ... }: {
   programs.helix = {
     settings = {
-      theme = "catppuccin_latte_packetmix";
+      theme = lib.mkForce "catppuccin_latte_packetmix";
     };
 
     themes = {

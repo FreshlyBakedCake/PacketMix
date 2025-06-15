@@ -1,9 +1,9 @@
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
-
 {
-  programs.ghostty = {
-    settings.theme = "catppuccin-latte";
+  catppuccin = {
+    flavor = "latte";
+    accent = "maroon";
   };
 }

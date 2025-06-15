@@ -11,6 +11,7 @@ in {
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
+      (import ./catppuccin { inherit (config.inputs) catppuccin; })
       ./common
       ./development
       ./minion
