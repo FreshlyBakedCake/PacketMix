@@ -3,5 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty.enable = true;
+  imports = [
+    ./hostname.nix
+  ];
 }

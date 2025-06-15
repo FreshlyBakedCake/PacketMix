@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{
-  programs.ghostty.enable = true;
+{ pkgs, ... }: {
+  home.packages = [ pkgs.itch ];
 }

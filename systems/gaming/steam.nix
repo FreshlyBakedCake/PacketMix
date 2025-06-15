@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{
-  programs.bash = {
+{ lib, ... }: {
+  programs.steam = {
     enable = true;
-    enableCompletion = true;
+    remotePlay.openFirewall = true;
   };
 }

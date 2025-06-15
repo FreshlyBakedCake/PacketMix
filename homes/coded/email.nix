@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 {
   programs.aerc.enable = true;
   programs.thunderbird.enable = true;

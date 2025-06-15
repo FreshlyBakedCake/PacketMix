@@ -1,18 +1,17 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 # depends on niri flavor
 # depends on catppuccin flavor
 # depends on development flavor
-
 {
   imports = [
-    ./atuin.nix
-    ./bash.nix
     ./bitwarden.nix
     ./calendar.nix
     ./catppuccin.nix
     ./email.nix
-    ./ghostty.nix
-    ./hoppscotch.nix
+    ./niri.nix
     ./sesh.nix
-    ./zoxide.nix
   ];
 }

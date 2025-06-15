@@ -11,13 +11,12 @@ in {
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      ./minion/direnv.nix
-      ./minion/ghostty.nix
-      ./minion/helix.nix
-      (import ./minion/niri.nix { inherit (config.inputs) niri walker; })
-      ./minion/ripgrep.nix
-      ./minion/sd.nix
-      ./minion/zoxide.nix
+      ./catppuccin/catppuccin.nix
+      ./common/default.nix
+      ./development/deafult.nix
+      ./gaming/default.nix
+      ./minion/default.nix
+      (import ./niri/niri.nix { inherit (config.inputs) niri walker; })
     ];
     args = {
       system = "x86_64-linux";
@@ -30,7 +29,12 @@ in {
         home.stateVersion = "25.05";
         home.homeDirectory = "/home/coded";
       }
+      ./catppuccin/catppuccin.nix
       ./coded/default.nix
+      ./common/default.nix
+      ./development/deafult.nix
+      ./gaming/default.nix
+      (import ./niri/niri.nix { inherit (config.inputs) niri walker; })
     ];
     args = {
       system = "x86_64-linux";

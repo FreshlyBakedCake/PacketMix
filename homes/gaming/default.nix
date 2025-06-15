@@ -3,5 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty.enable = true;
+  imports = [
+    ./itch.nix
+    ./minecraft.nix
+  ];
 }

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
 {
   config.niri.wallpaper = ./wallpaper.nix;
   config.programs.niri.settings = {

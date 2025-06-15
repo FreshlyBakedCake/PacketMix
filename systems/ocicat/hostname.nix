@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty.enable = true;
+  networking.hostName = "ocicat";
 }
