@@ -10,6 +10,7 @@ in {
     modules = [
       ./common
       ./javelin
+      ./minion
       ./niri
       ./personal
       ./redhead
@@ -26,6 +27,7 @@ in {
       ./common
       ./gaming
       ./javelin
+      ./minion
       ./emden
       ./niri
       ./personal
