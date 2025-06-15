@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-{
+{ pkgs, ... }: {
   programs.ripgrep = {
     enable = true;
 
@@ -10,4 +10,6 @@
       "--smart-case"
     ];
   };
+
+  home.packages = [ pkgs.sd pkgs.fd ];
 }

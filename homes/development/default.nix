@@ -3,7 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty = {
-    settings.theme = "catppuccin-latte";
-  };
+  imports = [
+    ./direnv.nix
+    ./helix.nix
+    ./simplified-utilities.nix
+  ];
 }
