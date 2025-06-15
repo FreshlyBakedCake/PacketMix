@@ -14,6 +14,7 @@ in {
       (import ./catppuccin { inherit (config.inputs) catppuccin; })
       ./common
       ./development
+      ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker; })
     ];
