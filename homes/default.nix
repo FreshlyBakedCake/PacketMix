@@ -11,13 +11,10 @@ in {
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      ./minion/direnv.nix
-      ./minion/ghostty.nix
-      ./minion/helix.nix
-      (import ./minion/niri.nix { inherit (config.inputs) niri walker; })
-      ./minion/ripgrep.nix
-      ./minion/sd.nix
-      ./minion/zoxide.nix
+      ./common
+      ./development
+      ./minion
+      (import ./niri { inherit (config.inputs) niri walker; })
     ];
     args = {
       system = "x86_64-linux";
