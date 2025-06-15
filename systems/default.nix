@@ -24,6 +24,7 @@ in {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
     modules = [
       ./common
+      ./gaming
       ./javelin
       ./emden
       ./niri
