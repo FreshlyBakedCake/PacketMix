@@ -38,6 +38,21 @@ in {
     };
     homes = { inherit (config.homes) "minion:x86_64-linux"; };
   };
+  config.systems.nixos."ocicat" = {
+    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    modules = [
+      ./common
+      ./gaming
+      ./niri
+      ./ocicat
+      ./personal
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+    homes = { inherit (config.homes) "coded:x86_64-linux"; };
+  };
   config.systems.nixos."midnight" = {
     pkgs = config.inputs.nixpkgs.result.x86_64-linux;
     modules = [
