@@ -1,5 +1,18 @@
 {
   "pins": {
+    "catppuccin": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "4e95eaf8a351956d75cc400318579967ca2b6d0f",
+      "url": "https://github.com/catppuccin/nix/archive/4e95eaf8a351956d75cc400318579967ca2b6d0f.tar.gz",
+      "hash": "sha256-NYHXXJZ9m4fJpKk9tKn/EExX87SqcBcRINOGF7hKRLI="
+    },
     "home-manager": {
       "type": "Git",
       "repository": {
