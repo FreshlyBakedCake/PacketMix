@@ -121,15 +121,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fba861e81d6fe8c0a8ba9fb2ed8d5e6df4a6ad78",
-      "url": "https://github.com/sodiboo/niri-flake/archive/fba861e81d6fe8c0a8ba9fb2ed8d5e6df4a6ad78.tar.gz",
-      "hash": "sha256-cfrRFN9j340Wlgwe3k2oWB/0LI63JyUZab7apN72xd8="
+      "revision": "8f39eb82488525728eda222b34e79b1ecf6d3f96",
+      "url": "https://github.com/sodiboo/niri-flake/archive/8f39eb82488525728eda222b34e79b1ecf6d3f96.tar.gz",
+      "hash": "sha256-pRkyWFytGAMaHlrOJIYYEur8NRDe0kTfMIhRdTeasRQ="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre811950.3e3afe5174c5/nixexprs.tar.xz",
-      "hash": "sha256-qYyUe0adJrvE1imY6TDUgCao1WR2g6vIYzJ8SGcf3l0="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre814309.ee930f9755f5/nixexprs.tar.xz",
+      "hash": "sha256-gQNGmTBOXstut+K8DFGn5EQNAiRvbN2P/CTphqbn9SM="
     },
     "nixpkgs": {
       "type": "Channel",
