@@ -1,8 +1,6 @@
-{ project, ... }: {
-  imports = [ project.inputs.catppuccin.result.homeModules.catppuccin ];
-  config.catppuccin = {
+{
+  catppuccin = {
     flavor = "macchiato";
     accent = "blue";
-    enable = true;
   };
 }

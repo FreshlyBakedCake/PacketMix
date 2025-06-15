@@ -3,8 +3,13 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty = {
+  programs.ripgrep = {
     enable = true;
-    settings.theme = "catppuccin-latte";
+
+    arguments = [
+      "--smart-case"
+    ];
   };
+
+  home.packages = [ pkgs.sd pkgs.fd ];
 }

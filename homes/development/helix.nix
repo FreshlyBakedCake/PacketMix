@@ -10,17 +10,8 @@
 }:
 {
   programs.helix = {
-    enable = true;
-
-    package = project.packages.helix.result.${system};
-
     settings = {
-      theme = "catppuccin_latte";
-
       editor = {
-        bufferline = "multiple";
-
-        line-number = "relative";
         lsp.display-inlay-hints = true;
 
         end-of-line-diagnostics = "hint";

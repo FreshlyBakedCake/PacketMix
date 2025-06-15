@@ -2,9 +2,8 @@
   programs.atuin = {
     enable = true;
     daemon.enable = true;
-    enableBashIntegration = true;
+    flags = [ "--disable-up-arrow" ];
     settings = {
-      search_mode_shell_up_key_binding = "fulltext";
       workspaces = true;
       enter_accept = true;
 
@@ -18,8 +17,8 @@
         "nilla"
         "npm"
         "pnpm"
+        "sesh"
         "systemctl"
-        "tmux"
       ];
     };
   };

@@ -1,6 +1,3 @@
-{ lib, ...}: {
-  programs.sesh = {
-    enable = true;
-    settings = lib.importers.toml ./sesh.toml;
-  };
+{
+  programs.sesh.settings = lib.importers.toml ./sesh.toml;
 }
