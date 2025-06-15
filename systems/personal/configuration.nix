@@ -42,6 +42,11 @@
     #  thunderbird
     ];
   };
+  users.users.coded = {
+    isNormalUser = true;
+    description = "Samuel Shuert";
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
 
   # Install firefox.
   programs.firefox.enable = true;
