@@ -36,9 +36,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "7453e2979f1d4684bea4cb340f23c089ea0d5a90",
-      "url": "https://git.lix.systems/lix-project/lix/archive/7453e2979f1d4684bea4cb340f23c089ea0d5a90.tar.gz",
-      "hash": "sha256-60avE6oxLzasJr+/tFdhInEUUEF3FZ9uHofTUq4MZ1o="
+      "revision": "e01ad92c9c2f75924966fb8f8819961b3024909c",
+      "url": "https://git.lix.systems/lix-project/lix/archive/e01ad92c9c2f75924966fb8f8819961b3024909c.tar.gz",
+      "hash": "sha256-l66Twraq+Mh7zlv0mNJ/gcJX5Q/O6E5LdccW+KwxA/M="
     },
     "lix-module": {
       "type": "Git",
@@ -121,9 +121,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "682e202b5eedcf2b2c6e916c08bc93c683af922d",
-      "url": "https://github.com/sodiboo/niri-flake/archive/682e202b5eedcf2b2c6e916c08bc93c683af922d.tar.gz",
-      "hash": "sha256-xGPyPewHUX1Rj0KtwkY6GlpUJim5rJrJ11PP0ZtZq3I="
+      "revision": "94ff8b2da333c42cad4a1429d897b99bd5b27e57",
+      "url": "https://github.com/sodiboo/niri-flake/archive/94ff8b2da333c42cad4a1429d897b99bd5b27e57.tar.gz",
+      "hash": "sha256-KfkA0uftsNhhIZAwnqzH6Z0TEn3wKKXhI5lYJCaL8x4="
     },
     "nixos-unstable": {
       "type": "Channel",
@@ -134,8 +134,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804002.5f4f306bea96/nixexprs.tar.xz",
-      "hash": "sha256-+W/3yiEeSZ+qTbd8eyHRujwP4ER/suXwLbp5DvqwXNU="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804113.6c64dabd3aa8/nixexprs.tar.xz",
+      "hash": "sha256-ivdukr+0UIQVZjFqXLFNLUj527r3rFIzMwkq3AAhKHQ="
     },
     "npins": {
       "type": "Git",
