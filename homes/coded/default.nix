@@ -7,6 +7,7 @@
 # depends on development flavor
 {
   imports = [
+    ./appimage.nix
     ./bitwarden.nix
     ./calendar.nix
     ./catppuccin.nix
