@@ -39,6 +39,19 @@
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
       "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
+    "impermanence": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "impermanence"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
+      "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
+      "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
+    },
     "lix": {
       "type": "Git",
       "repository": {
@@ -162,6 +175,19 @@
       "revision": "8c07a52a03f1f3d23366d409eda3445c6321a2d9",
       "url": "https://github.com/andir/npins/archive/8c07a52a03f1f3d23366d409eda3445c6321a2d9.tar.gz",
       "hash": "sha256-v9qYmBB0IVyW8P1LZ7ru130G3bJYDsGTO6qb33+RTks="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "release-25.05",
+      "submodules": false,
+      "revision": "7aae0ee71a17b19708b93b3ed448a1a0952bf111",
+      "url": "https://github.com/nix-community/home-manager/archive/7aae0ee71a17b19708b93b3ed448a1a0952bf111.tar.gz",
+      "hash": "sha256-gjN3j7joRvT3a8Zgcylnd4NFsnXeDBumqiu4HmY1RIg="
     },
     "walker": {
       "type": "GitRelease",
