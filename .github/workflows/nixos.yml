@@ -13,6 +13,10 @@ on:
 
   workflow_dispatch:
 
+concurrency: # Since as this check is expensive, it's a bad idea to keep running it when we push new commits...
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
