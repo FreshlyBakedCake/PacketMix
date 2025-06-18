@@ -36,9 +36,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "e01ad92c9c2f75924966fb8f8819961b3024909c",
-      "url": "https://git.lix.systems/lix-project/lix/archive/e01ad92c9c2f75924966fb8f8819961b3024909c.tar.gz",
-      "hash": "sha256-l66Twraq+Mh7zlv0mNJ/gcJX5Q/O6E5LdccW+KwxA/M="
+      "revision": "87d99da6ca50d63caec28513e23eeeb915781472",
+      "url": "https://git.lix.systems/lix-project/lix/archive/87d99da6ca50d63caec28513e23eeeb915781472.tar.gz",
+      "hash": "sha256-p+VryHLOoU2q1VnAnY4wOXk0PomYJ+1Zb3O0J5twRhU="
     },
     "lix-module": {
       "type": "Git",
@@ -121,21 +121,21 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "94ff8b2da333c42cad4a1429d897b99bd5b27e57",
-      "url": "https://github.com/sodiboo/niri-flake/archive/94ff8b2da333c42cad4a1429d897b99bd5b27e57.tar.gz",
-      "hash": "sha256-KfkA0uftsNhhIZAwnqzH6Z0TEn3wKKXhI5lYJCaL8x4="
+      "revision": "e05506ee00f7db56db951bde1c5dbc3a8a6208b6",
+      "url": "https://github.com/sodiboo/niri-flake/archive/e05506ee00f7db56db951bde1c5dbc3a8a6208b6.tar.gz",
+      "hash": "sha256-F4IZxpZBQMubMzt/Ye6aNh4yY537qrKEI51G4SApmTA="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre814309.ee930f9755f5/nixexprs.tar.xz",
-      "hash": "sha256-gQNGmTBOXstut+K8DFGn5EQNAiRvbN2P/CTphqbn9SM="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre816272.9e83b64f727c/nixexprs.tar.xz",
+      "hash": "sha256-KCfcRCnagwT0TG2C82SHsahzL+yG3DugHZIlSYbwAmY="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804113.6c64dabd3aa8/nixexprs.tar.xz",
-      "hash": "sha256-ivdukr+0UIQVZjFqXLFNLUj527r3rFIzMwkq3AAhKHQ="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804219.36ab78dab7da/nixexprs.tar.xz",
+      "hash": "sha256-EeKVw2NRn4Uo+Khb/K+Dzc0DabwuHYneG0mWflWkxHg="
     },
     "npins": {
       "type": "Git",
