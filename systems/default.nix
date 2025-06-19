@@ -109,6 +109,26 @@ in
     };
     homes = { inherit (config.homes) "pinea:x86_64-linux"; };
   };
+  config.systems.nixos."shorthair" = {
+    pkgs = nixpkgs.x86_64-linux;
+    modules = [
+      ./coded
+      ./common
+      ./corsair
+      ./espanso
+      ./freshlybakedcake
+      ./freshlybakedcake+personal
+      ./gaming
+      ./niri
+      ./shorthair
+      ./personal
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+    homes = { inherit (config.homes) "coded:x86_64-linux"; };
+  };
   config.systems.nixos."midnight" = {
     pkgs = nixpkgs.x86_64-linux;
     modules = [
