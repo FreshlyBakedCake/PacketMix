@@ -6,7 +6,7 @@
   nixpkgs = config.inputs.nixpkgs.result;
 in {
   config.systems.nixos."redhead" = {
-    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
       ./javelin
@@ -22,7 +22,7 @@ in {
     homes = { inherit (config.homes) "minion:x86_64-linux"; };
   };
   config.systems.nixos."emden" = {
-    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
       ./gaming
@@ -39,7 +39,7 @@ in {
     homes = { inherit (config.homes) "minion:x86_64-linux"; };
   };
   config.systems.nixos."ocicat" = {
-    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
       ./gaming
@@ -54,7 +54,7 @@ in {
     homes = { inherit (config.homes) "coded:x86_64-linux"; };
   };
   config.systems.nixos."midnight" = {
-    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
       ./midnight
@@ -66,7 +66,7 @@ in {
     };
   };
   config.systems.nixos."teal" = {
-    pkgs = config.inputs.nixpkgs.result.x86_64-linux;
+    pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
       ./teal
