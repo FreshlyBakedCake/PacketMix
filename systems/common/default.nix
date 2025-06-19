@@ -13,6 +13,7 @@
     ./nilla-nix.nix
     ./nixos.nix
     ./packetmix.nix
+    ./smartcard.nix
     ./sudo.nix
     ./sysctl.nix
   ];
