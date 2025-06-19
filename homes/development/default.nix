@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./collaboration.nix
     ./direnv.nix
     ./gpg.nix
     ./helix.nix

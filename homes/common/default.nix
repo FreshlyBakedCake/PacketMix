@@ -5,6 +5,7 @@
 {
   imports = [
     ./bash.nix
+    ./files.nix
     ./ghostty.nix
     ./helix.nix
     ./zoxide.nix
