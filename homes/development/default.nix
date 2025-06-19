@@ -5,6 +5,7 @@
 {
   imports = [
     ./direnv.nix
+    ./editor.nix
     ./helix.nix
     ./hoppscotch.nix
     ./simplified-utilities.nix
