@@ -17,6 +17,7 @@ in {
       ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker; })
+      ./remote
     ];
     args = {
       system = "x86_64-linux";
