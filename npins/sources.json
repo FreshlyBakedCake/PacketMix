@@ -163,6 +163,19 @@
       "url": "https://github.com/andir/npins/archive/3436e34124fa744c8ec4012cfdadddaf70d4328e.tar.gz",
       "hash": "sha256-uWO1kGBSw7a8osk4sHOeZGqeWEnijfO9B0HovmGYTqA="
     },
+    "treefmt-nix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "treefmt-nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a05be418a1af1198ca0f63facb13c985db4cb3c5",
+      "url": "https://github.com/numtide/treefmt-nix/archive/a05be418a1af1198ca0f63facb13c985db4cb3c5.tar.gz",
+      "hash": "sha256-eEy8cuS0mZ2j/r/FE0/LYBSBcIs/MKOIVakwHVuqTfk="
+    },
     "walker": {
       "type": "GitRelease",
       "repository": {
