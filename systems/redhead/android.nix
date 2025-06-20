@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.udev.packages = [
     pkgs.android-udev-rules
   ];

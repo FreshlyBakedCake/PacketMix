@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, ... }: {
+{ project, ... }:
+{
   imports = [
     (import "${project.inputs.lix-module.result}/module.nix" { lix = project.inputs.lix.src; })
   ];

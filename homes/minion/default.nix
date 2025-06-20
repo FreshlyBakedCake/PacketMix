@@ -5,9 +5,9 @@
 # depends on niri flavor
 # depends on catppuccin flavor
 {
-    imports = [
-        ./catppuccin.nix
-        ./helix.nix
-        ./niri.nix
-    ];
+  imports = [
+    ./catppuccin.nix
+    ./helix.nix
+    ./niri.nix
+  ];
 }

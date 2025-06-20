@@ -15,7 +15,12 @@
       type = "caldav";
       url = "https://nextcloud.clicks.codes/remote.php/dav";
       userName = "clicks-coded";
-      passwordCommand = [ "bw" "get" "password" "'nextcloud calendar app password'" ];
+      passwordCommand = [
+        "bw"
+        "get"
+        "password"
+        "'nextcloud calendar app password'"
+      ];
     };
 
     vdirsyncer.enable = true;

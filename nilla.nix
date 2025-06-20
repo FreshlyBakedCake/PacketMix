@@ -8,11 +8,15 @@ let
   nilla = import pins.nilla;
 
   settings = {
-    nixpkgs.configuration.allowUnfreePredicate = (x: (x ? meta.license) && (x.meta.license.shortName == "unfreeRedistributable")); # As we push to a public cachix, we can't use non-redistributable unfree software
+    nixpkgs.configuration.allowUnfreePredicate = (
+      x: (x ? meta.license) && (x.meta.license.shortName == "unfreeRedistributable")
+    ); # As we push to a public cachix, we can't use non-redistributable unfree software
     "nixos-24.11" = settings.nixpkgs;
   };
 in
-  nilla.create ({ config }: {
+nilla.create (
+  { config }:
+  {
     includes = [
       ./homes
       ./lib
@@ -33,43 +37,61 @@ in
       packages.allNixOSSystems = {
         systems = [ "x86_64-linux" ];
 
-        package = { stdenv }: stdenv.mkDerivation {
-          name = "all-nixos-systems";
+        package =
+          { stdenv }:
+          stdenv.mkDerivation {
+            name = "all-nixos-systems";
 
-          dontUnpack = true;
+            dontUnpack = true;
 
-          buildPhase = ''
-            mkdir -p $out
-          '' + (builtins.concatStringsSep "\n" (
-            config.lib.attrs.mapToList (name: value: ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"'') config.systems.nixos
-          ));
-        };
+            buildPhase =
+              ''
+                mkdir -p $out
+              ''
+              + (builtins.concatStringsSep "\n" (
+                config.lib.attrs.mapToList (
+                  name: value: ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"''
+                ) config.systems.nixos
+              ));
+          };
       };
 
       packages.allHomes = {
         systems = [ "x86_64-linux" ];
 
-        package = { system, stdenv }: stdenv.mkDerivation {
-          name = "all-homes";
+        package =
+          { system, stdenv }:
+          stdenv.mkDerivation {
+            name = "all-homes";
 
-          dontUnpack = true;
+            dontUnpack = true;
 
-          buildPhase = ''
-            mkdir -p $out
-          '' + (builtins.concatStringsSep "\n" (
-            config.lib.attrs.mapToList
-              (name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"'')
-              (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
-          ));
-        };
+            buildPhase =
+              ''
+                mkdir -p $out
+              ''
+              + (builtins.concatStringsSep "\n" (
+                config.lib.attrs.mapToList (
+                  name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"''
+                ) (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
+              ));
+          };
       };
 
       packages.helix = {
         systems = [ "x86_64-linux" ];
 
-        package = { helix }: helix.overrideAttrs ({ patches ? [], ... }: {
-          patches = patches ++ [ ./patches/helix/3958-labels-for-config-menus.patch ];
-        });
+        package =
+          { helix }:
+          helix.overrideAttrs (
+            {
+              patches ? [ ],
+              ...
+            }:
+            {
+              patches = patches ++ [ ./patches/helix/3958-labels-for-config-menus.patch ];
+            }
+          );
       };
 
       # With a package set defined, we can create a shell.
@@ -78,7 +100,15 @@ in
         systems = [ "x86_64-linux" ];
 
         # Define our shell environment.
-        shell = { pkgs, system, npins, mkShell, reuse, ... }:
+        shell =
+          {
+            pkgs,
+            system,
+            npins,
+            mkShell,
+            reuse,
+            ...
+          }:
           mkShell {
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
@@ -92,4 +122,5 @@ in
           };
       };
     };
-  })
+  }
+)

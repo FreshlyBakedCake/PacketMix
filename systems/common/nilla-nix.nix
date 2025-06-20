@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, system, ... }: {
+{ project, system, ... }:
+{
   environment.systemPackages = [
     project.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
     project.inputs.nilla-home.result.packages.nilla-home.result.${system}

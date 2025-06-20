@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 {
   # Set your time zone.
   time.timeZone = "Etc/UTC";

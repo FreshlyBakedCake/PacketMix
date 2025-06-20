@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, ... }: {
-  config.lib.constants.undefined = config.lib.modules.when false {};
+{ config, ... }:
+{
+  config.lib.constants.undefined = config.lib.modules.when false { };
 }

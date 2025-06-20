@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, ... }: {
+{ lib, ... }:
+{
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;

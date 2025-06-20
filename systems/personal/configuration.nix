@@ -6,7 +6,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ project, config, system, pkgs, ... }:
+{
+  project,
+  config,
+  system,
+  pkgs,
+  ...
+}:
 {
   # Enable networking
   networking.networkmanager.enable = true;
@@ -37,15 +43,21 @@
   users.users.minion = {
     isNormalUser = true;
     description = "Skyler Grey";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
   users.users.coded = {
     isNormalUser = true;
     description = "Samuel Shuert";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # Install firefox.
@@ -54,8 +66,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
     git
     helix
     jujutsu
@@ -67,10 +79,14 @@
         rev = "8395ec4576cf54411d974675d26f64208acdcee0";
       };
       makeWrapperArgs = [
-        "--set GIO_MODULE_DIR ${lib.makeSearchPathOutput "out"
-          "lib/gio/modules" (with pkgs; [
-            glib-networking
-          ])}"
+        "--set GIO_MODULE_DIR ${
+          lib.makeSearchPathOutput "out" "lib/gio/modules" (
+            with pkgs;
+            [
+              glib-networking
+            ]
+          )
+        }"
         "--set GI_TYPELIB_PATH ${
           lib.makeSearchPathOutput "out" "lib/girepository-1.0" [
             gtk3
@@ -88,8 +104,8 @@
         install -Dm644 gtimelog.desktop $out/share/applications/gtimelog.desktop
         install -Dm644 src/gtimelog/gtimelog.png $out/share/icons/hicolor/48x48/apps/gtimelog.png
       '';
-      buildInputs = oldAttrs.buildInputs ++ [pkgs.glib-networking];
-      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.gobject-introspection];
+      buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib-networking ];
+      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.gobject-introspection ];
     }))
     dogdns
     ghostty

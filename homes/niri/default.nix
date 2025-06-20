@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ niri, walker }: {
+{ niri, walker }:
+{
   imports = [
     (import ./niri.nix { inherit niri walker; })
   ];

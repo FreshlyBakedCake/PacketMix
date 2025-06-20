@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, ...}: {
+{ lib, ... }:
+{
   programs.sesh.settings = lib.importTOML ./sesh.toml;
 }

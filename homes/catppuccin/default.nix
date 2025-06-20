@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ catppuccin }: {
+{ catppuccin }:
+{
   imports = [
     (import ./catppuccin.nix { inherit catppuccin; })
   ];
