@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [ pkgs.itch ];
 }

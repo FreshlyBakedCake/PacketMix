@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.zed-editor = {
     enable = true;
     extensions = [

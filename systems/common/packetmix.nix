@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-/*
-  packetmix.nix: packetmix support configuration, including our binary cache and auto-updating
-*/
-{ config, pkgs, ... }: {
+# packetmix.nix: packetmix support configuration, including our binary cache and auto-updating
+{ config, pkgs, ... }:
+{
   nix.settings.substituters = [
     "https://cache.nixos.org"
   ];
@@ -17,8 +16,10 @@
     enable = true;
     operation = "boot"; # The default is "switch", but that can lead to some nasty inconsistencies - boot is cleaner
     flags = [
-      "-f" "/etc/nixos/nilla.nix"
-      "-A" "systems.nixos.${config.networking.hostName}.result"
+      "-f"
+      "/etc/nixos/nilla.nix"
+      "-A"
+      "systems.nixos.${config.networking.hostName}.result"
     ];
   };
 
@@ -35,7 +36,6 @@
     RestartSteps = 5;
     RestartMaxDelaySec = 86400;
   };
-    
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

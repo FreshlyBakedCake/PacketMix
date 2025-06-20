@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.ripgrep = {
     enable = true;
 
@@ -11,5 +12,8 @@
     ];
   };
 
-  home.packages = [ pkgs.sd pkgs.fd ];
+  home.packages = [
+    pkgs.sd
+    pkgs.fd
+  ];
 }

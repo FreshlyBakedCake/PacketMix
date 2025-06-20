@@ -4,7 +4,7 @@
 
 {
   programs.aerc.enable = true;
-  
+
   accounts.email.accounts."gmail" = {
     primary = true;
     address = "samuel.shuert@gmail.com";

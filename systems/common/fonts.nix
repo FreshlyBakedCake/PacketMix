@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, lib, ...}: {
+{ pkgs, lib, ... }:
+{
   fonts.packages = [
     pkgs.cantarell-fonts
     pkgs.carlito

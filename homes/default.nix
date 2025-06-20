@@ -2,9 +2,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, ... }: let
+{ config, ... }:
+let
   nixpkgs = config.inputs.nixpkgs.result;
-in {
+in
+{
   config.homes."minion:x86_64-linux" = {
     modules = [
       {

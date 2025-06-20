@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = [
     pkgs.timg # Display images in your terminal
   ];

@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, ... }: {
+{ project, ... }:
+{
   imports = [
     project.inputs.impermanence.result.nixosModules.impermanence
     ./locale.nix

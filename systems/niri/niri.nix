@@ -4,16 +4,23 @@
 # SPDX-License-Identifier: MIT
 #
 # This file is based on some work from sodiboo's niri-flake, see https://github.com/sodiboo/niri-flake/blob/main/flake.nix
-{ project, pkgs, lib, ... }: let
+{
+  project,
+  pkgs,
+  lib,
+  ...
+}:
+let
   package = pkgs.niri-unstable;
-in {
+in
+{
   # we do not use the niri-flake nixos module, as it imports the home-module which causes a duplicate for attached homes
 
   nixpkgs.overlays = [ project.inputs.niri.result.overlays.niri ];
 
   nix.settings = {
-    substituters = ["https://niri.cachix.org"];
-    trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="];
+    substituters = [ "https://niri.cachix.org" ];
+    trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
   };
 
   xdg = {
@@ -36,9 +43,9 @@ in {
   services.gnome.gnome-keyring.enable = true;
   systemd.user.services.niri-flake-polkit = {
     description = "PolicyKit Authentication Agent provided by niri-flake";
-    wantedBy = ["niri.service"];
-    after = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
+    wantedBy = [ "niri.service" ];
+    after = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
@@ -48,7 +55,7 @@ in {
     };
   };
 
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
   programs.dconf.enable = lib.mkDefault true;
   fonts.enableDefaultPackages = lib.mkDefault true;
 

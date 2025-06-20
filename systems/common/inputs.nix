@@ -2,7 +2,13 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, pkgs, lib, ... }: {
+{
+  project,
+  pkgs,
+  lib,
+  ...
+}:
+{
   nix = {
     channel.enable = false;
     nixPath = [ "/etc/nix/inputs" ];
@@ -13,8 +19,13 @@
 
   environment.etc = lib.mapAttrs' (name: value: {
     name = "nix/inputs/${name}";
-    value.source = if (lib.strings.isStringLike value.result) && (lib.strings.hasPrefix builtins.storeDir (builtins.toString value.result)) # We convert to a string here to force paths out of any attrsets/etc.
-                   then builtins.storePath value.result
-                   else builtins.storePath value.src;
+    value.source =
+      if
+        (lib.strings.isStringLike value.result)
+        && (lib.strings.hasPrefix builtins.storeDir (builtins.toString value.result)) # We convert to a string here to force paths out of any attrsets/etc.
+      then
+        builtins.storePath value.result
+      else
+        builtins.storePath value.src;
   }) project.inputs;
 }

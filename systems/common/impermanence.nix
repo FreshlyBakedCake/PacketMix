@@ -45,14 +45,17 @@ in
     };
     persist = {
       directories = lib.mkOption {
-        type = lib.types.listOf
-          (lib.types.oneOf [
+        type = lib.types.listOf (
+          lib.types.oneOf [
             lib.types.str
-            (lib.types.attrsOf (lib.types.oneOf [
-              lib.types.str
-              (lib.types.attrsOf lib.types.str)
-            ]))
-          ]);
+            (lib.types.attrsOf (
+              lib.types.oneOf [
+                lib.types.str
+                (lib.types.attrsOf lib.types.str)
+              ]
+            ))
+          ]
+        );
         description = "List of directories to store between boots";
         default = [ ];
       };
@@ -63,52 +66,55 @@ in
       };
     };
   };
-  config = lib.mkIf cfg.enable ({
-    boot.initrd.postDeviceCommands = lib.mkAfter ''
-      mkdir /impermanent_fs
-      mount ${cfg.devices.root} /impermanent_fs
-      if [[ -e /impermanent_fs/${cfg.volumes.mount} ]]; then
-          mkdir -p /impermanent_fs/${cfg.volumes.old_roots}
-          timestamp=$(date --date="@$(stat -c %Y /impermanent_fs/${cfg.volumes.mount})" "+%Y-%m-%-d_%H:%M:%S")
-          mv /impermanent_fs/${cfg.volumes.mount} "/impermanent_fs/${cfg.volumes.old_roots}/$timestamp"
-      fi
-      delete_subvolume_recursively() {
-          IFS=$'\n'
-          for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-              delete_subvolume_recursively "/impermanent_fs/$i"
-          done
-          btrfs subvolume delete "$1"
-      }
-      for i in $(find /impermanent_fs/${cfg.volumes.old_roots}/ -maxdepth 1 -mtime +${builtins.toString cfg.delete_days}); do
-          delete_subvolume_recursively "$i"
-      done
-      btrfs subvolume create /impermanent_fs/${cfg.volumes.mount}
-      umount /impermanent_fs
-    '';
-    fileSystems."/" = {
-      device = cfg.devices.root;
-      fsType = "btrfs";
-      options = [ "subvol=${cfg.volumes.mount}" ];
-    };
-    fileSystems."/persist" = {
-      device = cfg.devices.persist;
-      neededForBoot = true;
-      fsType = "btrfs";
-    };
-  } // {
-    environment = lib.optionalAttrs cfg.enable {
-      persistence."/persist/${cfg.volumes.persistent_data}" = {
-        directories = [
-          "/var/lib/nixos" # https://github.com/nix-community/impermanence/issues/178
-        ] ++ cfg.persist.directories;
-        files = [
-          "/etc/machine-id"
-          "/etc/ssh/ssh_host_ed25519_key"
-          "/etc/ssh/ssh_host_ed25519_key.pub"
-          "/etc/ssh/ssh_host_rsa_key"
-          "/etc/ssh/ssh_host_rsa_key.pub"
-        ] ++ cfg.persist.files;
+  config = lib.mkIf cfg.enable (
+    {
+      boot.initrd.postDeviceCommands = lib.mkAfter ''
+        mkdir /impermanent_fs
+        mount ${cfg.devices.root} /impermanent_fs
+        if [[ -e /impermanent_fs/${cfg.volumes.mount} ]]; then
+            mkdir -p /impermanent_fs/${cfg.volumes.old_roots}
+            timestamp=$(date --date="@$(stat -c %Y /impermanent_fs/${cfg.volumes.mount})" "+%Y-%m-%-d_%H:%M:%S")
+            mv /impermanent_fs/${cfg.volumes.mount} "/impermanent_fs/${cfg.volumes.old_roots}/$timestamp"
+        fi
+        delete_subvolume_recursively() {
+            IFS=$'\n'
+            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                delete_subvolume_recursively "/impermanent_fs/$i"
+            done
+            btrfs subvolume delete "$1"
+        }
+        for i in $(find /impermanent_fs/${cfg.volumes.old_roots}/ -maxdepth 1 -mtime +${builtins.toString cfg.delete_days}); do
+            delete_subvolume_recursively "$i"
+        done
+        btrfs subvolume create /impermanent_fs/${cfg.volumes.mount}
+        umount /impermanent_fs
+      '';
+      fileSystems."/" = {
+        device = cfg.devices.root;
+        fsType = "btrfs";
+        options = [ "subvol=${cfg.volumes.mount}" ];
       };
-    };
-  });
+      fileSystems."/persist" = {
+        device = cfg.devices.persist;
+        neededForBoot = true;
+        fsType = "btrfs";
+      };
+    }
+    // {
+      environment = lib.optionalAttrs cfg.enable {
+        persistence."/persist/${cfg.volumes.persistent_data}" = {
+          directories = [
+            "/var/lib/nixos" # https://github.com/nix-community/impermanence/issues/178
+          ] ++ cfg.persist.directories;
+          files = [
+            "/etc/machine-id"
+            "/etc/ssh/ssh_host_ed25519_key"
+            "/etc/ssh/ssh_host_ed25519_key.pub"
+            "/etc/ssh/ssh_host_rsa_key"
+            "/etc/ssh/ssh_host_rsa_key.pub"
+          ] ++ cfg.persist.files;
+        };
+      };
+    }
+  );
 }

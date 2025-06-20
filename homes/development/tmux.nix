@@ -2,8 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, ...}: {
+{ lib, ... }:
+{
   programs.tmux.enable = true;
-  programs.fzf.tmux.enableShellIntegration = true; # Needed for using sesh - which relies on fzf+tmux 
+  programs.fzf.tmux.enableShellIntegration = true; # Needed for using sesh - which relies on fzf+tmux
   programs.sesh.enable = true;
 }
