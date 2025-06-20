@@ -29,10 +29,7 @@ nilla.create (
 
     config = {
       # Add Nixpkgs as an input (match the name you used when pinning).
-      inputs = builtins.mapAttrs (name: value: {
-        src = value;
-        settings = settings.${name} or config.lib.constants.undefined;
-      }) pins;
+      inputs = builtins.mapAttrs (name: value: { src = value; settings = settings.${name} or config.lib.constants.undefined; }) pins;
 
       packages.allNixOSSystems = {
         systems = [ "x86_64-linux" ];
