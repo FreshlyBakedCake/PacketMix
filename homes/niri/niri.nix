@@ -43,7 +43,7 @@
 
         input.touchpad.natural-scroll = true;
 
-        input.warp-mouse-to-focus = true;
+        input.warp-mouse-to-focus.enable = true;
         input.focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "0%";
