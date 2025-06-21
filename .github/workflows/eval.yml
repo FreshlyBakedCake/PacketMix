@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+name: Evaluate NixOS systems and Homes
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lix
+        uses: samueldr/lix-gha-installer-action@8dc19fbd6451fa106a68ecb2dafeeeb90dff3a29
+        with:
+          extra_nix_config: "experimental-features = nix-command"
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Evaluate all systems
+        run: |
+          eval_out=$(nix-instantiate ./nilla.nix -A packages.allNixOSSystems.result.x86_64-linux --add-root ./system-root 2>&1 | tee /dev/stderr)
+          eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+          if [ -n "$eval_warns" ]; then
+            echo "There were some warnings while evaluating your systems:"
+            echo "$eval_warns"
+            echo "Please fix these and squash into your existing commits"
+            exit 1
+          fi
+
+      - name: Evaluate all homes
+        run: |
+          eval_out=$(nix-instantiate ./nilla.nix -A packages.allNixOSSystems.result.x86_64-linux --add-root ./home-root 2>&1 | tee /dev/stderr)
+          eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+          if [ -n "$eval_warns" ]; then
+            echo "There were some warnings while evaluating your homes:"
+            echo "$eval_warns"
+            echo "Please fix these and squash into your existing commits"
+            exit 1
+          fi
