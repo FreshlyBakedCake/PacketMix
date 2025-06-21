@@ -49,9 +49,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "877b0d7121a5d4d20114ba8d5981d99afe27e94e",
-      "url": "https://git.lix.systems/lix-project/lix/archive/877b0d7121a5d4d20114ba8d5981d99afe27e94e.tar.gz",
-      "hash": "sha256-eKe7/lb1dFNDfilgCzlduuDWEqgp77DSo96zCdC0iUk="
+      "revision": "3a6414760eb47776376e354c1281c2bef2c8f852",
+      "url": "https://git.lix.systems/lix-project/lix/archive/3a6414760eb47776376e354c1281c2bef2c8f852.tar.gz",
+      "hash": "sha256-h721EQth8BpCExEfB0vEMmVulmVrGVdJYtXcLge6/Ds="
     },
     "lix-module": {
       "type": "Git",
@@ -134,21 +134,21 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3bebe770ebe600fc7f28cc593df14a9e90a3c02e",
-      "url": "https://github.com/sodiboo/niri-flake/archive/3bebe770ebe600fc7f28cc593df14a9e90a3c02e.tar.gz",
-      "hash": "sha256-k0cDsEK8aQLCYhBXXEMgBVdFWrPWd19JEtwJ5+DA91w="
+      "revision": "13e7a34df7aa4e7d8ec4dd9df9d5a01973f28f49",
+      "url": "https://github.com/sodiboo/niri-flake/archive/13e7a34df7aa4e7d8ec4dd9df9d5a01973f28f49.tar.gz",
+      "hash": "sha256-oR2yjhAPXZDmfFb4UwBeVQcJBtrUNFwufovzN8sTBVc="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre816272.9e83b64f727c/nixexprs.tar.xz",
-      "hash": "sha256-KCfcRCnagwT0TG2C82SHsahzL+yG3DugHZIlSYbwAmY="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre818804.08f22084e608/nixexprs.tar.xz",
+      "hash": "sha256-LPEVD7FWRX+GFVWxIxNFLIB7kqet4tsAnV4mCKTdxNo="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804329.9ba04bda9249/nixexprs.tar.xz",
-      "hash": "sha256-c++Ep+nDeZxZVpEWGRrGORAMv/+jYSv+b5lJ7edOBVI="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804391.b2485d569675/nixexprs.tar.xz",
+      "hash": "sha256-iEKIktNTNZ6hmqJBs/k6ow+5rMVSFriKitP9zL2nmpg="
     },
     "npins": {
       "type": "Git",
