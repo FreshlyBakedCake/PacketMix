@@ -10,6 +10,7 @@
     ./beancount-smart_importer
     ./collabora-gtimelog
     ./lua-multipart
+    ./OpenLinkHub
     ./treefmt
   ];
 }
