@@ -2,9 +2,14 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ config, lib, ... }:
 {
-  programs.zed-editor = {
+  options.zed.vim_mode = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+  };
+
+  config.programs.zed-editor = {
     enable = true;
     extensions = [
       "catppuccin"
@@ -14,7 +19,7 @@
     userSettings = {
       git.git_gutter = "hide";
       minimap.show = "auto";
-      vim_mode = true;
+      vim_mode = config.zed.vim_mode;
     };
   };
 }
