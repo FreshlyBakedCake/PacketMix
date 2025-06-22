@@ -23,6 +23,7 @@
           height = 2160;
           refresh = 144.;
         };
+        scale = 1;
       };
       "DP-2" = {
         position = {
@@ -34,6 +35,7 @@
           height = 2160;
           refresh = 144.;
         };
+        scale = 1;
       };
       "LG Electronics LG TV SSCR2 0x01010101" = {
         position = {
