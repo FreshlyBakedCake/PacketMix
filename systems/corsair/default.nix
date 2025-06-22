@@ -3,8 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
-  includes = [
-    ./OpenLinkHub
-    ./treefmt
+  imports = [
+    ./openlinkhub.nix
   ];
 }

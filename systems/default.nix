@@ -59,6 +59,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./corsair
       ./gaming
       ./niri
       ./personal
