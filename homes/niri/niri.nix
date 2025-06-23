@@ -21,6 +21,20 @@
       type = lib.types.path;
       description = "Path to the desktop wallpaper you'd like to use";
     };
+    lockscreen = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to the lockscreen background you'd like to use, defaults to a greyscale version of your desktop wallpaper";
+      default = pkgs.stdenv.mkDerivation {
+        name = "niri-lock-background";
+
+        src = config.niri.wallpaper;
+        dontUnpack = true;
+
+        buildPhase = ''
+          ${pkgs.imagemagick}/bin/magick $src -colorspace Gray $out
+        '';
+      };
+    };
   };
 
   config = {
@@ -58,7 +72,7 @@
             mod = "Super";
             mod1 = "Alt";
 
-            lock = ''${pkgs.swaylock}/bin/swaylock -i ${config.niri.wallpaper} -s fill'';
+            lock = ''${pkgs.swaylock}/bin/swaylock -i ${config.niri.lockscreen} -s fill'';
 
             generateWorkspaceBindings = workspaceNumber: {
               "${mod}+${builtins.toString (lib.mod workspaceNumber 10)}".action.focus-workspace = [
