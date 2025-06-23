@@ -109,6 +109,11 @@
             "${mod}+D".action.spawn = "${config.programs.walker.package}/bin/walker";
 
             "${mod}+Shift+Slash".action.show-hotkey-overlay = [ ];
+
+            "${mod}+V".action.set-dynamic-cast-monitor = [ ];
+            "${mod}+W".action.set-dynamic-cast-window = [ ];
+            "${mod}+Shift+V".action.clear-dynamic-cast-target = [ ];
+            "${mod}+Shift+W".action.clear-dynamic-cast-target = [ ];
           }
           //
             # Workspace Keybinds
