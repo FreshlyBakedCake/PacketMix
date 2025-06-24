@@ -5,5 +5,6 @@
 {
   imports = [
     ./espanso.nix
+    ./nixpkgs-328890--espanso-capdacoverride
   ];
 }
