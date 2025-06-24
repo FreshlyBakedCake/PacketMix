@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
+  config,
   pkgs,
   project,
   system,
@@ -35,4 +36,6 @@
       };
     };
   };
+
+  home.sessionVariables.EDITOR = "${config.programs.helix.package}/bin/hx";
 }
