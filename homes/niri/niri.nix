@@ -53,6 +53,13 @@
           track-layout = "window";
           repeat-delay = 200;
           repeat-rate = 25;
+
+          xkb = lib.mkIf (config.home.keyboard != null) {
+            layout = if config.home.keyboard.layout == null then "" else config.home.keyboard.layout;
+            model = if config.home.keyboard.model == null then "" else config.home.keyboard.model;
+            options = builtins.concatStringsSep "," config.home.keyboard.options;
+            variant = if config.home.keyboard.variant == null then "" else config.home.keyboard.variant;
+          };
         };
 
         input.touchpad.natural-scroll = true;

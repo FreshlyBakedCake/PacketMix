@@ -12,13 +12,6 @@
 {
   programs.niri = {
     settings = {
-      input.keyboard = {
-        xkb = {
-          layout = "us";
-          variant = "dvorak";
-        };
-      };
-
       input.mouse.natural-scroll = true;
       outputs = {
         "eDP-1" = {
