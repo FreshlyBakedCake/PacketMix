@@ -16,6 +16,7 @@ in
       (import ./catppuccin { inherit (config.inputs) catppuccin; })
       ./common
       ./development
+      ./espanso
       ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker; })
@@ -36,6 +37,7 @@ in
       ./coded
       ./common
       ./development
+      ./espanso
       ./gaming
       (import ./niri { inherit (config.inputs) niri walker; })
       ./remote
