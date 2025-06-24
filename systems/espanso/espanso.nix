@@ -8,4 +8,6 @@
     enable = true;
     package = if config.services.xserver.enable then pkgs.espanso else pkgs.espanso-wayland;
   };
+
+  programs.espanso.capdacoverride.enable = !config.services.xserver.enable;
 }

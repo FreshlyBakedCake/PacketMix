@@ -11,6 +11,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./espanso
       ./javelin
       ./minion
       ./niri
@@ -27,6 +28,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./espanso
       ./gaming
       ./javelin
       ./minion
@@ -44,6 +46,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./espanso
       ./gaming
       ./niri
       ./ocicat

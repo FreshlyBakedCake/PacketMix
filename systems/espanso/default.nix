@@ -4,8 +4,6 @@
 
 {
   imports = [
-    ./bluetooth.nix
-    ./configuration.nix
-    ./homes.nix
+    ./espanso.nix
   ];
 }
