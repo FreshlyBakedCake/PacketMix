@@ -8,6 +8,7 @@
   imports = [
     ./catppuccin.nix
     ./helix.nix
+    ./keyboard.nix
     ./niri.nix
   ];
 }
