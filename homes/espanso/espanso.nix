@@ -2,17 +2,24 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, ... }:
+{ config, lib, ... }:
 {
-  xdg.configFile."espanso/config/default.yml".text = builtins.toJSON {
-    search_trigger = ":search";
-    show_notifications = false;
-    keyboard_layout = {
-      model = config.home.keyboard.model;
-      layout = config.home.keyboard.layout;
-      variant = config.home.keyboard.variant;
+  xdg.configFile."espanso/config/default.yml".text = builtins.toJSON (
+    {
+      search_trigger = ":search";
+      show_notifications = false;
+    }
+    // (
+      if (config.home.keyboard != null) then
+        {
+          keyboard_layout = {
+            inherit (config.home.keyboard) layout model variant;
 
-      options = builtins.concatStringsSep "," config.home.keyboard.options;
-    };
-  };
+            options = builtins.concatStringsSep "," config.home.keyboard.options;
+          };
+        }
+      else
+        { }
+    )
+  );
 }
