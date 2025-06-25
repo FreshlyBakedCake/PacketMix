@@ -7,6 +7,7 @@
 {
   imports = [
     ./catppuccin.nix
+    ./espanso.nix
     ./helix.nix
     ./keyboard.nix
     ./niri.nix
