@@ -121,6 +121,13 @@
             "${mod}+W".action.set-dynamic-cast-window = [ ];
             "${mod}+Shift+V".action.clear-dynamic-cast-target = [ ];
             "${mod}+Shift+W".action.clear-dynamic-cast-target = [ ];
+
+            "${mod}+N".action.spawn = [
+              "sh"
+              "-c"
+              "${pkgs.systemd}/bin/systemctl --user start swaync && ${pkgs.swaynotificationcenter}/bin/swaync-client -t"
+            ];
+            # We need to ensure swaync is started, since as it isn't usually until we get a notification
           }
           //
             # Workspace Keybinds
