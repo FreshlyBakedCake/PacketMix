@@ -285,8 +285,29 @@
 
     programs.bash.profileExtra = lib.mkBefore ''
       if [ -z $WAYLAND_DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-        exec ${pkgs.systemd}/bin/systemd-cat -t niri ${pkgs.dbus}/bin/dbus-run-session ${config.programs.niri.package}/bin/niri --session
+        exec ${config.programs.niri.package}/bin/niri-session -l
       fi
     '';
+
+    systemd.user.services.niri = {
+      Unit = {
+        Description = "A scrollable-tiling Wayland compositor";
+        BindsTo = "graphical-session.target";
+        Wants = [
+          "graphical-session-pre.target"
+          "xdg-desktop-autostart.target"
+        ];
+        After = [
+          "graphical-session-pre.target"
+          "xdg-desktop-autostart.target"
+        ];
+      };
+
+      Service = {
+        Slice = "session.slice";
+        Type = "notify";
+        ExecStart = "${config.programs.niri.package}/bin/niri --session";
+      };
+    };
   };
 }
