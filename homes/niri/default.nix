@@ -6,5 +6,6 @@
 {
   imports = [
     (import ./niri.nix { inherit niri walker; })
+    ./swaync.nix
   ];
 }
