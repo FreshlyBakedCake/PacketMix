@@ -12,7 +12,6 @@
     ./calendar.nix
     ./catppuccin.nix
     ./email.nix
-    ./keyboard.nix
     ./niri.nix
     ./sesh.nix
   ];
