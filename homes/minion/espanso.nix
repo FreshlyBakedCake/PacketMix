@@ -34,12 +34,12 @@
   xdg.configFile."espanso/match/personal.yml".text = builtins.toJSON {
     matches = [
       {
-        regex = "@(c\.|companies)";
+        regex = ''@(c\.|companies)'';
         replace = "@companies.starrysky.fyi";
       }
       {
-        regex = "sky@a(?P<whitespace>\W)";
-        replace = "sky@a.starrysky.fyii{{whitespace}}";
+        regex = ''sky@a(?P<whitespace>\W)'';
+        replace = "sky@a.starrysky.fyi{{whitespace}}";
       }
       {
         trigger = ":co:me";
