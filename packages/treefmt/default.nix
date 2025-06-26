@@ -12,6 +12,16 @@
       config.inputs.treefmt-nix.result.lib.mkWrapper pkgs {
         projectRootFile = "nilla.nix";
         programs.nixfmt.enable = true;
+
+        settings.formatter.qmlformat = {
+          command = "${pkgs.bash}/bin/bash";
+          options = [
+            "-euc"
+            "${pkgs.kdePackages.qtdeclarative}/bin/qmlformat -i $@"
+            "--"
+          ];
+          includes = [ "*.qml" ];
+        };
       };
   };
 
