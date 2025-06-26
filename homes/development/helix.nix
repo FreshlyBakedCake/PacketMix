@@ -43,7 +43,15 @@
             command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
           };
         }
+        {
+          name = "qml";
+          language-servers = [ "qmlls" ];
+        }
       ];
+      language-server.qmlls = {
+        args = [ "-E" ]; # Read the QML Path from the environment - this way it can be provided in nix shells
+        command = "qmlls"; # Again, many people won't need qmlls so there's no point in installing it - this lets it stay picked up from shell paths
+      };
     };
   };
 }
