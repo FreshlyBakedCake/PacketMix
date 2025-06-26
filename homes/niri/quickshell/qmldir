@@ -1,0 +1,9 @@
+module Sprinkles
+
+singleton Battery 1.0 Battery.qml
+singleton Niri 1.0 Niri.qml
+singleton Time 1.0 Time.qml
+
+Clock 1.0 Clock.qml
+Event 1.0 Event.qml
+Triline 1.0 Triline.qml

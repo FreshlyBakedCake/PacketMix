@@ -19,7 +19,7 @@ in
       ./espanso
       ./gaming
       ./minion
-      (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
     ];
@@ -40,7 +40,7 @@ in
       ./espanso
       ./gaming
       ./minion
-      (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./redhead
       ./remote
@@ -62,7 +62,7 @@ in
       ./development
       ./espanso
       ./gaming
-      (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
     ];
