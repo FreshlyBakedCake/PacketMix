@@ -10,6 +10,7 @@
     ./espanso.nix
     ./helix.nix
     ./keyboard.nix
+    ./misc.nix
     ./niri.nix
   ];
 }
