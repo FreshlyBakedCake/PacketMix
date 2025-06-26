@@ -17,6 +17,7 @@ in
       ./minion
       ./niri
       ./personal
+      ./portable
       ./redhead
     ];
     args = {
@@ -53,6 +54,7 @@ in
       ./niri
       ./ocicat
       ./personal
+      ./portable
     ];
     args = {
       system = "x86_64-linux";
