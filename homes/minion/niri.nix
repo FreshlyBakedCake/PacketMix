@@ -22,17 +22,17 @@
           };
         };
         "Hewlett Packard LA2405 CN40370NRF" = {
-          # work right monitor
-          position = {
-            x = 1504;
-            y = -1200;
-          };
-          transform.rotation = 90;
-        };
-        "Hewlett Packard LA2405 CN40500PYR" = {
           # work left monitor
           position = {
-            x = -416;
+            x = -1200;
+            y = -1560;
+          };
+          transform.rotation = 270;
+        };
+        "Hewlett Packard LA2405 CN40500PYR" = {
+          # work right monitor
+          position = {
+            x = 0;
             y = -1200;
           };
         };
