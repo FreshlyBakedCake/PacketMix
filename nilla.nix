@@ -94,6 +94,12 @@ nilla.create (
           );
       };
 
+      packages.quickshell = {
+        systems = [ "x86_64-linux" ];
+
+        package = import "${pins.quickshell}/default.nix";
+      };
+
       # With a package set defined, we can create a shell.
       shells.default = {
         # Declare what systems the shell can be used on.
@@ -106,17 +112,22 @@ nilla.create (
             system,
             npins,
             mkShell,
+            qmlls,
             reuse,
             ...
           }:
           mkShell {
+            QML2_IMPORT_PATH = "";
+          
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
               config.packages.nilla-fmt.result.${system}
+              config.packages.quickshell
               config.packages.treefmt.result.${system}
               (config.inputs.npins.result { inherit pkgs system; })
+              qmlls
               reuse
             ];
           };
