@@ -39,6 +39,19 @@
       "url": "https://github.com/nix-community/home-manager/archive/c6a01e54af81b381695db796a43360bf6db5702f.tar.gz",
       "hash": "sha256-aRY1cYOdVdXdNjcL/Twpa27CknO7pVHxooPsBizDraE="
     },
+    "home-manager-unstable": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "392ddb642abec771d63688c49fa7bcbb9d2a5717",
+      "url": "https://github.com/nix-community/home-manager/archive/392ddb642abec771d63688c49fa7bcbb9d2a5717.tar.gz",
+      "hash": "sha256-A4nftqiNz2bNihz0bKY94Hq/6ydR6UQOcGioeL7iymY="
+    },
     "impermanence": {
       "type": "Git",
       "repository": {

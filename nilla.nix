@@ -16,7 +16,7 @@ let
   };
 in
 nilla.create (
-  { config }:
+  { config, lib }:
   {
     includes = [
       ./homes
@@ -107,17 +107,31 @@ nilla.create (
             system,
             npins,
             mkShell,
+            kdePackages,
             reuse,
             ...
           }:
           mkShell {
+            QML_IMPORT_PATH =
+              lib.fp.pipe
+                [
+                  (map (pkg: "${pkg}/lib/qt-6/qml"))
+                  (builtins.concatStringsSep ":")
+                ]
+                [
+                  config.inputs.nixos-unstable.result.${system}.quickshell
+                  kdePackages.qtdeclarative
+                ];
+
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
+              config.inputs.nixos-unstable.result.${system}.quickshell
               config.packages.nilla-fmt.result.${system}
               config.packages.treefmt.result.${system}
               (config.inputs.npins.result { inherit pkgs system; })
+              kdePackages.qtdeclarative
               reuse
             ];
           };

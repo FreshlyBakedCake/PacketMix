@@ -2,10 +2,15 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ niri, walker }:
+{
+  niri,
+  walker,
+  home-manager-unstable,
+}:
 {
   imports = [
     (import ./niri.nix { inherit niri walker; })
+    (import ./quickshell { inherit home-manager-unstable; })
     ./swaync.nix
   ];
 }
