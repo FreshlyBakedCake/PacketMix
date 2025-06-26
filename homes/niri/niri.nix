@@ -316,5 +316,25 @@
         ExecStart = "${config.programs.niri.package}/bin/niri --session";
       };
     };
+
+    systemd.user.services.xdg-desktop-portal = {
+      # Overrides the portals from NixOS' `xdg.portal.enable`
+      Unit = {
+        Description = "Portal service";
+        PartOf = "graphical-session.target";
+        Requires = "dbus.service";
+        After = [
+          "dbus.service"
+          "niri.service"
+        ];
+      };
+
+      Service = {
+        Type = "dbus";
+        BusName = "org.freedesktop.portal.Desktop";
+        ExecStart = "${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal";
+        Slice = "session.slice";
+      };
+    };
   };
 }
