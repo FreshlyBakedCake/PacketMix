@@ -72,6 +72,15 @@
 
         input.power-key-handling.enable = false;
 
+        layer-rules = [
+          {
+            matches = [
+              { namespace = "^wallpaper$"; }
+            ];
+            place-within-backdrop = true;
+          }
+        ];
+
         binds =
           let
             inherit (config.lib.niri) actions;

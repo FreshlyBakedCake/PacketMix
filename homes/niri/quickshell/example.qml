@@ -1,6 +1,7 @@
 import Quickshell // for PanelWindow
 import QtQuick // for Text
 import Quickshell.Services.UPower;
+import Quickshell.Wayland;
 
 PanelWindow {
   anchors {
@@ -13,6 +14,8 @@ PanelWindow {
 
   implicitHeight: 30
 
+  WlrLayershell.layer: WlrLayer.Bottom;
+
   Text {
     id: batt
     // center the bar in its parent component (the window)
@@ -22,7 +25,7 @@ PanelWindow {
       interval: 1000
       running: true
       repeat: true
-      onTriggered: batt.text = UPower.displayDevice.percentage;
+      onTriggered: batt.text = `${UPower.displayDevice.percentage * 100}%`;
     }
   }
 }
