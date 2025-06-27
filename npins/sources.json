@@ -176,6 +176,23 @@
       "url": "https://github.com/andir/npins/archive/3436e34124fa744c8ec4012cfdadddaf70d4328e.tar.gz",
       "hash": "sha256-uWO1kGBSw7a8osk4sHOeZGqeWEnijfO9B0HovmGYTqA="
     },
+    "quickshell": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://git.outfoxxed.me/",
+        "owner": "outfoxxed",
+        "repo": "quickshell"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.1.0",
+      "revision": "703a3789083d2f990c4e99cd25c97c2a4cccbd81",
+      "url": "https://git.outfoxxed.me/api/v1/repos/outfoxxed/quickshell/archive/v0.1.0.tar.gz",
+      "hash": "sha256-DdE50ZJN/mKsSF/vc9hrMboOeJ7BST5DD6GNEXgVbWg="
+    },
     "treefmt-nix": {
       "type": "Git",
       "repository": {

@@ -112,22 +112,22 @@ nilla.create (
             system,
             npins,
             mkShell,
-            qmlls,
+            kdePackages,
             reuse,
             ...
           }:
           mkShell {
-            QML2_IMPORT_PATH = "";
+            QML2_IMPORT_PATH = "/nix/store/q1w6l8l3x4lf5yfhmakj2bvkass98m11-quickshell-0.1.0/lib/qt-6/qml";
           
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
               config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
               config.packages.nilla-fmt.result.${system}
-              config.packages.quickshell
+              config.packages.quickshell.result.${system}
               config.packages.treefmt.result.${system}
               (config.inputs.npins.result { inherit pkgs system; })
-              qmlls
+              kdePackages.qtdeclarative
               reuse
             ];
           };
