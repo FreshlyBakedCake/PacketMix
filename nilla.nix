@@ -117,7 +117,7 @@ nilla.create (
             ...
           }:
           mkShell {
-            QML2_IMPORT_PATH = "/nix/store/q1w6l8l3x4lf5yfhmakj2bvkass98m11-quickshell-0.1.0/lib/qt-6/qml";
+            QML_IMPORT_PATH = "${config.packages.quickshell.result.${system}}/lib/qt-6/qml";
           
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
