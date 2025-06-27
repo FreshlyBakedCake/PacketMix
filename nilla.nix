@@ -15,7 +15,7 @@ let
   };
 in
 nilla.create (
-  { config }:
+  { config, lib }:
   {
     includes = [
       ./homes
@@ -117,7 +117,13 @@ nilla.create (
             ...
           }:
           mkShell {
-            QML_IMPORT_PATH = "${config.packages.quickshell.result.${system}}/lib/qt-6/qml";
+            QML_IMPORT_PATH = lib.fp.pipe [
+              (map (pkg: "${pkg}/lib/qt-6/qml"))
+              (builtins.concatStringsSep ":")
+            ] [
+              config.packages.quickshell.result.${system}
+              kdePackages.qtdeclarative
+            ];
           
             packages = [
               config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
