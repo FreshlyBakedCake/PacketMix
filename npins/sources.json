@@ -49,9 +49,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "9a59106c172b7d5963e3dc2cf07ff5b19f8119d6",
-      "url": "https://git.lix.systems/lix-project/lix/archive/9a59106c172b7d5963e3dc2cf07ff5b19f8119d6.tar.gz",
-      "hash": "sha256-A9EwWUNC+8Fnsafi3Lcks2jNm6wjNoxfPS5TJXzpTk0="
+      "revision": "34696c65a241a2a16bcb1c97946e179ead6e41ea",
+      "url": "https://git.lix.systems/lix-project/lix/archive/34696c65a241a2a16bcb1c97946e179ead6e41ea.tar.gz",
+      "hash": "sha256-ePRqzLiUc+duqBj5fdsEKqdir3pIySIv/aqotBP7fbg="
     },
     "lix-module": {
       "type": "Git",
@@ -134,15 +134,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "26187a2a129b9a4dcfd5d1de642cadb013cbd958",
-      "url": "https://github.com/sodiboo/niri-flake/archive/26187a2a129b9a4dcfd5d1de642cadb013cbd958.tar.gz",
-      "hash": "sha256-q+siaCkgWr41l5YpNvdhmxy2gdT+VPpbEup+fws9FI0="
+      "revision": "151cff5b067b51384cf88d5bd5a4ec74b5984c7c",
+      "url": "https://github.com/sodiboo/niri-flake/archive/151cff5b067b51384cf88d5bd5a4ec74b5984c7c.tar.gz",
+      "hash": "sha256-Nt906asgI25vQ+/FFHpZ2VeS8N3EMxRBlt9o7F2+Ib8="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre820697.4b1164c3215f/nixexprs.tar.xz",
-      "hash": "sha256-dbEfd1KXb3gWGyh0WsgIc6IZn4RkBYCamZozaO3zrcI="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre820854.30a61f056ac4/nixexprs.tar.xz",
+      "hash": "sha256-H35GgPwCiZF7vOX6y6/9cbC3Bt8xZyZgy3p2VIENRfM="
     },
     "nixpkgs": {
       "type": "Channel",
@@ -172,9 +172,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a05be418a1af1198ca0f63facb13c985db4cb3c5",
-      "url": "https://github.com/numtide/treefmt-nix/archive/a05be418a1af1198ca0f63facb13c985db4cb3c5.tar.gz",
-      "hash": "sha256-eEy8cuS0mZ2j/r/FE0/LYBSBcIs/MKOIVakwHVuqTfk="
+      "revision": "ac8e6f32e11e9c7f153823abc3ab007f2a65d3e1",
+      "url": "https://github.com/numtide/treefmt-nix/archive/ac8e6f32e11e9c7f153823abc3ab007f2a65d3e1.tar.gz",
+      "hash": "sha256-0IEdQB1nS+uViQw4k3VGUXntjkDp7aAlqcxdewb/hAc="
     },
     "walker": {
       "type": "GitRelease",
