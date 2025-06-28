@@ -12,6 +12,7 @@ let
       x: (x ? meta.license) && (x.meta.license.shortName == "unfreeRedistributable")
     ); # As we push to a public cachix, we can't use non-redistributable unfree software
     "nixos-24.11" = settings.nixpkgs;
+    nixos-unstable = settings.nixpkgs;
   };
 in
 nilla.create (
