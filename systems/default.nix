@@ -10,6 +10,7 @@ in
   config.systems.nixos."redhead" = {
     pkgs = nixpkgs.x86_64-linux;
     modules = [
+      ./collabora
       ./common
       ./espanso
       ./javelin

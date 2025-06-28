@@ -72,7 +72,6 @@
     helix
     jujutsu
     chromium
-    project.packages.collabora-gtimelog.result.${system}
     dogdns
     ghostty
     (project.inputs.npins.result { inherit pkgs system; })
