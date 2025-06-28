@@ -40,18 +40,22 @@
       "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
     "lix": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "Forgejo",
         "server": "https://git.lix.systems/",
         "owner": "lix-project",
         "repo": "lix"
       },
-      "branch": "main",
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "ac80a11300eb60006b7de90fb10ad6789e5beeed",
-      "url": "https://git.lix.systems/lix-project/lix/archive/ac80a11300eb60006b7de90fb10ad6789e5beeed.tar.gz",
-      "hash": "sha256-m2VBWeEFBUHdn5LfD2HmWvaoM0f5QSPV8XD7VpE+Of8="
+      "version": "2.93.0",
+      "revision": "47aad376c87e2e65967f17099277428e4b3f8e5a",
+      "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/2.93.0.tar.gz",
+      "hash": "sha256-hsFe4Tsqqg4l+FfQWphDtjC79WzNCZbEFhHI8j2KJzw=",
+      "frozen": true
     },
     "lix-module": {
       "type": "Git",
