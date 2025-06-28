@@ -13,6 +13,19 @@
       "url": "https://github.com/catppuccin/nix/archive/a6b0e34d083c79f08efabb1fd6ccf12b882daae6.tar.gz",
       "hash": "sha256-L9u68mNPPiuW7+OV5BKbXaj/AENTiiuEx8+QnMBjRlU="
     },
+    "collabora-gtimelog": {
+      "type": "Git",
+      "repository": {
+        "type": "GitLab",
+        "repo_path": "collabora/gtimelog",
+        "server": "https://gitlab.collabora.com/"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "8395ec4576cf54411d974675d26f64208acdcee0",
+      "url": "https://gitlab.collabora.com/api/v4/projects/collabora%2Fgtimelog/repository/archive.tar.gz?sha=8395ec4576cf54411d974675d26f64208acdcee0",
+      "hash": "sha256-M9pCF+XVf5ylxgq0BSUn5Vkg1HZ6i88LDiUDM4Y1Ghs="
+    },
     "home-manager": {
       "type": "Git",
       "repository": {
