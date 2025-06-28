@@ -72,37 +72,7 @@
     helix
     jujutsu
     chromium
-    (pkgs.gtimelog.overrideAttrs (oldAttrs: {
-      src = project.inputs.collabora-gtimelog.src;
-      makeWrapperArgs = [
-        "--set GIO_MODULE_DIR ${
-          lib.makeSearchPathOutput "out" "lib/gio/modules" (
-            with pkgs;
-            [
-              glib-networking
-            ]
-          )
-        }"
-        "--set GI_TYPELIB_PATH ${
-          lib.makeSearchPathOutput "out" "lib/girepository-1.0" [
-            gtk3
-            libsoup_2_4
-            glib
-            pango
-            harfbuzz
-            gdk-pixbuf
-            atk
-            libsecret
-          ]
-        }"
-      ];
-      postInstall = ''
-        install -Dm644 gtimelog.desktop $out/share/applications/gtimelog.desktop
-        install -Dm644 src/gtimelog/gtimelog.png $out/share/icons/hicolor/48x48/apps/gtimelog.png
-      '';
-      buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib-networking ];
-      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.gobject-introspection ];
-    }))
+    project.packages.collabora-gtimelog.result.${system}
     dogdns
     ghostty
     (project.inputs.npins.result { inherit pkgs system; })
