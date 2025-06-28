@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./appimage.nix
     ./locale.nix
   ];
 }
