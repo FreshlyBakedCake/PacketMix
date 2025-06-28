@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "4e95eaf8a351956d75cc400318579967ca2b6d0f",
-      "url": "https://github.com/catppuccin/nix/archive/4e95eaf8a351956d75cc400318579967ca2b6d0f.tar.gz",
-      "hash": "sha256-NYHXXJZ9m4fJpKk9tKn/EExX87SqcBcRINOGF7hKRLI="
+      "revision": "a6b0e34d083c79f08efabb1fd6ccf12b882daae6",
+      "url": "https://github.com/catppuccin/nix/archive/a6b0e34d083c79f08efabb1fd6ccf12b882daae6.tar.gz",
+      "hash": "sha256-L9u68mNPPiuW7+OV5BKbXaj/AENTiiuEx8+QnMBjRlU="
     },
     "home-manager": {
       "type": "Git",
@@ -49,9 +49,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "34696c65a241a2a16bcb1c97946e179ead6e41ea",
-      "url": "https://git.lix.systems/lix-project/lix/archive/34696c65a241a2a16bcb1c97946e179ead6e41ea.tar.gz",
-      "hash": "sha256-ePRqzLiUc+duqBj5fdsEKqdir3pIySIv/aqotBP7fbg="
+      "revision": "ac80a11300eb60006b7de90fb10ad6789e5beeed",
+      "url": "https://git.lix.systems/lix-project/lix/archive/ac80a11300eb60006b7de90fb10ad6789e5beeed.tar.gz",
+      "hash": "sha256-m2VBWeEFBUHdn5LfD2HmWvaoM0f5QSPV8XD7VpE+Of8="
     },
     "lix-module": {
       "type": "Git",
@@ -134,9 +134,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "151cff5b067b51384cf88d5bd5a4ec74b5984c7c",
-      "url": "https://github.com/sodiboo/niri-flake/archive/151cff5b067b51384cf88d5bd5a4ec74b5984c7c.tar.gz",
-      "hash": "sha256-Nt906asgI25vQ+/FFHpZ2VeS8N3EMxRBlt9o7F2+Ib8="
+      "revision": "3667e998b5ad7a1ec56207f79c9629a919eafd43",
+      "url": "https://github.com/sodiboo/niri-flake/archive/3667e998b5ad7a1ec56207f79c9629a919eafd43.tar.gz",
+      "hash": "sha256-6pUwEiEJw8PGqUn2+Mf0IEJN4M0FMoXCM4sNa2EZuKk="
     },
     "nixos-unstable": {
       "type": "Channel",
@@ -147,8 +147,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804745.7284e2decc98/nixexprs.tar.xz",
-      "hash": "sha256-EcKpawfFHpBnlqYOX+uoU9xovM1B+L16QvfVQPeQKzw="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804936.a676066377a2/nixexprs.tar.xz",
+      "hash": "sha256-nOCWeIFks9/GznEN7K3ihDiQqbti00W98kkdFelsIX8="
     },
     "npins": {
       "type": "Git",
