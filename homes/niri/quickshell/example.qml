@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell // for PanelWindow
 import QtQuick // for Text
 import Quickshell.Services.UPower;
@@ -25,67 +27,79 @@ and ranges between 1/4 - 1/20 and 1/4 at the top (=1/5) and 3/4 and 3/4 + 1/20 a
 
 // we can probably lazyload timers from the 'niri msg event-stream' to reduce power consumption
 
-PanelWindow {
-  anchors {
-    top: true
-    left: true
-    right: true
-    bottom: true
-  }
+Scope {
+  id: root
 
-  color: "transparent"
+  property string time;
 
-  /* Start properties needed to place this in the overlay */
-  WlrLayershell.layer: WlrLayer.Background;
-  exclusionMode: ExclusionMode.Ignore;
-  /* End properties needed to place this in the overlay */
+  Variants {
+    model: Quickshell.screens;
 
-  Rectangle {
-    y: (parent.height / 5)
-
-    width: parent.width
-    height: parent.height * 1/20
-
-    color: "transparent"
-    
-    Text {
-      id: batt
-      color: "white"
-
-      x: parent.width * 4/5 - batt.width / 2
-      y: parent.height / 2 - batt.height / 2
-
-      Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: batt.text = `Battery: ${Math.round(UPower.displayDevice.percentage * 100)}%`;
+    PanelWindow {
+      anchors {
+        top: true
+        left: true
+        right: true
+        bottom: true
       }
-    }
 
-    Text {
-      id: time
-      color: "white"
+      color: "transparent"
 
-      x: parent.width / 2 - time.width / 2
-      y: parent.height / 2 - time.height / 2
+      /* Start properties needed to place this in the overlay */
+      WlrLayershell.layer: WlrLayer.Background;
+      exclusionMode: ExclusionMode.Ignore;
+      /* End properties needed to place this in the overlay */
 
-      Process {
-        id: dateProc
-        command: ["date"]
-        running: true
+      Rectangle {
+        y: (parent.height / 5)
 
-        stdout: StdioCollector {
-          onStreamFinished: time.text = this.text
+        width: parent.width
+        height: parent.height * 1/20
+
+        color: "transparent"
+  
+        Text {
+          id: batt
+          color: "white"
+
+          x: parent.width * 4/5 - batt.width / 2
+          y: parent.height / 2 - batt.height / 2
+
+          Timer {
+            interval: 1000
+            running: true
+            repeat: true
+            onTriggered: batt.text = `Battery: ${Math.round(UPower.displayDevice.percentage * 100)}%`;
+          }
+        }
+
+        Text {
+          id: time
+          color: "white"
+
+          text: root.time
+
+          x: parent.width / 2 - time.width / 2
+          y: parent.height / 2 - time.height / 2
         }
       }
-
-      Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: dateProc.running = true
-      }
     }
+  }
+
+  Process {
+    id: dateProc
+    command: ["date"]
+    running: true
+
+    stdout: StdioCollector {
+      onStreamFinished: root.time = this.text
+    }
+  }
+
+  Timer {
+    interval: 1000
+    running: true
+    repeat: true
+    onTriggered: dateProc.running = true
   }
 }
