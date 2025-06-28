@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
+  programs.vdirsyncer.enable = true;
   programs.khal.enable = true;
 
   accounts.calendar.basePath = ".calendar";
