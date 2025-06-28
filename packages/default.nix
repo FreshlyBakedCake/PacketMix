@@ -4,6 +4,7 @@
 
 {
   includes = [
+    ./collabora-gtimelog
     ./treefmt
   ];
 }
