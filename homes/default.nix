@@ -47,4 +47,23 @@ in
       project = config;
     };
   };
+  config.homes."pinea:x86_64-linux" = {
+    modules = [
+      {
+        home.stateVersion = "25.05";
+        home.homeDirectory = "/home/pinea";
+      }
+      (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./pinea
+      ./common
+      ./development
+      ./espanso
+      ./gaming
+      ./remote
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+  };
 }
