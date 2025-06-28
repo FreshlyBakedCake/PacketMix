@@ -31,6 +31,7 @@
   ];
   boot.kernel.sysctl."kernel.sysrq" = 1;
   boot.initrd = {
+    systemd.enable = true;
     luks.devices."key".device = "/dev/disk/by-uuid/f3547d7f-707e-4b17-a22b-d31b6af0a67a";
     luks.devices."MAIN" = {
       device = "/dev/disk/by-uuid/5183512d-92c1-4272-a746-8518ff7cde4b";
