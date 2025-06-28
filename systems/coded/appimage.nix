@@ -2,7 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
 {
-  home.packages = [ pkgs.appimage-run ];
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
 }
