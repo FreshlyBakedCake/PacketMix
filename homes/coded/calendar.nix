@@ -11,6 +11,8 @@
     primary = true;
     primaryCollection = "Personal";
 
+    khal.enable = true;
+
     remote = {
       type = "caldav";
       url = "https://nextcloud.clicks.codes/remote.php/dav";
