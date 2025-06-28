@@ -10,9 +10,10 @@
 
   accounts.calendar.accounts."nextcloud" = {
     primary = true;
-    primaryCollection = "Personal";
+    primaryCollection = "personal";
 
     khal.enable = true;
+    khal.type = "discover";
 
     remote = {
       type = "caldav";
@@ -22,10 +23,17 @@
         "bw"
         "get"
         "password"
-        "'nextcloud calendar app password'"
+        "nextcloud calendar app password"
       ];
     };
 
     vdirsyncer.enable = true;
+    vdirsyncer.collections = [
+      "personal"
+      "personal_shared_by_clicks-minion"
+      "skyler-ist41_shared_by_clicks-minion"
+      "infra_shared_by_clicks-minion"
+      "oh-god-what-is-happening_shared_by_clicks-minion"
+    ];
   };
 }
