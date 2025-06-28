@@ -31,6 +31,7 @@ Scope {
   id: root
 
   property string time;
+  property string transparentColor;
 
   Variants {
     model: Quickshell.screens;
@@ -58,30 +59,7 @@ Scope {
 
         color: "transparent"
   
-        Text {
-          id: batt
-          color: "white"
-
-          x: parent.width * 4/5 - batt.width / 2
-          y: parent.height / 2 - batt.height / 2
-
-          Timer {
-            interval: 1000
-            running: true
-            repeat: true
-            onTriggered: batt.text = `Battery: ${Math.round(UPower.displayDevice.percentage * 100)}%`;
-          }
-        }
-
-        Text {
-          id: time
-          color: "white"
-
-          text: root.time
-
-          x: parent.width / 2 - time.width / 2
-          y: parent.height / 2 - time.height / 2
-        }
+        Clock { }
       }
     }
   }
