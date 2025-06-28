@@ -73,11 +73,7 @@
     jujutsu
     chromium
     (pkgs.gtimelog.overrideAttrs (oldAttrs: {
-      src = builtins.fetchGit {
-        url = "https://gitlab.collabora.com/collabora/gtimelog.git";
-        ref = "master";
-        rev = "8395ec4576cf54411d974675d26f64208acdcee0";
-      };
+      src = project.inputs.collabora-gtimelog.src;
       makeWrapperArgs = [
         "--set GIO_MODULE_DIR ${
           lib.makeSearchPathOutput "out" "lib/gio/modules" (
