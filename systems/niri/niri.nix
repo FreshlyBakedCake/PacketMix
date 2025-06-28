@@ -11,12 +11,10 @@
   ...
 }:
 let
-  package = pkgs.niri-unstable;
+  package = pkgs.niri;
 in
 {
   # we do not use the niri-flake nixos module, as it imports the home-module which causes a duplicate for attached homes
-
-  nixpkgs.overlays = [ project.inputs.niri.result.overlays.niri ];
 
   nix.settings = {
     substituters = [ "https://niri.cachix.org" ];
