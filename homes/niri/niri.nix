@@ -63,6 +63,7 @@
         };
 
         input.touchpad.natural-scroll = true;
+        input.touchpad.click-method = "clickfinger";
 
         input.warp-mouse-to-focus.enable = true;
         input.focus-follows-mouse = {
