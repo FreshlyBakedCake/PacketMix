@@ -46,6 +46,7 @@ in
   config.systems.nixos."ocicat" = {
     pkgs = nixpkgs.x86_64-linux;
     modules = [
+      ./coded
       ./common
       ./espanso
       ./gaming

@@ -28,5 +28,5 @@
   };
 
   # Configure console keymap
-  console.keyMap = "qwerty";
+  console.keyMap = "us";
 }
