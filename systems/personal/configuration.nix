@@ -59,6 +59,14 @@
       "wheel"
     ];
   };
+  users.users.pinea = {
+    isNormalUser = true;
+    description = "Pinea";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+  };
 
   # Install firefox.
   programs.firefox.enable = true;
