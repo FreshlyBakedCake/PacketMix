@@ -2,30 +2,90 @@ import Quickshell // for PanelWindow
 import QtQuick // for Text
 import Quickshell.Services.UPower;
 import Quickshell.Wayland;
+import Quickshell.Io;
+
+/*
+
+Overview has the following gaps...
+
+  fn workspace_gap(&self, zoom: f64) -> f64 {
+      let scale = self.scale.fractional_scale();
+      let gap = self.view_size.h * 0.1 * zoom;
+      round_logical_in_physical_max1(scale, gap)
+  }
+
+...zoom by default is 0.5 -> workspaces are 1/2 of the screen size in all dimensions
+
+so by default the gap we have to work with is 1/2 * 1/10 = 1/20th of the screen size
+and ranges between 1/4 - 1/20 and 1/4 at the top (=1/5) and 3/4 and 3/4 + 1/20 at the bottom...
+
+...not sure if it's worth calcing this -> guess the cost of having some variables for this isn't really difficult and justifies any Magic Numbers
+
+*/
+
+// we can probably lazyload timers from the 'niri msg event-stream' to reduce power consumption
 
 PanelWindow {
   anchors {
     top: true
     left: true
     right: true
+    bottom: true
   }
 
-  // exclusionMode: ExclusionMode.Ignore;
+  color: "transparent"
 
-  implicitHeight: 30
+  /* Start properties needed to place this in the overlay */
+  WlrLayershell.layer: WlrLayer.Background;
+  exclusionMode: ExclusionMode.Ignore;
+  /* End properties needed to place this in the overlay */
 
-  WlrLayershell.layer: WlrLayer.Bottom;
+  Rectangle {
+    y: (parent.height / 5)
 
-  Text {
-    id: batt
-    // center the bar in its parent component (the window)
-    anchors.centerIn: parent
+    width: parent.width
+    height: parent.height * 1/20
 
-    Timer {
-      interval: 1000
-      running: true
-      repeat: true
-      onTriggered: batt.text = `${UPower.displayDevice.percentage * 100}%`;
+    color: "transparent"
+    
+    Text {
+      id: batt
+      color: "white"
+
+      x: parent.width * 4/5 - batt.width / 2
+      y: parent.height / 2 - batt.height / 2
+
+      Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: batt.text = `Battery: ${Math.round(UPower.displayDevice.percentage * 100)}%`;
+      }
+    }
+
+    Text {
+      id: time
+      color: "white"
+
+      x: parent.width / 2 - time.width / 2
+      y: parent.height / 2 - time.height / 2
+
+      Process {
+        id: dateProc
+        command: ["date"]
+        running: true
+
+        stdout: StdioCollector {
+          onStreamFinished: time.text = this.text
+        }
+      }
+
+      Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: dateProc.running = true
+      }
     }
   }
 }

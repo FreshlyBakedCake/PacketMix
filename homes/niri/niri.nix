@@ -75,7 +75,7 @@
         layer-rules = [
           {
             matches = [
-              { namespace = "^wallpaper$"; }
+              { namespace = "^quickshell$"; }
             ];
             place-within-backdrop = true;
           }
