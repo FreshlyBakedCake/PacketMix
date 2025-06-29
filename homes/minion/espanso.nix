@@ -38,7 +38,7 @@
         replace = "@companies.starrysky.fyi";
       }
       {
-        regex = ''sky@a(?P<whitespace>\W)'';
+        regex = ''sky@a(?P<whitespace>\s)'';
         replace = "sky@a.starrysky.fyi{{whitespace}}";
       }
       {
