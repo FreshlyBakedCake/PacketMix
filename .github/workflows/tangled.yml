@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+name: Mirror to tangled.sh
+
+on:
+  push:
+    branches: [ "main", "release" ]
+
+jobs:
+  tangled-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Write out SSH key
+        env:
+          TANGLED_SSH_KEY: ${{ secrets.TANGLED_SSH_KEY }}
+        run: |
+          echo "$TANGLED_SSH_KEY" > ../tangled_ssh_key
+          chmod 600 ../tangled_ssh_key
+          
+      - name: Push to tangled
+        run: |         
+          git remote add tangled git@tangled.sh:freshlybakedca.ke/packetmix
+          export GIT_SSH_COMMAND="ssh -i $(realpath ../tangled_ssh_key) -o StrictHostKeyChecking=no"
+          git fetch --unshallow origin
+          git fetch tangled
+          git push tangled HEAD
