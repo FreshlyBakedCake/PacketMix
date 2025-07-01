@@ -62,9 +62,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "286aa409b24ebc950118d640f3045d9996043ce2",
-      "url": "https://git.lix.systems/lix-project/lix/archive/286aa409b24ebc950118d640f3045d9996043ce2.tar.gz",
-      "hash": "sha256-kZhhg4j+dD8ShKUepSO6z/Jfrfn0BGcAU/QdOs7X8Is="
+      "revision": "6e7c0812c78c50c1b06da9a0f326a5e21a1fab6f",
+      "url": "https://git.lix.systems/lix-project/lix/archive/6e7c0812c78c50c1b06da9a0f326a5e21a1fab6f.tar.gz",
+      "hash": "sha256-EPwFPGhkPuNJcLcXRPmyAPCwJLN/f9qSilpnTS6peCk="
     },
     "lix-module": {
       "type": "Git",
@@ -147,21 +147,21 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d9b7ff985e454c1b3d2af1c5d09e799ecd38902d",
-      "url": "https://github.com/sodiboo/niri-flake/archive/d9b7ff985e454c1b3d2af1c5d09e799ecd38902d.tar.gz",
-      "hash": "sha256-ljpyZxr5cHjJEXItXCoJVXJ+fiHTW1Ft0fPgEY72K5A="
+      "revision": "fab3c874b28d95696225b4e575c3b6dc5d6058fe",
+      "url": "https://github.com/sodiboo/niri-flake/archive/fab3c874b28d95696225b4e575c3b6dc5d6058fe.tar.gz",
+      "hash": "sha256-OVP1yknJHvRK+eIy56UZsf9kUXSmwlwitPa9dZ0/HWo="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre822156.30e2e2857ba4/nixexprs.tar.xz",
-      "hash": "sha256-6RZXUJorxswQLvrBbD2yhgh3BrgdUAvg9t5qfkuzI/g="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre823481.3016b4b15d13/nixexprs.tar.xz",
+      "hash": "sha256-BTVn9nIjhCeWpaxOs3Wbhwum4xID4p36dbmEfLDyh9Y="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.804936.a676066377a2/nixexprs.tar.xz",
-      "hash": "sha256-nOCWeIFks9/GznEN7K3ihDiQqbti00W98kkdFelsIX8="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.805252.b43c397f6c21/nixexprs.tar.xz",
+      "hash": "sha256-iAmjAfHulye0CGJuiVWKQhVlKx0szRYJb7KrnmMsx58="
     },
     "npins": {
       "type": "Git",
@@ -200,10 +200,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.12.23",
-      "revision": "45d35be8dee9b69c8433296e401defd69c7b670d",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.23",
-      "hash": "sha256-DUbOu45ls/h0Nnrrue/t0R12yNOhL6GegjGL1pV6BAQ="
+      "version": "v0.12.24",
+      "revision": "352acae1704400934ba3a6332720176a9ce4a874",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.24",
+      "hash": "sha256-CKOGM8NiYhCh0p/IzinlhNGCk1RhIr2VpPFQzvLwz8k="
     }
   },
   "version": 6
