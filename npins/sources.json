@@ -62,9 +62,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "6e7c0812c78c50c1b06da9a0f326a5e21a1fab6f",
-      "url": "https://git.lix.systems/lix-project/lix/archive/6e7c0812c78c50c1b06da9a0f326a5e21a1fab6f.tar.gz",
-      "hash": "sha256-EPwFPGhkPuNJcLcXRPmyAPCwJLN/f9qSilpnTS6peCk="
+      "revision": "ed3c202c20483863ad61ea35003082f7c08e90ea",
+      "url": "https://git.lix.systems/lix-project/lix/archive/ed3c202c20483863ad61ea35003082f7c08e90ea.tar.gz",
+      "hash": "sha256-J5h8EEFusHlO33DXbOIVGtymbBTLT7hZlmiGNvV0rJI="
     },
     "lix-module": {
       "type": "Git",
@@ -200,10 +200,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.12.24",
-      "revision": "352acae1704400934ba3a6332720176a9ce4a874",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.24",
-      "hash": "sha256-CKOGM8NiYhCh0p/IzinlhNGCk1RhIr2VpPFQzvLwz8k="
+      "version": "v0.12.25",
+      "revision": "14830336a03250a173e31d5e6022c8c8e2257864",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.25",
+      "hash": "sha256-mR2W30ZhJjLP2fz4cM2Su7DQET8X3afghYfmrekrMoc="
     }
   },
   "version": 6
