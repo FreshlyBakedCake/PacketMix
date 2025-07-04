@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a682f7033678ea093c42c5e361975af5988aa3de",
-      "url": "https://github.com/catppuccin/nix/archive/a682f7033678ea093c42c5e361975af5988aa3de.tar.gz",
-      "hash": "sha256-eKbIZwTsl+Rbkj4coSZETlcTbmVbegN1nCKJ7059p88="
+      "revision": "0b48d7ff0b8b6e614a013db0c384b1aeac694e32",
+      "url": "https://github.com/catppuccin/nix/archive/0b48d7ff0b8b6e614a013db0c384b1aeac694e32.tar.gz",
+      "hash": "sha256-+22eT7KEfA3gLYljZqUb/Of+ZB2j0zH94AyALBysgyk="
     },
     "collabora-gtimelog": {
       "type": "Git",
@@ -200,10 +200,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.12.26",
-      "revision": "c6f1b29a19e815d7bcd8b179a91f64cbb0017e81",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.26",
-      "hash": "sha256-S+9n5EaQnnSK5jemPQAFXeoMA55cjzAXXg8OoPIIr+Q="
+      "version": "v0.12.27",
+      "revision": "b14195850e16f2bc1a003608a6ef4ebf547cb3f7",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.27",
+      "hash": "sha256-LRKyygqLtKgeNb9OBScwnH2jKQDSR8+wPjq46tJl3sE="
     }
   },
   "version": 6
