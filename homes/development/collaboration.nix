@@ -2,10 +2,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ project, system, ... }:
 {
   programs.zed-editor = {
     enable = true;
+    package = project.inputs.nixos-unstable.result.${system}.zed-editor;
     extensions = [
       "catppuccin"
       "catppuccin-icons"
@@ -14,7 +15,7 @@
     userSettings = {
       git.git_gutter = "hide";
       minimap.show = "auto";
-      vim_mode = true;
+      helix_mode = true;
     };
   };
 }
