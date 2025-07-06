@@ -13,6 +13,7 @@
       "nix"
     ];
     userSettings = {
+      edit_predictions.mode = "subtle";
       git.git_gutter = "hide";
       minimap.show = "auto";
       helix_mode = true;
