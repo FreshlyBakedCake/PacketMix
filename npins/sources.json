@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f07078deae3c9f896ed3aa8bd4b114d9ab59dce8",
-      "url": "https://github.com/catppuccin/nix/archive/f07078deae3c9f896ed3aa8bd4b114d9ab59dce8.tar.gz",
-      "hash": "sha256-lh+Fjz110EZVsg72qWAE7yCtSOJiTnYCv14OgyCoRZw="
+      "revision": "719bb50ca2c99bc9c077669a48bfd9815493a11d",
+      "url": "https://github.com/catppuccin/nix/archive/719bb50ca2c99bc9c077669a48bfd9815493a11d.tar.gz",
+      "hash": "sha256-Y099OGYWYHtpYFP4offuV6rldBnpUv4CYk+HwuaQwLU="
     },
     "collabora-gtimelog": {
       "type": "Git",
@@ -147,15 +147,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "0ca4dc1ae61f37b9f2f15225b3015a2dea3413da",
-      "url": "https://github.com/sodiboo/niri-flake/archive/0ca4dc1ae61f37b9f2f15225b3015a2dea3413da.tar.gz",
-      "hash": "sha256-JzPiCLz/ESg5OJ3uYPP141HTPEpfDA+g/8LPVtNiQdA="
+      "revision": "f3b4c3cbb65b690c66ad5ca78f1e88620d4d6cc5",
+      "url": "https://github.com/sodiboo/niri-flake/archive/f3b4c3cbb65b690c66ad5ca78f1e88620d4d6cc5.tar.gz",
+      "hash": "sha256-/wvCffuHn2eOw6qYyLFm+oButg9Z1dU/BhkHhoRd5z4="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre823481.3016b4b15d13/nixexprs.tar.xz",
-      "hash": "sha256-BTVn9nIjhCeWpaxOs3Wbhwum4xID4p36dbmEfLDyh9Y="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre824861.5c724ed1388e/nixexprs.tar.xz",
+      "hash": "sha256-EzgiAGp3yKKlpkjPRXL+sVhVNmp46lyq3BadLEqMeQM="
     },
     "nixpkgs": {
       "type": "Channel",
