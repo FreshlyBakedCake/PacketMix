@@ -151,6 +151,19 @@
       "url": "https://github.com/sodiboo/niri-flake/archive/c4d9d4caa0c1e5c002679ca4b15db223b1942c2b.tar.gz",
       "hash": "sha256-tF7Tery/v0lhBKAwj9TgBLPSng42iZzlf/MeFb7on6U="
     },
+    "nix-index-database": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-index-database"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "85686025ba6d18df31cc651a91d5adef63378978",
+      "url": "https://github.com/nix-community/nix-index-database/archive/85686025ba6d18df31cc651a91d5adef63378978.tar.gz",
+      "hash": "sha256-DuOznGdgMxeSlPpUu6Wkq0ZD5e2Cfv9XRZeZlHWMd1s="
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
