@@ -20,6 +20,7 @@ in
       ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
     ];
     args = {
@@ -40,6 +41,7 @@ in
       ./espanso
       ./gaming
       (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
     ];
     args = {
@@ -59,6 +61,7 @@ in
       ./development
       ./espanso
       ./gaming
+      (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
     ];
     args = {
