@@ -213,10 +213,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.12.30",
-      "revision": "2dccb2765e41a71355355dea6de6de3f593d19e5",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.30",
-      "hash": "sha256-xRMOCvXmtGA/KBstmQZdyFQZqAU7msv1QPRmWNAKXMs="
+      "version": "v0.12.31",
+      "revision": "db7926e14372c3b07354733ca864072c9896a65f",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v0.12.31",
+      "hash": "sha256-G55itZe9xAlEq1x4IsE6Pm17t0c7A4obmOTRXjChs+o="
     }
   },
   "version": 6
