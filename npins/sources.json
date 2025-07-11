@@ -35,9 +35,9 @@
       },
       "branch": "release-25.05",
       "submodules": false,
-      "revision": "9b0873b46c9f9e4b7aa01eb634952c206af53068",
-      "url": "https://github.com/nix-community/home-manager/archive/9b0873b46c9f9e4b7aa01eb634952c206af53068.tar.gz",
-      "hash": "sha256-kllkNbIqQi3VplgTMeGzuh1t8Gk8TauvkTRt93Km+tQ="
+      "revision": "524da5f6c0bf11bb0d5590046276423a28b9453e",
+      "url": "https://github.com/nix-community/home-manager/archive/524da5f6c0bf11bb0d5590046276423a28b9453e.tar.gz",
+      "hash": "sha256-g/f7sW8EH5qRRJF95+hwWj+AzOMlw4zs04Ei5DWSRlU="
     },
     "impermanence": {
       "type": "Git",
@@ -62,9 +62,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fc3261c3405b122c8c2e5bdc3da6c4fb7ffa80a9",
-      "url": "https://git.lix.systems/lix-project/lix/archive/fc3261c3405b122c8c2e5bdc3da6c4fb7ffa80a9.tar.gz",
-      "hash": "sha256-Q0pIV16Vx9PZQRVXc1GS/IcKYlmcVMdkSGPdBsiLyKU="
+      "revision": "65ef28df6dac2b5fe3b405a534515567a2f60b6f",
+      "url": "https://git.lix.systems/lix-project/lix/archive/65ef28df6dac2b5fe3b405a534515567a2f60b6f.tar.gz",
+      "hash": "sha256-1O9zT27Wm/lP+fWfGPWyXtYBZCn7yChP6Mk+ewCqKBU="
     },
     "lix-module": {
       "type": "Git",
