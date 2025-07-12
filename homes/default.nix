@@ -28,6 +28,28 @@ in
       project = config;
     };
   };
+  config.homes."minion@redhead:x86_64-linux" = {
+    modules = [
+      {
+        home.stateVersion = "24.11";
+        home.homeDirectory = "/home/minion";
+      }
+      (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./common
+      ./development
+      ./espanso
+      ./gaming
+      ./minion
+      (import ./niri { inherit (config.inputs) niri walker; })
+      (import ./nix-index { inherit (config.inputs) nix-index-database; })
+      ./redhead
+      ./remote
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+  };
   config.homes."coded:x86_64-linux" = {
     modules = [
       {
