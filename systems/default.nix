@@ -23,7 +23,7 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "minion:x86_64-linux"; };
+    homes = { inherit (config.homes) "minion@redhead:x86_64-linux"; };
   };
   config.systems.nixos."emden" = {
     pkgs = nixpkgs.x86_64-linux;
