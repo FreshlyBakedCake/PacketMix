@@ -5,5 +5,6 @@
 {
   imports = [
     ./locale.nix
+    ./samba.nix
   ];
 }

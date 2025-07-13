@@ -14,5 +14,6 @@
     pkgs.bun
     pkgs.nodePackages_latest.nodejs
     pkgs.prusa-slicer
+    pkgs.kitty
   ];
 }

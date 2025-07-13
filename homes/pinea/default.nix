@@ -9,5 +9,6 @@
     ./catppuccin.nix
     ./keyboard.nix
     ./misc.nix
+    ./zed.nix
   ];
 }
