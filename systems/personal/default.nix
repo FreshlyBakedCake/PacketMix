@@ -6,6 +6,7 @@
   imports = [
     ./bluetooth.nix
     ./configuration.nix
+    ./ddc.nix
     ./homes.nix
   ];
 }
