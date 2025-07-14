@@ -38,6 +38,8 @@ Scope {
         model: Quickshell.screens
 
         PanelWindow {
+            id: shell
+
             anchors {
                 top: true
                 left: true
@@ -59,10 +61,19 @@ Scope {
                 id: overviewTopline
                 visible: Niri.overview
 
-                y: (parent.height / 5)
+                QtObject {
+                    id: position
+
+                    property int vmin: Math.min(shell.width, shell.height)
+                    property int height: vmin * 1 / 20
+                    property int toplineAreaBottom: shell.height / 4
+                    property int y: toplineAreaBottom - height
+                }
+
+                y: position.y
 
                 width: parent.width
-                height: parent.height * 1 / 20
+                height: position.height
 
                 color: "transparent"
 
