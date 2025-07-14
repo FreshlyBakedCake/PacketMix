@@ -6,7 +6,7 @@
 { ... }:
 {
   imports = [
-    nix-index-database.result.hmModules.nix-index
+    nix-index-database.result.homeModules.nix-index
   ];
 
   config = {
