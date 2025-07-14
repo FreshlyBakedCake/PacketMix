@@ -214,7 +214,10 @@
                 "${mod}+Shift+Ctrl+Home".action.move-workspace-to-monitor-left = [ ];
                 "${mod}+Shift+Ctrl+End".action.move-workspace-to-monitor-right = [ ];
 
-                "${mod}+Space".action.toggle-overview = [ ];
+                "${mod}+Space" = {
+                  action.toggle-overview = [ ];
+                  repeat = false;
+                };
               })
             // {
               # Audio
