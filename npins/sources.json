@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "5f431aac1a4038c385e6de2d2384d943e4802d61",
-      "url": "https://github.com/catppuccin/nix/archive/5f431aac1a4038c385e6de2d2384d943e4802d61.tar.gz",
-      "hash": "sha256-eetITGJfURryoHY5gfuE9/4sEV9aSgzhPxgsQgofNa8="
+      "revision": "7dc907c010e1612729c5d76cf614b5f7811bfe23",
+      "url": "https://github.com/catppuccin/nix/archive/7dc907c010e1612729c5d76cf614b5f7811bfe23.tar.gz",
+      "hash": "sha256-CFOuAHbc9PTt9HhjGQFf07bUCZKOahQ+vLt30J6u5fw="
     },
     "collabora-gtimelog": {
       "type": "Git",
@@ -35,8 +35,8 @@
       },
       "branch": "release-25.05",
       "submodules": false,
-      "revision": "c26266790678863cce8e7460fdbf0d80991b1906",
-      "url": "https://github.com/nix-community/home-manager/archive/c26266790678863cce8e7460fdbf0d80991b1906.tar.gz",
+      "revision": "2e00ed310c218127e02ffcf28ddd4e0f669fde3e",
+      "url": "https://github.com/nix-community/home-manager/archive/2e00ed310c218127e02ffcf28ddd4e0f669fde3e.tar.gz",
       "hash": "sha256-ReX0NG6nIAEtQQjLqeu1vUU2jjZuMlpymNtb4VQYeus="
     },
     "home-manager-unstable": {
@@ -48,9 +48,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "1a4d8ffd320c2393b72e7ebc5b647122d5703056",
-      "url": "https://github.com/nix-community/home-manager/archive/1a4d8ffd320c2393b72e7ebc5b647122d5703056.tar.gz",
-      "hash": "sha256-P8mQIrgIImASTlNkHPfKwGTmyZgku8EUt6cF52s3N/Y="
+      "revision": "1e54837569e0b80797c47be4720fab19e0db1616",
+      "url": "https://github.com/nix-community/home-manager/archive/1e54837569e0b80797c47be4720fab19e0db1616.tar.gz",
+      "hash": "sha256-4kaR+xmng9YPASckfvIgl5flF/1nAZOplM+Wp9I5SMI="
     },
     "impermanence": {
       "type": "Git",
@@ -75,9 +75,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "2090853b8026ebac17eae181e36bd68ca1f424f2",
-      "url": "https://git.lix.systems/lix-project/lix/archive/2090853b8026ebac17eae181e36bd68ca1f424f2.tar.gz",
-      "hash": "sha256-ip8lIt5zfOFe1y5UosEhwsbFkr0G90ya2v9YeqKICH8="
+      "revision": "f4a11d0336478cc90802dae757267b85af587457",
+      "url": "https://git.lix.systems/lix-project/lix/archive/f4a11d0336478cc90802dae757267b85af587457.tar.gz",
+      "hash": "sha256-ScJapbIV3lJa6NdCE2VtATMPtBvga6QDQ8f8jtTBVBs="
     },
     "lix-module": {
       "type": "Git",
@@ -160,9 +160,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "11b4d1e53016d5ea8ed4cc6fd650e385ce4b927e",
-      "url": "https://github.com/sodiboo/niri-flake/archive/11b4d1e53016d5ea8ed4cc6fd650e385ce4b927e.tar.gz",
-      "hash": "sha256-twcawp+dcfo79MU3b7LoCug0xdwA68iVtQ6s8wNS5bM="
+      "revision": "61a97d3ee496bd5e29ec4c93eaf70a1bfc1fb326",
+      "url": "https://github.com/sodiboo/niri-flake/archive/61a97d3ee496bd5e29ec4c93eaf70a1bfc1fb326.tar.gz",
+      "hash": "sha256-GODcHAfq7IWgD+kLPwV2QU6H+iowUJcwijHKvNrSx/g="
     },
     "nix-index-database": {
       "type": "Git",
