@@ -64,4 +64,14 @@
   };
 
   niri.wallpaper = ./wallpaper.png;
+  niri.overviewBackground = pkgs.stdenv.mkDerivation {
+    name = "niri-overview-background";
+
+    src = ./overviewBackground.png;
+    dontUnpack = true;
+
+    buildPhase = ''
+      ${pkgs.imagemagick}/bin/magick $src -blur 0x4 -fill black -colorize 40% $out
+    '';
+  };
 }
