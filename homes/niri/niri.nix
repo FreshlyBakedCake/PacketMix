@@ -35,6 +35,20 @@
         '';
       };
     };
+    overviewBackground = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to the overview background you'd like to use, defaults to a darkened, blurred version of your desktop wallpaper";
+      default = pkgs.stdenv.mkDerivation {
+        name = "niri-overview-background";
+
+        src = config.niri.wallpaper;
+        dontUnpack = true;
+
+        buildPhase = ''
+          ${pkgs.imagemagick}/bin/magick $src -blur 0x16 -fill black -colorize 40% $out
+        '';
+      };
+    };
   };
 
   config = {

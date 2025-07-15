@@ -52,6 +52,14 @@ Scope {
 
             color: "transparent"
 
+            Image {
+                id: background
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+                source: "./background.png"
+                z: -1
+            }
+
             /* Start properties needed to place this in the overlay */
             WlrLayershell.layer: WlrLayer.Background
             exclusionMode: ExclusionMode.Ignore
