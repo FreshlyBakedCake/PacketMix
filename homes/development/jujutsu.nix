@@ -11,7 +11,8 @@
 {
   home.packages = [
     pkgs.difftastic
-    pkgs.meld
+    pkgs.kdiff3
+    pkgs.mergiraf
     project.inputs.nixos-unstable.result.${system}.jujutsu
   ];
 }
