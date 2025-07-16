@@ -9,6 +9,7 @@
     ./gpg.nix
     ./helix.nix
     ./hoppscotch.nix
+    ./jujutsu.nix
     ./simplified-utilities.nix
     ./tmux.nix
   ];
