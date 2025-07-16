@@ -147,6 +147,7 @@
                 "${mod}+Shift+BracketRight".action.expel-window-from-column = [ ];
                 "${mod}+Slash".action.switch-preset-column-width = [ ];
                 "${mod}+${mod1}+F".action.fullscreen-window = [ ];
+                "${mod}+${mod1}+Shift+F".action.toggle-windowed-fullscreen = [ ];
 
                 # Focus
                 "${mod}+Up".action.focus-window-or-workspace-up = [ ];
