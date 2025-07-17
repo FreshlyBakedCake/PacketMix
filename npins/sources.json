@@ -1,5 +1,57 @@
 {
   "pins": {
+    "beancount-autobean": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "SEIAROTg",
+        "repo": "autobean"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "b14d040eaa75a55731ef650e76425d7d356ec2b9",
+      "url": "https://github.com/SEIAROTg/autobean/archive/b14d040eaa75a55731ef650e76425d7d356ec2b9.tar.gz",
+      "hash": "sha256-+AFC78RzFITV7nNvg3PVUszsBW9b4tVHpVAjcPT2+4s="
+    },
+    "beancount-beancount_plugin_utils": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Akuukis",
+        "repo": "beancount_plugin_utils"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "053807f55b062a4d7bca91612a856da3812cb465",
+      "url": "https://github.com/Akuukis/beancount_plugin_utils/archive/053807f55b062a4d7bca91612a856da3812cb465.tar.gz",
+      "hash": "sha256-oyfL2K/sS4zZ7cq1P36h0dTcW1m5GUyQ9+IyZGfpb2E="
+    },
+    "beancount-beancount_share": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Akuukis",
+        "repo": "beancount_share"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "4101c45e16948c0683520cebcf88afe4862224c4",
+      "url": "https://github.com/Akuukis/beancount_share/archive/4101c45e16948c0683520cebcf88afe4862224c4.tar.gz",
+      "hash": "sha256-BW2KEC0pmervT71FBixPcQciEuGcElCd2wW7BZL1xUg="
+    },
+    "beancount-smart_importer": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "beancount",
+        "repo": "smart_importer"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d288eb31c580883491294c5e6c0abb4962f16e79",
+      "url": "https://github.com/beancount/smart_importer/archive/d288eb31c580883491294c5e6c0abb4962f16e79.tar.gz",
+      "hash": "sha256-1hE/2za1grfCeo1UK81dpLL/JkiLgaRYqLtF09mbDHc="
+    },
     "catppuccin": {
       "type": "Git",
       "repository": {

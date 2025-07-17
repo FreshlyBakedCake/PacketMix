@@ -4,7 +4,13 @@
 
 {
   imports = [
+    ./acme.nix
+    ./fava.nix
     ./hardware-configuration.nix
+    ./headscale.nix
     ./hostname.nix
+    ./packetmix.nix
+    ./secrets.nix
+    ./silverbullet.nix
   ];
 }
