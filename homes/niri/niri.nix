@@ -59,7 +59,7 @@
       {
         enable = true;
 
-        package = project.inputs.niri.result.packages.${pkgs.system}.niri-unstable;
+        package = pkgs.niri;
 
         settings = {
           environment = {
