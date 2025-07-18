@@ -6,5 +6,6 @@
   home.keyboard = {
     layout = "us";
     variant = "dvorak";
+    options = [ "compose:ralt" ];
   };
 }
