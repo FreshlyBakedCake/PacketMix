@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ./headscale.nix
     ./hostname.nix
+    ./networking.nix
     ./packetmix.nix
     ./secrets.nix
     ./silverbullet.nix

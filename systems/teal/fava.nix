@@ -149,6 +149,10 @@ in
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."fava.clicks.codes" = {
+    addSSL = true;
+    enableACME = true;
+    acmeRoot = null;
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1025";
       recommendedProxySettings = true;
