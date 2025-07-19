@@ -8,5 +8,6 @@
     project.inputs.impermanence.result.nixosModules.impermanence
     ./locale.nix
     ./ssh.nix
+    ./users.nix
   ];
 }
