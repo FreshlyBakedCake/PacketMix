@@ -10,6 +10,7 @@
     ./impermanence.nix
     ./inputs.nix
     ./lix.nix
+    ./networking.nix
     ./nilla-nix.nix
     ./packetmix.nix
     ./smartcard.nix
