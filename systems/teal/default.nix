@@ -15,6 +15,7 @@
     ./midnight.nix
     ./secrets.nix
     ./silverbullet.nix
+    ./spindle.nix
     ./stalwart.nix
     ./tailscale.nix
     ./vaultwarden.nix
