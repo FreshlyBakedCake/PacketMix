@@ -254,6 +254,18 @@
       "url": "https://github.com/andir/npins/archive/afa9fe50cb0bff9ba7e9f7796892f71722b2180d.tar.gz",
       "hash": "sha256-D6dYAMk9eYpBriE07s8Q7M3WBT7uM9pz3RKIoNk+h7I="
     },
+    "tangled": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://tangled.sh/@tangled.sh/core/"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f4ec8829cab63008d39b413150034564f27db26f",
+      "url": null,
+      "hash": "sha256-qDX/8AMd+nAumzngF45xRtdH8u+KTbFtdCSdwtpHG9I="
+    },
     "treefmt-nix": {
       "type": "Git",
       "repository": {

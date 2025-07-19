@@ -13,6 +13,7 @@
     ./packetmix.nix
     ./secrets.nix
     ./silverbullet.nix
+    ./spindle.nix
     ./tailscale.nix
   ];
 }
