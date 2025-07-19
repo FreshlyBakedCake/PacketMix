@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2022 Free Software Foundation Europe e.V. <https://fsfe.org>
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: Ensure files are formatted with treefmt
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  treefmt-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@526118121621777ccd86f79b04685a9319637641
+        with:
+          extra_nix_config: "experimental-features = nix-command"
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Set up a cachix cache
+        uses: cachix/cachix-action@0fc020193b5a1fa3ac4575aa3a7d3aa6a35435ad
+        with:
+          # Name of a cachix cache to push and pull/substitute
+          name: "freshlybakedcake"
+          authToken: "${{ secrets.CACHIX_TOKEN }}"
+
+      - name: Ensure all files are formatted
+        run: |
+          set +e
+
+          nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'treefmt --ci'
+
+          exitCode=$?
+
+          if [ $exitCode -ne 0 ]; then
+            echo "Your code isn't formatted correctly, please run 'nilla fmt' and squash it into each commit"
+          fi
+
+          exit $exitCode

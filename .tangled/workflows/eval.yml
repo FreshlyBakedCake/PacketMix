@@ -1,0 +1,31 @@
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main"]
+
+dependencies:
+  nixpkgs:
+    - lix
+
+steps:
+  - name: Evaluate all systems
+    command: |
+      eval_out=$(nix-instantiate ./nilla.nix -A packages.allNixOSSystems.result.x86_64-linux --add-root ./system-root 2>&1 | tee /dev/stderr)
+      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+      if [ -n "$eval_warns" ]; then
+        echo "There were some warnings while evaluating your systems:"
+        echo "$eval_warns"
+        echo "Please fix these and squash into your existing commits"
+        exit 1
+      fi
+  - name: Evaluate all homes
+    command: |
+      eval_out=$(nix-instantiate ./nilla.nix -A packages.allNixOSSystems.result.x86_64-linux --add-root ./system-root 2>&1 | tee /dev/stderr)
+      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+      if [ -n "$eval_warns" ]; then
+        echo "There were some warnings while evaluating your systems:"
+        echo "$eval_warns"
+        echo "Please fix these and squash into your existing commits"
+        exit 1
+      fi

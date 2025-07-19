@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+# SPDX-FileCopyrightText: 2022 Markus Dobel
+#
+# SPDX-License-Identifier: MIT
+
+name: Build and cache NixOS systems and Homes
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+concurrency: # Since as this check is expensive, it's a bad idea to keep running it when we push new commits...
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clean up runner
+        run: |
+          # Commands taken from https://github.com/easimon/maximize-build-space/blob/master/action.yml
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+      
+      - uses: actions/checkout@v4
+
+      - name: Install Lix
+        uses: samueldr/lix-gha-installer-action@8dc19fbd6451fa106a68ecb2dafeeeb90dff3a29
+        with:
+          extra_nix_config: "experimental-features = nix-command"
+
+      - run: cd $GITHUB_WORKSPACE
+
+      - name: Set up a cachix cache
+        uses: cachix/cachix-action@0fc020193b5a1fa3ac4575aa3a7d3aa6a35435ad
+        with:
+          # Name of a cachix cache to push and pull/substitute
+          name: "freshlybakedcake"
+          authToken: "${{ secrets.CACHIX_TOKEN }}"
+
+      # see https://git.lix.systems/lix-project/lix/issues/545
+      - name: Fix apparmor configuration for building Lix
+        run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+      - name: Build all systems
+        run: nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux --show-trace
+
+      - name: Build all homes
+        run: nix build -f ./nilla.nix packages.allHomes.result.x86_64-linux --show-trace
+
+      - if: github.event_name == 'push'
+        name: Push to release branch
+        run: |
+          git push -f origin HEAD:release

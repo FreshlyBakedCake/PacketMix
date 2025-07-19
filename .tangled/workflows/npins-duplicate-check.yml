@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2022 Free Software Foundation Europe e.V. <https://fsfe.org>
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: Check for npins duplicate keys
+# As it's possible to specify duplicate keys in npins, we need to route them
+# out... Duplicated npins keys cause the earlier definition of a pin to be
+# silently ignored, potentially causing confusion about what version is being
+# used
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  npins-duplicate-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for duplicate npins keys
+        run: |
+          dupes=$(jq --stream 'select((.[0] | length == 3) and (.[0][2] == "type")) | .[0][1]' $GITHUB_WORKSPACE/npins/sources.json | sort | uniq -d)
+          # We have to use the stream parser else jq will get rid of the duplicates
+
+          if [ ! -z "$dupes" ]; then
+            echo "The following keys are duplicated in your npins pins. By default, npins will take *the later definition*:"
+            echo "$dupes"
+            exit 1
+          fi
