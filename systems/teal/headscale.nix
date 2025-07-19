@@ -129,6 +129,10 @@ in
   # Nginx
   services.nginx.enable = true;
   services.nginx.virtualHosts."vpn.clicks.codes" = {
+    addSSL = true;
+    enableACME = true;
+    acmeRoot = null;
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1024";
       recommendedProxySettings = true;

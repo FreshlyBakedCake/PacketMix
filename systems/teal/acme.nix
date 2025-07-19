@@ -4,6 +4,7 @@
 
 {
   security.acme = {
+    acceptTerms = true;
     defaults = {
       email = "acme@freshlybakedca.ke";
       dnsProvider = "cloudflare";
