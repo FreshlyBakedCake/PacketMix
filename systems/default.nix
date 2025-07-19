@@ -13,6 +13,7 @@ in
       ./collabora
       ./common
       ./espanso
+      ./freshlybakedcake
       ./javelin
       ./minion
       ./niri
@@ -31,6 +32,7 @@ in
     modules = [
       ./common
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./javelin
       ./minion
@@ -50,6 +52,7 @@ in
       ./coded
       ./common
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./niri
       ./ocicat
@@ -67,6 +70,7 @@ in
     modules = [
       ./common
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./kde
       ./personal
@@ -83,6 +87,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./freshlybakedcake
       ./midnight
       ./server
     ];
@@ -95,6 +100,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     modules = [
       ./common
+      ./freshlybakedcake
       ./teal
       ./server
     ];
