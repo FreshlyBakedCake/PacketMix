@@ -3,4 +3,6 @@
 # SPDX-License-Identifier: MIT
 {
   users.mutableUsers = false;
+
+  security.sudo-rs.wheelNeedsPassword = false;
 }
