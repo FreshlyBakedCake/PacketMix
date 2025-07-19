@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main", "test"]
+
+dependencies:
+  nixpkgs:
+    - lix
+
+steps:
+  - name: Build all systems
+    command: |
+      nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux --show-trace
+  - name: Build all homes
+    command: |
+      nix build -f ./nilla.nix packages.allHomes.result.x86_64-linux --show-trace

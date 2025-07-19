@@ -11,11 +11,18 @@
     enableACME = true;
     acmeRoot = null;
 
+    serverAliases = [ "www.spindle.freshlybakedca.ke" ];
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1032";
       recommendedProxySettings = true;
+      proxyWebsockets = true;
     };
   };
+
+  services.nginx.commonHttpConfig = ''
+    error_log stderr debug;
+  '';
 
   services.tangled-spindle = {
     enable = true;
@@ -25,6 +32,8 @@
       jetstreamEndpoint = "wss://jetstream1.us-east.bsky.network/subscribe";
       owner = "did:plc:k2zmz2l3hvfr44tmlhewol2j";
     };
-    pipelines.stepTimeout = "2h";
+    pipelines.workflowTimeout = "2h";
   };
+
+  clicks.storage.impermanence.persist.directories = [ "/var/lib/docker" "/var/lib/spindle" ];
 }

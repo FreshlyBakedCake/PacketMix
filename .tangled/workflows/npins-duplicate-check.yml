@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main", "test"]
+
+dependencies:
+  nixpkgs:
+    - jq
+
+steps:
+  - name: Check for duplicate npins keys
+    command: |
+      dupes=$(jq --stream 'select((.[0] | length == 3) and (.[0][2] == "type")) | .[0][1]' npins/sources.json | sort | uniq -d)
+      # We have to use the stream parser else jq will get rid of the duplicates
+
+      if [ ! -z "$dupes" ]; then
+        echo "The following keys are duplicated in your npins pins. By default, npins will take *the later definition*:"
+        echo "$dupes"
+        exit 1
+      fi

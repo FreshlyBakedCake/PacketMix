@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main", "test"]
+
+dependencies:
+  nixpkgs:
+    - lix
+
+steps:
+  - name: Ensure files are formatted with treefmt
+    command: |
+      set +e
+
+      nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'treefmt --ci'
+
+      exitCode=$?
+
+      if [ $exitCode -ne 0 ]; then
+        echo "Your code isn't formatted correctly, please run 'nilla fmt' and squash it into each commit"
+      fi
+
+      exit $exitCode

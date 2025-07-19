@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main", "test"]
+
+dependencies:
+  nixpkgs:
+    - reuse
+
+steps:
+  - name: Check for REUSE compliance
+    command: reuse lint
