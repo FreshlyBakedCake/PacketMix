@@ -49,7 +49,7 @@ let
     {
       action = "accept";
       src = [ "mostlyturquoise" ];
-      dst = [ "tag:mostlyturquoise-minecraft-server" ];
+      dst = [ "tag:mostlyturquoise-minecraft-server:*" ];
     } # Used to let mostlyturquoise and their friends access their minecraft servers without giving people too many permissions
   ];
 
@@ -79,16 +79,10 @@ let
     }
   ] ++ exceptional_acls;
 
-  tagOwners = [
-    {
-      name = "tag:server";
-      value = "group:users";
-    }
-    {
-      name = "tag:mostlyturquoise-minecraft-server";
-      value = "mostlyturquoise";
-    }
-  ];
+  tagOwners = {
+    "tag:server" = [ "group:users" ];
+    "tag:mostlyturquoise-minecraft-server" = [ "mostlyturquoise" ];
+  };
 in
 {
   # Headscale service
