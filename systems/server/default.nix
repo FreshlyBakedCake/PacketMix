@@ -7,6 +7,7 @@
   imports = [
     project.inputs.impermanence.result.nixosModules.impermanence
     ./locale.nix
+    ./packetmix.nix
     ./ssh.nix
     ./users.nix
   ];
