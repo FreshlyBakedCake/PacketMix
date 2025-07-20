@@ -153,6 +153,8 @@ in
     enableACME = true;
     acmeRoot = null;
 
+    serverAliases = [ "www.fava.clicks.codes" ];
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1025";
       recommendedProxySettings = true;
