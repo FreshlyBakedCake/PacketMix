@@ -11,4 +11,6 @@
       environmentFile = "/secrets/acme/environmentFile";
     };
   };
+
+  clicks.storage.impermanence.persist.directories = [ "/var/lib/acme" ];
 }

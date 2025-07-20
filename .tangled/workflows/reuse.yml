@@ -1,24 +1,15 @@
-# SPDX-FileCopyrightText: 2022 Free Software Foundation Europe e.V. <https://fsfe.org>
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: MIT
 
-name: Check REUSE compliance
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main", "test"]
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+dependencies:
+  nixpkgs:
+    - reuse
 
-permissions:
-  contents: read
-
-jobs:
-  reuse:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Check REUSE compliance
-        uses: fsfe/reuse-action@a46482ca367aef4454a87620aa37c2be4b2f8106
+steps:
+  - name: Check for REUSE compliance
+    command: reuse lint

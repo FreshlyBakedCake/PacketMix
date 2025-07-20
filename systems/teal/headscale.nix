@@ -133,6 +133,8 @@ in
     enableACME = true;
     acmeRoot = null;
 
+    serverAliases = [ "www.vpn.clicks.codes" ];
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1024";
       recommendedProxySettings = true;

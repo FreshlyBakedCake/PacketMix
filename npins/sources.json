@@ -258,13 +258,13 @@
       "type": "Git",
       "repository": {
         "type": "Git",
-        "url": "https://tangled.sh/@tangled.sh/core/"
+        "url": "https://tangled.sh/@tangled.sh/core"
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f4ec8829cab63008d39b413150034564f27db26f",
+      "revision": "6ea25d1b67ac67f9f337b9adc224da7d2ef4b21c",
       "url": null,
-      "hash": "sha256-qDX/8AMd+nAumzngF45xRtdH8u+KTbFtdCSdwtpHG9I="
+      "hash": "sha256-bC/AXteKTvYPIUlgJur5qnKmSTdIBye/xEKXENfoQKY="
     },
     "treefmt-nix": {
       "type": "Git",
