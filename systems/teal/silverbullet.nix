@@ -30,6 +30,8 @@
     enableACME = true;
     acmeRoot = null;
 
+    serverAliases = [ "www.silverbullet.clicks.codes" ];
+
     locations."/" = {
       proxyPass = "http://127.0.0.1:1026";
       recommendedProxySettings = true;
