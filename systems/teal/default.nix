@@ -11,6 +11,7 @@
     ./hostname.nix
     ./kanidm.nix
     ./networking.nix
+    ./nextcloud.nix
     ./packetmix.nix
     ./secrets.nix
     ./silverbullet.nix
