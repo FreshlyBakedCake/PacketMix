@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ./headscale.nix
     ./hostname.nix
+    ./kanidm.nix
     ./networking.nix
     ./packetmix.nix
     ./secrets.nix
