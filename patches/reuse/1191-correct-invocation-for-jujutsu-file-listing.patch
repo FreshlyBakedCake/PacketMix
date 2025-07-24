@@ -1,0 +1,63 @@
+From 44d6d1a802e92c4837348329b32f1d0a158b5c30 Mon Sep 17 00:00:00 2001
+From: Jonas Fierlings <fnoegip@gmail.com>
+Date: Mon, 9 Jun 2025 18:28:42 +0200
+Subject: [PATCH] Correct invocation for jujutsu file listing
+
+The `jj files` command was deprecated in jujutsu 0.19.0, and removed in
+jujutsu 0.26.0 (released in february of 2025). The fix is to use the new
+`jj file list` command instead.
+---
+ src/reuse/vcs.py | 29 ++++++++++++++++++++++++++++-
+ 1 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/src/reuse/vcs.py b/src/reuse/vcs.py
+index 8c1cb5c8e..63b220048 100644
+--- a/src/reuse/vcs.py
++++ b/src/reuse/vcs.py
+@@ -2,6 +2,7 @@
+ # SPDX-FileCopyrightText: 2020 John Mulligan <jmulligan@redhat.com>
+ # SPDX-FileCopyrightText: 2023 Markus Haug <korrat@proton.me>
+ # SPDX-FileCopyrightText: 2024 Skyler Grey <sky@a.starrysky.fyi>
++# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+ # SPDX-FileCopyrightText: © 2020 Liferay, Inc. <https://liferay.com>
+ #
+ # SPDX-License-Identifier: GPL-3.0-or-later
+@@ -261,11 +262,37 @@ def _find_all_tracked_files(self) -> set[Path]:
+         """
+         Return a set of all files tracked in the current jj revision
+         """
+-        command = [str(self.EXE), "files"]
++        version = self._version()
++        # TODO: Remove the version check once most distributions ship jj 0.19.0
++        # or higher.
++        if version is None or version >= (0, 19, 0):
++            command = [str(self.EXE), "file", "list"]
++        else:
++            command = [str(self.EXE), "files"]
+         result = execute_command(command, _LOGGER, cwd=self.root)
+         all_files = result.stdout.decode("utf-8").split("\n")
+         return {Path(file_) for file_ in all_files if file_}
+ 
++    def _version(self) -> Optional[tuple[int, int, int]]:
++        """
++        Returns the (major, minor, patch) version of the jujutsu executable,
++        or None if the version components cannot be determined.
++        """
++        result = execute_command(
++            [str(self.EXE), "--version"], _LOGGER, cwd=self.root
++        )
++        lines = result.stdout.decode("utf-8").split("\n")
++        # Output has the form `jj major.minor.patch[-hash]\n`.
++        try:
++            line = lines[0]
++            version = line.split(" ")[-1]
++            without_hash = version.split("-")[0]
++            components = without_hash.split(".")
++            return (int(components[0]), int(components[1]), int(components[2]))
++        except (IndexError, ValueError) as e:
++            _LOGGER.debug("unable to parse jj version: %s", e)
++            return None
++
+     def is_ignored(self, path: StrPath) -> bool:
+         path = relative_from_root(path, self.root)
+ 
