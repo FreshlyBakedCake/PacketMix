@@ -95,6 +95,22 @@ nilla.create (
           );
       };
 
+      packages.reuse = {
+        systems = [ "x86_64-linux" ];
+
+        package =
+          { reuse }:
+          reuse.overrideAttrs (
+            {
+              patches ? [ ],
+              ...
+            }:
+            {
+              patches = patches ++ [ ./patches/reuse/1191-correct-invocation-for-jujutsu-file-listing.patch ];
+            }
+          );
+      };
+
       # With a package set defined, we can create a shell.
       shells.default = {
         # Declare what systems the shell can be used on.
@@ -108,7 +124,6 @@ nilla.create (
             npins,
             mkShell,
             kdePackages,
-            reuse,
             ...
           }:
           mkShell {
@@ -132,7 +147,7 @@ nilla.create (
               config.packages.treefmt.result.${system}
               (config.inputs.npins.result { inherit pkgs system; })
               kdePackages.qtdeclarative
-              reuse
+              config.packages.reuse.result.${system}
             ];
           };
       };
