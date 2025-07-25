@@ -77,7 +77,8 @@ let
       src = [ "tag:server" ];
       dst = [ "tag:server:*" ];
     }
-  ] ++ exceptional_acls;
+  ]
+  ++ exceptional_acls;
 
   tagOwners = {
     "tag:server" = [ "group:users" ];

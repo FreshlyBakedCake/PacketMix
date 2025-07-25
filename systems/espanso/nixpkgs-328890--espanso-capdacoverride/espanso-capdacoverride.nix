@@ -52,13 +52,12 @@ espanso.overrideAttrs (previousAttrs: {
     patchelfUnstable
   ];
 
-  postInstall =
-    ''
-      echo readlink readlink_wrapper > readlink_name_map
-      patchelf \
-        --rename-dynamic-symbols readlink_name_map \
-        --add-needed ${wrapperLibName} \
-        "$out/bin/espanso"
-    ''
-    + previousAttrs.postInstall;
+  postInstall = ''
+    echo readlink readlink_wrapper > readlink_name_map
+    patchelf \
+      --rename-dynamic-symbols readlink_name_map \
+      --add-needed ${wrapperLibName} \
+      "$out/bin/espanso"
+  ''
+  + previousAttrs.postInstall;
 })
