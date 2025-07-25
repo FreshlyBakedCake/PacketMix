@@ -14,6 +14,7 @@ in
       ./common
       ./espanso
       ./freshlybakedcake
+      ./freshlybakedcake+personal
       ./javelin
       ./minion
       ./niri
@@ -33,6 +34,7 @@ in
       ./common
       ./espanso
       ./freshlybakedcake
+      ./freshlybakedcake+personal
       ./gaming
       ./javelin
       ./minion
@@ -53,6 +55,7 @@ in
       ./common
       ./espanso
       ./freshlybakedcake
+      ./freshlybakedcake+personal
       ./gaming
       ./niri
       ./ocicat
@@ -71,6 +74,7 @@ in
       ./common
       ./espanso
       ./freshlybakedcake
+      ./freshlybakedcake+personal
       ./gaming
       ./kde
       ./personal
