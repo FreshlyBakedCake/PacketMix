@@ -45,15 +45,14 @@ nilla.create (
 
             dontUnpack = true;
 
-            buildPhase =
-              ''
-                mkdir -p $out
-              ''
-              + (builtins.concatStringsSep "\n" (
-                config.lib.attrs.mapToList (
-                  name: value: ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"''
-                ) config.systems.nixos
-              ));
+            buildPhase = ''
+              mkdir -p $out
+            ''
+            + (builtins.concatStringsSep "\n" (
+              config.lib.attrs.mapToList (
+                name: value: ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"''
+              ) config.systems.nixos
+            ));
           };
       };
 
@@ -67,15 +66,14 @@ nilla.create (
 
             dontUnpack = true;
 
-            buildPhase =
-              ''
-                mkdir -p $out
-              ''
-              + (builtins.concatStringsSep "\n" (
-                config.lib.attrs.mapToList (
-                  name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"''
-                ) (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
-              ));
+            buildPhase = ''
+              mkdir -p $out
+            ''
+            + (builtins.concatStringsSep "\n" (
+              config.lib.attrs.mapToList (
+                name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"''
+              ) (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
+            ));
           };
       };
 

@@ -105,14 +105,16 @@ in
         persistence."/persist/${cfg.volumes.persistent_data}" = {
           directories = [
             "/var/lib/nixos" # https://github.com/nix-community/impermanence/issues/178
-          ] ++ cfg.persist.directories;
+          ]
+          ++ cfg.persist.directories;
           files = [
             "/etc/machine-id"
             "/etc/ssh/ssh_host_ed25519_key"
             "/etc/ssh/ssh_host_ed25519_key.pub"
             "/etc/ssh/ssh_host_rsa_key"
             "/etc/ssh/ssh_host_rsa_key.pub"
-          ] ++ cfg.persist.files;
+          ]
+          ++ cfg.persist.files;
         };
       };
     }
