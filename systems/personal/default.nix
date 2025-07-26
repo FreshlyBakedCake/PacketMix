@@ -8,5 +8,6 @@
     ./bluetooth.nix
     ./configuration.nix
     ./homes.nix
+    ./kanidm.nix
   ];
 }
