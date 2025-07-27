@@ -14,6 +14,7 @@
     ./packetmix.nix
     ./secrets.nix
     ./silverbullet.nix
+    ./stalwart.nix
     ./tailscale.nix
   ];
 }
