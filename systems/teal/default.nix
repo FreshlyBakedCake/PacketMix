@@ -15,5 +15,6 @@
     ./secrets.nix
     ./silverbullet.nix
     ./tailscale.nix
+    ./vaultwarden.nix
   ];
 }
