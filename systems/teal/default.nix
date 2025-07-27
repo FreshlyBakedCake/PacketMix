@@ -16,5 +16,6 @@
     ./silverbullet.nix
     ./stalwart.nix
     ./tailscale.nix
+    ./vaultwarden.nix
   ];
 }
