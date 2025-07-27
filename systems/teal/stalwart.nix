@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
+  project,
   config,
   pkgs,
   lib,
@@ -27,135 +28,150 @@ let
   ];
 in
 {
-  services.stalwart-mail = {
-    enable = true;
-    openFirewall = true;
+  disabledModules = [ "services/mail/stalwart-mail.nix" ];
+  imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart-mail.nix" ];
 
-    settings = {
-      auth.dkim.sign = [
-        {
-          "if" = "is_local_domain('*', sender_domain)";
-          "then" = "['rsa-' + sender_domain, 'ed25519-' + sender_domain]";
-        }
-        { "else" = false; }
-      ];
-      certificate = {
-        "mail.freshly.space" = {
-          cert = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/fullchain.pem}%";
-          private-key = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/key.pem}%";
-          default = true;
+  config = {
+    services.stalwart-mail = {
+      enable = true;
+      openFirewall = true;
+
+      package = project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail.overrideAttrs {
+        inherit (project.inputs.stalwart) src;
+        doCheck = false;
+        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          name = "stalwart-deps";
+          inherit (project.inputs.stalwart) src;
+          hash = "sha256-t4BLko8vIVHZ44yeQoAhss3OxOlxJCErHm9h+FGG+28=";
         };
-      }
-      // (lib.pipe mail_domains [
+      };
+
+      settings = {
+        auth.dkim.sign = [
+          {
+            "if" = "is_local_domain('*', sender_domain)";
+            "then" = "['rsa-' + sender_domain, 'ed25519-' + sender_domain]";
+          }
+          { "else" = false; }
+        ];
+        certificate = {
+          "mail.freshly.space" = {
+            cert = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/fullchain.pem}%";
+            private-key = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/key.pem}%";
+            default = true;
+          };
+        }
+        // (lib.pipe mail_domains [
+          (map (domain: {
+            name = domain;
+            value = {
+              cert = "%{file:${config.security.acme.certs.${domain}.directory}/fullchain.pem}%";
+              private-key = "%{file:${config.security.acme.certs.${domain}.directory}/key.pem}%";
+            };
+          }))
+          builtins.listToAttrs
+        ]);
+        directory.internal = {
+          store = "rocksdb";
+          type = "internal";
+        };
+        server = {
+          hostname = "mail.freshly.space";
+          tls = {
+            enable = true;
+            implicit = true;
+          };
+          listener = {
+            smtp = {
+              protocol = "smtp";
+              bind = "0.0.0.0:25";
+            };
+            submissions = {
+              protocol = "smtp";
+              bind = "0.0.0.0:465";
+            };
+            imaps = {
+              protocol = "imap";
+              bind = "0.0.0.0:993";
+            };
+            web = {
+              protocol = "http";
+              bind = "127.0.0.1:1027";
+              url = "https://mail.freshly.space";
+            };
+          };
+        };
+        storage = {
+          blob = "rocksdb";
+          data = "rocksdb";
+          directory = "internal";
+          fts = "rocksdb";
+          lookup = "rocksdb";
+        };
+        store.rocksdb = {
+          compression = "lz4";
+          path = "/var/lib/stalwart-mail/data/rocksdb";
+          type = "rocksdb";
+        };
+        tracer.stdout.level = "debug";
+      };
+    };
+
+    systemd.services.stalwart-mail = {
+      wants = [
+        "acme-finished-mail.freshly.space.target"
+      ]
+      ++ (map (domain: "acme-finished-${domain}.target") mail_domains);
+      after = [
+        "acme-selfsigned-mail.freshly.space.service"
+        "acme-mail.freshly.space.service"
+      ]
+      ++ (map (domain: "acme-selfsigned-${domain}.service") mail_domains)
+      ++ (map (domain: "acme-${domain}.service") mail_domains);
+    };
+
+    services.nginx.enable = true;
+    services.nginx.virtualHosts."mail.freshly.space" = {
+      addSSL = true;
+      enableACME = true;
+      acmeRoot = null;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:1027";
+        recommendedProxySettings = true;
+        proxyWebsockets = true;
+      };
+    };
+
+    security.acme.certs =
+      (lib.pipe mail_domains [
         (map (domain: {
           name = domain;
           value = {
-            cert = "%{file:${config.security.acme.certs.${domain}.directory}/fullchain.pem}%";
-            private-key = "%{file:${config.security.acme.certs.${domain}.directory}/key.pem}%";
+            group = "stalwart-mail";
+            extraDomainNames = [
+              "autoconfig.${domain}"
+              "autodiscover.${domain}"
+              "mta-sts.${domain}"
+            ];
+            reloadServices = [ "stalwart-mail.service" ];
+            webroot = null;
           };
         }))
         builtins.listToAttrs
-      ]);
-      directory.internal = {
-        store = "rocksdb";
-        type = "internal";
-      };
-      server = {
-        hostname = "mail.freshly.space";
-        tls = {
-          enable = true;
-          implicit = true;
-        };
-        listener = {
-          smtp = {
-            protocol = "smtp";
-            bind = "0.0.0.0:25";
-          };
-          submissions = {
-            protocol = "smtp";
-            bind = "0.0.0.0:465";
-          };
-          imaps = {
-            protocol = "imap";
-            bind = "0.0.0.0:993";
-          };
-          web = {
-            protocol = "http";
-            bind = "127.0.0.1:1027";
-            url = "https://mail.freshly.space";
-          };
-        };
-      };
-      storage = {
-        blob = "rocksdb";
-        data = "rocksdb";
-        directory = "internal";
-        fts = "rocksdb";
-        lookup = "rocksdb";
-      };
-      store.rocksdb = {
-        compression = "lz4";
-        path = "/var/lib/stalwart-mail/data/rocksdb";
-        type = "rocksdb";
-      };
-      tracer.stdout.level = "debug";
-    };
-  };
-
-  systemd.services.stalwart-mail = {
-    wants = [
-      "acme-finished-mail.freshly.space.target"
-    ]
-    ++ (map (domain: "acme-finished-${domain}.target") mail_domains);
-    after = [
-      "acme-selfsigned-mail.freshly.space.service"
-      "acme-mail.freshly.space.service"
-    ]
-    ++ (map (domain: "acme-selfsigned-${domain}.service") mail_domains)
-    ++ (map (domain: "acme-${domain}.service") mail_domains);
-  };
-
-  services.nginx.enable = true;
-  services.nginx.virtualHosts."mail.freshly.space" = {
-    addSSL = true;
-    enableACME = true;
-    acmeRoot = null;
-
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:1027";
-      recommendedProxySettings = true;
-      proxyWebsockets = true;
-    };
-  };
-
-  security.acme.certs =
-    (lib.pipe mail_domains [
-      (map (domain: {
-        name = domain;
-        value = {
-          group = "stalwart-mail";
-          extraDomainNames = [
-            "autoconfig.${domain}"
-            "autodiscover.${domain}"
-            "mta-sts.${domain}"
-          ];
+      ])
+      // {
+        "mail.freshly.space" = {
           reloadServices = [ "stalwart-mail.service" ];
-          webroot = null;
+          group = "nginx+stalwart-mail";
         };
-      }))
-      builtins.listToAttrs
-    ])
-    // {
-      "mail.freshly.space" = {
-        reloadServices = [ "stalwart-mail.service" ];
-        group = "nginx+stalwart-mail";
       };
-    };
 
-  users.groups."nginx+stalwart-mail".members = [
-    "nginx"
-    "stalwart-mail"
-  ];
+    users.groups."nginx+stalwart-mail".members = [
+      "nginx"
+      "stalwart-mail"
+    ];
 
-  clicks.storage.impermanence.persist.directories = [ "/var/lib/stalwart-mail" ];
+    clicks.storage.impermanence.persist.directories = [ "/var/lib/stalwart-mail" ];
+  };
 }
