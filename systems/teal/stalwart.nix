@@ -75,6 +75,7 @@ in
           store = "rocksdb";
           type = "internal";
         };
+        file-storage.max-size = 8589934592;
         server = {
           hostname = "mail.freshly.space";
           tls = {
