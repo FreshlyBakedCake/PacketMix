@@ -9,6 +9,6 @@
 
     package = pkgs.kanidm_1_6;
 
-    clientSettings.uri = "https://kanidm.freshly.space";
+    clientSettings.uri = "https://idm.freshly.space";
   };
 }
