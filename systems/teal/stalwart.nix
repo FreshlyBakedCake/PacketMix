@@ -41,8 +41,8 @@ in
       ];
       certificate = {
         "mail.freshly.space" = {
-          cert = "${config.security.acme.certs."mail.freshly.space".directory}/fullchain.pem";
-          private-key = "${config.security.acme.certs."mail.freshly.space".directory}/key.pem";
+          cert = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/fullchain.pem}%";
+          private-key = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/key.pem}%";
           default = true;
         };
       }
@@ -50,8 +50,8 @@ in
         (map (domain: {
           name = domain;
           value = {
-            cert = "${config.security.acme.certs.${domain}.directory}/fullchain.pem";
-            private-key = "${config.security.acme.certs.${domain}.directory}/key.pem";
+            cert = "%{file:${config.security.acme.certs.${domain}.directory}/fullchain.pem}%";
+            private-key = "%{file:${config.security.acme.certs.${domain}.directory}/key.pem}%";
           };
         }))
         builtins.listToAttrs
@@ -133,6 +133,7 @@ in
       (map (domain: {
         name = domain;
         value = {
+          group = "stalwart-mail";
           extraDomainNames = [
             "autoconfig.${domain}"
             "autodiscover.${domain}"
@@ -145,8 +146,16 @@ in
       builtins.listToAttrs
     ])
     // {
-      "mail.freshly.space".reloadServices = [ "stalwart-mail.service" ];
+      "mail.freshly.space" = {
+        reloadServices = [ "stalwart-mail.service" ];
+        group = "nginx+stalwart-mail";
+      };
     };
+
+  users.groups."nginx+stalwart-mail".members = [
+    "nginx"
+    "stalwart-mail"
+  ];
 
   clicks.storage.impermanence.persist.directories = [ "/var/lib/stalwart-mail" ];
 }
