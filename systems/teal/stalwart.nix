@@ -47,6 +47,31 @@ in
       };
 
       settings = {
+        config.local-keys = [
+          "store.*"
+          "directory.*"
+          "tracer.*"
+          "!server.blocked-ip.*"
+          "!server.allowed-ip.*"
+          "server.*"
+          "authentication.fallback-admin.*"
+          "cluster.*"
+          "config.local-keys.*"
+          "storage.data"
+          "storage.blob"
+          "storage.lookup"
+          "storage.fts"
+          "storage.directory"
+          "certificate.*"
+
+          "resolver.public-suffix.*"
+          "file-storage.max-size"
+          "auth.dkim.sign.*"
+          "resolver.type"
+          "webadmin.path"
+          "webadmin.resource"
+          "spam-filter.resource"
+        ];
         auth.dkim.sign = [
           {
             "if" = "is_local_domain('*', sender_domain)";
