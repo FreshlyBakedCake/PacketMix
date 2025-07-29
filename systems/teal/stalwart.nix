@@ -96,10 +96,6 @@ in
           }))
           builtins.listToAttrs
         ]);
-        directory.internal = {
-          store = "rocksdb";
-          type = "internal";
-        };
         file-storage.max-size = 8589934592;
         server = {
           hostname = "mail.freshly.space";
@@ -127,23 +123,23 @@ in
             };
           };
         };
-        storage = {
-          blob = "rocksdb";
-          data = "rocksdb";
-          directory = "internal";
-          fts = "rocksdb";
-          lookup = "rocksdb";
-        };
-        store.rocksdb = {
-          compression = "lz4";
-          path = "/var/lib/stalwart-mail/data/rocksdb";
-          type = "rocksdb";
+        store.db = {
+          type = "postgresql";
+          host = "/run/postgresql";
+          database = "stalwart-mail";
+          query = {
+            name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = $1 AND active = true";
+            members = "SELECT member_of FROM group_members WHERE name = $1";
+            recipients = "SELECT name FROM emails WHERE address = $1 ORDER BY name ASC";
+            emails = "SELECT address FROM emails WHERE name = $1 ORDER BY type DESC, address ASC";
+          };
         };
         tracer.stdout.level = "debug";
       };
     };
 
     systemd.services.stalwart-mail = {
+      requires = [ "postgresql.service" ];
       wants = [
         "acme-finished-mail.freshly.space.target"
       ]
@@ -151,9 +147,11 @@ in
       after = [
         "acme-selfsigned-mail.freshly.space.service"
         "acme-mail.freshly.space.service"
+        "postgresql.service"
       ]
       ++ (map (domain: "acme-selfsigned-${domain}.service") mail_domains)
       ++ (map (domain: "acme-${domain}.service") mail_domains);
+      serviceConfig.RestrictAddressFamilies = lib.mkForce [ ]; # We need the default restricted address families to access the postgres socket
     };
 
     services.nginx.enable = true;
@@ -198,6 +196,15 @@ in
       "stalwart-mail"
     ];
 
-    clicks.storage.impermanence.persist.directories = [ "/var/lib/stalwart-mail" ];
+    services.postgresql = {
+      enable = true;
+      ensureDatabases = [ "stalwart-mail" ];
+      ensureUsers = [
+        {
+          name = "stalwart-mail";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
   };
 }
