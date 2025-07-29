@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./dav.nix
     ./kanidm.nix
   ];
 }
