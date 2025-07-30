@@ -12,5 +12,6 @@
     ./keyboard.nix
     ./misc.nix
     ./niri.nix
+    ./ssh.nix
   ];
 }
