@@ -62,6 +62,23 @@
     environmentFile = "/secrets/acme/environmentFile";
     email = "skyler.grey@collabora.com";
   };
+  security.acme.certs."collabora.dev.redhead.starrysky.fyi" = {
+    dnsProvider = "cloudflare";
+    environmentFile = "/secrets/acme/environmentFile";
+    email = "skyler.grey@collabora.com";
+  };
+
+  services.nginx.virtualHosts."collabora.dev.redhead.starrysky.fyi" = {
+    addSSL = true;
+    enableACME = true;
+    acmeRoot = null;
+
+    locations."/" = {
+      proxyPass = "https://127.0.0.1:9980";
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+    };
+  };
 
   services.postgresql = {
     enable = true;
