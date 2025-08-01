@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -41,6 +42,27 @@ in
       ./emden
       ./niri
       ./personal
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+    homes = { inherit (config.homes) "minion:x86_64-linux"; };
+  };
+  config.systems.nixos."marbled" = {
+    pkgs = nixpkgs.x86_64-linux;
+    modules = [
+      ./collabora
+      ./common
+      ./espanso
+      ./freshlybakedcake
+      ./freshlybakedcake+personal
+      ./javelin
+      ./minion
+      ./niri
+      ./personal
+      ./portable
+      ./marbled
     ];
     args = {
       system = "x86_64-linux";
