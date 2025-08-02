@@ -4,6 +4,7 @@
 
 {
   project,
+  pkgs,
   config,
   lib,
   ...
@@ -35,6 +36,8 @@
           no-crt = true;
 
           idp-store = 3;
+          idp-h-usr = "X-Webauth-Login";
+          idp-adm = admins;
 
           shr = "/share";
           shr-db = "/var/lib/copyparty/shares.db";
@@ -61,11 +64,6 @@
           og-ua = "Discordbot";
           og-site = "Freshly Baked Cake Files";
           spinner = "🧁"; # [hopefully this isn't too boring for you, tripflag](https://github.com/9001/copyparty/tree/hovudstraum/docs/rice#boring-loader-spinner)
-        };
-
-        accounts = {
-          coded.passwordFile = "/secrets/copyparty/default_password_coded";
-          minion.passwordFile = "/secrets/copyparty/default_password_minion";
         };
 
         volumes = {
@@ -123,8 +121,43 @@
         proxyPass = "http://127.0.0.1:1030";
         recommendedProxySettings = true;
         proxyWebsockets = true;
+
+        extraConfig = ''
+          proxy_hide_header X-Webauth-Login;
+          proxy_set_header X-Webauth-Login $preferred_username;
+        '';
       };
+
+      extraConfig = ''
+        auth_request_set $preferred_username $upstream_http_x_auth_request_preferred_username;
+      '';
     };
+
+    services.oauth2-proxy = {
+      enable = true;
+
+      keyFile = "/secrets/copyparty/oauth2-proxy";
+
+      httpAddress = "http://127.0.0.1:1031";
+      nginx = {
+        domain = "files.freshly.space";
+        virtualHosts."files.freshly.space" = { };
+      };
+      reverseProxy = true;
+
+      provider = "oidc";
+      scope = "openid profile email";
+      clientID = "copyparty";
+
+      setXauthrequest = true;
+
+      email.domains = [ "*" ];
+
+      oidcIssuerUrl = "https://idm.freshly.space/oauth2/openid/copyparty";
+
+      extraConfig.skip-provider-button = "true";
+    };
+    systemd.services.oauth2_proxy.preStart = "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w ''%{http_code}'' https://idm.freshly.space)\" != \"200\" ]]; do sleep 5; done";
 
     clicks.storage.impermanence.persist.directories = [ "/var/lib/copyparty" ];
   };
