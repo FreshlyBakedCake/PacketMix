@@ -5,6 +5,7 @@
 {
   imports = [
     ./acme.nix
+    ./copyparty.nix
     ./fava.nix
     ./hardware-configuration.nix
     ./headscale.nix
