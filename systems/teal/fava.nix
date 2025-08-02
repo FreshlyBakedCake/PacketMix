@@ -149,6 +149,8 @@ in
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."fava.clicks.codes" = {
+    listenAddresses = [ "100.64.0.5" ];
+
     addSSL = true;
     enableACME = true;
     acmeRoot = null;

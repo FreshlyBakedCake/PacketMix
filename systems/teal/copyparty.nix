@@ -209,6 +209,34 @@
     };
     systemd.services.oauth2_proxy.preStart = "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w ''%{http_code}'' https://idm.freshly.space)\" != \"200\" ]]; do sleep 5; done";
 
+    services.headscale.settings.dns.extra_records = [
+      {
+        # files.freshly.space -> teal
+        name = "files.freshly.space";
+        type = "A";
+        value = "100.64.0.5";
+      }
+    ];
+    services.nginx.virtualHosts."internal.files.freshly.space" = {
+      listenAddresses = [ "100.64.0.5" ];
+
+      serverName = "files.freshly.space";
+
+      addSSL = true;
+      enableACME = true;
+      acmeRoot = null;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:1030";
+        recommendedProxySettings = true;
+        proxyWebsockets = true;
+      };
+    };
+    services.nginx.tailscaleAuth = {
+      enable = true;
+      virtualHosts = [ "internal.files.freshly.space" ];
+    };
+
     clicks.storage.impermanence.persist.directories = [ "/var/lib/copyparty" ];
   };
 }
