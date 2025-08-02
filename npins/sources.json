@@ -78,6 +78,22 @@
       "url": "https://gitlab.collabora.com/api/v4/projects/collabora%2Fgtimelog/repository/archive.tar.gz?sha=8395ec4576cf54411d974675d26f64208acdcee0",
       "hash": "sha256-M9pCF+XVf5ylxgq0BSUn5Vkg1HZ6i88LDiUDM4Y1Ghs="
     },
+    "copyparty": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "9001",
+        "repo": "copyparty"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.18.9",
+      "revision": "ca22cd88534f48f13b18fc13eab9fdafca83a471",
+      "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.18.9",
+      "hash": "sha256-3ziocVJcVQ0cBia8Sp91uMkcVdh6l4rm/huhvAKfXzA="
+    },
     "home-manager": {
       "type": "Git",
       "repository": {
