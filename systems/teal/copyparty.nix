@@ -112,6 +112,14 @@
       ]);
 
     services.nginx.enable = true;
+    services.nginx.additionalModules = [ pkgs.nginxModules.lua ];
+    services.nginx.appendHttpConfig = ''
+      lua_package_path "${
+        "${pkgs.luaPackages.lua-resty-core}/lib/lua/5.2/?.lua;"
+        + "${pkgs.luaPackages.lua-resty-lrucache}/lib/lua/5.2/?.lua;"
+        + "${project.packages.lua-multipart.result.x86_64-linux}/share/lua/5.2/?.lua;;"
+      }"; # The double-semicolon makes the default search paths also be included
+    '';
     services.nginx.virtualHosts."files.freshly.space" = {
       addSSL = true;
       enableACME = true;
@@ -125,6 +133,45 @@
         extraConfig = ''
           proxy_hide_header X-Webauth-Login;
           proxy_set_header X-Webauth-Login $preferred_username;
+
+          proxy_intercept_errors on;
+          error_page 403 = @redirectToAuth2ProxyLogin;
+
+          access_by_lua_block {
+            if ngx.var.request_uri:sub(-3) == "/?h" and ngx.var.user == "" then
+              return ngx.redirect("https://files.freshly.space/oauth2/start?rd=" .. ngx.var.scheme .. "://" .. ngx.var.host .. ngx.var.request_uri, ngx.HTTP_MOVED_TEMPORARILY)
+            end
+
+            local headers, err = ngx.req.get_headers()
+            if not headers["Content-Type"] then
+              return
+            end
+            
+            ngx.req.read_body()
+            local body = ngx.req.get_body_data()
+
+            if not body then
+              return
+            end
+
+            local Multipart = require("multipart")
+            local multipart_data = Multipart(body, headers["Content-Type"])
+
+            if multipart_data:get("act").value == "logout" then
+              return ngx.redirect("https://files.freshly.space/oauth2/sign_out?rd=" .. ngx.var.scheme .. "://" .. ngx.var.host .. ngx.var.request_uri, ngx.HTTP_MOVED_TEMPORARILY)
+            end
+          }
+        '';
+      };
+
+      locations."@empty" = {
+        return = "200";
+      };
+
+      locations."= /oauth2/auth" = {
+        extraConfig = ''
+          proxy_intercept_errors on;
+          error_page 401 =200 @empty; # We always want to return 200 so as to allow anon access...
         '';
       };
 
@@ -155,7 +202,10 @@
 
       oidcIssuerUrl = "https://idm.freshly.space/oauth2/openid/copyparty";
 
-      extraConfig.skip-provider-button = "true";
+      extraConfig = {
+        skip-provider-button = "true";
+        whitelist-domain = "files.freshly.space";
+      };
     };
     systemd.services.oauth2_proxy.preStart = "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w ''%{http_code}'' https://idm.freshly.space)\" != \"200\" ]]; do sleep 5; done";
 
