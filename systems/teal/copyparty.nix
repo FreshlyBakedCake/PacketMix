@@ -75,22 +75,20 @@
               A = admins;
             };
           };
-          "/coded" = {
-            path = "/var/lib/copyparty/data/coded";
+          "/users/_" = {
+            path = "/var/lib/copyparty/data/users/_";
+
+            access = { };
+          };
+          "/users/\${u}" = {
+            path = "/var/lib/copyparty/data/users/_/\${u}";
 
             access = {
-              A = "coded";
+              A = "\${u}";
             };
           };
-          "/minion" = {
-            path = "/var/lib/copyparty/data/minion";
-
-            access = {
-              A = "minion";
-            };
-          };
-          "/freshly" = {
-            path = "/var/lib/copyparty/data/freshly";
+          "/groups/freshly" = {
+            path = "/var/lib/copyparty/data/groups/freshly";
 
             access = {
               A = [
