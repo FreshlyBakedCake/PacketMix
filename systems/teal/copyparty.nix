@@ -205,7 +205,11 @@
         whitelist-domain = "files.freshly.space";
       };
     };
-    systemd.services.oauth2_proxy.preStart = "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w ''%{http_code}'' https://idm.freshly.space)\" != \"200\" ]]; do sleep 5; done";
+    systemd.services.oauth2-proxy = {
+      after = [ "kanidm.service" ];
+      requires = [ "kanidm.service" ];
+      preStart = "while [[ \"$(${pkgs.curl}/bin/curl -s -L https://idm.freshly.space/status)\" != \"true\" ]]; do sleep 5; done";
+    };
 
     services.headscale.settings.dns.extra_records = [
       {
