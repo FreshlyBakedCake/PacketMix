@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -7,6 +8,27 @@ let
   nixpkgs = config.inputs.nixpkgs.result;
 in
 {
+  config.homes."maya:x86_64-linux" = {
+    modules = [
+      {
+        home.stateVersion = "24.11";
+        home.homeDirectory = "/home/maya";
+      }
+      (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./common
+      ./development
+      ./espanso
+      ./gaming
+      ./maya
+      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
+      (import ./nix-index { inherit (config.inputs) nix-index-database; })
+      ./remote
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+  };
   config.homes."minion:x86_64-linux" = {
     modules = [
       {
