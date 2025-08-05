@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ./hostname.nix
+    ./locale.nix
     ./users.nix
   ];
 }
