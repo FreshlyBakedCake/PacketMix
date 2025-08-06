@@ -175,6 +175,8 @@
 
       extraConfig = ''
         auth_request_set $preferred_username $upstream_http_x_auth_request_preferred_username;
+
+        client_max_body_size 1024M;
       '';
     };
 
@@ -233,6 +235,10 @@
         recommendedProxySettings = true;
         proxyWebsockets = true;
       };
+
+      extraConfig = ''
+        client_max_body_size 1024M;
+      '';
     };
     services.nginx.tailscaleAuth = {
       enable = true;
