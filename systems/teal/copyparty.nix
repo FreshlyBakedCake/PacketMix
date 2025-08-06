@@ -153,9 +153,9 @@
             end
 
             local Multipart = require("multipart")
-            local multipart_data = Multipart(body, headers["Content-Type"])
+            local multipart_data, err = pcall(Multipart(body, headers["Content-Type"]))
 
-            if multipart_data:get("act").value == "logout" then
+            if not err and multipart_data and multipart_data:get("act").value == "logout" then
               return ngx.redirect("https://files.freshly.space/oauth2/sign_out?rd=" .. ngx.var.scheme .. "://" .. ngx.var.host .. ngx.var.request_uri, ngx.HTTP_MOVED_TEMPORARILY)
             end
           }
