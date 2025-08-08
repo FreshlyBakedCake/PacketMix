@@ -9,6 +9,7 @@
     ./gtk.nix
     ./ghostty.nix
     ./helix.nix
+    ./impermanence.nix
     ./zoxide.nix
   ];
 }

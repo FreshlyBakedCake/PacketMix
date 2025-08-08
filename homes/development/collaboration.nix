@@ -19,4 +19,8 @@
       helix_mode = true;
     };
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    ".local/share/zed"
+  ];
 }

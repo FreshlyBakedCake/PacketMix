@@ -9,6 +9,7 @@
     ./catppuccin.nix
     ./espanso.nix
     ./helix.nix
+    ./impermanence.nix
     ./keyboard.nix
     ./misc.nix
     ./niri.nix

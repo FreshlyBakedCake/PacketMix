@@ -10,4 +10,8 @@
       nix-direnv.enable = true;
     };
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    ".local/share/direnv"
+  ];
 }

@@ -4,4 +4,8 @@
 
 {
   networking.networkmanager.enable = true;
+
+  clicks.storage.impermanence.persist.directories = [
+    "/etc/NetworkManager"
+  ];
 }

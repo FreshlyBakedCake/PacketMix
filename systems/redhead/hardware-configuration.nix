@@ -43,6 +43,22 @@
     options = [ "subvol=@" ];
   };
 
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" ];
+  };
+
+  fileSystems."/persist".options = [ "subvol=@persist" ];
+
+  clicks.storage.impermanence = {
+    enable = true;
+    devices = {
+      root = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45";
+      persist = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45"; # Not a typo - using subvol=@persist on fileSystems."/persist" to put in a specific subvolume
+    };
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/6181-C692";
     fsType = "vfat";

@@ -64,7 +64,7 @@ in
       ./minion
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      ./redhead
+      (import ./redhead { inherit (config.inputs) impermanence; })
       ./remote
     ];
     args = {

@@ -16,4 +16,8 @@
     enableScDaemon = true;
     pinentry.package = pkgs.pinentry-gnome3;
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    ".gnupg"
+  ];
 }
