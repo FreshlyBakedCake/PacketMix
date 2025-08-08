@@ -99,6 +99,7 @@ in
         neededForBoot = true;
         fsType = "btrfs";
       };
+      programs.fuse.userAllowOther = true;
     }
     // {
       environment = lib.optionalAttrs cfg.enable {

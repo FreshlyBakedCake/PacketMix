@@ -7,4 +7,8 @@
     enable = true;
     enableCompletion = true;
   };
+
+  clicks.storage.impermanence.persist.files = [
+    ".bash_history"
+  ];
 }

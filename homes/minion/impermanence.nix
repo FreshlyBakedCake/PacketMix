@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
 {
-  home.packages = [ pkgs.prismlauncher ];
-
   clicks.storage.impermanence.persist.directories = [
-    ".local/share/PrismLauncher"
+    ".config/jj"
+    ".ssh"
+    "Code"
   ];
 }

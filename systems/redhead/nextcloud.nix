@@ -136,4 +136,9 @@
       requires = [ "postgresql.service" ];
     };
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    "/var/lib/acme"
+    "/var/lib/nextcloud"
+  ];
 }

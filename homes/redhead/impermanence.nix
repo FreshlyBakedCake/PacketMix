@@ -2,11 +2,12 @@
 #
 # SPDX-License-Identifier: MIT
 
-# depends on niri flavor
 { impermanence }:
+{ ... }:
 {
   imports = [
-    (import ./impermanence.nix { inherit impermanence; })
-    ./niri.nix
+    impermanence.result.homeManagerModules.impermanence
   ];
+
+  clicks.storage.impermanence.enable = true;
 }

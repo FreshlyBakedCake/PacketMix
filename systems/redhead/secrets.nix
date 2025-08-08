@@ -3,9 +3,5 @@
 # SPDX-License-Identifier: MIT
 
 {
-  imports = [
-    ./itch.nix
-    ./minecraft.nix
-    ./steam.nix
-  ];
+  clicks.storage.impermanence.persist.directories = [ "/secrets" ];
 }

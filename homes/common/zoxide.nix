@@ -10,4 +10,8 @@
       "--hook=prompt"
     ];
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    ".local/share/zoxide"
+  ];
 }

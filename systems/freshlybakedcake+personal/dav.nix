@@ -37,4 +37,8 @@
       };
     }
   ];
+
+  clicks.storage.impermanence.persist.files = [
+    "/etc/davfs2/secrets"
+  ];
 }
