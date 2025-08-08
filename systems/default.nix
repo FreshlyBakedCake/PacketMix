@@ -114,6 +114,7 @@ in
     modules = [
       ./common
       ./freshlybakedcake
+      ./freshlybakedcake+server
       ./midnight
       ./server
     ];
@@ -127,6 +128,7 @@ in
     modules = [
       ./common
       ./freshlybakedcake
+      ./freshlybakedcake+server
       ./teal
       ./server
     ];

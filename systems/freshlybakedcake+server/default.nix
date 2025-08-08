@@ -4,11 +4,6 @@
 
 {
   imports = [
-    ./android.nix
-    ./hardware-configuration.nix
-    ./hostname.nix
-    ./nextcloud.nix
-    ./office.nix
     ./remoteBuilds.nix
   ];
 }
