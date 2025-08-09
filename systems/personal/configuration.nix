@@ -29,7 +29,6 @@
     dogdns
     ghostty
     (project.inputs.npins.result { inherit pkgs system; })
-    thunderbird
     wl-clipboard
   ];
 
