@@ -99,6 +99,13 @@
     phpfpm.wantedBy = lib.mkForce [ "nextcloud.target" ];
   };
 
+  systemd.timers = {
+    nextcloud-cron = {
+      wantedBy = lib.mkForce [ "nextcloud.target" ];
+      partOf = [ "nextcloud.target" ];
+    };
+  };
+
   systemd.services = {
     # By default nextcloud is brought up on multi-user.target... but we only want it on redhead for testing/development
     nextcloud-setup = {
