@@ -18,5 +18,6 @@
     ./smartcard.nix
     ./sudo.nix
     ./sysctl.nix
+    ./tailscale.nix
   ];
 }

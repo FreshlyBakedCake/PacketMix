@@ -10,6 +10,7 @@
     ./locale.nix
     ./packetmix.nix
     ./ssh.nix
+    ./tailscale.nix
     ./users.nix
   ];
 }
