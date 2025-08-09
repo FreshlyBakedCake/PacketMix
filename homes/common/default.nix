@@ -11,6 +11,7 @@
     ./ghostty.nix
     ./helix.nix
     ./impermanence.nix
+    ./thunderbird.nix
     ./zoxide.nix
   ];
 }
