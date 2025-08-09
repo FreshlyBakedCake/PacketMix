@@ -4,6 +4,16 @@
 
 { config, lib, ... }:
 {
+  home.file = {
+    ".cache/espanso/kvs/has_completed_wizard" = {
+      enable = true;
+      text = "true";
+    };
+    ".cache/espanso/kvs/has_displayed_welcome" = {
+      enable = true;
+      text = "true";
+    };
+  };
   xdg.configFile."espanso/config/default.yml".text = builtins.toJSON (
     {
       search_trigger = ":search";
