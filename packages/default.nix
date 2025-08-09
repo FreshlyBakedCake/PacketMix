@@ -9,6 +9,7 @@
     ./beancount-beancount_share
     ./beancount-smart_importer
     ./collabora-gtimelog
+    ./kavita
     ./lua-multipart
     ./OpenLinkHub
     ./treefmt
