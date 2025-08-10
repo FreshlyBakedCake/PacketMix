@@ -7,4 +7,7 @@
 {
   imports = [ catppuccin.result.homeModules.catppuccin ];
   config.catppuccin.enable = true;
+
+  config.catppuccin.cursors.enable = true;
+  config.home.pointerCursor.enable = true;
 }
