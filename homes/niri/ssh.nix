@@ -9,6 +9,7 @@
     Unit.After = [ "niri.service" ];
   };
 
+  services.gnome-keyring.enable = true;
   services.gnome-keyring.components = [
     "pkcs11"
     "secrets"
