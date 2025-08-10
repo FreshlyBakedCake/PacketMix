@@ -124,7 +124,7 @@ in
 
     script =
       let
-        fava = pkgs.fava.overrideAttrs (prevAttrs: {
+        fava = project.inputs.nixos-unstable.result.${system}.fava.overrideAttrs (prevAttrs: {
           propagatedBuildInputs = prevAttrs.propagatedBuildInputs ++ [
             project.packages.beancount-autobean.result.${system}
             project.packages.beancount-beancount_share.result.${system}
