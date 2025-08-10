@@ -57,6 +57,10 @@ let
       slug = "coded";
       name = "Samuel Shuert";
       beancountOptions.operating_currency = "USD";
+      favaOptions = {
+        import-config = builtins.toString ./fava/coded/importer.py;
+        import-dirs = "/var/lib/private/fava/coded/";
+      };
     }
   ];
 
