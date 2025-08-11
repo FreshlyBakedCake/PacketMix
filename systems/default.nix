@@ -11,7 +11,6 @@ in
   config.systems.nixos."redhead" = {
     pkgs = nixpkgs.x86_64-linux;
     modules = [
-      ./collabora
       ./common
       ./espanso
       ./freshlybakedcake
@@ -52,7 +51,6 @@ in
   config.systems.nixos."marbled" = {
     pkgs = nixpkgs.x86_64-linux;
     modules = [
-      ./collabora
       ./common
       ./espanso
       ./freshlybakedcake

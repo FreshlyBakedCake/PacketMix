@@ -15,6 +15,7 @@ in
         home.homeDirectory = "/home/maya";
       }
       (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./collabora
       ./common
       ./development
       ./espanso
@@ -57,6 +58,7 @@ in
         home.homeDirectory = "/home/minion";
       }
       (import ./catppuccin { inherit (config.inputs) catppuccin; })
+      ./collabora
       ./common
       ./development
       ./espanso
