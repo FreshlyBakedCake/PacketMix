@@ -19,5 +19,6 @@
     ./sudo.nix
     ./sysctl.nix
     ./tailscale.nix
+    ./ulimit.nix
   ];
 }
