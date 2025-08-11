@@ -13,5 +13,6 @@
     ./misc.nix
     ./niri.nix
     ./ssh.nix
+    ./zed.nix
   ];
 }
