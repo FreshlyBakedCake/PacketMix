@@ -147,5 +147,6 @@
   clicks.storage.impermanence.persist.directories = [
     "/var/lib/acme"
     "/var/lib/nextcloud"
+    "/var/lib/postgresql"
   ];
 }
