@@ -5,6 +5,7 @@
 {
   imports = [
     ./bash.nix
+    ./chromium.nix
     ./files.nix
     ./firefox.nix
     ./gtk.nix
