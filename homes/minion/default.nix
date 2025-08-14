@@ -13,6 +13,7 @@
     ./keyboard.nix
     ./misc.nix
     ./niri.nix
+    ./prompt.nix
     ./ssh.nix
   ];
 }
