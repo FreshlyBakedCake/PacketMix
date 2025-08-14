@@ -9,4 +9,8 @@
   home.packages = [
     pkgs.obs-studio
   ];
+
+  clicks.storage.impermanence.persist.directories = [
+    ".config/obs-studio"
+  ];
 }
