@@ -9,6 +9,7 @@
     ./catppuccin.nix
     ./espanso.nix
     ./helix.nix
+    ./jujutsu.nix
     ./keyboard.nix
     ./misc.nix
     ./niri.nix
