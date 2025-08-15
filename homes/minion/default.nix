@@ -10,6 +10,7 @@
     ./espanso.nix
     ./helix.nix
     ./impermanence.nix
+    ./jujutsu.nix
     ./keyboard.nix
     ./misc.nix
     ./niri.nix

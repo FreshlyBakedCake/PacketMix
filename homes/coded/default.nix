@@ -11,6 +11,7 @@
     ./calendar.nix
     ./catppuccin.nix
     ./email.nix
+    ./jujutsu.nix
     ./niri.nix
     ./sesh.nix
   ];
