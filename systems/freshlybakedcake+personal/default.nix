@@ -4,7 +4,7 @@
 
 {
   imports = [
-    ./dav.nix
+    ./copyparty.nix
     ./kanidm.nix
   ];
 }
