@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -13,6 +14,7 @@
   programs.niri = {
     settings = {
       input.mouse.natural-scroll = true;
+      layout.gaps = lib.mkForce 0;
     };
   };
 
