@@ -20,7 +20,22 @@
       "gid=${toString config.users.groups.users.gid}"
     ];
   };
+  fileSystems."/mnt/apricot" = {
+    device = "//apricot/main";
+    fsType = "cifs";
+    options = [
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+      "credentials=/etc/nixos/smb-secrets-apricot"
+      "uid=${toString config.users.users.pinea.uid}"
+      "gid=${toString config.users.groups.users.gid}"
+    ];
+  };
   systemd.tmpfiles.rules = [
     "d /mnt/family 0755 pinea users -"
+    "d /mnt/apricot 0755 pinea users -"
   ];
 }
