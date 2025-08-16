@@ -57,6 +57,10 @@ let
       slug = "coded";
       name = "Samuel Shuert";
       beancountOptions.operating_currency = "USD";
+      favaOptions = {
+        import-config = builtins.toString ./fava/coded/importer.py;
+        import-dirs = "/var/lib/private/fava/coded/";
+      };
     }
   ];
 
@@ -105,7 +109,7 @@ let
 in
 {
   systemd.services.fava = {
-    requires = [ "nginx.service" ];
+    wants = [ "nginx.service" ];
     after = [ "nginx.service" ];
     wantedBy = [ "multi-user.target" ];
 
@@ -124,7 +128,7 @@ in
 
     script =
       let
-        fava = pkgs.fava.overrideAttrs (prevAttrs: {
+        fava = project.inputs.nixos-unstable.result.${system}.fava.overrideAttrs (prevAttrs: {
           propagatedBuildInputs = prevAttrs.propagatedBuildInputs ++ [
             project.packages.beancount-autobean.result.${system}
             project.packages.beancount-beancount_share.result.${system}
