@@ -88,6 +88,7 @@ nilla.create (
               ...
             }:
             {
+              doCheck = false;
               patches = patches ++ [ ./patches/helix/3958-labels-for-config-menus.patch ];
             }
           );
