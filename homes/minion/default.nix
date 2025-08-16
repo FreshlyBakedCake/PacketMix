@@ -15,5 +15,6 @@
     ./niri.nix
     ./prompt.nix
     ./ssh.nix
+    ./xdg.nix
   ];
 }
