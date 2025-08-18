@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -12,6 +13,7 @@
     ./jujutsu.nix
     ./keyboard.nix
     ./misc.nix
+    ./nano.nix
     ./niri.nix
     ./ssh.nix
     ./zed.nix
