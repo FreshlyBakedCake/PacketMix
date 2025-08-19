@@ -17,23 +17,20 @@
 
     remote = {
       type = "caldav";
-      url = "https://nextcloud.clicks.codes/remote.php/dav";
-      userName = "clicks-coded";
+      url = "https://mail.freshly.space/dav/pal/me@thecoded.prof/";
+      userName = "me@thecoded.prof";
       passwordCommand = [
         "bw"
         "get"
         "password"
-        "nextcloud calendar app password"
+        "mail.freshly.space"
       ];
     };
 
     vdirsyncer.enable = true;
     vdirsyncer.collections = [
       "personal"
-      "personal_shared_by_clicks-minion"
-      "skyler-ist41_shared_by_clicks-minion"
-      "infra_shared_by_clicks-minion"
-      "oh-god-what-is-happening_shared_by_clicks-minion"
+      "default"
     ];
   };
 }

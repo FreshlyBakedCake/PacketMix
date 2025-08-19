@@ -6,7 +6,7 @@
   programs.aerc.enable = true;
 
   accounts.email.accounts."gmail" = {
-    primary = true;
+    aerc.enable = true;
     address = "samuel.shuert@gmail.com";
     passwordCommand = "bw get password 'samuel.shuert@gmail.com shorthair app password'";
     imap = {
@@ -24,20 +24,13 @@
     };
   };
 
-  accounts.email.accounts."clicks" = {
-    address = "coded@clicks.codes";
-    aliases = [
-      "me@thecoded.prof"
-    ];
-    passwordCommand = "bw get notes 'mail.clicks.codes App Password'";
-    imap = {
-      host = "mail.clicks.codes";
-      port = 993;
-    };
-    smtp = {
-      host = "mail.clicks.codes";
-      port = 465;
-    };
+  accounts.email.accounts."personal" = {
+    aerc.enable = true;
+    primary = true;
+    address = "me@thecoded.prof";
+    passwordCommand = "bw get notes 'mail.freshly.space App Password'";
+    jmap.host = "https://mail.freshly.space";
+    jmap.sessionUrl = "https://mail.freshly.space/jmap/session";
     realName = "Samuel Shuert";
     signature = {
       showSignature = "append";
