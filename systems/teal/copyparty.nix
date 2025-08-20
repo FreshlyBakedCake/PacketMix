@@ -64,6 +64,8 @@
           og-ua = "Discordbot";
           og-site = "Freshly Baked Cake Files";
           spinner = "🧁"; # [hopefully this isn't too boring for you, tripflag](https://github.com/9001/copyparty/tree/hovudstraum/docs/rice#boring-loader-spinner)
+
+          xm = "aw,f,j,t3600,${project.inputs.copyparty.src}/bin/hooks/wget.py"; # download URLs that are pasted into the message box
         };
 
         volumes = {
@@ -100,14 +102,23 @@
         };
       };
 
-    systemd.services.copyparty.serviceConfig.StateDirectory =
-      "copyparty "
-      + (lib.pipe config.services.copyparty.volumes [
-        builtins.attrValues
-        (map (mount: mount.path))
-        (map (lib.removePrefix "/var/lib/"))
-        (lib.concatStringsSep " ")
-      ]);
+    systemd.services.copyparty = {
+      path = [ pkgs.wget ]; # Needed for downloading files by URL
+      serviceConfig = {
+        BindReadOnlyPaths = [
+          "/etc/ssl"
+          "/etc/static/ssl"
+        ]; # Required for wget to validate SSL for downloads
+        StateDirectory =
+          "copyparty "
+          + (lib.pipe config.services.copyparty.volumes [
+            builtins.attrValues
+            (map (mount: mount.path))
+            (map (lib.removePrefix "/var/lib/"))
+            (lib.concatStringsSep " ")
+          ]);
+      };
+    };
 
     services.nginx.enable = true;
     services.nginx.additionalModules = [ pkgs.nginxModules.lua ];
