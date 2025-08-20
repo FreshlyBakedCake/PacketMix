@@ -67,6 +67,9 @@
 
           xm = "aw,f,j,t3600,${project.inputs.copyparty.src}/bin/hooks/wget.py"; # download URLs that are pasted into the message box
 
+          xff-src = "127.0.0.1";
+          rproxy = 1;
+
           exp = true;
         };
 
