@@ -66,6 +66,8 @@
           spinner = "🧁"; # [hopefully this isn't too boring for you, tripflag](https://github.com/9001/copyparty/tree/hovudstraum/docs/rice#boring-loader-spinner)
 
           xm = "aw,f,j,t3600,${project.inputs.copyparty.src}/bin/hooks/wget.py"; # download URLs that are pasted into the message box
+
+          exp = true;
         };
 
         volumes = {
