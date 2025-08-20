@@ -93,10 +93,6 @@ in
         file-storage.max-size = 8589934592;
         server = {
           hostname = "mail.freshly.space";
-          tls = {
-            enable = true;
-            implicit = true;
-          };
           listener = {
             smtp = {
               protocol = "smtp";
@@ -105,10 +101,18 @@ in
             submissions = {
               protocol = "smtp";
               bind = "0.0.0.0:465";
+              tls = {
+                enable = true;
+                implicit = true;
+              };
             };
             imaps = {
               protocol = "imap";
               bind = "0.0.0.0:993";
+              tls = {
+                enable = true;
+                implicit = true;
+              };
             };
             web = {
               protocol = "http";
