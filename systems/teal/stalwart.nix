@@ -72,13 +72,7 @@ in
           "webadmin.resource"
           "spam-filter.resource"
         ];
-        auth.dkim.sign = [
-          {
-            "if" = "is_local_domain('*', sender_domain)";
-            "then" = "['rsa-' + sender_domain, 'ed25519-' + sender_domain]";
-          }
-          { "else" = false; }
-        ];
+        auth.dkim.sign = "false";
         certificate = {
           "mail.freshly.space" = {
             cert = "%{file:${config.security.acme.certs."mail.freshly.space".directory}/fullchain.pem}%";
