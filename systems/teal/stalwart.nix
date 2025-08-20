@@ -164,6 +164,10 @@ in
         recommendedProxySettings = true;
         proxyWebsockets = true;
       };
+
+      extraConfig = ''
+        client_max_body_size 1024M;
+      '';
     };
 
     security.acme.certs =
