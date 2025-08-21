@@ -286,6 +286,19 @@
       "url": "https://github.com/andir/npins/archive/afa9fe50cb0bff9ba7e9f7796892f71722b2180d.tar.gz",
       "hash": "sha256-D6dYAMk9eYpBriE07s8Q7M3WBT7uM9pz3RKIoNk+h7I="
     },
+    "scriptfs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "eewanco",
+        "repo": "scriptfs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "82d7e4865c9a8e40bc717c8745d052420365069c",
+      "url": "https://github.com/eewanco/scriptfs/archive/82d7e4865c9a8e40bc717c8745d052420365069c.tar.gz",
+      "hash": "sha256-WLuOt8zemooHDzK+zWJNBicKu8bg0wXyAGvZIH/po6o="
+    },
     "stalwart": {
       "type": "GitRelease",
       "repository": {

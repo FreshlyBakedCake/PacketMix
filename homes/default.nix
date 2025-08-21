@@ -25,6 +25,7 @@ in
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
+      ./scriptfs
     ];
     args = {
       system = "x86_64-linux";
@@ -47,6 +48,7 @@ in
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
+      ./scriptfs
     ];
     args = {
       system = "x86_64-linux";
@@ -71,6 +73,7 @@ in
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       (import ./redhead { inherit (config.inputs) impermanence; })
       ./remote
+      ./scriptfs
     ];
     args = {
       system = "x86_64-linux";
@@ -93,6 +96,7 @@ in
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
+      ./scriptfs
     ];
     args = {
       system = "x86_64-linux";
@@ -114,6 +118,7 @@ in
       ./gaming
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
+      ./scriptfs
     ];
     args = {
       system = "x86_64-linux";
