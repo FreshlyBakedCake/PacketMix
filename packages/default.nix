@@ -11,6 +11,7 @@
     ./collabora-gtimelog
     ./lua-multipart
     ./OpenLinkHub
+    ./scriptfs
     ./treefmt
   ];
 }
