@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -322,6 +323,16 @@
             "WhiteSpaceEqual=0"
             "--cs"
             "UnfoldSubdirs=1"
+            "--cs"
+            "EncodingForA=iso 8859-1"
+            "--cs"
+            "EncodingForB=iso 8859-1"
+            "--cs"
+            "EncodingForC=iso 8859-1"
+            "--cs"
+            "EncodingForOutput=iso 8859-1"
+            "--cs"
+            "EncodingForPP=iso 8859-1"
             "$left"
             "$right"
           ];
