@@ -12,6 +12,7 @@
     ./hostname.nix
     ./kanidm.nix
     ./networking.nix
+    ./midnight.nix
     ./secrets.nix
     ./silverbullet.nix
     ./stalwart.nix
