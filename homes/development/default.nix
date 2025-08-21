@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
+  # depends on scriptfs ingredient for jujutsu
   imports = [
     ./collaboration.nix
     ./direnv.nix
