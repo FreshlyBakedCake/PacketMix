@@ -5,13 +5,22 @@
 
 {
   config,
+  lib,
   project,
   pkgs,
   system,
   ...
 }:
 {
-  programs.jujutsu = {
+  options.jujutsu = {
+    allowedSSHSigners = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.listOf lib.types.str);
+      description = "A mapping of SSH keys to emails they are valid for";
+      default = { };
+    };
+  };
+
+  config.programs.jujutsu = {
     enable = true;
     package = project.inputs.nixos-unstable.result.${system}.jujutsu;
     settings = {
@@ -357,6 +366,15 @@
 
         "series(tip, length)" = "back(tip, length)::tip";
       };
+      signing.backends.ssh.allowed-signers =
+        let
+          allowedSigners = lib.mapAttrsToList (
+            key: emails: "${builtins.concatStringsSep "," emails} ${key}"
+          ) config.jujutsu.allowedSSHSigners;
+          allowedSignersContent = builtins.concatStringsSep "\n" allowedSigners;
+          allowedSignersFile = builtins.toFile "allowed-signers" allowedSignersContent;
+        in
+        allowedSignersFile;
       snapshot.auto-track = "~(root-glob:'**/.envrc' | root-glob:'**/*.env' | root-glob:'**/.direnv/**/*')";
       template-aliases.series_log = ''
         if(root,
