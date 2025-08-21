@@ -18,7 +18,6 @@
       behavior = "drop";
       backend = "ssh";
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpBNIHk/kRhQL7Nl3Fd+UBVRoS2bTpbeerA//vwL2D4 coded";
-      backends.ssh.allowed-signers = "~/.ssh/allowed_signers";
     };
     user = {
       name = "Samuel Shuert";

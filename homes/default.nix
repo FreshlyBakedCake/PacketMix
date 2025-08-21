@@ -19,6 +19,7 @@ in
       ./common
       ./development
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./maya
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
@@ -40,6 +41,7 @@ in
       ./common
       ./development
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
@@ -62,6 +64,7 @@ in
       ./common
       ./development
       ./espanso
+      ./freshlybakedcake
       ./gaming
       ./minion
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
@@ -85,6 +88,7 @@ in
       ./common
       ./development
       ./espanso
+      ./freshlybakedcake
       ./gaming
       (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
@@ -106,6 +110,7 @@ in
       ./common
       ./development
       ./espanso
+      ./freshlybakedcake
       ./gaming
       (import ./nix-index { inherit (config.inputs) nix-index-database; })
       ./remote
