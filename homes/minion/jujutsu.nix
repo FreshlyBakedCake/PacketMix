@@ -39,11 +39,6 @@
       ];
     };
     git.sign-on-push = true;
-    signing = {
-      behavior = "drop";
-      backend = "ssh";
-      key = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident.pub";
-    };
     user.name = "Skyler Grey";
   };
 }

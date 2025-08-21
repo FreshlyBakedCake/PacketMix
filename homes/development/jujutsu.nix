@@ -366,15 +366,40 @@
 
         "series(tip, length)" = "back(tip, length)::tip";
       };
-      signing.backends.ssh.allowed-signers =
-        let
-          allowedSigners = lib.mapAttrsToList (
-            key: emails: "${builtins.concatStringsSep "," emails} ${key}"
-          ) config.jujutsu.allowedSSHSigners;
-          allowedSignersContent = builtins.concatStringsSep "\n" allowedSigners;
-          allowedSignersFile = builtins.toFile "allowed-signers" allowedSignersContent;
-        in
-        allowedSignersFile;
+      signing = {
+        backend = "ssh";
+        backends.ssh.allowed-signers =
+          let
+            allowedSigners = lib.mapAttrsToList (
+              key: emails: "${builtins.concatStringsSep "," emails} ${key}"
+            ) config.jujutsu.allowedSSHSigners;
+            allowedSignersContent = builtins.concatStringsSep "\n" allowedSigners;
+            allowedSignersFile = builtins.toFile "allowed-signers" allowedSignersContent;
+          in
+          allowedSignersFile;
+        behavior = "drop"; # override or set git.sign-on-push in your own config to auto-sign stuff...
+        key =
+          let
+            signingScript = pkgs.writeShellScript "first-ssh-key" ''
+              set -euo pipefail
+
+              KEYS="$(${pkgs.openssh}/bin/ssh-add -L)"
+
+              SECURITY_KEY="$(echo "$KEYS" | ${pkgs.gnugrep}/bin/grep '^sk-' || echo "")"
+
+              if [[ -z "$SECURITY_KEY" ]]; then
+                echo "$KEYS" | ${pkgs.coreutils}/bin/head -n 1
+                exit 0
+              fi
+
+              echo "$SECURITY_KEY" | ${pkgs.coreutils}/bin/head -n 1
+            '';
+            signingScriptPath = builtins.toString signingScript;
+            signingScriptScriptFSPath =
+              "~/.local/state/run/scriptfs" + (lib.removePrefix "/nix/store" signingScriptPath);
+          in
+          signingScriptScriptFSPath;
+      };
       snapshot.auto-track = "~(root-glob:'**/.envrc' | root-glob:'**/*.env' | root-glob:'**/.direnv/**/*')";
       template-aliases.series_log = ''
         if(root,
