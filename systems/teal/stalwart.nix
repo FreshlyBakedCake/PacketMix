@@ -121,7 +121,7 @@ in
             };
           };
         };
-        http.url = "https://mail.freshly.space";
+        http.url = "'https://mail.freshly.space'";
         store.db = {
           type = "postgresql";
           host = "/run/postgresql";
