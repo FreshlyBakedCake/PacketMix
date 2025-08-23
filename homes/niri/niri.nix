@@ -373,5 +373,16 @@
         Slice = "session.slice";
       };
     };
+
+    systemd.user.services.scriptfs = {
+      Install.WantedBy = lib.mkForce [ "graphical-session.target" ];
+
+      Unit = {
+        PartOf = "graphical-session.target";
+        After = [
+          "niri.service"
+        ];
+      };
+    };
   };
 }
