@@ -26,7 +26,7 @@
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."silverbullet.clicks.codes" = {
-    listenAddresses = [ "100.64.0.5" ];
+    listenAddresses = [ "localhost.tailscale" ];
 
     addSSL = true;
     enableACME = true;
