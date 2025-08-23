@@ -105,7 +105,7 @@ let
 in
 {
   systemd.services.fava = {
-    requires = [ "nginx.service" ];
+    wants = [ "nginx.service" ];
     after = [ "nginx.service" ];
     wantedBy = [ "multi-user.target" ];
 
