@@ -163,35 +163,51 @@ in
     };
 
     services.nginx.enable = true;
-    services.nginx.virtualHosts."mail.freshly.space" = {
-      addSSL = true;
-      enableACME = true;
-      acmeRoot = null;
+    services.nginx.virtualHosts =
+      lib.pipe
+        (
+          [ "mail.freshly.space" ]
+          ++ (map (domain: [
+            "autoconfig.${domain}"
+            "autodiscover.${domain}"
+            "mta-sts.${domain}"
+          ]) mail_domains)
+        )
+        [
+          lib.flatten
+          (map (domain: {
+            name = domain;
+            value = {
+              addSSL = true;
+              enableACME = true;
+              acmeRoot = null;
 
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:1027";
-        recommendedProxySettings = true;
-        proxyWebsockets = true;
-      };
+              locations."/" = {
+                proxyPass = "http://127.0.0.1:1027";
+                recommendedProxySettings = true;
+                proxyWebsockets = true;
+              };
 
-      extraConfig = ''
-        client_max_body_size 1024M;
-      '';
-    };
+              extraConfig = ''
+                client_max_body_size 1024M;
+              '';
+            };
+          }))
+          builtins.listToAttrs
+        ];
 
     security.acme.certs =
       (lib.pipe mail_domains [
         (map (domain: {
           name = domain;
           value = {
-            group = "stalwart-mail";
+            group = "nginx+stalwart-mail";
             extraDomainNames = [
               "autoconfig.${domain}"
               "autodiscover.${domain}"
               "mta-sts.${domain}"
             ];
             reloadServices = [ "stalwart-mail.service" ];
-            webroot = null;
           };
         }))
         builtins.listToAttrs
