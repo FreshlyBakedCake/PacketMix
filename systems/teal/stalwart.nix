@@ -32,6 +32,15 @@ in
   imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart-mail.nix" ];
 
   config = {
+    services.headscale.settings.dns.extra_records = [
+      {
+        # mail.freshly.space -> teal
+        name = "mail.freshly.space";
+        type = "A";
+        value = "100.64.0.5";
+      }
+    ];
+
     services.stalwart-mail = {
       enable = true;
       openFirewall = true;
