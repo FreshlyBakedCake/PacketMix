@@ -20,12 +20,12 @@
       ROCKET_PORT = 1028;
 
       # Mail Settings
-      SMTP_HOST = "mail.clicks.codes"; # FIXME: switch to mail.freshly.space when the time is right...
+      SMTP_HOST = "mail.freshly.space";
       SMTP_FROM = "vaultwarden@clicks.codes";
       SMTP_FROM_NAME = "Clicks vaultwarden";
-      SMTP_SECURITY = "starttls";
-      SMTP_PORT = 587;
-      SMTP_USERNAME = "vaultwarden@clicks.codes";
+      SMTP_SECURITY = "force_tls";
+      SMTP_PORT = 465;
+      SMTP_USERNAME = "automated@freshly.space";
 
       REQUIRE_DEVICE_EMAIL = true;
 
