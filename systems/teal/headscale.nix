@@ -23,9 +23,9 @@ let
       "coded"
       "matei"
       "minion"
-      "pineafan"
-      "zanderp25"
       "mostlyturquoise"
+      "pinea"
+      "zanderp25"
     ];
 
     /**
@@ -117,12 +117,21 @@ in
         only_start_if_oidc_is_available = false; # Otherwise we can end up locking ourselves out...
         strip_email_domain = true;
 
-        issuer = "https://login.clicks.codes/realms/master";
+        issuer = "https://idm.freshly.space/oauth2/openid/headscale";
 
         client_id = "headscale";
         client_secret_path = "/secrets/headscale/oidc_client_secret";
 
-        allowed_groups = [ "/clicks" ];
+        allowed_groups = [ "tailscale@idm.freshly.space" ]; # Cannot share the same name as the openid client
+
+        pkce.enabled = true;
+
+        scope = [
+          "openid"
+          "email"
+          "profile"
+          "groups"
+        ];
       };
     };
   };
