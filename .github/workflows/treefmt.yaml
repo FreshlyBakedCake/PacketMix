@@ -40,7 +40,7 @@ jobs:
         run: |
           set +e
 
-          nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'treefmt --ci'
+          nix-shell ./ci.nix -A shells.default.result.x86_64-linux --run 'treefmt --ci'
 
           exitCode=$?
 
