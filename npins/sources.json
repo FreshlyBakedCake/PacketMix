@@ -299,23 +299,6 @@
       "url": "https://github.com/eewanco/scriptfs/archive/82d7e4865c9a8e40bc717c8745d052420365069c.tar.gz",
       "hash": "sha256-WLuOt8zemooHDzK+zWJNBicKu8bg0wXyAGvZIH/po6o="
     },
-    "stalwart": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "stalwartlabs",
-        "repo": "stalwart"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.13.1",
-      "revision": "00daa696080418c12715e58ee0561e0c90478084",
-      "url": "https://api.github.com/repos/stalwartlabs/stalwart/tarball/refs/tags/v0.13.1",
-      "hash": "sha256-6zoI+yvE1Ep5jh9XthDqphm2zBA4UzhfK7VCKRWIH8g=",
-      "frozen": true
-    },
     "treefmt-nix": {
       "type": "Git",
       "repository": {
