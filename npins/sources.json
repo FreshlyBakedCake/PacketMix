@@ -133,6 +133,20 @@
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
       "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
+    "kavita": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "kareadita",
+        "repo": "kavita"
+      },
+      "branch": "feature/new-login",
+      "submodules": false,
+      "revision": "6d410baa72b9daa2d10527fd02903209ca4ba58b",
+      "url": "https://github.com/kareadita/kavita/archive/6d410baa72b9daa2d10527fd02903209ca4ba58b.tar.gz",
+      "hash": "sha256-hY2z1YP0nl4CbQBMjCywcWkj40s6UqL9Kb2r8T9mmEM=",
+      "frozen": true
+    },
     "lix": {
       "type": "Git",
       "repository": {

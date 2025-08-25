@@ -11,6 +11,7 @@
     ./headscale.nix
     ./hostname.nix
     ./kanidm.nix
+    ./kavita.nix
     ./networking.nix
     ./midnight.nix
     ./secrets.nix
