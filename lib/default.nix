@@ -4,5 +4,6 @@
 
 { config, ... }:
 {
+  config.lib.ci = false;
   config.lib.constants.undefined = config.lib.modules.when false { };
 }

@@ -41,7 +41,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_TOKEN }}"
 
       - name: Run npins update
-        run: nix-shell ./nilla.nix -A shells.default.result.x86_64-linux --run 'npins update'
+        run: nix-shell ./ci.nix -A shells.default.result.x86_64-linux --run 'npins update'
 
       - name: Create a pull request
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e
