@@ -45,15 +45,11 @@ in
       enable = true;
       openFirewall = true;
 
-      package = project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail.overrideAttrs {
-        inherit (project.inputs.stalwart) src;
-        doCheck = false;
-        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-          name = "stalwart-deps";
-          inherit (project.inputs.stalwart) src;
-          hash = "sha256-t4BLko8vIVHZ44yeQoAhss3OxOlxJCErHm9h+FGG+28=";
-        };
-      };
+      package =
+        if project.lib.ci then
+          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail
+        else
+          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail-enterprise;
 
       settings = {
         config.local-keys = [
