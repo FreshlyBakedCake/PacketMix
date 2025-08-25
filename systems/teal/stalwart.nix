@@ -128,6 +128,14 @@ in
               bind = "127.0.0.1:1027";
               url = "https://mail.freshly.space";
             };
+            sieve = {
+              protocol = "managesieve";
+              bind = "0.0.0.0:4190";
+              tls = {
+                enable = true;
+                implicit = false; # We can't use =true as clients seem to not support it
+              };
+            };
           };
         };
         http.url = "'https://mail.freshly.space'";
