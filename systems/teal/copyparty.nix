@@ -135,6 +135,11 @@
       }"; # The double-semicolon makes the default search paths also be included
     '';
     services.nginx.virtualHosts."files.freshly.space" = {
+      listenAddresses = [
+        "0.0.0.0"
+        "[::0]"
+      ];
+
       addSSL = true;
       enableACME = true;
       acmeRoot = null;
@@ -238,7 +243,7 @@
       }
     ];
     services.nginx.virtualHosts."internal.files.freshly.space" = {
-      listenAddresses = [ "100.64.0.5" ];
+      listenAddresses = [ "localhost.tailscale" ];
 
       serverName = "files.freshly.space";
 
