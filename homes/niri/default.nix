@@ -11,6 +11,7 @@
   imports = [
     (import ./niri.nix { inherit niri walker; })
     (import ./quickshell { inherit home-manager-unstable; })
+    ./scriptfs.nix
     ./ssh.nix
     ./swaync.nix
   ];
