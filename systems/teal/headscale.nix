@@ -51,6 +51,11 @@ let
       src = [ "mostlyturquoise" ];
       dst = [ "tag:mostlyturquoise-minecraft-server:*" ];
     } # Used to let mostlyturquoise and their friends access their minecraft servers without giving people too many permissions
+    {
+      action = "accept";
+      src = [ "tag:ci" ];
+      dst = [ "midnight:*" ];
+    } # Used to let CI remotely build on midnight
   ];
 
   acls = [

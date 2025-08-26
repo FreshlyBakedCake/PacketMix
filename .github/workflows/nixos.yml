@@ -22,12 +22,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clean up runner
+      - name: Setup Tailscale
+        uses: tailscale/github-action@84a3f23bb4d843bcf4da6cf824ec1be473daf4de
+        with:
+          authkey: "${{ secrets.TAILSCALE_PREAUTHKEY }}"
+          args: "--login-server=https://vpn.clicks.codes"
+
+      - name: Write out SSH key
+        env:
+          MIDNIGHT_SSH_KEY: ${{ secrets.MIDNIGHT_SSH_KEY }}
         run: |
-          # Commands taken from https://github.com/easimon/maximize-build-space/blob/master/action.yml
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          echo "$MIDNIGHT_SSH_KEY" > ../midnight_ssh_key
+          chmod 600 ../midnight_ssh_key
       
       - uses: actions/checkout@v4
 
@@ -52,10 +58,18 @@ jobs:
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
       - name: Build all systems
-        run: nix build -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux --show-trace
+        run: |
+          nix build \
+            -f ./nilla.nix packages.allNixOSSystems.result.x86_64-linux \
+            --eval-store auto --store "ssh-ng://remoteBuilds@midnight?ssh-key=$(realpath ../midnight_ssh_key)&base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU5wbnFKeDlBTGVSS0k0ekVvZnNIL0ZZMFJLaTVsWWtDRVMvR2NWbHNSWncgcm9vdEBhMWQyCg==" \
+            --show-trace
 
       - name: Build all homes
-        run: nix build -f ./nilla.nix packages.allHomes.result.x86_64-linux --show-trace
+        run: |
+          nix build \
+            -f ./nilla.nix packages.allHomes.result.x86_64-linux \
+            --eval-store auto --store "ssh-ng://remoteBuilds@midnight?ssh-key=$(realpath ../midnight_ssh_key)&base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU5wbnFKeDlBTGVSS0k0ekVvZnNIL0ZZMFJLaTVsWWtDRVMvR2NWbHNSWncgcm9vdEBhMWQyCg==" \
+            --show-trace
 
       - if: github.event_name == 'push'
         name: Push to release branch
