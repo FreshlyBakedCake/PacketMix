@@ -48,7 +48,10 @@ let
     } # Used to let Zan reverse proxy to their personal machine for development - port-locked so probably OK
     {
       action = "accept";
-      src = [ "mostlyturquoise" ];
+      src = [
+        "mostlyturquoise"
+        "starrylee"
+      ];
       dst = [ "tag:mostlyturquoise-minecraft-server:*" ];
     } # Used to let mostlyturquoise and their friends access their minecraft servers without giving people too many permissions
   ];
