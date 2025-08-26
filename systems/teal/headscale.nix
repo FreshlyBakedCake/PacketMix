@@ -130,10 +130,9 @@ in
         pkce.enabled = true;
 
         scope = [
-          "openid"
-          "email"
-          "profile"
           "groups"
+          "openid"
+          "profile"
         ];
       };
     };
