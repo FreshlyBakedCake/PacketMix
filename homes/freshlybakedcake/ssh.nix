@@ -22,6 +22,32 @@
         "coded@freshlybakedca.ke"
         "samuel.shuert@gmail.com"
       ];
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIteIdlZv52nUDxW2SUsoJ2NZi/w9j1NZwuHanQ/o/DuAAAAHnNzaDpjb2xsYWJvcmFfeXViaWtleV9yZXNpZGVudA== ssh:collabora_yubikey_resident" =
+      [
+        "sky@a.starrysky.fyi"
+
+        "minion@clicks.codes"
+        "minion@freshlybakedca.ke"
+        "minion@libreoffice.org"
+        "minion@trans.gg"
+        "skyler.grey@collabora.com"
+        "skyler3665@gmail.com"
+        "skyler3665@gmail.com"
+        "skyler@clicks.codes"
+      ];
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJRzQbQjXFpHKtt8lpNKmoNx57+EJ/z3wnKOn3/LjM6cAAAAFXNzaDppeXViaWtleV9yZXNpZGVudA== ssh:iyubikey_resident" =
+      [
+        "sky@a.starrysky.fyi"
+
+        "minion@clicks.codes"
+        "minion@freshlybakedca.ke"
+        "minion@libreoffice.org"
+        "minion@trans.gg"
+        "skyler.grey@collabora.com"
+        "skyler3665@gmail.com"
+        "skyler3665@gmail.com"
+        "skyler@clicks.codes"
+      ];
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOhzJ0p9bFRSURUjV05rrt5jCbxPXke7juNbEC9ZJXS/AAAAGXNzaDp0aW55X3l1YmlrZXlfcmVzaWRlbnQ= ssh:tiny_yubikey_resident" =
       [
         "sky@a.starrysky.fyi"
