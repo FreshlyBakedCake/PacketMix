@@ -35,5 +35,20 @@
         "skyler3665@gmail.com"
         "skyler@clicks.codes"
       ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICf5rx2r0w98r5lOpxr+/hScABDnk1UfgTH8T2WzeNp4 icy@kvothe" = [
+      "anirudh@tangled.sh" # Sourced by Coded from Tangled
+    ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICJPYX06+qKr9IHWfkgCtHbExoBOOwS/+iAWbog9bAdk icy@wyndle" = [
+      "anirudh@tangled.sh" # Sourced by Coded from Tangled
+    ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMj1Dn9YuFo2BNr993ymBa6nzzyIKAURIqMbUtfI8+4X op@mantis" = [
+      "me@oppi.li" # Sourced by Coded from Tangled
+    ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKrWYk05vDYhqw4laH4nh2lT1/0L+9dMx1nqDxQJbfPg isabelroses" = [
+      "isabel@isabelroses.com" # Sourced by Coded from Tangled
+    ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYUFynzvO9dfLqn7hssLIeHBp/y5V1lKLyCnDmThgDg boltless.me" = [
+      "boltlessengineer@proton.me" # Sourced by Coded from Tangled
+    ];
   };
 }
