@@ -22,7 +22,7 @@
 
   config.programs.jujutsu = {
     enable = true;
-    package = project.inputs.nixos-unstable.result.${system}.jujutsu;
+    package = project.packages.jujutsu.result.${system};
     settings = {
       aliases = {
         init = [
