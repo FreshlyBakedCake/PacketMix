@@ -35,6 +35,18 @@
         '';
       };
     };
+    timers = {
+      lock = lib.mkOption {
+        type = lib.types.int;
+        description = "How long while idling before locking the device (in seconds)";
+        default = 300;
+      };
+      sleep = lib.mkOption {
+        type = lib.types.addCheck lib.types.int (x: x >= config.niri.timers.lock);
+        description = "How long while idling before sleeping the device (in seconds)";
+        default = 450;
+      };
+    };
     overviewBackground = lib.mkOption {
       type = lib.types.path;
       description = "Path to the overview background you'd like to use, defaults to a darkened, blurred version of your desktop wallpaper";
@@ -310,10 +322,10 @@
                 "${pkgs.swayidle}/bin/swayidle"
                 "-w"
                 "timeout"
-                "300"
+                (toString config.niri.timers.lock)
                 lock
                 "timeout"
-                "450"
+                (toString config.niri.timers.sleep)
                 "niri msg action power-off-monitors"
                 "resume"
                 "niri msg action power-on-monitors" # Not sure if this is really needed - niri normally powers on monitors on a movement action anyway, but maybe this can affect resuming in different ways?
