@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 # SPDX-FileCopyrightText: 2022 Markus Dobel
 #
@@ -23,11 +24,16 @@ jobs:
 
     steps:
       - name: Clean up runner
-        run: |
-          # Commands taken from https://github.com/easimon/maximize-build-space/blob/master/action.yml
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
+        uses: easimon/maximize-build-space@c28619d8999a147d5e09c1199f84ff6af6ad5794
+        with:
+          overprovision-lvm: true # needed for our mount path to be /nix - we'll cope with the weird errors this option suggests may arise as it'd be untenable to constantly readjust root-reserve-mb
+          remove-dotnet: true
+          remove-android: true
+          remove-haskell: true
+          remove-codeql: true
+          remove-docker-images: true
+          build-mount-path: /nix
+          build-mount-path-ownership: root:root
       
       - uses: actions/checkout@v4
 
