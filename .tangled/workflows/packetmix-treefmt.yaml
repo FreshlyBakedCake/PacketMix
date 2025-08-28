@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main"]
+
+engine: nixery
+
+dependencies:
+  nixpkgs:
+    - lix
+    - openssh
+
+steps:
+  - name: Get remote builds SSH key
+    command: |
+      echo "$KEY_SSH_REMOTE_BUILD" > /tmp/key-ssh-remote-build
+      chmod 600 /tmp/key-ssh-remote-build
+  - name: Add base system files
+    command: |
+      # Let us SSH to midnight by name
+      echo "192.168.0.6 midnight" >> /etc/hosts
+
+      # Avoid missing user with UID 0 error on ssh...
+      echo "root:x:0:0:System administrator:/root:/run/current-system/sw/bin/bash" >> /etc/passwd
+
+      # Turn off SSH host key checking
+      echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+      echo "UserKnownHostsFile /dev/null" >> /etc/ssh/ssh_config
+
+      echo "Host midnight" >> /etc/ssh/ssh_config
+      echo "    User remoteBuilds" >> /etc/ssh/ssh_config
+      echo "    IdentityFile /tmp/key-ssh-remote-build" >> /etc/ssh/ssh_config
+
+      echo "extra-experimental-features = nix-command" >> /etc/nix/nix.conf
+      echo "sandbox = false" >> /etc/nix/nix.conf
+      echo "max-jobs = 0" >> /etc/nix/nix.conf
+  - name: Ensure files are formatted with treefmt
+    command: |
+      set -e
+
+      treefmt=$(nix build \
+        -f ./packetmix/nilla.nix packages.treefmt.result.x86_64-linux \
+        --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
+        --eval-store auto \
+        --show-trace --print-out-paths)
+      nix copy \
+        --from 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
+        --no-check-sigs \
+        "$treefmt"
+
+      set +e
+
+      "${treefmt}/bin/treefmt" --ci -C packetmix
+      exitCode=$?
+
+      if [ $exitCode -ne 0 ]; then
+        echo "Your code isn't formatted correctly, please run 'nilla fmt' and squash it into each commit"
+      fi
+
+      exit $exitCode

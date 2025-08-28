@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push"]
+    branch: ["release"]
+
+engine: nixery
+
+steps:
+  - name: Write SSH Key
+    command: |
+      echo $GITHUB_SSH_KEY > ssh_key
+      chmod 600 ssh_key
+  - name: Push to GitHub
+    command: |
+      export GIT_SSH_COMMAND="ssh -i $(realpath ./ssh_key) -o StrictHostKeyChecking=no"
+      git remote add github git@github.com:freshlybakedca.ke/Patisserie
+      git fetch --unshallow origin
+      git fetch github
+      git push tangled HEAD

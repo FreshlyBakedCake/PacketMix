@@ -1,0 +1,111 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main"]
+
+engine: nixery
+
+dependencies:
+  nixpkgs:
+    - lix
+    - gnugrep
+    - openssh
+
+steps:
+  - name: Get remote builds SSH key
+    command: |
+      echo "$KEY_SSH_REMOTE_BUILD" > /tmp/key-ssh-remote-build
+      chmod 600 /tmp/key-ssh-remote-build
+  - name: Add base system files
+    command: |
+      # Let us SSH to midnight by name
+      echo "192.168.0.6 midnight" >> /etc/hosts
+
+      # Avoid missing user with UID 0 error on ssh...
+      echo "root:x:0:0:System administrator:/root:/run/current-system/sw/bin/bash" >> /etc/passwd
+
+      # Turn off SSH host key checking
+      echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+      echo "UserKnownHostsFile /dev/null" >> /etc/ssh/ssh_config
+
+      echo "Host midnight" >> /etc/ssh/ssh_config
+      echo "    User remoteBuilds" >> /etc/ssh/ssh_config
+      echo "    IdentityFile /tmp/key-ssh-remote-build" >> /etc/ssh/ssh_config
+
+      echo "extra-experimental-features = nix-command" >> /etc/nix/nix.conf
+      echo "max-jobs = 0" >> /etc/nix/nix.conf
+      echo "builders = ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build x86_64-linux" >> /etc/nix/nix.conf
+  - name: Evaluate all systems
+    command: |
+      set +e
+      set -o pipefail
+
+      eval_out=$(nix eval \
+        -f ./packetmix/nilla.nix packages.allNixOSSystems.result.x86_64-linux.drvPath \
+        --show-trace --raw \
+        2>&1 >/tmp/systems-drv-path | tee /dev/stderr)
+      eval_status=$?
+
+      if [ $eval_status -ne 0 ]; then
+        echo "Evaluating your configuration failed with exit code $eval_status"
+        echo "Please fix this and squash into your existing commits"
+        exit $eval_status
+      fi
+
+      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+      if [ -n "$eval_warns" ]; then
+        echo "There were some warnings while evaluating your systems:"
+        echo "$eval_warns"
+        echo "Please fix these and squash into your existing commits"
+        exit 1
+      fi
+  - name: Evaluate all homes
+    command: |
+      set +e
+      set -o pipefail
+
+      eval_out=$(nix eval \
+        -f ./packetmix/nilla.nix packages.allHomes.result.x86_64-linux.drvPath \
+        --show-trace --raw \
+        2>&1 >/tmp/homes-drv-path | tee /dev/stderr)
+      eval_status=$?
+
+      if [ $eval_status -ne 0 ]; then
+        echo "Evaluating your configuration failed with exit code $eval_status"
+        echo "Please fix this and squash into your existing commits"
+        exit $eval_status
+      fi
+
+      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+
+      if [ -n "$eval_warns" ]; then
+        echo "There were some warnings while evaluating your homes:"
+        echo "$eval_warns"
+        echo "Please fix these and squash into your existing commits"
+        exit 1
+      fi
+  - name: Build all systems
+    command: |
+      set -e
+      nix-copy-closure \
+        --to 'midnight' \
+        "$(cat /tmp/systems-drv-path)"
+      nix build \
+        "$(cat /tmp/systems-drv-path)"'^*' \
+        --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
+        --eval-store auto \
+        --show-trace --print-out-paths
+  - name: Build all homes
+    command: |
+      set -e
+      nix-copy-closure \
+        --to 'midnight' \
+        "$(cat /tmp/homes-drv-path)"
+      nix build \
+        "$(cat /tmp/homes-drv-path)"'^*' \
+        --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
+        --eval-store auto \
+        --show-trace --print-out-paths
