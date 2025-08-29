@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Collabora Productivity Limited
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
@@ -32,4 +33,8 @@
         { }
     )
   );
+
+  clicks.storage.impermanence.persist.directories = [
+    ".config/espanso/match"
+  ];
 }
