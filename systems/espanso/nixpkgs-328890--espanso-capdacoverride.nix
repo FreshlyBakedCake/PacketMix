@@ -44,10 +44,12 @@ in
     nixpkgs.overlays = [
       (final: prev: {
         _espanso-wayland-orig = prev.espanso-wayland;
-        espanso-wayland = pkgs.callPackage ./espanso-capdacoverride.nix {
-          capDacOverrideWrapperDir = "${config.security.wrapperDir}";
-          espanso = cfg.package;
-        };
+        espanso-wayland =
+          pkgs.callPackage ./nixpkgs-328890--espanso-capdacoverride/espanso-capdacoverride.nix
+            {
+              capDacOverrideWrapperDir = "${config.security.wrapperDir}";
+              espanso = cfg.package;
+            };
       })
     ];
 

@@ -4,11 +4,18 @@
 # SPDX-License-Identifier: MIT
 # postDeviceCommands based of code from https://github.com/nix-community/impermanence/tree/d5f1ed7141fa407880ff5956ded2c88a307ca940?tab=readme-ov-file#btrfs-subvolumes
 
-{ lib, config, ... }:
+{
+  project,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.clicks.storage.impermanence;
 in
 {
+  imports = [ project.inputs.impermanence.result.nixosModules.impermanence ];
+
   options.clicks.storage.impermanence = {
     enable = lib.mkEnableOption "Enable impermanent rootfs with btrfs subvolumes";
     devices = {
