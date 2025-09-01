@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ niri, walker }:
 {
   project,
   config,
@@ -12,8 +11,8 @@
 }:
 {
   imports = [
-    niri.result.homeModules.niri
-    walker.result.homeManagerModules.walker
+    project.inputs.niri.result.homeModules.niri
+    project.inputs.walker.result.homeManagerModules.walker
   ];
 
   options.niri = {

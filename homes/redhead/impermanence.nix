@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ impermanence }:
-{ ... }:
+{ project, ... }:
 {
   imports = [
-    impermanence.result.homeManagerModules.impermanence
+    project.inputs.impermanence.result.homeManagerModules.impermanence
   ];
 
   clicks.storage.impermanence.enable = true;

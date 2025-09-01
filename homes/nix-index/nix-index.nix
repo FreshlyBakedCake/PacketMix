@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ nix-index-database }:
-{ ... }:
+{ project, ... }:
 {
   imports = [
-    nix-index-database.result.homeModules.nix-index
+    project.inputs.nix-index-database.result.homeModules.nix-index
   ];
 
   config = {

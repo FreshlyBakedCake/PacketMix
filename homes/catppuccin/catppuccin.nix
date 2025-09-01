@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ catppuccin }:
 { project, lib, ... }:
 {
-  imports = [ catppuccin.result.homeModules.catppuccin ];
+  imports = [ project.inputs.catppuccin.result.homeModules.catppuccin ];
   config.catppuccin.enable = true;
 
   config.catppuccin.cursors.enable = true;

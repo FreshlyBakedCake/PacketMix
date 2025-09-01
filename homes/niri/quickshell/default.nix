@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ home-manager-unstable }:
 {
   project,
   system,
@@ -11,7 +10,7 @@
   ...
 }:
 {
-  imports = [ "${home-manager-unstable.src}/modules/programs/quickshell.nix" ];
+  imports = [ "${project.inputs.home-manager-unstable.src}/modules/programs/quickshell.nix" ];
 
   programs.quickshell = {
     enable = true;

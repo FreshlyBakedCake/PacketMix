@@ -7,7 +7,7 @@
 let
   nixpkgs = config.inputs.nixpkgs.result;
 
-  modules = config.lib.ingredients.collectIngredientsModules ./.;
+  modules = config.lib.ingredients.collectIngredientsModules ./. {};
 in
 {
   config.systems.nixos."redhead" = {
