@@ -14,12 +14,12 @@
           { config, name, ... }@submodule:
           {
             options.ingredients = nilla.lib.options.create {
-              description = "Ingredients to activate for the system";
+              description = "Ingredients to activate for the system. Defaults to the common ingredient";
               type = nilla.lib.types.list.of nilla.lib.types.string;
-              default = [ ];
             };
 
             config = {
+              ingredients = [ "common" ];
               modules =
                 ingredientModules
                 ++ (map (ingredient: {
@@ -30,6 +30,4 @@
         )
       );
     };
-
-  # The type for options.homes is defined in ./nilla-home/homes-type.nix - portable submodules are not mergeable
 }

@@ -18,7 +18,6 @@ in
     ingredients = [
       "catppuccin"
       "collabora"
-      "common"
       "development"
       "espanso"
       "freshlybakedcake"
@@ -42,7 +41,6 @@ in
     ];
     ingredients = [
       "catppuccin"
-      "common"
       "development"
       "espanso"
       "freshlybakedcake"
@@ -67,7 +65,6 @@ in
     ingredients = [
       "catppuccin"
       "collabora"
-      "common"
       "development"
       "espanso"
       "freshlybakedcake"
@@ -93,7 +90,6 @@ in
     ingredients = [
       "catppuccin"
       "coded"
-      "common"
       "development"
       "espanso"
       "freshlybakedcake"
@@ -116,7 +112,6 @@ in
     ];
     ingredients = [
       "catppuccin"
-      "common"
       "development"
       "espanso"
       "freshlybakedcake"

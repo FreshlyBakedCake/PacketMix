@@ -11,7 +11,6 @@ in
   config.systems.nixos."redhead" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "espanso"
       "freshlybakedcake"
       "javelin"
@@ -30,7 +29,6 @@ in
   config.systems.nixos."emden" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "emden"
       "espanso"
       "freshlybakedcake"
@@ -49,7 +47,6 @@ in
   config.systems.nixos."marbled" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "espanso"
       "freshlybakedcake"
       "javelin"
@@ -69,7 +66,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "coded"
-      "common"
       "espanso"
       "freshlybakedcake"
       "gaming"
@@ -87,7 +83,6 @@ in
   config.systems.nixos."saurosuchus" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "espanso"
       "freshlybakedcake"
       "gaming"
@@ -106,7 +101,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "coded"
-      "common"
       "corsair"
       "espanso"
       "freshlybakedcake"
@@ -124,7 +118,6 @@ in
   config.systems.nixos."midnight" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "freshlybakedcake"
       "midnight"
       "server"
@@ -137,7 +130,6 @@ in
   config.systems.nixos."teal" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "common"
       "freshlybakedcake"
       "teal"
       "server"

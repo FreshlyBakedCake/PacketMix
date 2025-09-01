@@ -96,7 +96,7 @@ lib.types.attrs.of (
           };
 
           ingredients = nilla.lib.options.create {
-            description = "Ingredients to activate for the home";
+            description = "Ingredients to activate for the home. Defaults to the common ingredient";
             type = nilla.lib.types.list.of nilla.lib.types.string;
           };
 
@@ -109,6 +109,9 @@ lib.types.attrs.of (
         };
 
         config = {
+          ingredients = [
+            "common"
+          ];
           modules =
             defaultModules
             ++ ingredientModules
