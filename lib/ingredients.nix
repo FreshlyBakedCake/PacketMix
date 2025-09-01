@@ -130,7 +130,25 @@ in
         {
           options.ingredient.${name}.enable = nixpkgs.lib.mkEnableOption "the ${name} ingredient";
         }
-      ];
+      ]
+      ++ (
+        if nilla.lib.strings.hasInfix "+" name then
+          [
+            (
+              { config, ... }@module:
+              {
+                config.ingredient.${name}.enable =
+                  let
+                    components = nilla.lib.strings.split "+" name;
+                    shouldEnable = builtins.all (component: module.config.ingredient.${component}.enable) components;
+                  in
+                  nixpkgs.lib.mkIf shouldEnable true;
+              }
+            )
+          ]
+        else
+          [ ]
+      );
 
     # Gets modules for all ingredients, based on just a directory
     # Includes all required option declarations (under options.ingredient.${name}.enable for each ingredient) and conditional auto-imports

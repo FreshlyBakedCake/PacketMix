@@ -18,7 +18,6 @@ in
           common.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           javelin.enable = true;
           minion.enable = true;
           niri.enable = true;
@@ -43,7 +42,6 @@ in
           common.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           gaming.enable = true;
           javelin.enable = true;
           minion.enable = true;
@@ -68,7 +66,6 @@ in
           common.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           javelin.enable = true;
           minion.enable = true;
           niri.enable = true;
@@ -94,7 +91,6 @@ in
           common.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           gaming.enable = true;
           niri.enable = true;
           ocicat.enable = true;
@@ -118,7 +114,6 @@ in
           common.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           gaming.enable = true;
           kde.enable = true;
           personal.enable = true;
@@ -144,7 +139,6 @@ in
           corsair.enable = true;
           espanso.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+personal".enable = true;
           gaming.enable = true;
           niri.enable = true;
           shorthair.enable = true;
@@ -166,7 +160,6 @@ in
         ingredient = {
           common.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+server".enable = true;
           midnight.enable = true;
           server.enable = true;
         };
@@ -185,7 +178,6 @@ in
         ingredient = {
           common.enable = true;
           freshlybakedcake.enable = true;
-          "freshlybakedcake+server".enable = true;
           teal.enable = true;
           server.enable = true;
         };
