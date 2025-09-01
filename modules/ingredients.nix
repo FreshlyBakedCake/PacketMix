@@ -30,4 +30,6 @@
         )
       );
     };
+
+  # The type for options.homes is defined in ./nilla-home/homes-type.nix - portable submodules are not mergeable
 }
