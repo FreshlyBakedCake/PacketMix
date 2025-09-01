@@ -6,6 +6,8 @@
 { config, ... }:
 let
   nixpkgs = config.inputs.nixpkgs.result;
+
+  modules = config.lib.ingredients.collectIngredientsModules ./. { project = config; };
 in
 {
   config.homes."maya:x86_64-linux" = {
@@ -14,22 +16,26 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/maya";
       }
-      (import ./catppuccin { inherit (config.inputs) catppuccin; })
-      ./collabora
-      ./common
-      ./development
-      ./espanso
-      ./freshlybakedcake
-      ./gaming
-      ./maya
-      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
-      (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      ./remote
-      ./scriptfs
-    ];
+      {
+        ingredient = {
+          catppuccin.enable = true;
+          collabora.enable = true;
+          common.enable = true;
+          development.enable = true;
+          espanso.enable = true;
+          freshlybakedcake.enable = true;
+          gaming.enable = true;
+          maya.enable = true;
+          niri.enable = true;
+          nix-index.enable = true;
+          remote.enable = true;
+          scriptfs.enable = true;
+        };
+      }
+    ]
+    ++ modules;
     args = {
       system = "x86_64-linux";
-      project = config;
     };
   };
   config.homes."minion:x86_64-linux" = {
@@ -38,21 +44,25 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      (import ./catppuccin { inherit (config.inputs) catppuccin; })
-      ./common
-      ./development
-      ./espanso
-      ./freshlybakedcake
-      ./gaming
-      ./minion
-      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
-      (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      ./remote
-      ./scriptfs
-    ];
+      {
+        ingredient = {
+          catppuccin.enable = true;
+          common.enable = true;
+          development.enable = true;
+          espanso.enable = true;
+          freshlybakedcake.enable = true;
+          gaming.enable = true;
+          minion.enable = true;
+          niri.enable = true;
+          nix-index.enable = true;
+          remote.enable = true;
+          scriptfs.enable = true;
+        };
+      }
+    ]
+    ++ modules;
     args = {
       system = "x86_64-linux";
-      project = config;
     };
   };
   config.homes."minion@redhead:x86_64-linux" = {
@@ -61,23 +71,27 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      (import ./catppuccin { inherit (config.inputs) catppuccin; })
-      ./collabora
-      ./common
-      ./development
-      ./espanso
-      ./freshlybakedcake
-      ./gaming
-      ./minion
-      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
-      (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      (import ./redhead { inherit (config.inputs) impermanence; })
-      ./remote
-      ./scriptfs
-    ];
+      {
+        ingredient = {
+          catppuccin.enable = true;
+          collabora.enable = true;
+          common.enable = true;
+          development.enable = true;
+          espanso.enable = true;
+          freshlybakedcake.enable = true;
+          gaming.enable = true;
+          minion.enable = true;
+          niri.enable = true;
+          nix-index.enable = true;
+          redhead.enable = true;
+          remote.enable = true;
+          scriptfs.enable = true;
+        };
+      }
+    ]
+    ++ modules;
     args = {
       system = "x86_64-linux";
-      project = config;
     };
   };
   config.homes."coded:x86_64-linux" = {
@@ -86,21 +100,25 @@ in
         home.stateVersion = "25.05";
         home.homeDirectory = "/home/coded";
       }
-      (import ./catppuccin { inherit (config.inputs) catppuccin; })
-      ./coded
-      ./common
-      ./development
-      ./espanso
-      ./freshlybakedcake
-      ./gaming
-      (import ./niri { inherit (config.inputs) niri walker home-manager-unstable; })
-      (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      ./remote
-      ./scriptfs
-    ];
+      {
+        ingredient = {
+          catppuccin.enable = true;
+          coded.enable = true;
+          common.enable = true;
+          development.enable = true;
+          espanso.enable = true;
+          freshlybakedcake.enable = true;
+          gaming.enable = true;
+          niri.enable = true;
+          nix-index.enable = true;
+          remote.enable = true;
+          scriptfs.enable = true;
+        };
+      }
+    ]
+    ++ modules;
     args = {
       system = "x86_64-linux";
-      project = config;
     };
   };
   config.homes."pinea:x86_64-linux" = {
@@ -109,20 +127,24 @@ in
         home.stateVersion = "25.05";
         home.homeDirectory = "/home/pinea";
       }
-      (import ./catppuccin { inherit (config.inputs) catppuccin; })
-      ./pinea
-      ./common
-      ./development
-      ./espanso
-      ./freshlybakedcake
-      ./gaming
-      (import ./nix-index { inherit (config.inputs) nix-index-database; })
-      ./remote
-      ./scriptfs
-    ];
+      {
+        ingredient = {
+          catppuccin.enable = true;
+          common.enable = true;
+          development = true;
+          espanso = true;
+          freshlybakedcake.enable = true;
+          gaming.enable = true;
+          nix-index.enable = true;
+          pinea.enable = true;
+          remote.enable = true;
+          scriptfs.enable = true;
+        };
+      }
+    ]
+    ++ modules;
     args = {
       system = "x86_64-linux";
-      project = config;
     };
   };
 }
