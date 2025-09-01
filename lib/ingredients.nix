@@ -156,6 +156,23 @@ in
           [ ]
       );
 
+    # Gets the names of all ingredients, based on just a directory
+    #
+    # this: {ingredientsDirectory -> moduleName[]}
+    #
+    # ingredientsDirectory: {path} the path in which your ingredients reside
+    # moduleName[]: {string[]} names of all ingredients in your ingredientsDirectory
+    getIngredientsNames =
+      ingredientsDirectory:
+      let
+        ingredientsDirectoryListing = builtins.readDir ingredientsDirectory;
+        ingredientSubdirectories = nilla.lib.attrs.filter (
+          _: value: value == "directory"
+        ) ingredientsDirectoryListing;
+        ingredientNames = builtins.attrNames ingredientSubdirectories;
+      in
+      ingredientNames;
+
     # Gets modules for all ingredients, based on just a directory and any argument overrides
     # Includes all required option declarations (under options.ingredient.${name}.enable for each ingredient) and conditional auto-imports
     # Includes any options, imports, etc. that are defined in *any* ingredient, even if it is not enabled
@@ -170,13 +187,19 @@ in
     collectIngredientsModules =
       ingredientsDirectory: overrideArgs:
       let
-        ingredientsDirectoryListing = builtins.readDir ingredientsDirectory;
-        ingredientSubdirectories = nilla.lib.attrs.filter (
-          _: value: value == "directory"
-        ) ingredientsDirectoryListing;
-        ingredientNames = builtins.attrNames ingredientSubdirectories;
+        ingredientNames = this.getIngredientsNames ingredientsDirectory;
         modules = map (this.collectIngredientModules ingredientsDirectory overrideArgs) ingredientNames;
       in
       nilla.lib.lists.flatten modules;
+
+    # Gets whether an ingredient exists, based on a directory name and a
+    #
+    # this: {ingredientsDirectory -> name -> exists}
+    #
+    # ingredientsDirectory: {path} the path in which your ingredients reside
+    # name: {string} the name of the ingredient to search for
+    # exists: {boolean} whether that ingredient exists
+    ingredientExists =
+      ingredientsDirectory: name: builtins.elem name (this.getIngredientsNames ingredientsDirectory);
   };
 }

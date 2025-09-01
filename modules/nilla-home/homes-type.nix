@@ -42,8 +42,10 @@ lib.types.attrs.of (
         );
 
         username = builtins.elemAt home_name_parts 0;
+        hostname = builtins.elemAt home_name_parts 2;
         system = builtins.elemAt home_name_parts 4;
 
+        hostnameProvided = hostname != null;
         systemProvided = system != null;
 
         defaultModules = [
@@ -96,7 +98,7 @@ lib.types.attrs.of (
           };
 
           ingredients = nilla.lib.options.create {
-            description = "Ingredients to activate for the home. Defaults to the common ingredient";
+            description = "Ingredients to activate for the home. Defaults to the common ingredient, as well as one or more of the ingredients named as the username and the hostname if they are set in the home name and the ingredients exist";
             type = nilla.lib.types.list.of nilla.lib.types.string;
           };
 
@@ -111,7 +113,9 @@ lib.types.attrs.of (
         config = {
           ingredients = [
             "common"
-          ];
+          ]
+          ++ (if ingredientExists username then [ username ] else [ ])
+          ++ (if hostnameProvided && ingredientExists hostname then [ hostname ] else [ ]);
           modules =
             defaultModules
             ++ ingredientModules

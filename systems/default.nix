@@ -18,7 +18,6 @@ in
       "niri"
       "personal"
       "portable"
-      "redhead"
     ];
     args = {
       system = "x86_64-linux";
@@ -29,7 +28,6 @@ in
   config.systems.nixos."emden" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "emden"
       "espanso"
       "freshlybakedcake"
       "gaming"
@@ -50,7 +48,6 @@ in
       "espanso"
       "freshlybakedcake"
       "javelin"
-      "marbled"
       "minion"
       "niri"
       "personal"
@@ -70,7 +67,6 @@ in
       "freshlybakedcake"
       "gaming"
       "niri"
-      "ocicat"
       "personal"
       "portable"
     ];
@@ -89,7 +85,6 @@ in
       "kde"
       "personal"
       "pinea"
-      "saurosuchus"
     ];
     args = {
       system = "x86_64-linux";
@@ -107,7 +102,6 @@ in
       "gaming"
       "niri"
       "personal"
-      "shorthair"
     ];
     args = {
       system = "x86_64-linux";
@@ -119,7 +113,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"
-      "midnight"
       "server"
     ];
     args = {
@@ -131,7 +124,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"
-      "teal"
       "server"
     ];
     args = {

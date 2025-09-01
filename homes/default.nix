@@ -22,7 +22,6 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "maya"
       "niri"
       "nix-index"
       "remote"
@@ -45,7 +44,6 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "minion"
       "niri"
       "nix-index"
       "remote"
@@ -69,10 +67,8 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "minion"
       "niri"
       "nix-index"
-      "redhead"
       "remote"
       "scriptfs"
     ];
@@ -89,7 +85,6 @@ in
     ];
     ingredients = [
       "catppuccin"
-      "coded"
       "development"
       "espanso"
       "freshlybakedcake"
@@ -117,7 +112,6 @@ in
       "freshlybakedcake"
       "gaming"
       "nix-index"
-      "pinea"
       "remote"
       "scriptfs"
     ];
