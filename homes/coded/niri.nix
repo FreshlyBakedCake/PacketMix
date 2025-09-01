@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 {
+  ingredient.niri.enable = true;
+
   niri.timers = {
     lock = 900;
     sleep = 1800;
