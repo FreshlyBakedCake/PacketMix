@@ -10,6 +10,8 @@
   ...
 }:
 {
+  ingredient.niri.enable = true;
+
   programs.niri = {
     settings = {
       input.mouse.natural-scroll = true;

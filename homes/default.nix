@@ -22,10 +22,8 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "niri"
       "nix-index"
       "remote"
-      "scriptfs"
     ];
     args = {
       system = "x86_64-linux";
@@ -44,10 +42,8 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "niri"
       "nix-index"
       "remote"
-      "scriptfs"
     ];
     args = {
       system = "x86_64-linux";
@@ -67,10 +63,8 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "niri"
       "nix-index"
       "remote"
-      "scriptfs"
     ];
     args = {
       system = "x86_64-linux";
@@ -89,10 +83,8 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
-      "niri"
       "nix-index"
       "remote"
-      "scriptfs"
     ];
     args = {
       system = "x86_64-linux";
@@ -113,7 +105,6 @@ in
       "gaming"
       "nix-index"
       "remote"
-      "scriptfs"
     ];
     args = {
       system = "x86_64-linux";
