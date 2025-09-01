@@ -6,28 +6,21 @@
 { config, lib, ... }:
 let
   nixpkgs = config.inputs.nixpkgs.result;
-
-  modules = config.lib.ingredients.collectIngredientsModules ./. {};
 in
 {
   config.systems.nixos."redhead" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          javelin.enable = true;
-          minion.enable = true;
-          niri.enable = true;
-          personal.enable = true;
-          portable.enable = true;
-          redhead.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "espanso"
+      "freshlybakedcake"
+      "javelin"
+      "minion"
+      "niri"
+      "personal"
+      "portable"
+      "redhead"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -36,22 +29,17 @@ in
   };
   config.systems.nixos."emden" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          javelin.enable = true;
-          minion.enable = true;
-          emden.enable = true;
-          niri.enable = true;
-          personal.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "emden"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "javelin"
+      "minion"
+      "niri"
+      "personal"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -60,22 +48,17 @@ in
   };
   config.systems.nixos."marbled" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          javelin.enable = true;
-          minion.enable = true;
-          niri.enable = true;
-          personal.enable = true;
-          portable.enable = true;
-          marbled.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "espanso"
+      "freshlybakedcake"
+      "javelin"
+      "marbled"
+      "minion"
+      "niri"
+      "personal"
+      "portable"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -84,22 +67,17 @@ in
   };
   config.systems.nixos."ocicat" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          coded.enable = true;
-          common.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          niri.enable = true;
-          ocicat.enable = true;
-          personal.enable = true;
-          portable.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "coded"
+      "common"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "niri"
+      "ocicat"
+      "personal"
+      "portable"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -108,21 +86,16 @@ in
   };
   config.systems.nixos."saurosuchus" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          kde.enable = true;
-          personal.enable = true;
-          pinea.enable = true;
-          saurosuchus.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "kde"
+      "personal"
+      "pinea"
+      "saurosuchus"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -131,22 +104,17 @@ in
   };
   config.systems.nixos."shorthair" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          coded.enable = true;
-          common.enable = true;
-          corsair.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          niri.enable = true;
-          shorthair.enable = true;
-          personal.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "coded"
+      "common"
+      "corsair"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "niri"
+      "personal"
+      "shorthair"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -155,17 +123,12 @@ in
   };
   config.systems.nixos."midnight" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          freshlybakedcake.enable = true;
-          midnight.enable = true;
-          server.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "freshlybakedcake"
+      "midnight"
+      "server"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
@@ -173,17 +136,12 @@ in
   };
   config.systems.nixos."teal" = {
     pkgs = nixpkgs.x86_64-linux;
-    modules = [
-      {
-        ingredient = {
-          common.enable = true;
-          freshlybakedcake.enable = true;
-          teal.enable = true;
-          server.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ingredients = [
+      "common"
+      "freshlybakedcake"
+      "teal"
+      "server"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;
