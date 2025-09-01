@@ -6,8 +6,6 @@
 { config, ... }:
 let
   nixpkgs = config.inputs.nixpkgs.result;
-
-  modules = config.lib.ingredients.collectIngredientsModules ./. { project = config; };
 in
 {
   config.homes."maya:x86_64-linux" = {
@@ -16,24 +14,21 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/maya";
       }
-      {
-        ingredient = {
-          catppuccin.enable = true;
-          collabora.enable = true;
-          common.enable = true;
-          development.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          maya.enable = true;
-          niri.enable = true;
-          nix-index.enable = true;
-          remote.enable = true;
-          scriptfs.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ];
+    ingredients = [
+      "catppuccin"
+      "collabora"
+      "common"
+      "development"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "maya"
+      "niri"
+      "nix-index"
+      "remote"
+      "scriptfs"
+    ];
     args = {
       system = "x86_64-linux";
     };
@@ -44,23 +39,20 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      {
-        ingredient = {
-          catppuccin.enable = true;
-          common.enable = true;
-          development.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          minion.enable = true;
-          niri.enable = true;
-          nix-index.enable = true;
-          remote.enable = true;
-          scriptfs.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ];
+    ingredients = [
+      "catppuccin"
+      "common"
+      "development"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "minion"
+      "niri"
+      "nix-index"
+      "remote"
+      "scriptfs"
+    ];
     args = {
       system = "x86_64-linux";
     };
@@ -71,25 +63,22 @@ in
         home.stateVersion = "24.11";
         home.homeDirectory = "/home/minion";
       }
-      {
-        ingredient = {
-          catppuccin.enable = true;
-          collabora.enable = true;
-          common.enable = true;
-          development.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          minion.enable = true;
-          niri.enable = true;
-          nix-index.enable = true;
-          redhead.enable = true;
-          remote.enable = true;
-          scriptfs.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ];
+    ingredients = [
+      "catppuccin"
+      "collabora"
+      "common"
+      "development"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "minion"
+      "niri"
+      "nix-index"
+      "redhead"
+      "remote"
+      "scriptfs"
+    ];
     args = {
       system = "x86_64-linux";
     };
@@ -100,23 +89,20 @@ in
         home.stateVersion = "25.05";
         home.homeDirectory = "/home/coded";
       }
-      {
-        ingredient = {
-          catppuccin.enable = true;
-          coded.enable = true;
-          common.enable = true;
-          development.enable = true;
-          espanso.enable = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          niri.enable = true;
-          nix-index.enable = true;
-          remote.enable = true;
-          scriptfs.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ];
+    ingredients = [
+      "catppuccin"
+      "coded"
+      "common"
+      "development"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "niri"
+      "nix-index"
+      "remote"
+      "scriptfs"
+    ];
     args = {
       system = "x86_64-linux";
     };
@@ -127,22 +113,19 @@ in
         home.stateVersion = "25.05";
         home.homeDirectory = "/home/pinea";
       }
-      {
-        ingredient = {
-          catppuccin.enable = true;
-          common.enable = true;
-          development = true;
-          espanso = true;
-          freshlybakedcake.enable = true;
-          gaming.enable = true;
-          nix-index.enable = true;
-          pinea.enable = true;
-          remote.enable = true;
-          scriptfs.enable = true;
-        };
-      }
-    ]
-    ++ modules;
+    ];
+    ingredients = [
+      "catppuccin"
+      "common"
+      "development"
+      "espanso"
+      "freshlybakedcake"
+      "gaming"
+      "nix-index"
+      "pinea"
+      "remote"
+      "scriptfs"
+    ];
     args = {
       system = "x86_64-linux";
     };

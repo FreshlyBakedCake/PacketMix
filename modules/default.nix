@@ -3,5 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 {
-  includes = [ ./ingredients.nix ];
+  includes = [
+    ./ingredients.nix
+    ./nilla-home/home.nix
+    ./nilla-home/nixos.nix
+  ];
 }

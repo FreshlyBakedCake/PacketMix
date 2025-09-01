@@ -23,8 +23,6 @@ nilla.create (
       ./modules
       ./packages
       ./systems
-      "${pins.nilla-home}/modules/home.nix" # We can't use config.inputs here without infinitely-recursing
-      "${pins.nilla-home}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
       "${pins.nilla-nixos}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
     ];
 
