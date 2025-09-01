@@ -72,10 +72,11 @@
         package = pkgs.niri;
 
         settings = {
-          environment = {
-            NIXOS_OZONE_WL = "1";
-            DISPLAY = ":0";
+          xwayland-satellite = {
+            enable = true;
+            path = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
           };
+          environment.NIXOS_OZONE_WL = "1";
 
           input.keyboard = {
             track-layout = "window";
@@ -301,9 +302,6 @@
           screenshot-path = null;
 
           spawn-at-startup = [
-            {
-              command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
-            }
             {
               command = [
                 "${pkgs.swaybg}/bin/swaybg"
