@@ -11,11 +11,10 @@
   ...
 }:
 let
-  package = pkgs.niri;
+  package = project.inputs.niri.result.packages.${pkgs.system}.niri-stable;
 in
 {
   # we do not use the niri-flake nixos module, as it imports the home-module which causes a duplicate for attached homes
-
   nix.settings = {
     substituters = [ "https://niri.cachix.org" ];
     trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
