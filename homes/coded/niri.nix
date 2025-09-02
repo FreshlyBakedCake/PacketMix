@@ -5,11 +5,11 @@
 {
   ingredient.niri.enable = true;
 
-  niri.timers = {
+  ingredient.niri.niri.timers = {
     lock = 900;
     sleep = 1800;
   };
-  niri.wallpaper = ./wallpaper.png;
+  ingredient.niri.niri.wallpaper = ./wallpaper.png;
   programs.niri.settings = {
     input.mouse.natural-scroll = false;
     outputs = {

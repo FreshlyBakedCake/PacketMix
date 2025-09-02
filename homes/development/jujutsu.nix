@@ -12,7 +12,7 @@
   ...
 }:
 {
-  options.jujutsu = {
+  options.ingredient.development.jujutsu = {
     allowedSSHSigners = lib.mkOption {
       type = lib.types.attrsOf (lib.types.listOf lib.types.str);
       description = "A mapping of SSH keys to emails they are valid for";
@@ -374,7 +374,7 @@
             let
               allowedSigners = lib.mapAttrsToList (
                 key: emails: "${builtins.concatStringsSep "," emails} ${key}"
-              ) config.jujutsu.allowedSSHSigners;
+              ) config.ingredient.development.jujutsu.allowedSSHSigners;
               allowedSignersContent = builtins.concatStringsSep "\n" allowedSigners;
               allowedSignersFile = builtins.toFile "allowed-signers" allowedSignersContent;
             in

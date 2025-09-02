@@ -4,7 +4,7 @@
 
 {
   # Non-packetmixers can be included in this list, but you should have a comment stating where you got the key/email(s) from
-  jujutsu.allowedSSHSigners = {
+  ingredient.development.jujutsu.allowedSSHSigners = {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpBNIHk/kRhQL7Nl3Fd+UBVRoS2bTpbeerA//vwL2D4 coded" = [
       "me@thecoded.prof"
 

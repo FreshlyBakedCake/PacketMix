@@ -20,8 +20,8 @@
     };
   };
 
-  niri.wallpaper = ../minion/wallpaper.png;
-  niri.overviewBackground = pkgs.stdenv.mkDerivation {
+  ingredient.niri.niri.wallpaper = ../minion/wallpaper.png;
+  ingredient.niri.niri.overviewBackground = pkgs.stdenv.mkDerivation {
     name = "niri-overview-background";
 
     src = ../minion/overviewBackground.png;
