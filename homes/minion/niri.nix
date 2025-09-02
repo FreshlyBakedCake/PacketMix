@@ -65,8 +65,8 @@
     };
   };
 
-  niri.wallpaper = ./wallpaper.png;
-  niri.overviewBackground = pkgs.stdenv.mkDerivation {
+  ingredient.niri.niri.wallpaper = ./wallpaper.png;
+  ingredient.niri.niri.overviewBackground = pkgs.stdenv.mkDerivation {
     name = "niri-overview-background";
 
     src = ./overviewBackground.png;

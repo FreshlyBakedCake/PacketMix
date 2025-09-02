@@ -15,7 +15,7 @@
     project.inputs.walker.result.homeManagerModules.walker
   ];
 
-  options.niri = {
+  options.ingredient.niri.niri = {
     wallpaper = lib.mkOption {
       type = lib.types.path;
       description = "Path to the desktop wallpaper you'd like to use";
@@ -26,7 +26,7 @@
       default = pkgs.stdenv.mkDerivation {
         name = "niri-lock-background";
 
-        src = config.niri.wallpaper;
+        src = config.ingredient.niri.niri.wallpaper;
         dontUnpack = true;
 
         buildPhase = ''
@@ -41,7 +41,7 @@
         default = 300;
       };
       sleep = lib.mkOption {
-        type = lib.types.addCheck lib.types.int (x: x >= config.niri.timers.lock);
+        type = lib.types.addCheck lib.types.int (x: x >= config.ingredient.niri.niri.timers.lock);
         description = "How long while idling before sleeping the device (in seconds)";
         default = 450;
       };
@@ -52,7 +52,7 @@
       default = pkgs.stdenv.mkDerivation {
         name = "niri-overview-background";
 
-        src = config.niri.wallpaper;
+        src = config.ingredient.niri.niri.wallpaper;
         dontUnpack = true;
 
         buildPhase = ''
@@ -65,7 +65,7 @@
   config = {
     programs.niri =
       let
-        lock = ''${config.programs.niri.package}/bin/niri msg action do-screen-transition && ${pkgs.swaylock}/bin/swaylock -i ${config.niri.lockscreen} -s fill -f'';
+        lock = ''${config.programs.niri.package}/bin/niri msg action do-screen-transition && ${pkgs.swaylock}/bin/swaylock -i ${config.ingredient.niri.niri.lockscreen} -s fill -f'';
       in
       {
         enable = true;
@@ -311,7 +311,7 @@
               command = [
                 "${pkgs.swaybg}/bin/swaybg"
                 "-i"
-                "${config.niri.wallpaper}"
+                "${config.ingredient.niri.niri.wallpaper}"
                 "-m"
                 "fill"
               ];
@@ -321,10 +321,10 @@
                 "${pkgs.swayidle}/bin/swayidle"
                 "-w"
                 "timeout"
-                (toString config.niri.timers.lock)
+                (toString config.ingredient.niri.niri.timers.lock)
                 lock
                 "timeout"
-                (toString config.niri.timers.sleep)
+                (toString config.ingredient.niri.niri.timers.sleep)
                 "niri msg action power-off-monitors"
                 "resume"
                 "niri msg action power-on-monitors" # Not sure if this is really needed - niri normally powers on monitors on a movement action anyway, but maybe this can affect resuming in different ways?
