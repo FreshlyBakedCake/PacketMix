@@ -11,6 +11,7 @@
     ./collabora-gtimelog
     ./jujutsu
     ./lua-multipart
+    ./octodns-config
     ./OpenLinkHub
     ./scriptfs
     ./treefmt
