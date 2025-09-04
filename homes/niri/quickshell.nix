@@ -21,14 +21,14 @@
     configs.sprinkles = pkgs.stdenv.mkDerivation {
       name = "sprinkles-config";
 
-      src = ./.;
+      src = ./quickshell;
       dontUnpack = true;
 
       buildPhase = ''
         mkdir -p $out
 
         cp -r $src/*.qml $out
-        cp ${config.niri.overviewBackground} $out/background.png
+        cp ${config.ingredient.niri.niri.overviewBackground} $out/background.png
       '';
     };
 
