@@ -70,9 +70,13 @@
       {
         enable = true;
 
-        package = pkgs.niri;
+        package = project.inputs.niri.result.packages.${pkgs.system}.niri-stable;
 
         settings = {
+          xwayland-satellite = {
+            enable = true;
+            path = "${project.inputs.niri.result.packages.${pkgs.system}.xwayland-satellite-unstable}/bin/xwayland-satellite";
+          };
           environment = {
             NIXOS_OZONE_WL = "1";
             DISPLAY = ":0";
@@ -304,9 +308,6 @@
           screenshot-path = null;
 
           spawn-at-startup = [
-            {
-              command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
-            }
             {
               command = [
                 "${pkgs.swaybg}/bin/swaybg"
