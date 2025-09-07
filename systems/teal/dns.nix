@@ -4,5 +4,5 @@
 
 { project, ... }:
 {
-  
+  config.networking.domains.baseDomains."files.freshly.space".cname.data = "a1.clicks.domains";
 }

@@ -17,6 +17,8 @@
   config = {
     nixpkgs.overlays = [ project.inputs.copyparty.result.overlays.default ];
 
+    config.networking.domains.subDomains."files.freshly.space" = {};
+
     services.copyparty =
       let
         admins = [

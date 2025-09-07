@@ -38,7 +38,7 @@
           "thecoded.prof." = nixos-dns.utils.octodns.generateZoneAttrs [ "cloudflare" ];
         };
         dnsConfig = {
-          nixosConfigurations = lib.mapAttrsToList (name: value: value.result) config.systems;
+          nixosConfigurations = builtins.mapAttrs (name: value: value.result) config.systems.nixos;
         };
       };
   };

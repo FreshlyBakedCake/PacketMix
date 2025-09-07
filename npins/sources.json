@@ -261,6 +261,19 @@
       "url": "https://github.com/nix-community/nix-index-database/archive/b33c3aadca9343dbbcba8be71cb741d095aab8a9.tar.gz",
       "hash": "sha256-wCp1wHGzTSTtY3A8BLEJKRqbnD2oFlBBD4NKwZimRqw="
     },
+    "nixos-dns": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Janik-Haag",
+        "repo": "nixos-dns"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "04b00ea7423c8dbe6e0ea78e4eb96f874a04c543",
+      "url": "https://github.com/Janik-Haag/nixos-dns/archive/04b00ea7423c8dbe6e0ea78e4eb96f874a04c543.tar.gz",
+      "hash": "sha256-aTsLqhW9XD0O37BTJo0u5f0gkk/x4KnZ9sho9hSE6hE="
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
