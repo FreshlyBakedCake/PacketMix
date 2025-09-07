@@ -4,6 +4,8 @@
 
 { pkgs, ... }:
 {
+  networking.domains.subDomains."idm.freshly.space".cname.data = "a1.clicks.domains";
+
   services.kanidm = {
     package = pkgs.kanidm_1_6;
     enableServer = true;

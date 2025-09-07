@@ -104,6 +104,15 @@ let
       userConfigs;
 in
 {
+  services.headscale.settings.dns.extra_records = [
+    {
+      # fava.clicks.codes -> teal
+      name = "fava.clicks.codes";
+      type = "A";
+      value = "100.64.0.5";
+    }
+  ];
+
   systemd.services.fava = {
     wants = [ "nginx.service" ];
     after = [ "nginx.service" ];

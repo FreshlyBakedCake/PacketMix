@@ -17,7 +17,7 @@
   config = {
     nixpkgs.overlays = [ project.inputs.copyparty.result.overlays.default ];
 
-    config.networking.domains.subDomains."files.freshly.space" = {};
+    networking.domains.subDomains."files.freshly.space".cname.data = "a1.clicks.domains";
 
     services.copyparty =
       let

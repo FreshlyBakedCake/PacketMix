@@ -89,6 +89,8 @@ let
   };
 in
 {
+  networking.domains.subDomains."vpn.clicks.codes".cname.data = "a1.clicks.domains";
+
   # Headscale service
   services.headscale = {
     enable = true;

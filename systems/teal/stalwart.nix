@@ -32,6 +32,54 @@ in
   imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart-mail.nix" ];
 
   config = {
+    networking.domains.subDomains = {
+      "mail.freshly.space".cname.data = "a1.clicks.domains";
+    }
+    // (lib.pipe mail_domains [
+      (map (name: [
+        {
+          inherit name;
+          value = {
+            mx = {
+              exchange = "mail.freshly.space";
+              preference = "10";
+            };
+            txt.data = "v=spf1 include:amazonses.com -all"; # FIXME: this isn't valid for non-SES domains (e.g. HC)
+          };
+        }
+        # TODO: domainkey stuff...
+        {
+          name = "_imaps._tcp.${name}";
+          value.srv = {
+            priority = 0;
+            weight = 1;
+            port = 993;
+            target = "mail.freshly.space";
+          };
+        }
+        {
+          name = "_submissions._tcp.${name}";
+          value.srv = {
+            priority = 0;
+            weight = 1;
+            port = 465;
+            target = "mail.freshly.space";
+          };
+        }
+        {
+          name = "_dmarc.${name}";
+          value.txt.data = "v=DMARC1; p=reject; rua=mailto:postmaster@${name}; ruf=mailto:postmaster@${name}";
+        }
+        {
+          name = "_smtp._tls.${name}";
+          value.txt.data = "v=TLSRPTv1; rua=mailto:postmaster@${name}";
+        }
+        # TODO: TLSA stuff
+      ]))
+      lib.flatten
+      builtins.listToAttrs
+    ]);
+
     services.headscale.settings.dns.extra_records = [
       {
         # mail.freshly.space -> teal

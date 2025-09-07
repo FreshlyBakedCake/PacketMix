@@ -5,6 +5,8 @@
 
 { pkgs, lib, ... }:
 {
+  networking.domains.subDomains."git.freshlybakedca.ke".cname.data = "a1.clicks.domains";
+
   users.users.git = {
     isSystemUser = true;
     group = "git";

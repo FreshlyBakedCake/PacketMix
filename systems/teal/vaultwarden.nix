@@ -14,6 +14,8 @@
     dbBackend = "postgresql";
 
     config = {
+      networking.domains.subDomains."vaultwarden.clicks.codes".cname.data = "a1.clicks.domains";
+
       # Server Settings
       DOMAIN = "https://vaultwarden.clicks.codes"; # Not moving off the clicks domain due to passkey migration - maybe at a later date...
       ROCKET_ADDRESS = "127.0.0.1";

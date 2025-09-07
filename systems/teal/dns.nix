@@ -4,5 +4,20 @@
 
 { project, ... }:
 {
-  config.networking.domains.baseDomains."files.freshly.space".cname.data = "a1.clicks.domains";
+  imports = [ project.inputs.nixos-dns.result.nixosModules.default ];
+
+  networking.domains = {
+    enable = true;
+    baseDomains = {
+      "clicks.codes" = { };
+      "clicksminuteper.net" = { };
+      "coded.codes" = { };
+      "freshly.space" = { };
+      "freshlybakedca.ke" = { };
+      "hopescaramels.com" = { };
+      "starrysky.fyi" = { };
+      "thecoded.prof" = { };
+      "turquoise.fyi" = { };
+    };
+  };
 }

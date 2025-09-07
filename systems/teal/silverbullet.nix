@@ -9,6 +9,15 @@
   ...
 }:
 {
+  services.headscale.settings.dns.extra_records = [
+    {
+      # silverbullet.clicks.codes -> teal
+      name = "silverbullet.clicks.codes";
+      type = "A";
+      value = "100.64.0.5";
+    }
+  ];
+
   clicks.storage.impermanence.persist.directories = [
     {
       directory = config.services.silverbullet.spaceDir;
