@@ -15,6 +15,7 @@ in
       "freshlybakedcake"
       "javelin"
       "minion"
+      "nightshift"
       "niri"
       "personal"
       "portable"
@@ -33,6 +34,7 @@ in
       "gaming"
       "javelin"
       "minion"
+      "nightshift"
       "niri"
       "personal"
     ];

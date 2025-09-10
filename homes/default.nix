@@ -42,6 +42,7 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
+      "nightshift"
       "nix-index"
       "remote"
     ];
@@ -63,6 +64,7 @@ in
       "espanso"
       "freshlybakedcake"
       "gaming"
+      "nightshift"
       "nix-index"
       "remote"
     ];
