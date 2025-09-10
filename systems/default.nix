@@ -11,12 +11,8 @@ in
   config.systems.nixos."redhead" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "espanso"
-      "freshlybakedcake"
       "javelin"
       "minion"
-      "nightshift"
-      "niri"
       "personal"
       "portable"
     ];
@@ -29,13 +25,8 @@ in
   config.systems.nixos."emden" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "espanso"
-      "freshlybakedcake"
-      "gaming"
       "javelin"
       "minion"
-      "nightshift"
-      "niri"
       "personal"
     ];
     args = {
@@ -47,11 +38,8 @@ in
   config.systems.nixos."marbled" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "espanso"
-      "freshlybakedcake"
       "javelin"
       "minion"
-      "niri"
       "personal"
       "portable"
     ];
@@ -65,10 +53,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "coded"
-      "espanso"
-      "freshlybakedcake"
-      "gaming"
-      "niri"
       "personal"
       "portable"
     ];
@@ -81,9 +65,6 @@ in
   config.systems.nixos."saurosuchus" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "espanso"
-      "freshlybakedcake"
-      "gaming"
       "kde"
       "personal"
       "pinea"
@@ -99,10 +80,6 @@ in
     ingredients = [
       "coded"
       "corsair"
-      "espanso"
-      "freshlybakedcake"
-      "gaming"
-      "niri"
       "personal"
     ];
     args = {

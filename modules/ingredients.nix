@@ -25,7 +25,30 @@
                 ingredientModules
                 ++ (map (ingredient: {
                   config.ingredient.${ingredient}.enable = true;
-                }) submodule.config.ingredients);
+                }) submodule.config.ingredients)
+                ++ [
+                  (
+                    {
+                      system,
+                      ...
+                    }:
+                    let
+                      homeIngredientModules = lib.attrs.mapToList (
+                        _: value: value.result.${system}.config.ingredient
+                      ) submodule.config.homes;
+                      homeIngredients = lib.lists.flatten (
+                        map (lib.attrs.mapToList (
+                          name: value: if value.enable && ingredientExists name then [ name ] else [ ]
+                        )) homeIngredientModules
+                      );
+                      homeIngredientEnables = map (ingredient: {
+                        config.ingredient.${ingredient}.enable = true;
+                      }) homeIngredients;
+                      allHomeIngredientEnables = builtins.foldl' lib.attrs.mergeRecursive { } homeIngredientEnables;
+                    in
+                    allHomeIngredientEnables
+                  )
+                ];
             };
           }
         )
