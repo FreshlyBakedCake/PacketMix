@@ -309,6 +309,11 @@
             }
             {
               command = [
+                "${project.inputs.walker.result.inputs.elephant.packages.${pkgs.system}.default}/bin/elephant"
+              ];
+            }
+            {
+              command = [
                 "${pkgs.swaybg}/bin/swaybg"
                 "-i"
                 "${config.ingredient.niri.niri.wallpaper}"
