@@ -20,7 +20,21 @@
             };
 
             config = {
-              ingredients = [ "common" ] ++ (if ingredientExists name then [ name ] else [ ]);
+              ingredients = [
+                "common"
+              ]
+              ++ (if ingredientExists submodule.name then [ submodule.name ] else [ ])
+              ++ (
+                let
+                  homeNames = builtins.attrNames submodule.config.homes;
+                  homeNamesParts = map (
+                    homeName: builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" homeName
+                  ) homeNames;
+                  usernames = map (homeNameParts: builtins.elemAt homeNameParts 0) homeNamesParts;
+                  validUsernameIngredients = builtins.filter ingredientExists usernames;
+                in
+                validUsernameIngredients
+              );
               modules =
                 ingredientModules
                 ++ (map (ingredient: {

@@ -12,7 +12,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
-      "minion"
       "personal"
       "portable"
     ];
@@ -26,7 +25,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
-      "minion"
       "personal"
     ];
     args = {
@@ -39,7 +37,6 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
-      "minion"
       "personal"
       "portable"
     ];
@@ -52,7 +49,6 @@ in
   config.systems.nixos."ocicat" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "coded"
       "personal"
       "portable"
     ];
@@ -67,7 +63,6 @@ in
     ingredients = [
       "kde"
       "personal"
-      "pinea"
     ];
     args = {
       system = "x86_64-linux";
@@ -78,7 +73,6 @@ in
   config.systems.nixos."shorthair" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
-      "coded"
       "corsair"
       "personal"
     ];
