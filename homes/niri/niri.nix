@@ -12,7 +12,6 @@
 {
   imports = [
     project.inputs.niri.result.homeModules.niri
-    project.inputs.walker.result.homeManagerModules.walker
   ];
 
   options.ingredient.niri.niri = {
@@ -140,8 +139,6 @@
 
               "${mod}+Space".action.switch-layout = [ "next" ];
               "${mod}+Shift+Space".action.switch-layout = [ "prev" ];
-
-              "${mod}+D".action.spawn = "${config.programs.walker.package}/bin/walker";
 
               "${mod}+Shift+Slash".action.show-hotkey-overlay = [ ];
 
@@ -309,11 +306,6 @@
             }
             {
               command = [
-                "${project.inputs.walker.result.inputs.elephant.packages.${pkgs.system}.default}/bin/elephant"
-              ];
-            }
-            {
-              command = [
                 "${pkgs.swaybg}/bin/swaybg"
                 "-i"
                 "${config.ingredient.niri.niri.wallpaper}"
@@ -340,8 +332,6 @@
           ];
         };
       };
-
-    programs.walker.enable = true;
 
     programs.bash.profileExtra = lib.mkBefore ''
       if [ -z $WAYLAND_DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
