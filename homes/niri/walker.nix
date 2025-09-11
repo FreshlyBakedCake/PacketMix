@@ -32,8 +32,8 @@
 
     systemd.user.services.elephant.Unit.After = [ "niri.service" ];
     systemd.user.services.walker.Unit.After = [ "niri.service" ];
-    systemd.user.services.elephant.Unit.WantedBy = lib.mkForce [ "niri.service" ];
-    systemd.user.services.walker.Unit.WantedBy = lib.mkForce [ "niri.service" ];
+    systemd.user.services.elephant.Install.WantedBy = lib.mkForce [ "niri.service" ];
+    systemd.user.services.walker.Install.WantedBy = lib.mkForce [ "niri.service" ];
     systemd.user.services.elephant.Unit.PartOf = lib.mkForce [ ];
     systemd.user.services.walker.Unit.PartOf = lib.mkForce [ ];
   };
