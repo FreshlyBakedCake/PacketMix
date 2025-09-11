@@ -8,6 +8,8 @@
   # Don't place any config that isn't directly adding lines to home.packages here...
   home.packages = [
     pkgs.obs-studio
+    pkgs.unzip
+    pkgs.zip
   ];
 
   clicks.storage.impermanence.persist.directories = [
