@@ -44,7 +44,7 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "maya:x86_64-linux" "minion:x86_64-linux"; };
+    homes = { inherit (config.homes) "maya:x86_64-linux"; };
   };
   config.systems.nixos."ocicat" = {
     pkgs = nixpkgs.x86_64-linux;
