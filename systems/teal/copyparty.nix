@@ -104,6 +104,16 @@
               ];
             };
           };
+          "/groups/turing_complete" = {
+            path = "/var/lib/copyparty/data/groups/turing_complete";
+
+            access = {
+              A = [
+                "coded"
+                "pinea"
+              ];
+            };
+          };
         };
       };
 
