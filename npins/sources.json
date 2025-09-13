@@ -94,6 +94,19 @@
       "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.19.8",
       "hash": "sha256-S7HDDX3ndcMo++d9mEBw74LJqwoivP3XB42RgeqYX+E="
     },
+    "headscale": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juanfont",
+        "repo": "headscale"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "30d12dafed210316431a57349adfdb2128078feb",
+      "url": "https://github.com/juanfont/headscale/archive/30d12dafed210316431a57349adfdb2128078feb.tar.gz",
+      "hash": "sha256-q2Ac/KfHv9WWZVHo+AM4opt3P7iFqO4XsbtRTpGIPU0="
+    },
     "home-manager": {
       "type": "Git",
       "repository": {
