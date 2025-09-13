@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ project, pkgs, ... }:
 let
   groups = {
     /**
@@ -20,12 +20,13 @@ let
       different permission level. Servers can only access other servers
     */
     "group:users" = [
-      "coded"
-      "matei"
-      "minion"
-      "mostlyturquoise"
-      "pinea"
-      "zanderp25"
+      "coded@"
+      "matei@"
+      "minion@"
+      "mostlyturquoise@"
+      "pinea@"
+      "zanderp25@"
+      "testminion@"
     ];
 
     /**
@@ -36,21 +37,16 @@ let
       tailnet
     */
     "group:friends" = [
-      "sirdigalot"
+      "sirdigalot@"
     ];
   };
 
   exceptional_acls = [
     {
       action = "accept";
-      src = [ "zulu" ];
-      dst = [ "zanderp25:3000" ];
-    } # Used to let Zan reverse proxy to their personal machine for development - port-locked so probably OK
-    {
-      action = "accept";
       src = [
-        "mostlyturquoise"
-        "starrylee"
+        "mostlyturquoise@"
+        "starrylee@"
       ];
       dst = [ "tag:mostlyturquoise-minecraft-server:*" ];
     } # Used to let mostlyturquoise and their friends access their minecraft servers without giving people too many permissions
@@ -85,13 +81,20 @@ let
 
   tagOwners = {
     "tag:server" = [ "group:users" ];
-    "tag:mostlyturquoise-minecraft-server" = [ "mostlyturquoise" ];
+    "tag:mostlyturquoise-minecraft-server" = [ "mostlyturquoise@" ];
   };
 in
 {
+  disabledModules = [ "services/networking/headscale.nix" ];
+  imports = [
+    "${project.inputs.nixos-unstable.src}/nixos/modules/services/networking/headscale.nix"
+  ];
+
   # Headscale service
   services.headscale = {
     enable = true;
+
+    package = project.packages.headscale.result.x86_64-linux;
 
     address = "127.0.0.1";
     port = 1024;
@@ -116,9 +119,9 @@ in
         ];
         base_domain = "clicks.domains";
       };
+      auth_setup_allow_defer = true; # Otherwise we'll fall back to CLI auth
       oidc = {
         only_start_if_oidc_is_available = false; # Otherwise we can end up locking ourselves out...
-        strip_email_domain = true;
 
         issuer = "https://idm.freshly.space/oauth2/openid/headscale";
 
