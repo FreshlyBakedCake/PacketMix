@@ -312,6 +312,21 @@
       "url": "https://github.com/eewanco/scriptfs/archive/82d7e4865c9a8e40bc717c8745d052420365069c.tar.gz",
       "hash": "sha256-WLuOt8zemooHDzK+zWJNBicKu8bg0wXyAGvZIH/po6o="
     },
+    "tangled": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Git",
+        "url": "https://tangled.sh/@tangled.sh/core"
+      },
+      "pre_releases": true,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.9.0-alpha",
+      "revision": "6200797b6377ab37640e9236633df2b845ae4c49",
+      "url": null,
+      "hash": "sha256-sTJAWsTj49q48CneaO9t/rVswqbmvQWcNTnw/bJGfps="
+    },
     "treefmt-nix": {
       "type": "Git",
       "repository": {
