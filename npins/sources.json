@@ -116,9 +116,9 @@
       },
       "branch": "release-25.05",
       "submodules": false,
-      "revision": "07fc025fe10487dd80f2ec694f1cd790e752d0e8",
-      "url": "https://github.com/nix-community/home-manager/archive/07fc025fe10487dd80f2ec694f1cd790e752d0e8.tar.gz",
-      "hash": "sha256-Xd1vOeY9ccDf5VtVK12yM0FS6qqvfUop8UQlxEB+gTQ="
+      "revision": "f21d9167782c086a33ad53e2311854a8f13c281e",
+      "url": "https://github.com/nix-community/home-manager/archive/f21d9167782c086a33ad53e2311854a8f13c281e.tar.gz",
+      "hash": "sha256-K6PEI5PYY94TVMH0mX3MbZNYFme7oNRKml/85BpRRAo="
     },
     "home-manager-unstable": {
       "type": "Git",
@@ -129,9 +129,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "a3fcc92180c7462082cd849498369591dfb20855",
-      "url": "https://github.com/nix-community/home-manager/archive/a3fcc92180c7462082cd849498369591dfb20855.tar.gz",
-      "hash": "sha256-UqHHGydF/q3jfYXCpvYLA0TWtvByOp1NwOKCUjhYmPs="
+      "revision": "17a10049486f6698fca32097d8f52c0c895542b0",
+      "url": "https://github.com/nix-community/home-manager/archive/17a10049486f6698fca32097d8f52c0c895542b0.tar.gz",
+      "hash": "sha256-29mlXbfAJhz9cWVrPP4STvVPDVZFCfCOmaIN5lFJa+Y="
     },
     "impermanence": {
       "type": "Git",
@@ -156,9 +156,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d90e4a65812c6d3dd90aed7e44941eba3215f876",
-      "url": "https://git.lix.systems/lix-project/lix/archive/d90e4a65812c6d3dd90aed7e44941eba3215f876.tar.gz",
-      "hash": "sha256-rbf0ptj4BTSwsitKQu3FuaiJwhNDePGBeBJovm5HLdQ="
+      "revision": "8981fb5a18ae15f664b27fde437dce3e17030874",
+      "url": "https://git.lix.systems/lix-project/lix/archive/8981fb5a18ae15f664b27fde437dce3e17030874.tar.gz",
+      "hash": "sha256-G7QPn4gnKeXuecVfiglVSUqxufgB4Z4dlO/1zygXsBA="
     },
     "lix-module": {
       "type": "Git",
@@ -257,9 +257,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "2418edea929640fb5f856bc0a25fb91f54dfc229",
-      "url": "https://github.com/sodiboo/niri-flake/archive/2418edea929640fb5f856bc0a25fb91f54dfc229.tar.gz",
-      "hash": "sha256-vXZaxm2LfFrVyuUOKkyWpwR0K2WB7k2oo94HN1o4910="
+      "revision": "e1088ad97a72f86afadd1e76086a4e74cc224153",
+      "url": "https://github.com/sodiboo/niri-flake/archive/e1088ad97a72f86afadd1e76086a4e74cc224153.tar.gz",
+      "hash": "sha256-LrCMacdjesK2GW8aA5/eGEkh3jAut6HG0vRkpnGfN3I="
     },
     "nix-index-database": {
       "type": "Git",
@@ -270,15 +270,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "9b144dc3ef6e42b888c4190e02746aab13b0e97f",
-      "url": "https://github.com/nix-community/nix-index-database/archive/9b144dc3ef6e42b888c4190e02746aab13b0e97f.tar.gz",
-      "hash": "sha256-IwOwN70HvoBNB2ckaROxcaCvj5NudNc52taPsv5wtLk="
+      "revision": "80b92602ddca79bd46ffa8fd244af0319c22551b",
+      "url": "https://github.com/nix-community/nix-index-database/archive/80b92602ddca79bd46ffa8fd244af0319c22551b.tar.gz",
+      "hash": "sha256-S1uv00g0DEs1ef8BJoIH9g1AsdDAFAWLoynrzmKibJc="
     },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre859555.ab0f3607a6c7/nixexprs.tar.xz",
-      "hash": "sha256-sUg6wUdqMkC6Eu/QiztLWxmS2GY9WsTisWrxFMlZ+gY="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.11pre861038.c23193b943c6/nixexprs.tar.xz",
+      "hash": "sha256-rmyZ6B4DtU9MwkBSEf63NU4czFoM0budKcAtlhjaGEc="
     },
     "nixpkgs": {
       "type": "Channel",
@@ -351,10 +351,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.0.0",
-      "revision": "8804abfb995d9ef2a94092b2f5f0d80bbd2d377e",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.0",
-      "hash": "sha256-Qnv11vIGoIMOMNmed9lRwHeMrFr9z67LE1ymnvFDguM="
+      "version": "v1.0.3",
+      "revision": "48aa2fa533b5b9590af4b584270e39f0764ac3c2",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.3",
+      "hash": "sha256-W6PE16XCftWGGC4pokekbdYoJi+6NUefjJwEkeox9Dg="
     }
   },
   "version": 6
