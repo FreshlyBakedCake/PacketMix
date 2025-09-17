@@ -14,10 +14,6 @@
         replace = "sudo mount --bind /nix systemplate/nix";
       }
       {
-        trigger = ":work";
-        replace = "Skyler Grey <skyler.grey@collabora.com>";
-      }
-      {
         trigger = "SJIC";
         replace = "St John's Innovation Center";
       }
@@ -90,8 +86,20 @@
         replace = "@companies.starrysky.fyi";
       }
       {
+        regex = ''@:co(c\.|companies)'';
+        replace = "@companies.thecoded.prof";
+      }
+      {
         regex = ''sky@a(?P<whitespace>\s)'';
         replace = "sky@a.starrysky.fyi{{whitespace}}";
+      }
+      {
+        trigger = ":co: ";
+        replace = "Co-Authored-By: ";
+      }
+      {
+        trigger = ":co:coded";
+        replace = "Co-Authored-By: Samuel Shuert <me@thecoded.prof>";
       }
       {
         trigger = ":co:me";
