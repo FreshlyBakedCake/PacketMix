@@ -403,45 +403,48 @@
             signingScriptScriptFSPath;
         };
         snapshot.auto-track = "~(root-glob:'**/.envrc' | root-glob:'**/*.env' | root-glob:'**/.direnv/**/*')";
-        template-aliases.series_log = ''
-          if(root,
-            format_root_commit(self),
-            label(if(current_working_copy, "working_copy"),
-              concat(
-                if(current_working_copy, label("op_log current_operation id", "@"),
-                if(self.contained_in("..@"), label("diff added", "-"),
-                label("diff removed", "+")
-                )),
-                " ",
-                separate(" ",
-                  format_short_change_id_with_hidden_and_divergent_info(self),
-                  format_short_commit_id(commit_id),
-                  git_head,
-                  if(conflict, label("conflict", "conflict")),
-                ) ++ " ",
-                separate(" ",
-                  if(self.contained_in("@.."),
-                    label("rest", separate(" ",
-                      if(empty, "(empty)"),
-                      if(description,
-                        description.first_line(),
-                        "(no description set)",
-                      ),
-                    )),
-                    separate(" ",
-                      if(empty, label("empty", "(empty)")),
-                      if(description,
-                        description.first_line(),
-                        label(if(empty, "empty"), description_placeholder),
-                      ),
-                    )
-                  ),
-                  if(!(current_working_copy || parents), "\033[22m")
-                ) ++ "\n",
-              ),
+        template-aliases = {
+          "format_timestamp(timestamp)" = ''timestamp.local().format("%Y-%m-%d %H:%M:%S") ++ " (" ++ timestamp.ago() ++ ")"'';
+          series_log = ''
+            if(root,
+              format_root_commit(self),
+              label(if(current_working_copy, "working_copy"),
+                concat(
+                  if(current_working_copy, label("op_log current_operation id", "@"),
+                  if(self.contained_in("..@"), label("diff added", "-"),
+                  label("diff removed", "+")
+                  )),
+                  " ",
+                  separate(" ",
+                    format_short_change_id_with_hidden_and_divergent_info(self),
+                    format_short_commit_id(commit_id),
+                    git_head,
+                    if(conflict, label("conflict", "conflict")),
+                  ) ++ " ",
+                  separate(" ",
+                    if(self.contained_in("@.."),
+                      label("rest", separate(" ",
+                        if(empty, "(empty)"),
+                        if(description,
+                          description.first_line(),
+                          "(no description set)",
+                        ),
+                      )),
+                      separate(" ",
+                        if(empty, label("empty", "(empty)")),
+                        if(description,
+                          description.first_line(),
+                          label(if(empty, "empty"), description_placeholder),
+                        ),
+                      )
+                    ),
+                    if(!(current_working_copy || parents), "\033[22m")
+                  ) ++ "\n",
+                ),
+              )
             )
-          )
-        '';
+          '';
+        };
         templates = {
           git_push_bookmark = "'private/${config.home.username}/push-' ++ change_id.short()";
           commit_trailers = ''
