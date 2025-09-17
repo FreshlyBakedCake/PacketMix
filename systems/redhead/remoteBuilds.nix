@@ -57,7 +57,7 @@
         hostName = "midnight.clicks.domains";
         sshUser = "remoteBuilds";
         sshKey = "/secrets/remoteBuilds/id_ed25519";
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU5wbnFKeDlBTGVSS0k0ekVvZnNIL0ZZMFJLaTVsWWtDRVMvR2NWbHNSWncgcm9vdEBhMWQyCg==";
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUdOcW44b0VlelNMMTg2Q1VhRjBRYzR3by9tOFpvY011Q1crNENvYXhtZ1Agcm9vdEBtaWRuaWdodAo=";
 
         system = "x86_64-linux";
 
