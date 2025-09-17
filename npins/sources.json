@@ -129,9 +129,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "11cc5449c50e0e5b785be3dfcb88245232633eb8",
-      "url": "https://github.com/nix-community/home-manager/archive/11cc5449c50e0e5b785be3dfcb88245232633eb8.tar.gz",
-      "hash": "sha256-Mv16aegXLulgyDunijP6SPFJNm8lSXb2w3Q0X+vZ9TY="
+      "revision": "ec73c06d34859ed01e2ce0e15d5972b4dd539694",
+      "url": "https://github.com/nix-community/home-manager/archive/ec73c06d34859ed01e2ce0e15d5972b4dd539694.tar.gz",
+      "hash": "sha256-EvJcfgpIfTxw7NdVeUWCtgaNcGHzBAfjo4JlexzOxpk="
     },
     "impermanence": {
       "type": "Git",
@@ -156,9 +156,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "812f466e0db207dbd9a3ea7882173943ee3bc44c",
-      "url": "https://git.lix.systems/lix-project/lix/archive/812f466e0db207dbd9a3ea7882173943ee3bc44c.tar.gz",
-      "hash": "sha256-p+ghcqdstZ8faqImeR6bhrAOSxcUzanYGTp8LIuPRYI="
+      "revision": "a9f28622c8c6ced79afdf164bbdd81c26dacfd4d",
+      "url": "https://git.lix.systems/lix-project/lix/archive/a9f28622c8c6ced79afdf164bbdd81c26dacfd4d.tar.gz",
+      "hash": "sha256-8oOUa6vFoI0LzfgBLPNf10Z1W7LzEwZ+EVFBVFl/k1w="
     },
     "lix-module": {
       "type": "Git",
@@ -257,9 +257,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1da07fd6a9d44a7875d2843cccab1179085edb2c",
-      "url": "https://github.com/sodiboo/niri-flake/archive/1da07fd6a9d44a7875d2843cccab1179085edb2c.tar.gz",
-      "hash": "sha256-iDnEKwUYNOJZU/2B4bt8tfKUwN0J7RFJ7BXmf17VJOM="
+      "revision": "addd500206b992b1c9211e0dfecb70c1d0c9821a",
+      "url": "https://github.com/sodiboo/niri-flake/archive/addd500206b992b1c9211e0dfecb70c1d0c9821a.tar.gz",
+      "hash": "sha256-5BUDFG+HnB4ZBLZSxbQ5tuueOVQDkSHi/8tUsJWlXl8="
     },
     "nix-index-database": {
       "type": "Git",
@@ -351,10 +351,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.0.3",
-      "revision": "48aa2fa533b5b9590af4b584270e39f0764ac3c2",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.3",
-      "hash": "sha256-W6PE16XCftWGGC4pokekbdYoJi+6NUefjJwEkeox9Dg="
+      "version": "v1.0.4",
+      "revision": "6ead873b63d857478d5c752876960cac96731243",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.4",
+      "hash": "sha256-DVGJG1ZEDxlqXb/T2vnnZD+k31XQ7cq/xE9i6/f1UQc="
     }
   },
   "version": 6
