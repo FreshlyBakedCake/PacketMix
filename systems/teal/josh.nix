@@ -20,11 +20,11 @@
     environment =
       let
         url_config = repo: ''
-          [url "https://tangled.sh/@freshlybakedca.ke/${repo}"]
-            insteadOf = "https://tangled.sh/@freshlybakedca.ke/${repo}.git"
+          [url "https://tangled.org/@freshlybakedca.ke/${repo}"]
+            insteadOf = "https://tangled.org/@freshlybakedca.ke/${repo}.git"
 
-          [url "ssh://git@tangled.sh/freshlybakedca.ke/${repo}"]
-            insteadOf = "ssh://git@tangled.sh/freshlybakedca.ke/${repo}.git"
+          [url "ssh://git@tangled.org/freshlybakedca.ke/${repo}"]
+            insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
         '';
         # ^^ Tangled doesn't support cloning from .git URLs, so we have to not have .git at the end of our repos
         # ^^ Additionally, we can only push to Tangled over SSH, not HTTP
@@ -47,8 +47,8 @@
     script =
       "${pkgs.josh}/bin/josh-proxy"
       + " --local /var/lib/josh/local"
-      + " --remote https://tangled.sh/@freshlybakedca.ke"
-      + " --remote ssh://git@tangled.sh/freshlybakedca.ke"
+      + " --remote https://tangled.org/@freshlybakedca.ke"
+      + " --remote ssh://git@tangled.org/freshlybakedca.ke"
       + " --port 1032";
   };
 
