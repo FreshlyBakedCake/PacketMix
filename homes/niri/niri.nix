@@ -337,6 +337,12 @@
       fi
     '';
 
+    programs.zsh.profileExtra = lib.mkBefore ''
+      if [ -z $WAYLAND_DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+        exec ${config.programs.niri.package}/bin/niri-session -l
+      fi
+    '';
+
     systemd.user.services.niri = {
       Unit = {
         Description = "A scrollable-tiling Wayland compositor";
