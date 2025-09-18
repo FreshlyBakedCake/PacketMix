@@ -98,5 +98,5 @@ steps:
       done
   - name: Push to release
     command: |
-      git remote set-url --push git@tangled.sh:freshlybakedca.ke/patisserie
+      git remote set-url --push origin git@tangled.sh:freshlybakedca.ke/patisserie
       git push origin HEAD:refs/heads/release
