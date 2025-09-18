@@ -1760,10 +1760,11 @@
       '))
 
       local VCS_STATUS_LOCAL_BRANCH=$branch
-      local VCS_STATUS_COMMITS_AHEAD=$counts[2]
-      local VCS_STATUS_COMMITS_BEHIND=$counts[3]
-      local VCS_STATUS_COMMITS_AHEAD_PLUS=$counts[4]
-      local VCS_STATUS_COMMITS_BEHIND_PLUS=$counts[5]
+      # note: the tracking_ahead_count and tracking_behind_count refer to whether the remote bookmark is ahead or behind the local bookmark, we want the other way round...
+      local VCS_STATUS_COMMITS_BEHIND=$counts[2]
+      local VCS_STATUS_COMMITS_AHEAD=$counts[3]
+      local VCS_STATUS_COMMITS_BEHIND_PLUS=$counts[4]
+      local VCS_STATUS_COMMITS_AHEAD_PLUS=$counts[5]
     fi
 
     local status_char=''
@@ -1783,10 +1784,10 @@
 
 
     ## jj_remote
-    # ⇡42 if ahead of the remote.
+    # ⇡42 if our local branch is ahead of the remote.
     (( VCS_STATUS_COMMITS_AHEAD  )) && res+=" ${green}⇡${VCS_STATUS_COMMITS_AHEAD}"
     (( VCS_STATUS_COMMITS_AHEAD_PLUS )) && res+="${VCS_STATUS_COMMITS_AHEAD_PLUS}"
-    # ⇣42 if behind the remote; no leading space if also ahead of the remote: ⇡42⇣42.
+    # ⇣42 if our local branch is behind the remote; no leading space if our local branch is also ahead of the remote: ⇡42⇣42.
     (( VCS_STATUS_COMMITS_BEHIND && !VCS_STATUS_COMMITS_AHEAD )) && res+=" "
     (( VCS_STATUS_COMMITS_BEHIND )) && res+="${red}⇣${VCS_STATUS_COMMITS_BEHIND}"
     (( VCS_STATUS_COMMITS_BEHIND_PLUS )) && res+="${VCS_STATUS_COMMITS_BEHIND_PLUS}"
