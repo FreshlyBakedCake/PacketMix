@@ -103,9 +103,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "40b3d54c1f00850e03db49408af174853414ee57",
-      "url": "https://github.com/juanfont/headscale/archive/40b3d54c1f00850e03db49408af174853414ee57.tar.gz",
-      "hash": "sha256-ZB2AO5O6413wN7uQ3t3X/GVBebX4N9hQvAHVP01H2Jo="
+      "revision": "bd35fcf338d678314fc5ef674d318f441fdf6fb6",
+      "url": "https://github.com/juanfont/headscale/archive/bd35fcf338d678314fc5ef674d318f441fdf6fb6.tar.gz",
+      "hash": "sha256-ELeYUzCFWuxqREjkbs7ZPX7j4qO0sVJOV3Ruhl0GgNk="
     },
     "home-manager": {
       "type": "Git",
@@ -129,9 +129,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ec73c06d34859ed01e2ce0e15d5972b4dd539694",
-      "url": "https://github.com/nix-community/home-manager/archive/ec73c06d34859ed01e2ce0e15d5972b4dd539694.tar.gz",
-      "hash": "sha256-EvJcfgpIfTxw7NdVeUWCtgaNcGHzBAfjo4JlexzOxpk="
+      "revision": "a504aee7d452ecf8881b933b1eb573535a543a03",
+      "url": "https://github.com/nix-community/home-manager/archive/a504aee7d452ecf8881b933b1eb573535a543a03.tar.gz",
+      "hash": "sha256-4YoMTUZRXb2XggJi11lSJnehrwM6u31Ylu2cOzb96JQ="
     },
     "impermanence": {
       "type": "Git",
@@ -156,9 +156,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a9f28622c8c6ced79afdf164bbdd81c26dacfd4d",
-      "url": "https://git.lix.systems/lix-project/lix/archive/a9f28622c8c6ced79afdf164bbdd81c26dacfd4d.tar.gz",
-      "hash": "sha256-8oOUa6vFoI0LzfgBLPNf10Z1W7LzEwZ+EVFBVFl/k1w="
+      "revision": "0018b988597f7e5fa482e3a77e3d6b539c146ed4",
+      "url": "https://git.lix.systems/lix-project/lix/archive/0018b988597f7e5fa482e3a77e3d6b539c146ed4.tar.gz",
+      "hash": "sha256-RkqywRKSg1Dq0fgtiMCiMjfbCBiqfXsLSVMLKhCiL80="
     },
     "lix-module": {
       "type": "Git",
@@ -257,9 +257,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "addd500206b992b1c9211e0dfecb70c1d0c9821a",
-      "url": "https://github.com/sodiboo/niri-flake/archive/addd500206b992b1c9211e0dfecb70c1d0c9821a.tar.gz",
-      "hash": "sha256-5BUDFG+HnB4ZBLZSxbQ5tuueOVQDkSHi/8tUsJWlXl8="
+      "revision": "2a84fdae04beddac03cbcaea8cfc05386dfb3bdc",
+      "url": "https://github.com/sodiboo/niri-flake/archive/2a84fdae04beddac03cbcaea8cfc05386dfb3bdc.tar.gz",
+      "hash": "sha256-qS4VkDso0nc+UpGR+pWLMBrC14Dvbk1Q4ZC74Qx6r7M="
     },
     "nix-index-database": {
       "type": "Git",
@@ -283,8 +283,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.05",
-      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.809873.9a094440e02a/nixexprs.tar.xz",
-      "hash": "sha256-mvTtxYIyANBRVxruLSUeuQOp7rV3kzygbRTfeTNY0Yk="
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.809980.e9b7f2ff62b3/nixexprs.tar.xz",
+      "hash": "sha256-AYOqNVRaBbpK31I8PjKERYgcdjbeYVd1sxRhaKY+CLQ="
     },
     "npins": {
       "type": "Git",
@@ -295,9 +295,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "a3b23457f1f524309d14652414002c9cafdee23c",
-      "url": "https://github.com/andir/npins/archive/a3b23457f1f524309d14652414002c9cafdee23c.tar.gz",
-      "hash": "sha256-S6uCQgfPX5E/QBgnluI+KKmrKu1MM0n2lrNB+agQy2g="
+      "revision": "208112c6c3b6c9ac38ffcde2bcfb6d8309e02cf5",
+      "url": "https://github.com/andir/npins/archive/208112c6c3b6c9ac38ffcde2bcfb6d8309e02cf5.tar.gz",
+      "hash": "sha256-iHzirqpITtUAvJfLAmfL00Odr3R3tVj2J9l0lBQ3EaU="
     },
     "scriptfs": {
       "type": "Git",
@@ -351,10 +351,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.0.4",
-      "revision": "6ead873b63d857478d5c752876960cac96731243",
-      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.4",
-      "hash": "sha256-DVGJG1ZEDxlqXb/T2vnnZD+k31XQ7cq/xE9i6/f1UQc="
+      "version": "v1.0.5",
+      "revision": "bc50afc6bb54ab6a3c20dcc28ece41e8ec017c01",
+      "url": "https://api.github.com/repos/abenz1267/walker/tarball/refs/tags/v1.0.5",
+      "hash": "sha256-CqzwUYXcUyh3V10ZqHEE1KXBMErtjcs1at04FlIYtg8="
     }
   },
   "version": 6
