@@ -6,9 +6,11 @@
 { config, pkgs, ... }:
 {
   nix.settings.substituters = [
+    "https://cache.freshlybakedca.ke"
     "https://freshlybakedcake.cachix.org"
   ];
   nix.settings.trusted-public-keys = [
+    "cache.freshlybakedca.ke-1:WD7CED6MwAxxOzgHlrHVbcVdYeqSa2mwBwR3vNuCJvg="
     "freshlybakedcake.cachix.org-1:YmhsHdeKjqbaS33PPJXJllTHBupT3hliQrPcllJXkE0="
   ];
 
@@ -26,6 +28,7 @@
   systemd.services.nixos-upgrade.preStart = ''
     ${pkgs.networkmanager}/bin/nm-online -s -q # wait until the internet is online, as esp. if we go offline we need to wait to retry...
     cd /etc/nixos
+    ${pkgs.git}/bin/git remote set-url origin https://git.freshlybakedca.ke/patisserie.git:workspace=packetmix.git
     ${pkgs.git}/bin/git fetch
     ${pkgs.git}/bin/git checkout origin/release
   '';
