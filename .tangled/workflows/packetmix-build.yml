@@ -43,7 +43,7 @@ steps:
       set -o pipefail
 
       eval_out=$(nix eval \
-        -f ./packetmix/nilla.nix packages.allNixOSSystems.result.x86_64-linux.drvPath \
+        -f ./packetmix/ci.nix packages.allNixOSSystems.result.x86_64-linux.drvPath \
         --show-trace --raw \
         2>&1 >/tmp/systems-drv-path | tee /dev/stderr)
       eval_status=$?
@@ -68,7 +68,7 @@ steps:
       set -o pipefail
 
       eval_out=$(nix eval \
-        -f ./packetmix/nilla.nix packages.allHomes.result.x86_64-linux.drvPath \
+        -f ./packetmix/ci.nix packages.allHomes.result.x86_64-linux.drvPath \
         --show-trace --raw \
         2>&1 >/tmp/homes-drv-path | tee /dev/stderr)
       eval_status=$?
