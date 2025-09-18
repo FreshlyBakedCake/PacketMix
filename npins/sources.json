@@ -274,6 +274,19 @@
       "url": "https://github.com/nix-community/nix-index-database/archive/050a5feb5d1bb5b6e5fc04a7d3d816923a87c9ea.tar.gz",
       "hash": "sha256-3HIpe3P2h1AUPYcAH9cjuX0tZOqJpX01c0iDwoUYNZ8="
     },
+    "nix-monitored": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ners",
+        "repo": "nix-monitored"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "60f3baa4701d58eab86c2d1d9c3d7e820074d461",
+      "url": "https://github.com/ners/nix-monitored/archive/60f3baa4701d58eab86c2d1d9c3d7e820074d461.tar.gz",
+      "hash": "sha256-Z8PknjkmIr/8ZCH+dmc2Pc+UltiOr7/oKg37PXuVvuU="
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
