@@ -18,4 +18,9 @@
     };
     pipelines.workflowTimeout = "2h";
   };
+
+  clicks.storage.impermanence.persist.directories = [
+    "/var/lib/docker"
+    "/var/lib/spindle"
+  ];
 }
