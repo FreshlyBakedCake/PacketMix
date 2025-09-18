@@ -6,9 +6,11 @@
 { config, pkgs, ... }:
 {
   nix.settings.substituters = [
+    "https://cache.freshlybakedca.ke"
     "https://freshlybakedcake.cachix.org"
   ];
   nix.settings.trusted-public-keys = [
+    "cache.freshlybakedca.ke-1:WD7CED6MwAxxOzgHlrHVbcVdYeqSa2mwBwR3vNuCJvg="
     "freshlybakedcake.cachix.org-1:YmhsHdeKjqbaS33PPJXJllTHBupT3hliQrPcllJXkE0="
   ];
 
