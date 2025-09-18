@@ -42,70 +42,50 @@ steps:
       set +e
       set -o pipefail
 
-      eval_out=$(nix eval \
-        -f ./packetmix/ci.nix packages.allNixOSSystems.result.x86_64-linux.drvPath \
-        --show-trace --raw \
-        2>&1 >/tmp/systems-drv-path | tee /dev/stderr)
-      eval_status=$?
+      mkdir -p /tmp/systems-drv-paths
 
-      if [ $eval_status -ne 0 ]; then
-        echo "Evaluating your configuration failed with exit code $eval_status"
-        echo "Please fix this and squash into your existing commits"
-        exit $eval_status
-      fi
+      systems=$(nix eval \
+        --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import ./packetmix/ci.nix).systems.nixos)' \
+        --impure \
+        --show-trace --raw)
 
-      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
+      for system in $systems; do
+        echo "Evaluating system $system"
 
-      if [ -n "$eval_warns" ]; then
-        echo "There were some warnings while evaluating your systems:"
-        echo "$eval_warns"
-        echo "Please fix these and squash into your existing commits"
-        exit 1
-      fi
-  - name: Evaluate all homes
-    command: |
-      set +e
-      set -o pipefail
+        eval_out=$(nix eval \
+          -f ./packetmix/ci.nix "systems.nixos.$system.result.config.system.build.toplevel.drvPath" \
+          --show-trace --raw \
+          2>&1 >"/tmp/systems-drv-paths/$system" | tee /dev/stderr)
+        eval_status=$?
 
-      eval_out=$(nix eval \
-        -f ./packetmix/ci.nix packages.allHomes.result.x86_64-linux.drvPath \
-        --show-trace --raw \
-        2>&1 >/tmp/homes-drv-path | tee /dev/stderr)
-      eval_status=$?
+        if [ $eval_status -ne 0 ]; then
+          echo "Evaluating the system '$system' failed with exit code $eval_status"
+          echo "Please fix this and squash into your existing commits"
+          exit $eval_status
+        fi
 
-      if [ $eval_status -ne 0 ]; then
-        echo "Evaluating your configuration failed with exit code $eval_status"
-        echo "Please fix this and squash into your existing commits"
-        exit $eval_status
-      fi
+        eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
 
-      eval_warns=$(echo "$eval_out" | grep "evaluation warning:" || true)
-
-      if [ -n "$eval_warns" ]; then
-        echo "There were some warnings while evaluating your homes:"
-        echo "$eval_warns"
-        echo "Please fix these and squash into your existing commits"
-        exit 1
-      fi
+        if [ -n "$eval_warns" ]; then
+          echo "There were some warnings while evaluating the system '$system':"
+          echo "$eval_warns"
+          echo "Please fix these and squash into your existing commits"
+          exit 1
+        fi
+      done
   - name: Build all systems
     command: |
       set -e
-      nix-copy-closure \
-        --to 'midnight' \
-        "$(cat /tmp/systems-drv-path)"
-      nix build \
-        "$(cat /tmp/systems-drv-path)"'^*' \
-        --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
-        --eval-store auto \
-        --show-trace --print-out-paths
-  - name: Build all homes
-    command: |
-      set -e
-      nix-copy-closure \
-        --to 'midnight' \
-        "$(cat /tmp/homes-drv-path)"
-      nix build \
-        "$(cat /tmp/homes-drv-path)"'^*' \
-        --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
-        --eval-store auto \
-        --show-trace --print-out-paths
+
+      for derivation_path in /tmp/systems-drv-paths/*; do
+        echo "Building system $(basename $derivation_path)"
+
+        nix-copy-closure \
+          --to 'midnight' \
+          "$(cat $derivation_path)"
+        nix build \
+          "$(cat $derivation_path)"'^*' \
+          --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
+          --eval-store auto \
+          --show-trace --print-out-paths
+      done      
