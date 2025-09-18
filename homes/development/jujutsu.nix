@@ -404,7 +404,8 @@
         };
         snapshot.auto-track = "~(root-glob:'**/.envrc' | root-glob:'**/*.env' | root-glob:'**/.direnv/**/*')";
         template-aliases = {
-          "format_timestamp(timestamp)" = ''timestamp.local().format("%Y-%m-%d %H:%M:%S") ++ " (" ++ timestamp.ago() ++ ")"'';
+          "format_timestamp(timestamp)" =
+            ''timestamp.local().format("%Y-%m-%d %H:%M:%S") ++ " (" ++ timestamp.ago() ++ ")"'';
           series_log = ''
             if(root,
               format_root_commit(self),
