@@ -6,7 +6,7 @@
 {
   imports = [ project.inputs.tangled.result.nixosModules.spindle ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 1024 ];
+  networking.firewall.allowedTCPPorts = [ 1024 ];
 
   services.tangled-spindle = {
     enable = true;
