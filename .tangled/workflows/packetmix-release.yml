@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 when:
-  - event: ["pull_request"]
+  - event: ["push"]
     branch: ["main"]
 
 engine: nixery
@@ -18,6 +18,10 @@ steps:
     command: |
       echo "$KEY_SSH_REMOTE_BUILD" > /tmp/key-ssh-remote-build
       chmod 600 /tmp/key-ssh-remote-build
+  - name: Get release push SSH key
+    command: |
+      echo "$KEY_SSH_RELEASE_PUSH" > /tmp/key-ssh-release-push
+      chmod 600 /tmp/key-ssh-release-push
   - name: Add base system files
     command: |
       # Let us SSH to midnight by name
@@ -33,6 +37,9 @@ steps:
       echo "Host midnight" >> /etc/ssh/ssh_config
       echo "    User remoteBuilds" >> /etc/ssh/ssh_config
       echo "    IdentityFile /tmp/key-ssh-remote-build" >> /etc/ssh/ssh_config
+      echo "Host tangled.org" >> /etc/ssh/ssh_config
+      echo "    User git" >> /etc/ssh/ssh_config
+      echo "    IdentityFile /tmp/key-ssh-release-push" >> /etc/ssh/ssh_config
 
       echo "extra-experimental-features = nix-command" >> /etc/nix/nix.conf
       echo "max-jobs = 0" >> /etc/nix/nix.conf
@@ -88,4 +95,8 @@ steps:
           --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
           --eval-store auto \
           --show-trace --print-out-paths
-      done      
+      done
+  - name: Push to release
+    command: |
+      git remote set-url --push git@tangled.sh:freshlybakedca.ke/patisserie
+      git push origin HEAD:refs/heads/release
