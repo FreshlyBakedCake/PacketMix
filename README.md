@@ -4,6 +4,9 @@ SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 SPDX-License-Identifier: MIT
 -->
 
+> [!IMPORTANT]
+> PacketMix has moved! You can find us [on Tangled](https://tangled.org/@freshlybakedca.ke/patisserie/)
+
 # PacketMix
 
 # Principles
