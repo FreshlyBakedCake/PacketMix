@@ -22,9 +22,10 @@
         url_config = repo: ''
           [url "https://tangled.org/@freshlybakedca.ke/${repo}"]
             insteadOf = "https://tangled.org/@freshlybakedca.ke/${repo}.git"
+            insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
 
           [url "ssh://git@tangled.org/freshlybakedca.ke/${repo}"]
-            insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
+            pushInsteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
         '';
         # ^^ Tangled doesn't support cloning from .git URLs, so we have to not have .git at the end of our repos
         # ^^ Additionally, we can only push to Tangled over SSH, not HTTP
