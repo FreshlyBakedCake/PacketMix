@@ -10,6 +10,7 @@
     pkgs.corefonts
     pkgs.fira-code
     pkgs.fira-sans
+    pkgs.nerd-fonts.symbols-only
   ];
 
   fonts.enableDefaultPackages = true;
