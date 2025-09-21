@@ -3,8 +3,26 @@
 # SPDX-License-Identifier: MIT
 
 {
-  services.pds = {
+  project,
+  pkgs,
+  system,
+  ...
+}:
+{
+  disabledModules = [ "services/web-apps/pds.nix" ];
+  imports = [
+    "${project.inputs.nixos-unstable.src}/nixos/modules/services/web-apps/bluesky-pds.nix"
+  ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      bluesky-pdsadmin = final.pdsadmin;
+    })
+  ];
+
+  services.bluesky-pds = {
     enable = true;
+    package = project.packages.bluesky-pds.result.${system};
     settings = {
       PDS_HOSTNAME = "pds.freshly.space";
       PDS_PORT = 1033;

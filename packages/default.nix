@@ -8,6 +8,7 @@
     ./beancount-beancount_plugin_utils
     ./beancount-beancount_share
     ./beancount-smart_importer
+    ./bluesky-pds
     ./collabora-gtimelog
     ./headscale
     ./jujutsu

@@ -52,6 +52,19 @@
       "url": "https://github.com/beancount/smart_importer/archive/d288eb31c580883491294c5e6c0abb4962f16e79.tar.gz",
       "hash": "sha256-1hE/2za1grfCeo1UK81dpLL/JkiLgaRYqLtF09mbDHc="
     },
+    "bluesky-atproto": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bluesky-social",
+        "repo": "atproto"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d91988fe79030b61b556dd6f16a46f0c3b9d0b44",
+      "url": "https://github.com/bluesky-social/atproto/archive/d91988fe79030b61b556dd6f16a46f0c3b9d0b44.tar.gz",
+      "hash": "sha256-KCnhgyWiA6kBlQCIEEPHGYDxgkPn5/WIwxlfeShugG0="
+    },
     "catppuccin": {
       "type": "Git",
       "repository": {
