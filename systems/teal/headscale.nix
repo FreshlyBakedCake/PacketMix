@@ -111,6 +111,20 @@ in
         );
       };
       dns = {
+        extra_records = [
+          {
+            # cartandflynns.turquoise.fyi -> nordic
+            name = "cartandflynns.turquoise.fyi";
+            type = "A";
+            value = "100.64.0.37";
+          }
+          {
+            # puttheleeinholly.turquoise.fyi -> nordic
+            name = "puttheleeinholly.turquoise.fyi";
+            type = "A";
+            value = "100.64.0.37";
+          }
+        ];
         nameservers.global = [
           "1.1.1.1"
           "1.0.0.1"
