@@ -27,6 +27,7 @@
       PDS_HOSTNAME = "pds.freshly.space";
       PDS_PORT = 1033;
       PDS_SERVICE_HANDLE_DOMAINS = ".at.freshlybakedca.ke";
+      PDS_EMAIL_FROM_ADDRESS = "pds@freshly.space";
     };
     environmentFiles = [
       "/secrets/pds/environmentFile"
