@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main"]
+
+engine: nixery
+
+dependencies:
+  nixpkgs:
+    - ansifilter
+    - deadnix
+
+steps:
+  - name: Check for unused nix bindings
+    command: |
+      set -eo pipefail
+
+      deadnix --exclude **/npins --no-underscore --fail | ansifilter

@@ -128,6 +128,7 @@ nilla.create (
               config.inputs.nilla-home.result.packages.nilla-home.result.${system}
               config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
               config.inputs.nixos-unstable.result.${system}.quickshell
+              config.inputs.nixpkgs.result.${system}.deadnix
               config.packages.nilla-fmt.result.${system}
               config.packages.treefmt.result.${system}
               (config.inputs.npins.result { inherit pkgs system; })
