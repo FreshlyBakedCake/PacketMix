@@ -5,7 +5,6 @@
 {
   project,
   config,
-  pkgs,
   lib,
   ...
 }:

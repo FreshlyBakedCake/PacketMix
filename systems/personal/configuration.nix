@@ -8,7 +8,6 @@
 
 {
   project,
-  config,
   system,
   pkgs,
   ...

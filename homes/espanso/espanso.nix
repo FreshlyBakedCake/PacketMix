@@ -3,7 +3,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, lib, ... }:
+{
+  config,
+  ...
+}:
 {
   home.file = {
     ".cache/espanso/kvs/has_completed_wizard" = {

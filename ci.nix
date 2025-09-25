@@ -7,11 +7,11 @@ let
   project = base.extend {
     modules = [
       (
-        { config, lib, ... }:
+        { config, ... }:
         {
           config.inputs = (
             builtins.mapAttrs (
-              name: value:
+              _name: value:
               if value ? settings.configuration.allowUnfree then
                 {
                   settings.configuration = {

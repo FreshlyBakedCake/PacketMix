@@ -3,10 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
-  project,
-  config,
   pkgs,
-  lib,
   ...
 }:
 {

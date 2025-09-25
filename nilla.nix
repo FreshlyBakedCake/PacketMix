@@ -6,12 +6,6 @@ let
   pins = import ./npins;
 
   nilla = import pins.nilla;
-
-  settings = {
-    nixpkgs.configuration.allowUnfree = true;
-    "nixos-24.11" = settings.nixpkgs;
-    nixos-unstable = settings.nixpkgs;
-  };
 in
 nilla.create (
   { config, lib }:

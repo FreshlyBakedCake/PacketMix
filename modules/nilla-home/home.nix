@@ -4,7 +4,6 @@
 
 { lib, config }:
 let
-  inherit (config) inputs;
   homes-type = import ./homes-type.nix { inherit lib config; };
 in
 {

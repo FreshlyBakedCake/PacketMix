@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
 {
   gtk.enable = true;
 }

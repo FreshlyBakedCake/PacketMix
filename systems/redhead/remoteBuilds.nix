@@ -3,10 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 {
-  lib,
-  ...
-}:
-{
   nix = {
     distributedBuilds = true;
     buildMachines = [

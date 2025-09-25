@@ -3,7 +3,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, lib, ... }:
+{
+  config,
+  ...
+}:
 let
   nixpkgs = config.inputs.nixpkgs.result;
 in

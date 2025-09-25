@@ -42,7 +42,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [
-      (final: prev: {
+      (_final: prev: {
         _espanso-wayland-orig = prev.espanso-wayland;
         espanso-wayland =
           pkgs.callPackage ./nixpkgs-328890--espanso-capdacoverride/espanso-capdacoverride.nix

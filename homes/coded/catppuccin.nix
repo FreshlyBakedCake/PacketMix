@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, ... }:
 {
   config.catppuccin = {
     flavor = "macchiato";

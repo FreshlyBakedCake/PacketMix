@@ -4,9 +4,6 @@
 # SPDX-License-Identifier: MIT
 
 { config, ... }:
-let
-  nixpkgs = config.inputs.nixpkgs.result;
-in
 {
   config.homes."maya:x86_64-linux" = {
     modules = [

@@ -4,7 +4,6 @@
 
 {
   project,
-  pkgs,
   system,
   ...
 }:
@@ -15,7 +14,7 @@
   ];
 
   nixpkgs.overlays = [
-    (final: prev: {
+    (final: _prev: {
       bluesky-pdsadmin = final.pdsadmin;
     })
   ];

@@ -9,11 +9,9 @@
     systems = [ "x86_64-linux" ];
     package =
       {
-        system,
         stdenv,
         nodejs,
         pnpm_9,
-        lib,
         srcOnly,
         python3,
         ...
@@ -83,7 +81,7 @@
         system,
         ...
       }:
-      config.inputs.nixos-unstable.result.${system}.bluesky-pds.overrideAttrs (prevAttrs: {
+      config.inputs.nixos-unstable.result.${system}.bluesky-pds.overrideAttrs {
         postBuild = ''
           rm -r node_modules/.pnpm/@atproto+pds@0.4.169
           mkdir -p node_modules/.pnpm/@atproto+pds@0.4.169
@@ -91,6 +89,6 @@
             config.packages.bluesky-atproto-pds.result.${system}
           }/lib node_modules/.pnpm/@atproto+pds@0.4.169/node_modules
         '';
-      });
+      };
   };
 }

@@ -104,8 +104,6 @@
 
           binds =
             let
-              inherit (config.lib.niri) actions;
-
               mod = "Super";
               mod1 = "Alt";
 

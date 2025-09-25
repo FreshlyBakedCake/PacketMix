@@ -30,7 +30,6 @@ in
 
             config.modules =
               let
-                system = submodule.config.pkgs.system;
                 warn' = builtins.warn or builtins.trace; # builtins.warn doesn't exist on some versions of nix/lix
                 warnIf =
                   condition: message: value:
@@ -52,7 +51,7 @@ in
                   {
                     home,
                     homeName,
-                    username,
+                    ...
                   }@identity:
                   warnIf (home.home-manager != homeManager)
                     "The home \"${homeName}\" isn't using the same home-manager input as the NixOS system \"${name}\". This may work, but is not officially supported by the Nilla Home or Nilla NixOS maintainers. Please fix this before reporting any bugs you may find."

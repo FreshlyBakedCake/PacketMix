@@ -5,7 +5,6 @@
 #
 # This file is based on some work from sodiboo's niri-flake, see https://github.com/sodiboo/niri-flake/blob/main/flake.nix
 {
-  project,
   pkgs,
   lib,
   ...

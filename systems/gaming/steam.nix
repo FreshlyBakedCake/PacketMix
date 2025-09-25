@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ lib, ... }:
 {
   programs.steam = {
     enable = true;
