@@ -5,7 +5,7 @@
 {
   ingredient.niri.enable = true;
 
-  ingredient.niri.niri.timers = {
+  ingredient.niri.swayidle.timers = {
     lock = 900;
     sleep = 1800;
   };
