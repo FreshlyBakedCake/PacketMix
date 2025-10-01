@@ -27,10 +27,20 @@
           [url "ssh://git@tangled.org/freshlybakedca.ke/${repo}"]
             pushInsteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
         '';
+        other_url_config = repo: ''
+          [url "https://tangled.org/@${repo}"]
+            insteadOf = "https://tangled.org/@freshlybakedca.ke/${repo}.git"
+            insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
+
+          [url "ssh://git@tangled.org/${repo}"]
+            pushInsteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
+        '';
         # ^^ Tangled doesn't support cloning from .git URLs, so we have to not have .git at the end of our repos
         # ^^ Additionally, we can only push to Tangled over SSH, not HTTP
 
-        gitconfig = pkgs.writeTextDir "/.gitconfig" (url_config "patisserie");
+        gitconfig = pkgs.writeTextDir "/.gitconfig" (
+          (url_config "patisserie") + (other_url_config "footnotes.social/core")
+        );
       in
       {
         HOME = gitconfig;
