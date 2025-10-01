@@ -339,19 +339,16 @@
       "hash": "sha256-WLuOt8zemooHDzK+zWJNBicKu8bg0wXyAGvZIH/po6o="
     },
     "tangled": {
-      "type": "GitRelease",
+      "type": "Git",
       "repository": {
         "type": "Git",
         "url": "https://tangled.sh/@tangled.sh/core"
       },
-      "pre_releases": true,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "master",
       "submodules": false,
-      "version": "v1.9.0-alpha",
-      "revision": "6200797b6377ab37640e9236633df2b845ae4c49",
+      "revision": "32b7c17e266e0da0f0e1e6e6a3821cd8dd3b8362",
       "url": null,
-      "hash": "sha256-sTJAWsTj49q48CneaO9t/rVswqbmvQWcNTnw/bJGfps="
+      "hash": "sha256-Q/UnCYR8NgO5xoevJJxyCa3ZQnB/5c62F1IBxFKbF3Q="
     },
     "treefmt-nix": {
       "type": "Git",
