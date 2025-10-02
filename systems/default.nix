@@ -107,4 +107,15 @@ in
       project = config;
     };
   };
+  config.systems.nixos."umber" = {
+    pkgs = nixpkgs.x86_64-linux;
+    ingredients = [
+      "freshlybakedcake"
+      "server"
+    ];
+    args = {
+      system = "x86_64-linux";
+      project = config;
+    };
+  };
 }
