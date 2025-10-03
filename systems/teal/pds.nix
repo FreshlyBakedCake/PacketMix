@@ -27,6 +27,7 @@
       PDS_PORT = 1033;
       PDS_SERVICE_HANDLE_DOMAINS = ".at.freshlybakedca.ke";
       PDS_EMAIL_FROM_ADDRESS = "pds@freshly.space";
+      PDS_BLOB_UPLOAD_LIMIT = "268435456";
     };
     environmentFiles = [
       "/secrets/pds/environmentFile"
@@ -45,6 +46,10 @@
       recommendedProxySettings = true;
       proxyWebsockets = true;
     };
+
+    extraConfig = ''
+      client_max_body_size 1024M;
+    '';
   };
 
   clicks.storage.impermanence.persist.directories = [ "/var/lib/pds" ];
