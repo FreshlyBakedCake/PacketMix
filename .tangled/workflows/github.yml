@@ -30,9 +30,33 @@ steps:
       echo "Host github.com" >> /etc/ssh/ssh_config
       echo "    User git" >> /etc/ssh/ssh_config
       echo "    IdentityFile /tmp/key-ssh-github" >> /etc/ssh/ssh_config
-  - name: Push to GitHub
+  - name: Push * to GitHub
     command: |
       git remote add github git@github.com:FreshlyBakedCake/Patisserie.git
       git fetch --unshallow origin
       git fetch github
       git push github HEAD:refs/heads/release
+  - name: Write SSH Key
+    command: |
+      echo "$KEY_SSH_GITHUB_PACKETMIX" > /tmp/key-ssh-github
+      chmod 600 /tmp/key-ssh-github
+  - name: Push packetmix to GitHub
+    command: |
+      cd ..
+      git clone https://git.freshlybakedca.ke/patisserie.git:workspace=projects/packetmix.git
+      cd packetmix
+      git remote add github git@github.com:FreshlyBakedCake/PacketMix.git
+      git fetch github
+      git push github origin/refs/heads/release:refs/heads/release
+  - name: Write SSH Key
+    command: |
+      echo "$KEY_SSH_GITHUB_SPRINKLES" > /tmp/key-ssh-github
+      chmod 600 /tmp/key-ssh-github
+  - name: Push sprinkles to GitHub
+    command: |
+      cd ..
+      git clone https://git.freshlybakedca.ke/patisserie.git:workspace=projects/sprinkles.git
+      cd packetmix
+      git remote add github git@github.com:FreshlyBakedCake/Sprinkles.git
+      git fetch github
+      git push github origin/refs/heads/release:refs/heads/release
