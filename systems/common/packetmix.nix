@@ -28,6 +28,7 @@
   systemd.services.nixos-upgrade.preStart = ''
     ${pkgs.networkmanager}/bin/nm-online -s -q # wait until the internet is online, as esp. if we go offline we need to wait to retry...
     cd /etc/nixos
+    ${pkgs.git}/bin/git remote set-url origin https://git.freshlybakedca.ke/patisserie.git:workspace=projects/packetmix.git
     ${pkgs.git}/bin/git fetch
     ${pkgs.git}/bin/git checkout origin/release
   '';
