@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+{
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "acme@starrysky.fyi";
+      dnsProvider = "cloudflare";
+      environmentFile = "/secrets/acme/environmentFile";
+    };
+  };
+
+  clicks.storage.impermanence.persist.directories = [ "/var/lib/acme" ];
+}
