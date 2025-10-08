@@ -159,6 +159,22 @@
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
       "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
+    "lanzaboote": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "lanzaboote"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.4.2",
+      "revision": "f0212638a2ec787a7841882f4477d40ae24f0a5d",
+      "url": "https://api.github.com/repos/nix-community/lanzaboote/tarball/refs/tags/v0.4.2",
+      "hash": "sha256-AEEDktApTEZ5PZXNDkry2YV2k6t0dTgLPEmAZbnigXU="
+    },
     "lix": {
       "type": "Git",
       "repository": {
