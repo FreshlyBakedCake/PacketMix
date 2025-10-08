@@ -11,7 +11,6 @@
     ./bluesky-pds
     ./collabora-gtimelog
     ./headscale
-    ./jujutsu
     ./lua-multipart
     ./OpenLinkHub
     ./scriptfs

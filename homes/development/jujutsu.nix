@@ -24,7 +24,7 @@
     ingredient.scriptfs.enable = true; # used for signing configuration
     programs.jujutsu = {
       enable = true;
-      package = project.packages.jujutsu.result.${system};
+      package = project.inputs.nixos-unstable.result.${system}.jujutsu;
       settings = {
         aliases = {
           init = [
