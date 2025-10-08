@@ -107,6 +107,18 @@
       "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.19.15",
       "hash": "sha256-FjS5UA4jWko/2+lkyzGOVhhZOEA8oTIoQ7GIcRj3ebM="
     },
+    "core": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://tangled.sh/@tangled.sh/core"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "eaa11ecb2112c90113a8ee49a8aa05be327b13ad",
+      "url": null,
+      "hash": "sha256-lLyX1f4fSG1IYsjcsUKKCAOHpa3ZTFexJMRc/0K2g3c="
+    },
     "headscale": {
       "type": "Git",
       "repository": {
