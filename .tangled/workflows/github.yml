@@ -47,7 +47,7 @@ steps:
       cd packetmix
       git remote add github git@github.com:FreshlyBakedCake/PacketMix.git
       git fetch github
-      git push github origin/refs/heads/release:refs/heads/release
+      git push github origin/release:refs/heads/release
   - name: Write SSH Key
     command: |
       echo "$KEY_SSH_GITHUB_SPRINKLES" > /tmp/key-ssh-github
@@ -59,4 +59,4 @@ steps:
       cd packetmix
       git remote add github git@github.com:FreshlyBakedCake/Sprinkles.git
       git fetch github
-      git push github origin/refs/heads/release:refs/heads/release
+      git push github origin/release:refs/heads/release
