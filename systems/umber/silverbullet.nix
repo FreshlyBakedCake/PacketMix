@@ -48,7 +48,7 @@
       }
     ];
     locations."/".return =
-      ''403 '403 - Access Denied: Your device is logged on to tailscale as '$http_x_webauth_user'. Unfortunately, this is a private silverbullet instance for 'minion', please use https://silverbullet.clicks.codes instead' '';
+      ''403 "403 - Access Denied: Your device is logged on to tailscale as '$http_x_webauth_user'. Unfortunately, this is a private silverbullet instance for 'minion', please use https://silverbullet.clicks.codes instead"'';
   };
 
   services.nginx.commonHttpConfig = ''
