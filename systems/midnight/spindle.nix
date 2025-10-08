@@ -2,7 +2,12 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ project, ... }:
+{
+  project,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [ project.inputs.tangled.result.nixosModules.spindle ];
 
@@ -18,6 +23,15 @@
     };
     pipelines.workflowTimeout = "2h";
   };
+
+  virtualisation.docker.autoPrune = {
+    enable = true;
+    dates = "hourly";
+  };
+  systemd.services.docker-prune.serviceConfig.ExecStart = lib.mkForce ''
+    ${pkgs.docker}/bin/docker network prune -f ;\
+    ${pkgs.docker}/bin/docker container prune -f
+  '';
 
   clicks.storage.impermanence.persist.directories = [
     "/var/lib/docker"
