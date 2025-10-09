@@ -1864,7 +1864,7 @@
     typeset -g p10k_jj_status_stale=1 p10k_jj_status_updated=
     p10k segment -f grey -c '$p10k_jj_status_stale' -e -t '$p10k_jj_status'
     p10k segment -c '$p10k_jj_status_updated' -e -t '$p10k_jj_status'
-    async_job jj_status_worker jj_status $PWD || (register_async_worker && async_job jj_status_worker jj_status $PWD)
+    async_job jj_status_worker jj_status $PWD 2>/dev/null || { register_async_worker; async_job jj_status_worker jj_status $PWD }
   }
 
   # Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
