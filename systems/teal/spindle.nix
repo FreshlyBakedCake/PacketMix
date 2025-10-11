@@ -10,7 +10,7 @@
     acmeRoot = null;
 
     locations."/" = {
-      proxyPass = "http://midnight:1024";
+      proxyPass = "http://192.168.1.2:1024";
       recommendedProxySettings = true;
       proxyWebsockets = true;
     };
