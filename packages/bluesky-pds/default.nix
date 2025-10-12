@@ -79,15 +79,17 @@
     package =
       {
         system,
+        findutils,
         ...
       }:
       config.inputs.nixos-unstable.result.${system}.bluesky-pds.overrideAttrs {
         postBuild = ''
-          rm -r node_modules/.pnpm/@atproto+pds@0.4.169
-          mkdir -p node_modules/.pnpm/@atproto+pds@0.4.169
+          atproto_pds_dir=$(${findutils}/bin/find node_modules/.pnpm -maxdepth 1 -name "@atproto+pds@*")
+          rm -r $atproto_pds_dir
+          mkdir -p $atproto_pds_dir
           ln -s ${
             config.packages.bluesky-atproto-pds.result.${system}
-          }/lib node_modules/.pnpm/@atproto+pds@0.4.169/node_modules
+          }/lib $atproto_pds_dir/node_modules
         '';
       };
   };
