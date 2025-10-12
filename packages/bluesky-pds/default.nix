@@ -87,9 +87,7 @@
           atproto_pds_dir=$(${findutils}/bin/find node_modules/.pnpm -maxdepth 1 -name "@atproto+pds@*")
           rm -r $atproto_pds_dir
           mkdir -p $atproto_pds_dir
-          ln -s ${
-            config.packages.bluesky-atproto-pds.result.${system}
-          }/lib $atproto_pds_dir/node_modules
+          ln -s ${config.packages.bluesky-atproto-pds.result.${system}}/lib $atproto_pds_dir/node_modules
         '';
       };
   };
