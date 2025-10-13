@@ -21,7 +21,7 @@ steps:
   - name: Add base system files
     command: |
       # Let us SSH to midnight by name
-      echo "192.168.0.6 midnight" >> /etc/hosts
+      echo "192.168.1.2 midnight" >> /etc/hosts
 
       # Avoid missing user with UID 0 error on ssh...
       echo "root:x:0:0:System administrator:/root:/run/current-system/sw/bin/bash" >> /etc/passwd
