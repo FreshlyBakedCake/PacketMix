@@ -1,0 +1,27 @@
+<!--
+SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+
+SPDX-License-Identifier: MIT
+-->
+
+<script>
+{
+	const locationFilter = document.getElementById("location-filter");
+	let desiredLocation = GetUriParam("location");
+	if (locationFilter !== null && desiredLocation !== null)
+	{
+		if (locationFilter.selectedOptions.length === 0 || locationFilter.selectedOptions[0].value === "all") {
+			// Don't trigger if we select a different option and refresh the page
+			desiredLocation = desiredLocation.replaceAll("_", " ") // WikiText needs underscores to be spaces
+			const option = locationFilter.querySelector(`option[value="${desiredLocation}"]`) 
+										 ?? locationFilter.querySelector(`option[value^="${desiredLocation}"]`) 
+										 ?? locationFilter.querySelector(`option[value*="${desiredLocation}"]`);
+										 // Search first for an exact match, then a match which starts with, then a match which contains
+			if (option) {
+				locationFilter.value = option.value;
+				locationFilter.dispatchEvent(new Event('change'));
+			}
+		}
+	}
+}
+</script>
