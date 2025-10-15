@@ -28,11 +28,9 @@
   services.nginx.virtualHosts."silverbullet.starrysky.fyi" = {
     listenAddresses = [ "localhost.tailscale" ];
 
-    addSSL = true;
+    onlySSL = true;
     enableACME = true;
     acmeRoot = null;
-
-    serverAliases = [ "umber.clicks.domains" ];
 
     locations."/" = {
       proxyPass = "http://$silverbullet_upstream_minion_only";
