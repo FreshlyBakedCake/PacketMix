@@ -127,10 +127,10 @@
                 fi
 
                 BEFORE_TOP=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet $BEFORE_REVSET)
-                BEFORE_BOTTOM=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet "back($BEFORE_REVSET, $BEFORE_LENGTH)")
+                BEFORE_BOTTOM=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet "back($BEFORE_REVSET, $(($BEFORE_LENGTH - 1)))")
 
                 AFTER_TOP=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet $AFTER_REVSET)
-                AFTER_BOTTOM=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet "back($AFTER_REVSET, $AFTER_LENGTH)")
+                AFTER_BOTTOM=$(${config.programs.jujutsu.package}/bin/jj show -T "self.commit_id()" --no-patch --quiet "back($AFTER_REVSET, $(($AFTER_LENGTH - 1)))")
 
                 ${pkgs.git}/bin/git range-diff $BEFORE_BOTTOM~..$BEFORE_TOP $AFTER_BOTTOM~..$AFTER_TOP "$@"
               '';
@@ -358,8 +358,13 @@
           "here" = "reachable(@, trunk()..)";
           "in(branch, matching)" = "matching & ::branch";
 
-          "back(revision, distance)" = "roots(ancestors(revision, distance))";
-          "fwd(revision, distance)" = "heads(decendants(revision, distance))";
+          "valued(n)" = "latest(root(), n)::"; # Returns all() if n >= 1 or none() if n == 0
+          "back(revision, distance)" =
+            "coalesce(~valued(distance) & revision, ancestors(revision-, distance) & ~ancestors(revision, distance))";
+          "fwd(revision, distance)" =
+            "coalesce(~valued(distance) & revision, descendants(revision+, distance) & ~descendants(revision, distance))";
+          "back(distance)" = "back(@, distance)";
+          "fwd(distance)" = "fwd(@, distance)";
 
           "closest_bookmark(to)" = "heads(::to & bookmarks())";
           "closest_pushable_allow_empty_desc(to)" = "heads(::to & mutable() & (~empty() | merges()))";
