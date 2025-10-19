@@ -7,7 +7,7 @@
   services.kanidm = {
     enableClient = true;
 
-    package = pkgs.kanidm_1_6;
+    package = pkgs.kanidm_1_7;
 
     clientSettings.uri = "https://idm.freshly.space";
   };

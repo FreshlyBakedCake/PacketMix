@@ -10,15 +10,15 @@
     package =
       {
         lib,
-        buildGo124Module,
+        buildGo125Module,
         ...
       }:
       let
-        vendorHash = "sha256-hIY6asY3rOIqf/5P6lFmnNCDWcqNPJaj+tqJuOvGJlo=";
+        vendorHash = "sha256-GUIzlPRsyEq1uSTzRNds9p1uVu4pTeH5PAxrJ5Njhis=";
         commitHash = config.inputs.headscale.src.revision;
         headscaleVersion = commitHash;
       in
-      buildGo124Module {
+      buildGo125Module {
         pname = "headscale";
         version = headscaleVersion;
         src = config.inputs.headscale.src;
