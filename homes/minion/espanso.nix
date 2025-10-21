@@ -26,8 +26,16 @@
         replace = "productivity: r&d-productivity: project-admin: internal-meeting: {{name}}-meeting";
       }
       {
+        trigger = ":tadmin";
+        replace = "collabora: internal: admin: cp-admin: ";
+      }
+      {
         trigger = ":tevent";
         replace = "collabora: business-development: event-attendance: event-attendee: ";
+      }
+      {
+        trigger = ":tist";
+        replace = "collabora: business-development: event-attendance: event-attendee: IST/41 committee";
       }
       {
         trigger = ":tmail";
