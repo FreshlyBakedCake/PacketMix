@@ -15,5 +15,18 @@
         "ui.virtual.whitespace" = "surface0"; # The default catppuccin_latte theme displays rendered whitespace way too harshly...
       };
     };
+
+    languages = {
+      language = [
+        {
+          name = "rust";
+        }
+      ];
+      language-server.rust-analyzer.config = {
+        cargo.allFeatures = true;
+        diagnostics.disabled = [ "proc-macro-disabled" ];
+        procMacro.ignored.leptos_macro = [ "server" ];
+      };
+    };
   };
 }
