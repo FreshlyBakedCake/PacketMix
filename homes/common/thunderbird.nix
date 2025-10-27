@@ -15,4 +15,12 @@
     ".mozilla/thunderbird"
     ".thunderbird"
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "message/rfc822" = [ "org.mozilla.thunderbird.desktop" ];
+      "x-scheme-handler/mailto" = [ "org.mozilla.thunderbird.desktop" ];
+    };
+  };
 }
