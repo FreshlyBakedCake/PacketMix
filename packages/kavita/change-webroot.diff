@@ -1,0 +1,87 @@
+Commit ID: 60c1f64421b3de57be486e3d6fcac5db29be448c
+Change ID: zyrloqpswtmulpttnvwyonrounzyqpok
+Author   : Samuel Shuert <me@thecoded.prof> (2025-10-29 23:29:04 (49 seconds ago))
+Committer: Samuel Shuert <me@thecoded.prof> (2025-10-29 23:29:04 (49 seconds ago))
+Signature: (no signature)
+
+    (no description set)
+
+diff --git a/API/Controllers/FallbackController.cs b/API/Controllers/FallbackController.cs
+index 9aff820278..7d0ead694e 100644
+--- a/API/Controllers/FallbackController.cs
++++ b/API/Controllers/FallbackController.cs
+@@ -27,7 +27,6 @@
+             return NotFound();
+         }
+ 
+-        return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html"), "text/HTML");
++        return PhysicalFile(Path.Combine("@webroot@", "index.html"), "text/HTML");
+     }
+ }
+-
+diff --git a/API/Services/DirectoryService.cs b/API/Services/DirectoryService.cs
+index ecce1957a9..8fc8739e0a 100644
+--- a/API/Services/DirectoryService.cs
++++ b/API/Services/DirectoryService.cs
+@@ -135,7 +135,7 @@
+         ExistOrCreate(SiteThemeDirectory);
+         FaviconDirectory = FileSystem.Path.Join(FileSystem.Directory.GetCurrentDirectory(), "config", "favicons");
+         ExistOrCreate(FaviconDirectory);
+-        LocalizationDirectory = FileSystem.Path.Join(FileSystem.Directory.GetCurrentDirectory(), "I18N");
++        LocalizationDirectory = FileSystem.Path.Join("@out@/lib/kavita-backend", "I18N");
+         CustomizedTemplateDirectory = FileSystem.Path.Join(FileSystem.Directory.GetCurrentDirectory(), "config", "templates");
+         ExistOrCreate(CustomizedTemplateDirectory);
+         TemplateDirectory = FileSystem.Path.Join(FileSystem.Directory.GetCurrentDirectory(), "EmailTemplates");
+diff --git a/API/Services/LocalizationService.cs b/API/Services/LocalizationService.cs
+index 8abde66474..3a2d29b982 100644
+--- a/API/Services/LocalizationService.cs
++++ b/API/Services/LocalizationService.cs
+@@ -58,8 +58,7 @@
+         else
+         {
+             _localizationDirectoryUi = directoryService.FileSystem.Path.Join(
+-                directoryService.FileSystem.Directory.GetCurrentDirectory(),
+-                "wwwroot", "assets/langs");
++                "@webroot@", "assets/langs");
+         }
+ 
+         _cacheOptions = new MemoryCacheEntryOptions()
+diff --git a/API/Startup.cs b/API/Startup.cs
+index fad79ceea5..f0801bd6f8 100644
+--- a/API/Startup.cs
++++ b/API/Startup.cs
+@@ -36,6 +36,7 @@
+ using Microsoft.EntityFrameworkCore;
+ using Microsoft.Extensions.Configuration;
+ using Microsoft.Extensions.DependencyInjection;
++using Microsoft.Extensions.FileProviders;
+ using Microsoft.Extensions.Hosting;
+ using Microsoft.Extensions.Logging;
+ using Microsoft.Net.Http.Headers;
+@@ -353,9 +354,6 @@
+         app.UsePathBase(basePath);
+         if (!env.IsDevelopment())
+         {
+-            // We don't update the index.html in local as we don't serve from there
+-            UpdateBaseUrlInIndex(basePath);
+-
+             // Update DB with what's in config
+             var dataContext = serviceProvider.GetRequiredService<DataContext>();
+             var setting = dataContext.ServerSetting.SingleOrDefault(x => x.Key == ServerSettingKey.BaseUrl);
+@@ -399,6 +397,7 @@
+ 
+         app.UseStaticFiles(new StaticFileOptions
+         {
++            FileProvider = new PhysicalFileProvider("@webroot@"),
+             // bcmap files needed for PDF reader localizations (https://github.com/Kareadita/Kavita/issues/2970)
+             // ftl files are needed for PDF zoom options (https://github.com/Kareadita/Kavita/issues/3995)
+             ContentTypeProvider = new FileExtensionContentTypeProvider
+@@ -481,7 +480,7 @@
+         try
+         {
+             var htmlDoc = new HtmlDocument();
+-            var indexHtmlPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html");
++            var indexHtmlPath = Path.Combine("@webroot@", "index.html");
+             htmlDoc.Load(indexHtmlPath);
+ 
+             var baseNode = htmlDoc.DocumentNode.SelectSingleNode("/html/head/base");
