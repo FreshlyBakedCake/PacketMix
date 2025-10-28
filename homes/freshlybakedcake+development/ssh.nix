@@ -76,5 +76,8 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYUFynzvO9dfLqn7hssLIeHBp/y5V1lKLyCnDmThgDg boltless.me" = [
       "boltlessengineer@proton.me" # Sourced by Coded from Tangled
     ];
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUkKr2wgFDgkU1VbwPIbBS8eL6Z8imAGaY4NUVrVNO7" = [
+      "kate@provokateurin.de" # Sourced by minion from GitHub
+    ];
   };
 }
