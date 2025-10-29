@@ -114,6 +114,16 @@
               ];
             };
           };
+          "/groups/library" = {
+            path = "/var/lib/copyparty/data/groups/library";
+
+            access = {
+              A = [
+                "coded"
+                "minion"
+              ];
+            };
+          };
         };
       };
 
@@ -175,7 +185,7 @@
             if not headers["Content-Type"] then
               return
             end
-            
+
             ngx.req.read_body()
             local body = ngx.req.get_body_data()
 
@@ -276,6 +286,13 @@
       virtualHosts = [ "internal.files.freshly.space" ];
     };
 
-    clicks.storage.impermanence.persist.directories = [ "/var/lib/copyparty" ];
+    users.groups."copyparty+kavita".members = [
+      "copyparty"
+      "kavita"
+    ];
+
+    clicks.storage.impermanence.persist.directories = [
+      "/var/lib/copyparty"
+    ];
   };
 }
