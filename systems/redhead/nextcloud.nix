@@ -68,6 +68,12 @@
     email = "skyler.grey@collabora.com";
   };
 
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    9980
+  ];
+
   services.nginx.virtualHosts."collabora.dev.redhead.starrysky.fyi" = {
     addSSL = true;
     enableACME = true;
