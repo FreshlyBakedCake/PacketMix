@@ -58,6 +58,13 @@
             y = 300;
           };
         };
+        "Philips Consumer Electronics Company Philips FTV 0x01010101" = {
+          # Cambridge Office meeting room monitor
+          position = {
+            x = 2640;
+            y = 1560;
+          };
+        };
       };
     };
   };
