@@ -123,6 +123,12 @@
                 "minion"
               ];
             };
+
+            flags = {
+              chmod_f = "770";
+              chmod_d = "770";
+              gid = "974";
+            };
           };
         };
       };
@@ -287,10 +293,13 @@
       virtualHosts = [ "internal.files.freshly.space" ];
     };
 
-    users.groups."copyparty+kavita".members = [
-      "copyparty"
-      "kavita"
-    ];
+    users.groups."copyparty+kavita" = {
+      gid = 974; # Copied from random assignment on teal. Entirely arbitrary.
+      members = [
+        "copyparty"
+        "kavita"
+      ];
+    };
 
     clicks.storage.impermanence.persist.directories = [
       "/var/lib/copyparty"
