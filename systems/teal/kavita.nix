@@ -39,6 +39,8 @@
       ${pkgs.replace-secret}/bin/replace-secret '@OIDC_SECRET@' \
       ''${CREDENTIALS_DIRECTORY}/OIDC_SECRET \
       '${config.services.kavita.dataDir}/config/appsettings.json'
+
+      while [[ \"$(${pkgs.curl}/bin/curl -s -L https://idm.freshly.space/status)\" != \"true\" ]]; do sleep 5; done
     '';
     serviceConfig.LoadCredential = [ "OIDC_SECRET:/secrets/kavita/OIDC_SECRET" ];
   };
