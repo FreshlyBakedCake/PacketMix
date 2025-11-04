@@ -115,7 +115,7 @@
             };
           };
           "/groups/library" = {
-            path = "/var/lib/copyparty/data/groups/library";
+            path = "/var/lib/libraries";
 
             access = {
               A = [
@@ -140,6 +140,7 @@
             builtins.attrValues
             (map (mount: mount.path))
             (map (lib.removePrefix "/var/lib/"))
+            (builtins.filter (name: !(builtins.elem name [ "libraries" ]))) # For shared directories we can't afford for systemd to change permissions on us...
             (lib.concatStringsSep " ")
           ]);
       };
@@ -293,6 +294,15 @@
 
     clicks.storage.impermanence.persist.directories = [
       "/var/lib/copyparty"
+      {
+        directory = "/var/lib/libraries";
+        mode = "0770";
+        group = "copyparty+kavita";
+        defaultPerms = {
+          mode = "0770";
+          group = "copyparty+kavita";
+        };
+      }
     ];
   };
 }
