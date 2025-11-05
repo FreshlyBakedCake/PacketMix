@@ -5,14 +5,30 @@
 # packetmix.nix: packetmix support configuration, including our binary cache and auto-updating
 { config, pkgs, ... }:
 {
-  nix.settings.substituters = [
-    "https://cache.freshlybakedca.ke"
-    "https://freshlybakedcake.cachix.org"
-  ];
-  nix.settings.trusted-public-keys = [
-    "cache.freshlybakedca.ke-1:WD7CED6MwAxxOzgHlrHVbcVdYeqSa2mwBwR3vNuCJvg="
-    "freshlybakedcake.cachix.org-1:YmhsHdeKjqbaS33PPJXJllTHBupT3hliQrPcllJXkE0="
-  ];
+  nix.settings.substituters =
+    (
+      if !config.ingredient.nix-serve.enable then
+        [
+          "https://cache.freshlybakedca.ke"
+        ]
+      else
+        [ ]
+    )
+    ++ [
+      "https://freshlybakedcake.cachix.org"
+    ];
+  nix.settings.trusted-public-keys =
+    (
+      if !config.ingredient.nix-serve.enable then
+        [
+          "cache.freshlybakedca.ke-1:WD7CED6MwAxxOzgHlrHVbcVdYeqSa2mwBwR3vNuCJvg="
+        ]
+      else
+        [ ]
+    )
+    ++ [
+      "freshlybakedcake.cachix.org-1:YmhsHdeKjqbaS33PPJXJllTHBupT3hliQrPcllJXkE0="
+    ];
 
   system.autoUpgrade = {
     enable = true;

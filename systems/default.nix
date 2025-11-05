@@ -89,6 +89,7 @@ in
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"
+      "nix-serve"
       "server"
     ];
     args = {
