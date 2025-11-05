@@ -46,7 +46,7 @@ nilla.create (
         systems = [ "x86_64-linux" ];
 
         package =
-          { system, stdenv }:
+          { stdenv }:
           stdenv.mkDerivation {
             name = "all-homes";
 
@@ -57,8 +57,9 @@ nilla.create (
             ''
             + (builtins.concatStringsSep "\n" (
               config.lib.attrs.mapToList (
-                name: value: ''ln -s "${value.result.${system}.activationPackage}" "$out/${name}"''
-              ) (config.lib.attrs.filter (_: value: value.result ? ${system}) config.homes)
+                name: value:
+                ''ln -s "${value.result.${stdenv.hostPlatform.system}.activationPackage}" "$out/${name}"''
+              ) (config.lib.attrs.filter (_: value: value.result ? ${stdenv.hostPlatform.system}) config.homes)
             ));
           };
       };
@@ -80,22 +81,6 @@ nilla.create (
           );
       };
 
-      packages.reuse = {
-        systems = [ "x86_64-linux" ];
-
-        package =
-          { reuse }:
-          reuse.overrideAttrs (
-            {
-              patches ? [ ],
-              ...
-            }:
-            {
-              patches = patches ++ [ ./patches/reuse/1191-correct-invocation-for-jujutsu-file-listing.patch ];
-            }
-          );
-      };
-
       # With a package set defined, we can create a shell.
       shells.default = {
         # Declare what systems the shell can be used on.
@@ -105,9 +90,10 @@ nilla.create (
         shell =
           {
             pkgs,
-            system,
+            stdenv,
             mkShell,
             kdePackages,
+            reuse,
             ...
           }:
           mkShell {
@@ -118,21 +104,24 @@ nilla.create (
                   (builtins.concatStringsSep ":")
                 ]
                 [
-                  config.inputs.nixos-unstable.result.${system}.quickshell
+                  config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.quickshell
                   kdePackages.qtdeclarative
                 ];
 
             packages = [
-              config.inputs.nilla-cli.result.packages.nilla-cli.result.${system}
-              config.inputs.nilla-home.result.packages.nilla-home.result.${system}
-              config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${system}
-              config.inputs.nixos-unstable.result.${system}.quickshell
-              config.inputs.nixpkgs.result.${system}.deadnix
-              config.packages.nilla-fmt.result.${system}
-              config.packages.treefmt.result.${system}
-              (config.inputs.npins.result { inherit pkgs system; })
+              config.inputs.nilla-cli.result.packages.nilla-cli.result.${stdenv.hostPlatform.system}
+              config.inputs.nilla-home.result.packages.nilla-home.result.${stdenv.hostPlatform.system}
+              config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${stdenv.hostPlatform.system}
+              config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.quickshell
+              config.inputs.nixpkgs.result.${stdenv.hostPlatform.system}.deadnix
+              config.packages.nilla-fmt.result.${stdenv.hostPlatform.system}
+              config.packages.treefmt.result.${stdenv.hostPlatform.system}
+              (config.inputs.npins.result {
+                inherit pkgs;
+                inherit (stdenv.hostPlatform) system;
+              })
               kdePackages.qtdeclarative
-              config.packages.reuse.result.${system}
+              reuse
             ];
           };
       };

@@ -8,17 +8,6 @@
   ...
 }:
 {
-  disabledModules = [ "services/web-apps/pds.nix" ];
-  imports = [
-    "${project.inputs.nixos-unstable.src}/nixos/modules/services/web-apps/bluesky-pds.nix"
-  ];
-
-  nixpkgs.overlays = [
-    (final: _prev: {
-      bluesky-pdsadmin = final.pdsadmin;
-    })
-  ];
-
   services.bluesky-pds = {
     enable = true;
     package = project.packages.bluesky-pds.result.${system};

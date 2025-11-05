@@ -46,8 +46,14 @@
             [ -f ${path}/database/scheduler.json ] || cp ${pkg}/var/lib/OpenLinkHub/schduler.json ${path}/database/scheduler.json
             mkdir -p ${path}/database/temperatures
             mkdir -p ${path}/database/profiles
+            mkdir -p ${path}/database/macros
+            mkdir -p ${path}/database/led
 
-            cp -r ${pkg}/var/lib/OpenLinkHub/database/keyboard ${path}/database/keyboard
+            cp -r ${pkg}/var/lib/OpenLinkHub/database/keyboard ${path}/database
+            cp -r ${pkg}/var/lib/OpenLinkHub/database/lcd ${path}/database
+            cp -r ${pkg}/var/lib/OpenLinkHub/database/external ${path}/database
+            cp -r ${pkg}/var/lib/OpenLinkHub/database/nexus ${path}/database
+            cp -r ${pkg}/var/lib/OpenLinkHub/database/language ${path}/database
 
             [ -L ${path}/static ] || ln -s ${pkg}/var/lib/OpenLinkHub/static ${path}/static
             [ -L ${path}/web ] || ln -s ${pkg}/var/lib/OpenLinkHub/web ${path}/web

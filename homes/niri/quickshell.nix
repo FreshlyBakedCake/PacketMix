@@ -10,8 +10,6 @@
   ...
 }:
 {
-  imports = [ "${project.inputs.home-manager-unstable.src}/modules/programs/quickshell.nix" ];
-
   programs.quickshell = {
     enable = true;
 

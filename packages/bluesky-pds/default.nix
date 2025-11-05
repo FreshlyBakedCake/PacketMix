@@ -35,7 +35,7 @@
         pnpmDeps = pnpm_9.fetchDeps {
           inherit (finalAttrs) pname version src;
           fetcherVersion = 2;
-          hash = "sha256-3Q3k2zTAyJHWunOLU/CuCaNljmPf9r3ONUjZ/0vno8s=";
+          hash = "sha256-9FYnpZ9wCC2JdpS/AGb8jrURrkrbMi5DTFvZVi7MYPc=";
         };
 
         buildPhase = ''
@@ -78,16 +78,18 @@
     systems = [ "x86_64-linux" ];
     package =
       {
-        system,
+        stdenv,
         findutils,
         ...
       }:
-      config.inputs.nixos-unstable.result.${system}.bluesky-pds.overrideAttrs {
+      config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.bluesky-pds.overrideAttrs {
         postBuild = ''
           atproto_pds_dir=$(${findutils}/bin/find node_modules/.pnpm -maxdepth 1 -name "@atproto+pds@*")
           rm -r $atproto_pds_dir
           mkdir -p $atproto_pds_dir
-          ln -s ${config.packages.bluesky-atproto-pds.result.${system}}/lib $atproto_pds_dir/node_modules
+          ln -s ${
+            config.packages.bluesky-atproto-pds.result.${stdenv.hostPlatform.system}
+          }/lib $atproto_pds_dir/node_modules
         '';
       };
   };

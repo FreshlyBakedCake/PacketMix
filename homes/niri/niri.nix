@@ -7,6 +7,7 @@
   config,
   pkgs,
   lib,
+  system,
   ...
 }:
 {
@@ -63,7 +64,9 @@
       settings = {
         xwayland-satellite = {
           enable = true;
-          path = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+          path = "${
+            project.inputs.nixos-unstable.result.${system}.xwayland-satellite
+          }/bin/xwayland-satellite";
         };
         environment.NIXOS_OZONE_WL = "1";
 

@@ -29,11 +29,11 @@
     systems = [ "x86_64-linux" ];
 
     package =
-      { stdenv, system }:
+      { stdenv }:
       stdenv.mkDerivation {
         name = "nilla-fmt";
 
-        src = config.packages.treefmt.result.${system};
+        src = config.packages.treefmt.result.${stdenv.hostPlatform.system};
 
         dontBuild = true;
 

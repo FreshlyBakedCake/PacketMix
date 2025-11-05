@@ -13,7 +13,7 @@
 
   networking.firewall.allowedTCPPorts = [ 1024 ];
 
-  services.tangled-spindle = {
+  services.tangled.spindle = {
     enable = true;
     server = {
       listenAddr = "0.0.0.0:1024";

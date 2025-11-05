@@ -8,7 +8,7 @@
     systems = [ "x86_64-linux" ];
     package =
       {
-        system,
+        stdenv,
         lib,
         python3,
       }:
@@ -25,7 +25,7 @@
 
         propagatedBuildInputs = [
           python3.pkgs.beancount
-          config.packages.beancount-beancount_plugin_utils.result.${system}
+          config.packages.beancount-beancount_plugin_utils.result.${stdenv.hostPlatform.system}
         ];
 
         buildInputs = [

@@ -31,7 +31,7 @@
 
         buildInputs = [
           python3.pkgs.setuptools
-          python3.pkgs.setuptools_scm
+          python3.pkgs.setuptools-scm
         ];
 
         meta = {

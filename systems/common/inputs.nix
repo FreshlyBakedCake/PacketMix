@@ -26,5 +26,5 @@
         builtins.storePath value.result
       else
         builtins.storePath value.src;
-  }) project.inputs;
+  }) (lib.attrsets.filterAttrs (n: _: n != "__functor") project.inputs);
 }

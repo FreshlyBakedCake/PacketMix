@@ -117,7 +117,7 @@ in
             homeName: home:
             let
               homeHasHomeManager = !(builtins.isNull home.home-manager);
-              homeIsValidForSystem = home ? result.${value.pkgs.system};
+              homeIsValidForSystem = home ? result.${value.pkgs.stdenv.hostPlatform.system};
             in
             [
               {
@@ -126,7 +126,7 @@ in
               }
               {
                 assertion = !homeHasHomeManager || !hasNixpkgs || homeIsValidForSystem;
-                message = "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it isn't valid for \"${value.pkgs.system}\" systems.";
+                message = "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it isn't valid for \"${value.pkgs.stdenv.hostPlatform.system}\" systems.";
               }
             ]
           ) value.homes)
@@ -136,7 +136,7 @@ in
                 homeName: home:
                 let
                   homeHasHomeManager = !(builtins.isNull home.home-manager);
-                  homeIsValidForSystem = home ? result.${value.pkgs.system};
+                  homeIsValidForSystem = home ? result.${value.pkgs.stdenv.hostPlatform.system};
                 in
                 if homeHasHomeManager && hasNixpkgs && homeIsValidForSystem then
                   let

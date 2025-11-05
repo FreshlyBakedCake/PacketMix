@@ -16,5 +16,6 @@
     ./OpenLinkHub
     ./scriptfs
     ./treefmt
+    ./vs-launcher
   ];
 }

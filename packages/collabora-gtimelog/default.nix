@@ -38,7 +38,9 @@
               gtk3
               harfbuzz
               libsecret
-              libsoup_2_4
+              (libsoup_2_4.overrideAttrs {
+                meta.knownVulnerabilities = [ ]; # FIXME: update libsoup to _3
+              })
               pango
             ]
           }"
