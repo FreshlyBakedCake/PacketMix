@@ -2,7 +2,6 @@
 # SPDX-FileCopyrightText: 2025 Nixpkgs Maintainers
 #
 # SPDX-License-Identifier: MIT
-{ config, ... }:
 {
   config.packages.kavita = {
     systems = [ "x86_64-linux" ];

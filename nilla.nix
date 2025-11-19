@@ -106,7 +106,6 @@ nilla.create (
           {
             pkgs,
             system,
-            npins,
             mkShell,
             kdePackages,
             ...

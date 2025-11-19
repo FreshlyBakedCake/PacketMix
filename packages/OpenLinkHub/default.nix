@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
-{ config, ... }:
 {
   config.packages.openlinkhub = {
     systems = [ "x86_64-linux" ];

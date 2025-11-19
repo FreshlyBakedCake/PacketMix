@@ -3,7 +3,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ config, ... }:
 {
   config.homes."maya:x86_64-linux" = {
     modules = [

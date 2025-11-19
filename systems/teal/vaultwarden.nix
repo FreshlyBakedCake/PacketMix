@@ -3,10 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 {
-  config,
-  ...
-}:
-{
   services.vaultwarden = {
     enable = true;
     dbBackend = "postgresql";

@@ -18,4 +18,4 @@ steps:
     command: |
       set -eo pipefail
 
-      deadnix --exclude **/npins --no-underscore --fail | ansifilter
+      deadnix --exclude **/npins --no-underscore --no-lambda-pattern-names --fail | ansifilter
