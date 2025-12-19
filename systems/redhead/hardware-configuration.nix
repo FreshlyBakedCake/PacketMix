@@ -37,13 +37,13 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45";
+    device = "/dev/disk/by-label/persist";
     fsType = "btrfs";
     options = [ "subvol=@" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45";
+    device = "/dev/disk/by-label/persist";
     fsType = "btrfs";
     options = [ "subvol=@nix" ];
   };
@@ -53,13 +53,13 @@
   clicks.storage.impermanence = {
     enable = true;
     devices = {
-      root = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45";
-      persist = "/dev/disk/by-uuid/9ceb17f8-af04-42ae-9c5c-98b1e72c5a45"; # Not a typo - using subvol=@persist on fileSystems."/persist" to put in a specific subvolume
+      root = "/dev/disk/by-label/persist";
+      persist = "/dev/disk/by-label/persist"; # Not a typo - using subvol=@persist on fileSystems."/persist" to put in a specific subvolume
     };
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/6181-C692";
+    device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
     options = [
       "fmask=0077"
