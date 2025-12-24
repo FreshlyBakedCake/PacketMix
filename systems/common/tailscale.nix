@@ -2,7 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 {
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
 
   systemd.services.tailscaled.environment.TS_NO_LOGS_NO_SUPPORT = "true";
 

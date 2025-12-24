@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
+{ lib, ... }:
 {
-  services.tailscale.useRoutingFeatures = "both";
+  services.tailscale.useRoutingFeatures = lib.mkForce "both";
 }
