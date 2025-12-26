@@ -14,6 +14,7 @@
     ./kavita
     ./lua-multipart
     ./OpenLinkHub
+    ./opensearch
     ./scriptfs
     ./treefmt
     ./vs-launcher

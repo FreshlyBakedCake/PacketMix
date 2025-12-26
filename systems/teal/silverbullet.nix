@@ -23,6 +23,7 @@
     listenAddress = "127.0.0.1";
     package = project.inputs.nixos-unstable.result.${system}.silverbullet;
   };
+  systemd.services.silverbullet.environment.SB_READ_ONLY = "true";
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."silverbullet.clicks.codes" = {

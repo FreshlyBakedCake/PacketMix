@@ -92,7 +92,6 @@
   };
 
   clicks.storage.impermanence.persist.directories = [
-    "/var/lib/postgresql"
     "/var/lib/vaultwarden"
   ];
 }
