@@ -17,6 +17,8 @@ in
     isSystemUser = true;
     group = "git";
     shell = "${josh}/bin/josh-ssh-shell";
+    createHome = true;
+    home = "/var/lib/josh/home";
   };
   users.groups.git = { };
 
