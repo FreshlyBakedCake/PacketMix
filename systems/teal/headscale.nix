@@ -21,6 +21,7 @@ let
     */
     "group:users" = [
       "coded@"
+      "hyperneutrino@"
       "matei@"
       "minion@"
       "mostlyturquoise@"
