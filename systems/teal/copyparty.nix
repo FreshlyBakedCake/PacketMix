@@ -177,7 +177,6 @@
         proxyWebsockets = true;
 
         extraConfig = ''
-          proxy_hide_header X-Webauth-Login;
           proxy_set_header X-Webauth-Login $preferred_username;
 
           proxy_intercept_errors on;
