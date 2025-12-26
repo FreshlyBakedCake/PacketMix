@@ -332,6 +332,19 @@
       "url": "https://github.com/nix-community/impermanence/archive/4b3e914cdf97a5b536a889e939fb2fd2b043a170.tar.gz",
       "hash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI="
     },
+    "josh": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "josh-project",
+        "repo": "josh"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "fc2bb5f79a4fc96f0adb1e015b9ac155beac7b3a",
+      "url": "https://github.com/josh-project/josh/archive/fc2bb5f79a4fc96f0adb1e015b9ac155beac7b3a.tar.gz",
+      "hash": "sha256-/lwBR2FD5nC9Qn+0pgd5APw97auMDg/NeZl5I9VrgZk="
+    },
     "lanzaboote": {
       "type": "GitRelease",
       "repository": {

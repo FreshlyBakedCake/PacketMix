@@ -11,6 +11,7 @@
     ./bluesky-pds
     ./collabora-gtimelog
     ./headscale
+    ./josh
     ./kavita
     ./lua-multipart
     ./OpenLinkHub

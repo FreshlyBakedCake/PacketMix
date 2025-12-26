@@ -3,12 +3,20 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, lib, ... }:
+{
+  project,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  josh = project.packages.josh.result.${pkgs.system};
+in
 {
   users.users.git = {
     isSystemUser = true;
     group = "git";
-    shell = "${pkgs.josh}/bin/josh-ssh-shell";
+    shell = "${josh}/bin/josh-ssh-shell";
   };
   users.groups.git = { };
 
@@ -20,7 +28,8 @@
     environment =
       let
         url_config = repo: ''
-          [url "https://tangled.org/@freshlybakedca.ke/${repo}"]
+          [url "https://tangled.org/freshlybakedca.ke/${repo}.git"]
+            insteadOf = "https://tangled.org/freshlybakedca.ke/${repo}.git"
             insteadOf = "https://tangled.org/@freshlybakedca.ke/${repo}.git"
             insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
 
@@ -28,7 +37,8 @@
             pushInsteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
         '';
         other_url_config = repo: ''
-          [url "https://tangled.org/@${repo}"]
+          [url "https://tangled.org/${repo}.git"]
+            insteadOf = "https://tangled.org/freshlybakedca.ke/${repo}.git"
             insteadOf = "https://tangled.org/@freshlybakedca.ke/${repo}.git"
             insteadOf = "ssh://git@tangled.org/freshlybakedca.ke/${repo}.git"
 
@@ -56,7 +66,7 @@
     };
 
     script =
-      "${pkgs.josh}/bin/josh-proxy"
+      "${josh}/bin/josh-proxy"
       + " --local /var/lib/josh/local"
       + " --remote https://tangled.org/@freshlybakedca.ke"
       + " --remote ssh://git@tangled.org/freshlybakedca.ke"
