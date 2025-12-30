@@ -88,24 +88,4 @@
       system = "x86_64-linux";
     };
   };
-  config.homes."pinea:x86_64-linux" = {
-    modules = [
-      {
-        home.stateVersion = "25.05";
-        home.homeDirectory = "/home/pinea";
-      }
-    ];
-    ingredients = [
-      "catppuccin"
-      "development"
-      "espanso"
-      "freshlybakedcake"
-      "gaming"
-      "nix-index"
-      "remote"
-    ];
-    args = {
-      system = "x86_64-linux";
-    };
-  };
 }
