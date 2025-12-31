@@ -193,6 +193,8 @@
 
       $wgSVGNativeRendering = true;
 
+      $wgRCWatchCategoryMembership = true;
+
       $wgShowExceptionDetails = true;
       $wgDevelopmentWarnings = true;
     '';
