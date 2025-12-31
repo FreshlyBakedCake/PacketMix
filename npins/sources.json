@@ -22,7 +22,7 @@
       "submodules": false,
       "revision": "12fb5f6d1a4bcfd1741b02fd60ec3c9ff6ec5faa",
       "url": null,
-      "hash": "sha256-vaSNVdiU9tLA5DujSFKAvY4fUiHVGEMvBzuswyPG22k="
+      "hash": "sha256-yks79QtWndY2+ESKFcO2EPlj886TDLV+DldK+GpiMXI="
     },
     "AutoCreateCategoryPages": {
       "type": "GitRelease",
@@ -520,9 +520,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f4e3698681704e74196fa0f905c7dfdd43cf5c86",
-      "url": "https://github.com/andir/npins/archive/f4e3698681704e74196fa0f905c7dfdd43cf5c86.tar.gz",
-      "hash": "sha256-8lkiistkBemkRN4aTqGW3SvI1CqibOnvFvNJS9OOdnU="
+      "revision": "0d6aaa4b3dcd1d8badbed2b66e0c50867330a86e",
+      "url": "https://github.com/andir/npins/archive/0d6aaa4b3dcd1d8badbed2b66e0c50867330a86e.tar.gz",
+      "hash": "sha256-9N14/tliOiA49Us2uFUWHcrhYN8AmJjR+bnwzcxejgs="
     },
     "scriptfs": {
       "type": "Git",

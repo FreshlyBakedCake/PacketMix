@@ -85,14 +85,25 @@ let
                 url,
                 submodules,
                 rev,
+                branch ? null,
                 name,
                 narHash,
               }:
-              pkgs.fetchgit {
-                inherit url rev name;
-                fetchSubmodules = submodules;
-                hash = narHash;
-              };
+              pkgs.fetchgit (
+                {
+                  inherit url rev name;
+                  fetchSubmodules = submodules;
+                  hash = narHash;
+                }
+                // (
+                  if branch == null then
+                    { }
+                  else
+                    {
+                      ref = "refs/heads/${branch}";
+                    }
+                )
+              );
           };
 
       # Dispatch to the correct code path based on the type
@@ -124,6 +135,7 @@ let
       repository,
       revision,
       url ? null,
+      branch ? null,
       submodules,
       hash,
       ...
@@ -159,12 +171,22 @@ let
           "${if matched == null then "source" else builtins.head matched}${appendShort}";
         name = urlToName url revision;
       in
-      fetchGit {
-        rev = revision;
-        narHash = hash;
+      fetchGit (
+        {
+          rev = revision;
+          narHash = hash;
 
-        inherit name submodules url;
-      };
+          inherit name submodules url;
+        }
+        // (
+          if branch == null then
+            { }
+          else
+            {
+              ref = "refs/heads/${branch}";
+            }
+        )
+      );
 
   mkPyPiSource =
     { fetchurl, ... }:
