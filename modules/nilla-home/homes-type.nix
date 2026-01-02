@@ -16,7 +16,7 @@ lib.types.attrs.of (
     name = "home";
     description = "A home-manager home";
     module =
-      { config }@submodule:
+      { config, name }@submodule:
       let
         home_name = config.__module__.args.dynamic.name;
         home_name_parts = builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" home_name;
@@ -106,7 +106,11 @@ lib.types.attrs.of (
             description = "The created Home Manager home for each of the systems.";
             type = lib.types.attrs.of lib.types.raw;
             writable = false;
-            default.value = result;
+            default.value =
+              if builtins.isNull config.pkgs then
+                "A Nixpkgs instance is required for the home-manager home \"${name}\", but none was provided and \"inputs.nixpkgs\" does not exist."
+              else
+                result;
           };
         };
 

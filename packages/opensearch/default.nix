@@ -7,7 +7,6 @@
     systems = [ "x86_64-linux" ];
     package =
       {
-        system,
         opensearch,
         jdk11_headless,
         ...

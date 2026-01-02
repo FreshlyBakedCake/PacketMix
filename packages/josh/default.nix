@@ -6,8 +6,8 @@
   config.packages.josh = {
     systems = [ "x86_64-linux" ];
     package =
-      { system, rustPlatform, ... }:
-      config.inputs.nixos-unstable.result.${system}.josh.overrideAttrs {
+      { stdenv, rustPlatform, ... }:
+      config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.josh.overrideAttrs {
         src = config.inputs.josh.result;
 
         cargoDeps = rustPlatform.fetchCargoVendor {

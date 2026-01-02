@@ -412,11 +412,11 @@
         "owner": "nilla-nix",
         "repo": "nilla"
       },
-      "branch": "private/coded/push-nzprlvpltxyl",
+      "branch": "private/minion/push-swlstmwvzvkr",
       "submodules": false,
-      "revision": "2f8b8c68efc4d81637be344d1b01462291a45e05",
-      "url": "https://github.com/nilla-nix/nilla/archive/2f8b8c68efc4d81637be344d1b01462291a45e05.tar.gz",
-      "hash": "sha256-VLlP6L8uvgEjb1ZZXdc4P3NAs5PcgIjpGm8LvaObrLY="
+      "revision": "1a45420c0b579aea97d834d04e6eec773a8391b1",
+      "url": "https://github.com/nilla-nix/nilla/archive/1a45420c0b579aea97d834d04e6eec773a8391b1.tar.gz",
+      "hash": "sha256-4jqikEAkh5GUKGDkGAtWRWZexN25Rzt0yIsnilhA77U="
     },
     "nilla-cli": {
       "type": "Git",
@@ -432,20 +432,17 @@
       "hash": "sha256-cPdYYXhCsDllVgq+gs5Wqhb41bFtKWHlkTvjOJv7its="
     },
     "nilla-home": {
-      "type": "GitRelease",
+      "type": "Git",
       "repository": {
         "type": "GitHub",
         "owner": "nilla-nix",
         "repo": "home"
       },
-      "pre_releases": true,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "private/minion/push-ovknmuuuxzul",
       "submodules": false,
-      "version": "v0.1.1-alpha",
-      "revision": "8d8d783cd3ebe38246f66c027a312e5ec0914c58",
-      "url": "https://api.github.com/repos/nilla-nix/home/tarball/refs/tags/v0.1.1-alpha",
-      "hash": "sha256-34qP2aqJgvJ6rQo5vi9o65kxrxbp2dFi8S7z3B+P74g="
+      "revision": "7d7189e841d70136ac0f9d8a4c024cdc0fe8605d",
+      "url": "https://github.com/nilla-nix/home/archive/7d7189e841d70136ac0f9d8a4c024cdc0fe8605d.tar.gz",
+      "hash": "sha256-LZrPz9bp3VDOpiv95MuCKIkfgRmfAkR5x4DLNDxCa+o="
     },
     "nilla-nixos": {
       "type": "Git",
@@ -454,11 +451,11 @@
         "owner": "nilla-nix",
         "repo": "nixos"
       },
-      "branch": "main",
+      "branch": "private/minion/push-yxkmmnpurumu",
       "submodules": false,
-      "revision": "52c623ae89fe77de669a981c7e92b1504cd99eac",
-      "url": "https://github.com/nilla-nix/nixos/archive/52c623ae89fe77de669a981c7e92b1504cd99eac.tar.gz",
-      "hash": "sha256-7tadYU5GzOUAxo8XLC18+dk0Rj+QSORUO5cFdpqfSy4="
+      "revision": "c851cfd1e9555ab2372fd4ce48e1094059eed561",
+      "url": "https://github.com/nilla-nix/nixos/archive/c851cfd1e9555ab2372fd4ce48e1094059eed561.tar.gz",
+      "hash": "sha256-Mj5DQKDql1IxXsd13zpjJBitjz0ZD6Wr7Q3ASgUFXQY="
     },
     "niri": {
       "type": "Git",
@@ -541,13 +538,13 @@
       "type": "Git",
       "repository": {
         "type": "Git",
-        "url": "https://tangled.org/@tangled.org/core"
+        "url": "https://tangled.sh/freshlybakedca.ke/core"
       },
-      "branch": "master",
+      "branch": "private/minion/push-pyxzxvyxylmx",
       "submodules": false,
-      "revision": "3eb9cefd98d13ab9864abb2e394fc41f89ffd923",
+      "revision": "acc63d3522b0c9b92ef3ab9214102bedaa944faf",
       "url": null,
-      "hash": "sha256-lRTZLRcqWpVf6CzJmvg+ggp/YWWasT4u2lFKIiIopoM="
+      "hash": "sha256-DwlweCkrVRga1dZY/gne7DDsFdLsQ8vlgpWegXAbrLY="
     },
     "treefmt-nix": {
       "type": "Git",
