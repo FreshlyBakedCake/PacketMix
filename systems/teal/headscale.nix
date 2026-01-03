@@ -132,6 +132,7 @@ in
           "2606:4700:4700::1111"
           "2606:4700:4700::1001"
         ];
+        search_domains = [ "search.freshly.space" ];
         base_domain = "clicks.domains";
       };
       auth_setup_allow_defer = true; # Otherwise we'll fall back to CLI auth

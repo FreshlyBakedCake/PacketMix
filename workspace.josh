@@ -1,5 +1,6 @@
 ::.tangled/
 ::LICENSES/
+dependencies/menu = :/menu
 ::npins/
 ::nilla.nix=projects/nilla.nix
 ::workspace.josh.license=projects/packetmix/workspace.josh.license

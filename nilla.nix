@@ -30,7 +30,18 @@ let
           }) pins;
         }
       )
-    ];
+    ]
+    ++ (
+      if (builtins.readDir ./.) ? "dependencies" then
+        let
+          dependenciesDir = ./dependencies;
+          dependencies = builtins.attrNames (builtins.readDir dependenciesDir);
+          depedencyFiles = map (name: "${./dependencies}/${name}/project.nix") dependencies;
+        in
+        depedencyFiles
+      else
+        [ ]
+    );
 
     args = {
       inherit nilla pins; # pins needs to be a static arg for us to import from it...
