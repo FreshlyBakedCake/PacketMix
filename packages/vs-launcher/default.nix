@@ -1,9 +1,6 @@
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
-let
-  pins = import ../../npins;
-in
 { config, ... }:
 {
   config.packages.vs-launcher = {
@@ -15,7 +12,7 @@ in
       in
       { appimageTools, fetchurl }:
       let
-        version = pins.vs-launcher.version;
+        version = config.inputs.vs-launcher.src.version;
         pname = "vs-launcher";
         src = fetchurl {
           url = "https://github.com/XurxoMF/vs-launcher/releases/download/${version}/vs-launcher-${version}.AppImage";

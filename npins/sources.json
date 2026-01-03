@@ -280,6 +280,19 @@
       "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.19.20",
       "hash": "sha256-/Wm8hZvdGfYWdTOF+dgTPX8DGuSKLhGw4qC4crf1dAo="
     },
+    "fenix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "fenix"
+      },
+      "branch": "monthly",
+      "submodules": false,
+      "revision": "f44d7c3596ff028ad9f7fcc31d1941ed585f11b3",
+      "url": "https://github.com/nix-community/fenix/archive/f44d7c3596ff028ad9f7fcc31d1941ed585f11b3.tar.gz",
+      "hash": "sha256-6RzWfxENGlO73jQb3uQNgOvubUFwvveeIg+PZxhAu6s="
+    },
     "headscale": {
       "type": "Git",
       "repository": {
@@ -520,6 +533,23 @@
       "revision": "0d6aaa4b3dcd1d8badbed2b66e0c50867330a86e",
       "url": "https://github.com/andir/npins/archive/0d6aaa4b3dcd1d8badbed2b66e0c50867330a86e.tar.gz",
       "hash": "sha256-9N14/tliOiA49Us2uFUWHcrhYN8AmJjR+bnwzcxejgs="
+    },
+    "quickshell": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://git.outfoxxed.me/",
+        "owner": "quickshell",
+        "repo": "quickshell"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.2.0",
+      "revision": "a5431dd02dc23d9ef1680e67777fed00fe5f7cda",
+      "url": "https://git.outfoxxed.me/api/v1/repos/quickshell/quickshell/archive/v0.2.0.tar.gz",
+      "hash": "sha256-vqkSDvh7hWhPvNjMjEDV4KbSCv2jyl2Arh73ZXe274k="
     },
     "scriptfs": {
       "type": "Git",

@@ -45,7 +45,7 @@ steps:
       mkdir -p /tmp/systems-drv-paths
 
       systems=$(nix eval \
-        --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import ./packetmix/ci.nix).systems.nixos)' \
+        --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import ./ci.nix).systems.nixos)' \
         --impure \
         --show-trace --raw)
 
@@ -53,7 +53,7 @@ steps:
         echo "Evaluating system $system"
 
         eval_out=$(nix eval \
-          -f ./packetmix/ci.nix "systems.nixos.$system.result.config.system.build.toplevel.drvPath" \
+          -f ./ci.nix "systems.nixos.$system.result.config.system.build.toplevel.drvPath" \
           --show-trace --raw \
           2>&1 >"/tmp/systems-drv-paths/$system" | tee /dev/stderr)
         eval_status=$?

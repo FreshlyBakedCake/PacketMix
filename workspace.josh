@@ -1,4 +1,6 @@
 ::.tangled/
 ::LICENSES/
-::projects/packetmix/workspace.josh.license
+::npins/
+::nilla.nix=projects/nilla.nix
+::workspace.josh.license=projects/packetmix/workspace.josh.license
 :/packetmix
