@@ -251,8 +251,6 @@
       ${config.services.phpfpm.pools.mediawiki.phpPackage}/bin/php ${config.services.mediawiki.finalPackage}/share/mediawiki/maintenance/run.php runJobs --memory-limit 1G --wait
     '';
     serviceConfig = {
-      RemainAfterExit = false;
-      Type = "oneshot";
       User = "mediawiki";
       Group = "nginx";
       PrivateTmp = true;
