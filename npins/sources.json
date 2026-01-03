@@ -115,6 +115,22 @@
       "url": "https://gitlab.com/api/v4/projects/nonsensopedia%2Fextensions%2Fnamespacepreload/repository/archive.tar.gz?sha=e7165b33f5216e1dc9240243b15bb05fe909f593",
       "hash": "sha256-9BeZAxy14ScMUemQ/lYT1zrGg9+pZQOuiCMwhjQrarE="
     },
+    "Network": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ProfessionalWiki",
+        "repo": "Network"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "4.0.0",
+      "revision": "5e8d222a34a9f4f5896465f90de1333c0d316bb6",
+      "url": "https://api.github.com/repos/ProfessionalWiki/Network/tarball/refs/tags/4.0.0",
+      "hash": "sha256-HO6k2RAY3nV4JWR49ozgUHxxDz1u7njbMRGX4HLjEzM="
+    },
     "OpenIDConnect": {
       "type": "Git",
       "repository": {

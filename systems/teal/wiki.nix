@@ -71,6 +71,15 @@
       Linter = null;
       Math = null;
       NamespacePreload = project.inputs.NamespacePreload.src;
+      Network = "${
+        config.services.phpfpm.pools.mediawiki.phpPackage.buildComposerProject {
+          pname = "Network";
+          version = "0.0.3665";
+          src = project.inputs.Network.src;
+          vendorHash = "sha256-JHa6PW5xO3pcwn/2jbGXM0wGhr6UmtqFdxaGCgpaYb0=";
+          composerLock = ./wiki/Network.composer.lock;
+        }
+      }/share/php/Network"; # for page connection graphs
       OpenIDConnect = "${
         pkgs.php.buildComposerProject {
           pname = "OpenIDConnect";
