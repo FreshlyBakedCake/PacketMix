@@ -29,6 +29,11 @@
     ];
   };
 
+  boot.swraid.enable = true;
+  boot.swraid.mdadmConf = ''
+    PROGRAM=true
+  ''; # Disable reporting for this system
+
   clicks.storage.impermanence = {
     enable = true;
     devices = {
