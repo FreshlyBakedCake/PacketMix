@@ -56,6 +56,12 @@
       type = "A";
       value = "100.64.0.5";
     }
+    {
+      # starry.sk -> teal
+      name = "starry.sk";
+      type = "A";
+      value = "100.64.0.5";
+    }
   ];
 
   services.nginx.virtualHosts."menu.freshlybakedca.ke" = {
@@ -68,7 +74,10 @@
     enableACME = true;
     acmeRoot = null;
 
-    serverAliases = [ "go.search.freshly.space" ];
+    serverAliases = [
+      "go.search.freshly.space"
+      "starry.sk"
+    ];
 
     locations."/" = {
       proxyPass = "http://127.0.0.1:1038";
@@ -91,7 +100,10 @@
 
     serverName = "menu.freshlybakedca.ke";
 
-    serverAliases = [ "go.search.freshly.space" ];
+    serverAliases = [
+      "go.search.freshly.space"
+      "starry.sk"
+    ];
 
     locations."/" = {
       proxyPass = "http://127.0.0.1:1038";
