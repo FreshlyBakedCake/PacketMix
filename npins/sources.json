@@ -289,9 +289,9 @@
       },
       "branch": "monthly",
       "submodules": false,
-      "revision": "f44d7c3596ff028ad9f7fcc31d1941ed585f11b3",
-      "url": "https://github.com/nix-community/fenix/archive/f44d7c3596ff028ad9f7fcc31d1941ed585f11b3.tar.gz",
-      "hash": "sha256-6RzWfxENGlO73jQb3uQNgOvubUFwvveeIg+PZxhAu6s="
+      "revision": "a3eaf682db8800962943a77ab77c0aae966f9825",
+      "url": "https://github.com/nix-community/fenix/archive/a3eaf682db8800962943a77ab77c0aae966f9825.tar.gz",
+      "hash": "sha256-PnQdWvPZqHp+7yaHWDFX3NYSKaOy0fjkwpR+rIQC7AY="
     },
     "headscale": {
       "type": "Git",
