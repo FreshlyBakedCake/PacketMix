@@ -17,6 +17,7 @@
 
   systemd.services.menu = {
     wantedBy = [ "default.target" ];
+    wants = [ "postgresql.service" ];
     script = ''
       ${project.packages.menu.result.${system}}/bin/menu
     '';
@@ -25,7 +26,21 @@
       Group = "menu";
       PrivateTmp = true;
     };
-    environment.BIND_ADDR = "127.0.0.1:1038";
+    environment = {
+      BIND_ADDR = "127.0.0.1:1038";
+      DATABASE_URL = "postgresql:///menu?host=/run/postgresql";
+    };
+  };
+
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "menu" ];
+    ensureUsers = [
+      {
+        name = "menu";
+        ensureDBOwnership = true;
+      }
+    ];
   };
 
   services.headscale.settings.dns.extra_records = [

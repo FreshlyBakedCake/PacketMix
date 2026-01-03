@@ -3,10 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 /target
-
-
-# Added by cargo
-#
-# already existing elements were commented out
-
-#/target
+.devenv.flake.nix
+.devenv/
+.direnv/
+.envrc

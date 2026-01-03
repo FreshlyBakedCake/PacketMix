@@ -8,7 +8,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = "0.8.8"
+axum = { version = "0.8.8", features = ["macros"] }
+serde = { version = "1.0.228", features = ["derive"] }
+sqlx = { version = "0.8.6", features = ["runtime-tokio", "tls-rustls-ring-webpki", "postgres", "uuid", "macros"] }
 tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
 tower-http = { version = "0.6.8", features = ["normalize-path"] }
 tower-layer = "0.3.3"

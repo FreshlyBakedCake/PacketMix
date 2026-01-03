@@ -47,6 +47,7 @@
       shell =
         {
           bacon,
+          devenv,
           fenix,
           mkShell,
           pkg-config,
@@ -67,6 +68,7 @@
               inherit pkgs;
               inherit (stdenv.hostPlatform) system;
             })
+            devenv
             pkg-config
             reuse
             (fenix.complete.withComponents [
