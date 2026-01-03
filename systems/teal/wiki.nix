@@ -204,6 +204,24 @@
 
       $wgRCWatchCategoryMembership = true;
 
+      $wgCargoPageDataColumns[] = 'creationDate';
+      $wgCargoPageDataColumns[] = 'modificationDate';
+      $wgCargoPageDataColumns[] = 'creator';
+      $wgCargoPageDataColumns[] = 'lastEditor';
+      $wgCargoPageDataColumns[] = 'displayTitle';
+      $wgCargoPageDataColumns[] = 'categories';
+      $wgCargoPageDataColumns[] = 'numRevisions';
+      $wgCargoPageDataColumns[] = 'outgoingLinks';
+      $wgCargoPageDataColumns[] = 'isRedirect';
+      $wgCargoPageDataColumns[] = 'pageNameOrRedirect';
+      $wgCargoPageDataColumns[] = 'pageIDOrRedirect';
+
+      $wgCargoFileDataColumns[] = 'mediaType';
+      $wgCargoFileDataColumns[] = 'path';
+      $wgCargoFileDataColumns[] = 'lastUploadDate';
+
+      $wgFixDoubleRedirects = true;
+
       $wgShowExceptionDetails = true;
       $wgDevelopmentWarnings = true;
     '';
