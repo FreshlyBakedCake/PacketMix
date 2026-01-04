@@ -243,8 +243,8 @@
   systemd.timers.mediawiki-maintenance = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnUnitActiveSec = "5min";
-      OnBootSec = "5min";
+      OnUnitActiveSec = "30";
+      OnBootSec = "30";
       Persistent = false;
       Unit = "mediawiki-maintenance.service";
     };
@@ -252,9 +252,11 @@
 
   systemd.services.mediawiki-maintenance = {
     script = ''
-      ${config.services.phpfpm.pools.mediawiki.phpPackage}/bin/php ${config.services.mediawiki.finalPackage}/share/mediawiki/maintenance/run.php runJobs --memory-limit 1G --wait
+      ${config.services.phpfpm.pools.mediawiki.phpPackage}/bin/php ${config.services.mediawiki.finalPackage}/share/mediawiki/maintenance/run.php runJobs --memory-limit 1G --maxtime 30
     '';
     serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
       User = "mediawiki";
       Group = "nginx";
       PrivateTmp = true;
