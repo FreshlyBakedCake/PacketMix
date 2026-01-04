@@ -70,6 +70,7 @@
       }/share/php/Elastica"; # needed for cirrussearch
       Linter = null;
       Math = null;
+      MobileFrontend = project.inputs.MobileFrontend.src;
       NamespacePreload = project.inputs.NamespacePreload.src;
       Network = "${
         config.services.phpfpm.pools.mediawiki.phpPackage.buildComposerProject {
@@ -221,6 +222,10 @@
       $wgCargoFileDataColumns[] = 'lastUploadDate';
 
       $wgFixDoubleRedirects = true;
+
+      $wgMFAutodetectMobileView = true;
+      $wgMFEnableMobilePreferences = true;
+      wfLoadSkin( 'MinervaNeue' );
 
       $wgShowExceptionDetails = true;
       $wgDevelopmentWarnings = true;

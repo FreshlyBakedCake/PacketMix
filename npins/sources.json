@@ -102,6 +102,18 @@
       "url": null,
       "hash": "sha256-nPShvlf9GizwfzZstFhj4mv3DcHg8leN+zfiv9kETAg="
     },
+    "MobileFrontend": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend"
+      },
+      "branch": "REL1_45",
+      "submodules": false,
+      "revision": "2bccb7e19bbe154ac24eae97137ce5396d63339d",
+      "url": null,
+      "hash": "sha256-X4vq7SnGQZMBjDDCv6ZRllnDzJ/QmKoA2REkC/2jm+g="
+    },
     "NamespacePreload": {
       "type": "Git",
       "repository": {
