@@ -369,7 +369,7 @@
           "closest_bookmark(to)" = "heads(::to & bookmarks())";
           "closest_pushable_allow_empty_desc(to)" = "heads(::to & mutable() & (~empty() | merges()))";
 
-          "main" = "coalesce(bookmarks(exact:'main'), bookmarks(exact:'master'))";
+          "main" = "coalesce(bookmarks(exact:'main'), bookmarks(exact:'master'), trunk())";
 
           "series(tip, length)" = "back(tip, length)::tip";
         };
