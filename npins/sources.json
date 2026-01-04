@@ -54,18 +54,6 @@
       "url": null,
       "hash": "sha256-yFOyqK6Mu71x451BEw1FSWpamLl6JbTJ+NwNPM8YJ30="
     },
-    "CategoryWatch": {
-      "type": "Git",
-      "repository": {
-        "type": "Git",
-        "url": "https://gerrit.wikimedia.org/r/mediawiki/extensions/CategoryWatch"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "3e7a18857227ab8e71a8ce6486b0b0b9be47ef76",
-      "url": null,
-      "hash": "sha256-UcKZ/MCYjIJkT+eZhaP7fdne6Pkg2QP+F6f2TVyCeU0="
-    },
     "CirrusSearch": {
       "type": "Git",
       "repository": {

@@ -42,7 +42,6 @@
       AutoCreateCategoryPages = project.inputs.AutoCreateCategoryPages.src;
       Cargo = project.inputs.Cargo.src; # queries and soforth
       CategoryTree = null;
-      CategoryWatch = project.inputs.CategoryWatch.src;
       CheckUser = null;
       Cite = null;
       CiteThisPage = null;
