@@ -21,21 +21,23 @@
     '';
   };
 
-  systemd.services."acme-missinghost.invalid".enable = false;
-  systemd.timers."acme-missinghost.invalid".enable = false;
+  systemd.services."acme-order-renew-missinghost.invalid".enable = false;
 
-  systemd.targets."acme-finished-missinghost.invalid" = {
-    requires = lib.mkForce [ "acme-selfsigned-missinghost.invalid.service" ];
-    after = lib.mkForce [ "acme-selfsigned-missinghost.invalid.service" ];
+  systemd.services."acme-missinghost.invalid" = {
+    wants = lib.mkForce [
+      "acme-setup.service"
+    ];
+    before = lib.mkForce [ ];
+    restartTriggers = lib.mkForce [ ];
   };
 
   security.acme.acceptTerms = true;
   security.acme.certs = lib.mkIf config.services.nginx.enable {
     "missinghost.invalid" = {
-      dnsProvider = null;
+      dnsProvider = "invalidns";
       listenHTTP = null;
       s3Bucket = null;
-      webroot = "/dev/null";
+      webroot = null; # We can't use webroot as the setup service validates it...
       email = "invalid@missinghost.invalid";
     }; # Nix requires some values, even if we're actually disabling the acme-missinghost.invalid service... that's problematic if there are no defaults for the system
   };

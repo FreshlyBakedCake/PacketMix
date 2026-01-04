@@ -143,15 +143,13 @@ in
     systemd.services.stalwart-mail = {
       requires = [ "postgresql.service" ];
       wants = [
-        "acme-finished-mail.freshly.space.target"
+        "acme-mail.freshly.space.service"
       ]
-      ++ (map (domain: "acme-finished-${domain}.target") mail_domains);
+      ++ (map (domain: "acme-${domain}.service") mail_domains);
       after = [
-        "acme-selfsigned-mail.freshly.space.service"
         "acme-mail.freshly.space.service"
         "postgresql.service"
       ]
-      ++ (map (domain: "acme-selfsigned-${domain}.service") mail_domains)
       ++ (map (domain: "acme-${domain}.service") mail_domains);
       serviceConfig.RestrictAddressFamilies = lib.mkForce [ ]; # We need the default restricted address families to access the postgres socket
     };
