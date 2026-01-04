@@ -50,7 +50,7 @@ fn clean_host(provided_host: &str) -> &str {
 }
 
 async fn get_redirect(default_location: &str, go: &str) -> Redirect {
-    let redirect = sqlx::query!(r#"SELECT ("to") FROM direct WHERE "from" = $1 LIMIT 1"#, go)
+    let redirect = sqlx::query!(r#"SELECT ("to") FROM direct WHERE "from" = $1 LIMIT 1"#, go.to_lowercase())
         .fetch_one(
             STATE
                 .get()
@@ -134,7 +134,7 @@ async fn handle_create_post(headers: HeaderMap, Form(create): Form<Create>) -> R
 
     let create_call = sqlx::query!(
         r#"INSERT INTO direct ("from", "to", "owner") VALUES ($1, $2, $3)"#,
-        create.from,
+        create.from.to_lowercase(),
         create.to,
         owner,
     )
