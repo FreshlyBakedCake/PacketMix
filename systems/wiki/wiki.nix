@@ -29,6 +29,14 @@
     };
     enablePublicInternet = lib.mkEnableOption "Allow access from the public internet with authentication via OIDC";
     enableAutoRegistration = lib.mkEnableOption "Allow unregistered users to automatically register via OIDC or Tailscale";
+    favicon = lib.mkOption {
+      type = lib.types.path;
+      description = "What's your favicon.ico (.ico)";
+    };
+    icon = lib.mkOption {
+      type = lib.types.path;
+      description = "What icon do you want to display on the top left of pages (.svg)";
+    };
   };
 
   config = {
@@ -338,8 +346,8 @@
             return 301 https://${config.ingredient.wiki.wiki.hostname}/wiki/;
           ''; # overriding nixpkgs /wiki/ redirect since as our double-proxy makes it redirect to :1036
         };
-        "= /favicon.ico".alias = ./wiki/favicon.ico;
-        "= /icon.svg".alias = ./wiki/icon.svg;
+        "= /favicon.ico".alias = config.ingredient.wiki.wiki.favicon;
+        "= /icon.svg".alias = config.ingredient.wiki.wiki.icon;
       };
 
       extraConfig = ''

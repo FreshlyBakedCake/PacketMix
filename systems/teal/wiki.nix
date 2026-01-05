@@ -18,5 +18,7 @@
     email = "wiki@freshly.space";
     enablePublicInternet = true;
     enableAutoRegistration = true;
+    favicon = ./wiki/favicon.ico;
+    icon = ./wiki/icon.svg;
   };
 }
