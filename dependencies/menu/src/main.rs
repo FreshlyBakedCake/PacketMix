@@ -13,7 +13,10 @@ use axum::{
 use serde::Deserialize;
 use sqlx::{Connection, PgConnection};
 use std::{collections::HashMap, env, ops::DerefMut, sync::OnceLock};
-use tokio::sync::Mutex;
+use tokio::{
+    sync::Mutex,
+    time::{Duration, sleep},
+};
 use tower_http::normalize_path::NormalizePathLayer;
 use tower_layer::Layer;
 
@@ -50,17 +53,20 @@ fn clean_host(provided_host: &str) -> &str {
 }
 
 async fn get_redirect(default_location: &str, go: &str) -> Redirect {
-    let redirect = sqlx::query!(r#"SELECT ("to") FROM direct WHERE "from" = $1 LIMIT 1"#, go.to_lowercase())
-        .fetch_one(
-            STATE
-                .get()
-                .expect("Server must be initialized before processing connections")
-                .sqlx_connection
-                .lock()
-                .await
-                .deref_mut(),
-        )
-        .await;
+    let redirect = sqlx::query!(
+        r#"SELECT ("to") FROM direct WHERE "from" = $1 LIMIT 1"#,
+        go.to_lowercase()
+    )
+    .fetch_one(
+        STATE
+            .get()
+            .expect("Server must be initialized before processing connections")
+            .sqlx_connection
+            .lock()
+            .await
+            .deref_mut(),
+    )
+    .await;
 
     if let Ok(record) = redirect {
         Redirect::temporary(&record.to)
@@ -162,15 +168,31 @@ async fn handle_404() -> impl IntoResponse {
 
 #[tokio::main]
 async fn main() {
-    let mut connection = PgConnection::connect(
-        env::var("DATABASE_URL")
-            .expect(
-                "Please ensure you set your database URL in the $DATABASE_URL environment variable",
+    let mut connection = {
+        let mut maybe_connection;
+        let mut tries = 3;
+        loop {
+            // We can't use a for loop here as rust doesn't know it will run at least once...
+            tries -= 1;
+            maybe_connection = PgConnection::connect(
+                env::var("DATABASE_URL")
+                    .expect(
+                        "Please ensure you set your database URL in the $DATABASE_URL environment variable",
+                    )
+                    .as_str(),
             )
-            .as_str(),
-    )
-    .await
-    .expect("Failed to connect to database defined in $DATABASE_URL");
+            .await;
+
+            if maybe_connection.is_ok() || tries == 0 {
+                break;
+            }
+
+            sleep(Duration::from_secs(5)).await;
+        }
+
+        maybe_connection
+            .expect("Failed to connect to database defined in $DATABASE_URL after 3 retries")
+    };
 
     sqlx::migrate!()
         .run(&mut connection)
