@@ -67,7 +67,9 @@ in
                 (
                   values:
                   let
-                    existingUsernames = builtins.filter (value: value.username != null) values;
+                    existingUsernames = map (value: value.username) (
+                      builtins.filter (value: value.username != null) values
+                    );
                     uniqueUsernames = lib.lists.unique existingUsernames;
                   in
                   if existingUsernames != uniqueUsernames then
