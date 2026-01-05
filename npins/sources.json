@@ -525,6 +525,12 @@
       "url": "https://github.com/ners/nix-monitored/archive/60f3baa4701d58eab86c2d1d9c3d7e820074d461.tar.gz",
       "hash": "sha256-Z8PknjkmIr/8ZCH+dmc2Pc+UltiOr7/oKg37PXuVvuU="
     },
+    "nixos-prev": {
+      "type": "Channel",
+      "name": "nixos-25.05",
+      "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.813798.40ee5e1944be/nixexprs.tar.xz",
+      "hash": "sha256-fZOGhoxE03G6SuKVZC6bPf7IdPYW9gLHYS1wC64emlU="
+    },
     "nixos-unstable": {
       "type": "Channel",
       "name": "nixos-unstable",
