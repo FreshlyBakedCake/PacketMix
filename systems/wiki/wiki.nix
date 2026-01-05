@@ -153,9 +153,6 @@
           'username'  => 'automated@freshly.space',
           'password'  => trim(file_get_contents('/secrets/mediawiki/mail_password.txt'))
         ];
-        $wgLocalInterwikis = [
-          'fbc'
-        ];
 
         $wgWhitelistReadRegexp = [
           '/^Main Page$/',
