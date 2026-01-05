@@ -90,6 +90,7 @@ in
     ingredients = [
       "freshlybakedcake"
       "server"
+      "wiki"
     ];
     args = {
       system = "x86_64-linux";
@@ -101,6 +102,7 @@ in
     ingredients = [
       "freshlybakedcake"
       "server"
+      "wiki"
     ];
     args = {
       system = "x86_64-linux";

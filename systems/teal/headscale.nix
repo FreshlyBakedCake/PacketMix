@@ -125,6 +125,12 @@ in
             type = "A";
             value = "100.64.0.37";
           }
+          {
+            # wiki.starrysky.fyi -> umber
+            name = "wiki.starrysky.fyi";
+            type = "A";
+            value = "100.64.0.48";
+          }
         ];
         nameservers.global = [
           "1.1.1.1"
