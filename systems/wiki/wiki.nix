@@ -265,6 +265,8 @@
         $wgMFEnableMobilePreferences = true;
         wfLoadSkin( 'MinervaNeue' );
 
+        $wgEnableEditRecovery = true;
+
         $wgShowExceptionDetails = true;
         $wgDevelopmentWarnings = true;
       '';
