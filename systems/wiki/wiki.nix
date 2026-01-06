@@ -248,7 +248,7 @@
         $wgCargoPageDataColumns[] = 'creator';
         $wgCargoPageDataColumns[] = 'lastEditor';
         $wgCargoPageDataColumns[] = 'displayTitle';
-        $wgCargoPageDataColumns[] = 'categories';
+        // $wgCargoPageDataColumns[] = 'categories'; - seems to break with auto-categorization(?), causes job queue to abandon and drop refresh link tasks
         $wgCargoPageDataColumns[] = 'numRevisions';
         $wgCargoPageDataColumns[] = 'outgoingLinks';
         $wgCargoPageDataColumns[] = 'isRedirect';
