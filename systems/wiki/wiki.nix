@@ -169,8 +169,12 @@
         $wgGroupPermissions['bureaucrat']['usermerge'] = true;
 
         $wgAuthRemoteuserUserName = function () {
-          if (!isset($_SERVER['HTTP_X_WEBAUTH_LOGIN'])) {
+          if (!isset($_SERVER['HTTP_X_FROM_TAILSCALE'])) {
             return "";
+          }
+
+          if (!isset($_SERVER['HTTP_X_WEBAUTH_LOGIN'])) {
+            return "Server";
           }
 
           if ($_SERVER['HTTP_X_WEBAUTH_LOGIN'] === 'hyperneutrino') {
@@ -372,6 +376,7 @@
 
             extraConfig = ''
               proxy_set_header X-Webauth-Login "";
+              proxy_set_header X-From-Tailscale "";
               proxy_cache off;
             '';
           };
@@ -396,6 +401,18 @@
 
         extraConfig = ''
           proxy_cache off;
+          proxy_set_header X-From-Tailscale "Yes";
+        '';
+      };
+
+      locations."@empty" = {
+        return = "200";
+      };
+
+      locations."/auth" = {
+        extraConfig = ''
+          proxy_intercept_errors on;
+          error_page 403 =200 @empty; # We always want to return 200 so as to allow server access
         '';
       };
 
