@@ -278,6 +278,8 @@
 
         $wgEnableEditRecovery = true;
 
+        $wgExternalLinkTarget = '_blank';
+
         $wgShowExceptionDetails = true;
         $wgDevelopmentWarnings = true;
       '';
