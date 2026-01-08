@@ -139,7 +139,7 @@ async fn handle_create_post(headers: HeaderMap, Form(create): Form<Create>) -> R
     };
 
     let create_call = sqlx::query!(
-        r#"INSERT INTO direct ("from", "to", "owner") VALUES ($1, $2, $3)"#,
+        r#"INSERT INTO direct ("from", "to", "owner") VALUES ($1, $2, $3) ON CONFLICT ("from") DO UPDATE SET "to" = EXCLUDED.to, "owner" = EXCLUDED.owner"#,
         create.from.to_lowercase(),
         create.to,
         owner,

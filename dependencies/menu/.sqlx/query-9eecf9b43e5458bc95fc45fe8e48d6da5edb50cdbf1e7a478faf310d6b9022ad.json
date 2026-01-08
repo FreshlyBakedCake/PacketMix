@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO direct (\"from\", \"to\", \"owner\") VALUES ($1, $2, $3) ON CONFLICT (\"from\") DO UPDATE SET \"to\" = EXCLUDED.to, \"owner\" = EXCLUDED.owner",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Varchar"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "9eecf9b43e5458bc95fc45fe8e48d6da5edb50cdbf1e7a478faf310d6b9022ad"
+}
