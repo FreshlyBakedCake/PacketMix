@@ -224,7 +224,15 @@
 
         $wgScribuntoDefaultEngine = 'luasandbox';
 
+        define("NS_PUBLIC", 3000);
+        define("NS_PUBLIC_TALK", 3001);
+
+        // Add namespaces.
+        $wgExtraNamespaces[NS_PUBLIC] = "Public";
+        $wgExtraNamespaces[NS_PUBLIC_TALK] = "Public_talk";
+
         $wgNamespacesWithSubpages[NS_MAIN] = true;
+        $wgNamespacesWithSubpages[NS_PUBLIC] = true;
 
         $wgNamespacePreloadDoExpansion = false; // This can't expand {{PAGENAME}} (or like) correctly, making it very nearly useless
 
@@ -236,6 +244,7 @@
         ];
         $wgSearchType = 'CirrusSearch';
         $wgNamespacesToBeSearchedDefault[NS_CATEGORY] = true;
+        $wgNamespacesToBeSearchedDefault[NS_PUBLIC] = true;
 
         $wgUrlProtocols[] = "rad:";
 
