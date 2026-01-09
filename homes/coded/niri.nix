@@ -22,7 +22,7 @@
       "DP-1" = {
         position = {
           x = 5760;
-          y = 2160;
+          y = 0;
         };
         mode = {
           width = 3840;
@@ -34,7 +34,7 @@
       "DP-2" = {
         position = {
           x = 1920;
-          y = 2160;
+          y = 0;
         };
         mode = {
           width = 3840;
@@ -43,21 +43,10 @@
         };
         scale = 1;
       };
-      "LG Electronics LG TV SSCR2 0x01010101" = {
-        position = {
-          x = 1920;
-          y = 0;
-        };
-        mode = {
-          width = 3840;
-          height = 2160;
-          refresh = 60.;
-        };
-      };
       "Dell Inc. DELL S2422HG BTTCK83" = {
         position = {
           x = 0;
-          y = 2700;
+          y = 540;
         };
         mode = {
           width = 1920;
