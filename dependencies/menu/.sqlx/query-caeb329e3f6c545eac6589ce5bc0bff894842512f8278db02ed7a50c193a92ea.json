@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM direct WHERE direct.from = $1 AND direct.to = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "caeb329e3f6c545eac6589ce5bc0bff894842512f8278db02ed7a50c193a92ea"
+}

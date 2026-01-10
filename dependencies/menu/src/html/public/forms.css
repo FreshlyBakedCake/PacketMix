@@ -1,0 +1,52 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form > div {
+  padding: 0.25em;
+}
+
+form > div > div {
+  padding: 0.1em;
+}
+
+input {
+  border: 0.1em solid black;
+  border-radius: 0.25em;
+  height: 1.5em;
+  font-size: 1em;
+}
+
+input:invalid:not(:placeholder-shown):not(:focus), input:user-invalid {
+  border: 0.1em solid red;
+}
+
+form div:has(> input) {
+  &::after {
+    content: "";
+    height: 0.75em;
+    font-size: 0.75em;
+    display: block;
+    text-align: center;
+  }
+
+  &:has(:is(input:invalid:not(:placeholder-shown):not(:focus), input:user-invalid)) {
+    &::after {
+      height: auto;
+      content: "You must fill this out";
+      color: red;
+    }
+
+    &:has(input[type="url"])::after {
+      content: "You must enter a URL (including http:// or https://)";
+    }
+  }
+}

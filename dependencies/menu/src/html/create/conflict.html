@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+
+SPDX-License-Identifier: MIT
+-->
+
+<html>
+  <head>
+    <title>Add shortlink</title>
+    <link rel="stylesheet" href="/_/public/logo.css"/>
+    <link rel="stylesheet" href="/_/public/colors.css"/>
+    <link rel="stylesheet" href="/_/public/actions.css"/>
+  </head>
+
+  <body>
+    <div id="logo"><div><span><span class="failure">Couldn't create</span> shortlink</span><img src="/_/public/logo.svg"></div></div>
+    <p>You can't create a link from <a href="/{from:url}">{host}/{from}</a> to <a href="{to:attribute}">{to}</a> because <a href="/{from:url}">{host}/{from}</a> already goes to <a href="{current:attribute}">{current}</a>.</p>
+    <ul>
+      <li><a href="/_/create/do?from={from:url}&to={to:url}&current={current:url}">Overwrite it</a></li>
+      <li><a href="/_/create?from={from:url}&to={to:url}">Back to editor</a></li>
+      <li><a href="/">All shortlinks</a></li>
+    </ul>
+  </body>
+</html>

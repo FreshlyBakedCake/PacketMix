@@ -1,0 +1,43 @@
+<!--
+SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+
+SPDX-License-Identifier: MIT
+-->
+
+<html>
+  <head>
+    <title>Add shortlink</title>
+    <link rel="stylesheet" href="/_/public/logo.css"/>
+    <link rel="stylesheet" href="/_/public/colors.css"/>
+    <link rel="stylesheet" href="/_/public/actions.css"/>
+  </head>
+
+  <body>
+    <div id="logo"><div><span><span class="success">Created</span> shortlink</span><img src="/_/public/logo.svg"></div></div>
+    <p>Your new shortlink is up!</p>
+    <p><a href="/{from:url}">{host}/{from}</a> now goes to <a href="{to:attribute}">{to}</a></p>
+    <ul>
+      <li>Access it at <a href="/{from:url}">{host}/{from}</a> (<span id="copy" text="go/{from:attribute}" onclick="navigator.clipboard.writeText(this.getAttribute('text')); ">copy</span>)</li>
+      <li><a href="/_/create">Create another one</a></li>
+      <li><a href="/_/create?from={from:url}&to={to:url}&current={to:url}">Edit it</a></li>
+      <li><a href="/_/delete/do?from={from:url}&current={to:url}">Delete it</a></li>
+      <li><a href="/">All shortlinks</a></li>
+    </ul>
+    <script>
+      const copy = document.getElementById("copy");
+    
+      copy.onclick = () => {
+        document.execCommand("copy");
+      };
+
+      copy.addEventListener("copy", event => {
+        event.preventDefault();
+        if (event.clipboardData) {
+          event.clipboardData.setData("text/plain", copy.getAttribute("text"));
+          copy.classList.add('complete');
+          copy.textContent = 'copied';
+        }
+      });
+    </script>
+  </body>
+</html>

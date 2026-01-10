@@ -7,18 +7,24 @@ SPDX-License-Identifier: MIT
 <html>
   <head>
     <title>Add shortlink</title>
+    <link rel="stylesheet" href="/_/public/logo.css"/>
+    <link rel="stylesheet" href="/_/public/forms.css"/>
   </head>
 
   <body>
-    <form action="" method="post">
+    <div id="logo"><div><span>Create shortlink</span><img src="/_/public/logo.svg"></div></div>
+    <form action="/_/create/do" method="get">
       <div>
-        <label for="from">When I go to {host}/</label><!--
-     --><input type="text" name="from" id="from" placeholder="kagi" value="{path}" required />
+        <div>
+          <label for="from">When I go to {host}/</label><!--
+       --><input type="text" name="from" id="from" placeholder="kagi" value="{from:attribute}" required />...
+        </div>
+        <div>
+          ...<label for="to">send me to </label>
+          <input type="url" name="to" id="to" value="{to:attribute}" placeholder="https://kagi.com" required />
+        </div>
       </div>
-      <div>
-        <label for="to">Send me to </label>
-        <input type="text" name="to" id="to" placeholder="https://kagi.com" required />
-      </div>
+      <input type="hidden" name="current" id="current" value="{current:attribute}" />
       <input type="submit" value="Add shortlink" />
     </form>
   </body>

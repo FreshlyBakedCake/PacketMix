@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH insertion AS (\n            INSERT INTO direct (\"from\", \"to\", \"owner\")\n                VALUES ($1, $2, $3)\n                ON CONFLICT (\"from\")\n                DO UPDATE SET \"to\" = EXCLUDED.to, \"owner\" = EXCLUDED.owner WHERE direct.to = $4\n                RETURNING direct.from\n        )\n        SELECT direct.to FROM direct\n        WHERE direct.from NOT IN (SELECT insertion.from FROM insertion) AND direct.from = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "to",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "b8fd68f2b748b100b6b594a1ce38ed07de8be8f5aefa059a2800b94f5b485a3d"
+}

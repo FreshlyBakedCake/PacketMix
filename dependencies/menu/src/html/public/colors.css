@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.success {
+  color: #64ff98;
+}
+
+.failure {
+  color: #ff6464;
+}

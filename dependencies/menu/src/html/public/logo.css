@@ -1,0 +1,53 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap'); /* TODO: vendor this font */
+
+html {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+  min-height: 100%;
+  width: 80%;
+  background: #e0faff;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+}
+
+#logo {
+  background: #144f5f;
+  border-radius: 0 0 0.5rem 0.5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#logo > div {
+  height: 100%;
+}
+
+#logo > div > span {
+  color: #64e4ff;
+  font-family: "Delius", cursive;
+  font-size: 3rem;
+  line-height: 5rem;
+  vertical-align: top;
+}
+
+#logo > div > img {
+  height: 100%;
+}
