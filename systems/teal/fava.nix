@@ -40,7 +40,6 @@ let
         plugin "fava.plugins.link_documents"
 
         plugin "beancount.plugins.pedantic"
-        plugin "beancount.plugins.unrealized" "Unrealized"
         plugin "beancount.plugins.implicit_prices"
 
         plugin "beancount_share.share" "{
