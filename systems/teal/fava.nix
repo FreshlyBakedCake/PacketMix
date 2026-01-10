@@ -53,6 +53,32 @@ let
       '';
     }
     {
+      slug = "hyperneutrino";
+      name = "HyperNeutrino";
+      beancountOptions.operating_currency = "CAD";
+      favaOptions = {
+        invert-income-liabilities-equity = "true";
+        auto-reload = "true";
+        fiscal-year-end = "03-31";
+      };
+      extraConfig = ''
+        plugin "fava.plugins.tag_discovered_documents"
+        plugin "fava.plugins.link_documents"
+
+        plugin "beancount.plugins.pedantic"
+        plugin "beancount.plugins.implicit_prices"
+
+        plugin "beancount_share.share" "{
+          'mark_name': 'share',
+          'meta_name': 'shared',
+          'account_debtors': 'Assets:People',
+          'account_creditors': 'Liabilities:People',
+          'open_date': None,
+          'quantize': '0.01'
+        }"
+      '';
+    }
+    {
       slug = "coded";
       name = "Samuel Shuert";
       beancountOptions.operating_currency = "USD";
