@@ -11,6 +11,7 @@ use axum::{
 };
 use include_dir::{Dir, include_dir};
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
+use regex::Captures;
 use sqlx::{Connection, PgConnection};
 
 #[cfg(debug_assertions)]
@@ -30,27 +31,40 @@ static PUBLIC_DIR: Dir<'static> = include_dir!("src/html/public");
 #[cfg(debug_assertions)]
 static DEVELOPMENT: OnceLock<bool> = OnceLock::new();
 
-fn template_html<'a>(
-    mut html: String,
-    replacements: HashMap<&str, Box<dyn 'a + FnOnce() -> Option<&'a str>>>,
-) -> String {
-    for (text, maybe_replacement) in replacements {
-        let replacement = maybe_replacement().unwrap_or_else(|| "");
-        html = html.replace(
-            &("{".to_owned() + text + "}"),
-            &html_escape::encode_text(replacement),
-        );
-        html = html.replace(
-            &("{".to_owned() + text + ":attribute}"),
-            &html_escape::encode_quoted_attribute(replacement),
-        );
-        html = html.replace(
-            &("{".to_owned() + text + ":url}"),
-            &utf8_percent_encode(replacement, NON_ALPHANUMERIC).to_string(),
-        );
-    }
+#[derive(Clone)]
+enum AnyString<'a> {
+    Owned(String),
+    Ref(&'a str),
+}
 
-    html
+fn template_html<'a>(
+    html: String,
+    replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>>,
+) -> String {
+    let re = regex_static::static_regex!(r"\{([^\}:]+)(?::([^\}]+))?\}");
+    re.replace_all(&html, |captures: &Captures| {
+        let replacement_name = &captures[1];
+        let replacement = replacements
+            .get(replacement_name)
+            .and_then(|maybe_replacement| maybe_replacement())
+            .unwrap_or_else(|| AnyString::Ref(""))
+            .clone();
+        let replacement_owned = match replacement {
+            AnyString::Owned(owned) => owned,
+            AnyString::Ref(str) => str.to_string(),
+        };
+
+        match captures.get(2).and_then(|m| Some(m.as_str())) {
+            Some("dangerous_raw") => replacement_owned,
+            Some("attribute") => {
+                html_escape::encode_quoted_attribute(&replacement_owned).to_string()
+            }
+            Some("url") => utf8_percent_encode(&replacement_owned, NON_ALPHANUMERIC).to_string(),
+            None => html_escape::encode_text(&replacement_owned).to_string(),
+            Some(_) => "UNKNOWN_MATCH_TYPE".to_string(),
+        }
+    })
+    .to_string()
 }
 
 /// include_str, but if DEVELOPMENT then the string is dynamically fetched for easy reloading
@@ -125,16 +139,12 @@ async fn get_redirect_search(go: &str) -> Redirect {
     get_redirect("https://kagi.com/search?q=", go).await
 }
 
-async fn handle_root(
+#[axum::debug_handler]
+async fn handle_index(
     headers: HeaderMap,
-    #[cfg(debug_assertions)] Query(params): Query<HashMap<String, String>>,
-) -> Result<String> {
-    ensure_authenticated(
-        &headers,
-        #[cfg(debug_assertions)]
-        &params,
-    )?;
-    Ok("Hello, world!".to_string())
+    Query(params): Query<HashMap<String, String>>,
+) -> Result<Html<String>> {
+    handle_static_page(StaticPageType::Index, &params, &headers).await
 }
 
 async fn handle_base(Path(go): Path<String>) -> Redirect {
@@ -149,14 +159,21 @@ async fn handle_search(Query(params): Query<HashMap<String, String>>) -> Redirec
     }
 }
 
+struct Link {
+    from: String,
+    to: String,
+    owner: String,
+}
+
 #[derive(Clone)]
 enum StaticPageType {
     Create,
-    CreateSuccess,
     CreateConflict,
     CreateFailure,
-    DeleteSuccess,
+    CreateSuccess,
     DeleteFailure,
+    DeleteSuccess,
+    Index,
 }
 
 async fn handle_static_page<'a>(
@@ -170,11 +187,12 @@ async fn handle_static_page<'a>(
 
     let html = match page_type {
         StaticPageType::Create => include_String_dynamic!("./html/create.html"),
-        StaticPageType::CreateSuccess => include_String_dynamic!("./html/create/success.html"),
         StaticPageType::CreateConflict => include_String_dynamic!("./html/create/conflict.html"),
         StaticPageType::CreateFailure => include_String_dynamic!("./html/create/failure.html"),
-        StaticPageType::DeleteSuccess => include_String_dynamic!("./html/delete/success.html"),
+        StaticPageType::CreateSuccess => include_String_dynamic!("./html/create/success.html"),
         StaticPageType::DeleteFailure => include_String_dynamic!("./html/delete/failure.html"),
+        StaticPageType::DeleteSuccess => include_String_dynamic!("./html/delete/success.html"),
+        StaticPageType::Index => include_String_dynamic!("./html/index.html"),
     };
 
     let username = if auth_required {
@@ -187,35 +205,95 @@ async fn handle_static_page<'a>(
         None
     };
 
-    let mut replacements: HashMap<&str, Box<dyn 'a + FnOnce() -> Option<&'a str>>> = HashMap::new();
+    let mut replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>> =
+        HashMap::new();
     replacements.insert(
         "host",
         Box::new(|| {
-            Some(clean_host(
+            Some(AnyString::Ref(clean_host(
                 headers
                     .get("host")
                     .and_then(|header| Some(header.to_str().unwrap_or_else(|_| "go")))
                     .unwrap_or_else(|| "go"),
-            ))
+            )))
         }),
     );
     replacements.insert(
         "from",
-        Box::new(|| params.get("from").and_then(|from| Some(from.as_str()))),
+        Box::new(|| {
+            params
+                .get("from")
+                .and_then(|from| Some(AnyString::Ref(from.as_str())))
+        }),
     );
     replacements.insert(
         "to",
-        Box::new(|| params.get("to").and_then(|to| Some(to.as_str()))),
+        Box::new(|| {
+            params
+                .get("to")
+                .and_then(|to| Some(AnyString::Ref(to.as_str())))
+        }),
     );
     replacements.insert(
         "current",
         Box::new(|| {
             params
                 .get("current")
-                .and_then(|current| Some(current.as_str()))
+                .and_then(|current| Some(AnyString::Ref(current.as_str())))
         }),
     );
-    replacements.insert("username", Box::new(move || username));
+    replacements.insert(
+        "username",
+        Box::new(move || username.and_then(|name| Some(AnyString::Ref(name)))),
+    );
+
+    if matches!(page_type, StaticPageType::Index) {
+        let links_query = sqlx::query_as!(
+            Link,
+            r#"SELECT "from", "to", "owner" FROM direct ORDER BY direct."from" ASC"#,
+        )
+        .fetch_all(
+            STATE
+                .get()
+                .expect("Server must be initialized before processing connections")
+                .sqlx_connection
+                .lock()
+                .await
+                .deref_mut(),
+        )
+        .await;
+
+        let Ok(links) = links_query else {
+            return Err("Failed to query database".into());
+        };
+
+        let mut rows = vec![];
+
+        for link in links {
+            let from_attribute = html_escape::encode_quoted_attribute(&link.from);
+            let from = html_escape::encode_text(&link.from);
+            let from_url = utf8_percent_encode(&link.from, NON_ALPHANUMERIC);
+            let to_attribute = html_escape::encode_quoted_attribute(&link.to);
+            let to = html_escape::encode_text(&link.to);
+            let to_url = utf8_percent_encode(&link.to, NON_ALPHANUMERIC);
+            let owner = html_escape::encode_text(&link.owner);
+
+            rows.push(format!(
+                r#"<tr>
+                    <td><a href="{from_attribute}">{from}</a></td>
+                    <td><a href="{to_attribute}">{to}</a></td>
+                    <td>{owner}</td>
+                    <td>(<a href="/_/create?from={from_url}&to={to_url}&current={to_url}">edit</a>) (<a href="/_/delete/do?from={from_url}&current={to_url}">delete</a>)</td>
+                </tr>"#,
+            ));
+        }
+
+        let link_table = rows.join("\n");
+        replacements.insert(
+            "links",
+            Box::new(move || Some(AnyString::Owned(link_table.clone()))),
+        );
+    }
 
     let result = template_html(html, replacements);
     Ok(Html(result))
@@ -480,7 +558,7 @@ async fn main() {
     }
 
     router = router
-        .route("/", get(handle_root))
+        .route("/", get(handle_index))
         .route("/_/create", get(handle_create_page))
         .route("/_/create/success", get(handle_create_success_page))
         .route("/_/create/conflict", get(handle_create_conflict_page))

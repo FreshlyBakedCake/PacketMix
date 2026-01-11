@@ -26,6 +26,18 @@ body {
   font-family: sans-serif;
 }
 
+.actions {
+  align-self: start;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
 #logo {
   background: #144f5f;
   border-radius: 0 0 0.5rem 0.5rem;

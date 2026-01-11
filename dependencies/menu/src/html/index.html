@@ -1,0 +1,29 @@
+
+<!--
+SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+
+SPDX-License-Identifier: MIT
+-->
+
+<html>
+  <head>
+    <title>Add shortlink</title>
+    <link rel="stylesheet" href="/_/public/logo.css"/>
+    <link rel="stylesheet" href="/_/public/tables.css"/>
+  </head>
+
+  <body>
+    <div id="logo"><div><span>Menu</span><img src="/_/public/logo.svg"></div></div>
+    <span class="actions">(<a href="/_/create">New link</a>) (<a href="/menu">Learn more</a>)</span>
+    <table class="autogrid links">
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Owner</th>
+        <th>Actions</th>
+      </tr>
+      {links:dangerous_raw}
+    </table>
+    <span class="actions">(<a href="/_/create">New link</a>) (<a href="/menu">Learn more</a>)</span>
+  </body>
+</html>

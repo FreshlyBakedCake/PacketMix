@@ -1,0 +1,73 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+table.autogrid {
+  width: 100%;
+  display: grid;
+  justify-content: stretch;
+}
+
+table.links {
+  grid-template-columns: minmax(min-content, max-content) minmax(0, 1fr) minmax(min-content, max-content) minmax(min-content, max-content);
+}
+
+.autogrid tbody {
+  display: contents;
+}
+
+.autogrid tr {
+  margin: 0;
+  display: contents;
+}
+
+.autogrid :is(th, td) {
+  display: block;
+  border: 0.05em solid #144f5f;
+  padding: 0.5em 0.75em;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+table.autogrid tr {
+  &:first-child :is(th, td) {
+    /* First row */
+    border-top-width: 0.1em;
+
+    &:first-child {
+      border-top-left-radius: 0.5rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: 0.5rem;
+    }
+  }
+
+  &:last-child :is(th, td) {
+    /* Last row */
+    border-bottom-width: 0.1em;
+
+    &:first-child {
+      border-bottom-left-radius: 0.5rem;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 0.5rem;
+    }
+  }
+
+  & :is(th, td) {
+    &:first-child {
+      /* First column */
+      border-left-width: 0.1em;
+    }
+
+    &:last-child {
+      /* Last column */
+      border-right-width: 0.1em;
+    }
+  }
+}
+

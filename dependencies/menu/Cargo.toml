@@ -12,6 +12,8 @@ axum = { version = "0.8.8", features = ["macros"] }
 html-escape = "0.2.13"
 include_dir = "0.7.4"
 percent-encoding = "2.3.2"
+regex = "1.12.2"
+regex_static = "0.1.1"
 serde = { version = "1.0.228", features = ["derive"] }
 sqlx = { version = "0.8.6", features = ["runtime-tokio", "tls-rustls-ring-webpki", "postgres", "uuid", "macros"] }
 tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }

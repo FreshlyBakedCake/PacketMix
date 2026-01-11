@@ -1,0 +1,32 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \"from\", \"to\", \"owner\" FROM direct ORDER BY direct.\"from\" ASC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "from",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 1,
+        "name": "to",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "owner",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "ca0119f85393f3c3aa1907ed10aa70d9227a6d9586c3295af4dbca3ef4ea6be5"
+}
