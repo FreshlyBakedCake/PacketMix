@@ -41,7 +41,7 @@ fn template_html<'a>(
     html: String,
     replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>>,
 ) -> String {
-    let re = regex_static::static_regex!(r"\{([^\}:]+)(?::([^\}]+))?\}");
+    let re = regex_static::static_regex!(r"\{([a-z_]+)(?::([a-z_]+))?\}");
     re.replace_all(&html, |captures: &Captures| {
         let replacement_name = &captures[1];
         let replacement = replacements
