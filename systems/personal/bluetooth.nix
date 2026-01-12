@@ -7,4 +7,8 @@
   environment.systemPackages = [ pkgs.overskride ];
 
   hardware.bluetooth.enable = true;
+
+  clicks.storage.impermanence.persist.directories = [
+    "/var/lib/bluetooth"
+  ];
 }
