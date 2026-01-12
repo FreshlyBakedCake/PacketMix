@@ -17,7 +17,8 @@
 
   systemd.services.menu = {
     wantedBy = [ "default.target" ];
-    wants = [ "postgresql.service" ];
+    wants = [ "postgresql.target" ];
+    after = [ "postgresql.target" ];
     script = ''
       ${project.packages.menu.result.${system}}/bin/menu
     '';
