@@ -230,6 +230,7 @@
         // Add namespaces.
         $wgExtraNamespaces[NS_PUBLIC] = "Public";
         $wgExtraNamespaces[NS_PUBLIC_TALK] = "Public_talk";
+        $wgContentNamespaces[] = NS_PUBLIC;
 
         $wgNamespacesWithSubpages[NS_MAIN] = true;
         $wgNamespacesWithSubpages[NS_PUBLIC] = true;
