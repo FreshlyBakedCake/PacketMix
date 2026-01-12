@@ -2,13 +2,14 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   services.kanidm = {
     enableClient = true;
 
-    package = pkgs.kanidm_1_8;
+    package = lib.lowPrio pkgs.kanidm_1_8; # lowPrio because otherwise `orca` ("Orca Load Testing Utility") from kanidm overrides `orca` the screen reader...
 
     clientSettings.uri = "https://idm.freshly.space";
   };
+
 }
