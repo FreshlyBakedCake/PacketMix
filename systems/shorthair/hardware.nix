@@ -6,6 +6,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 
@@ -23,6 +24,7 @@
     "ext4"
   ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
   boot.kernelModules = [
     "kvm-amd"
     "amdgpu"
