@@ -132,11 +132,19 @@ async fn get_redirect(default_location: &str, go: &str) -> Redirect {
 }
 
 async fn get_redirect_base(go: &str) -> Redirect {
-    get_redirect("/_/create?from=", go).await
+    get_redirect(
+        "/_/create?from=",
+        &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
+    )
+    .await
 }
 
 async fn get_redirect_search(go: &str) -> Redirect {
-    get_redirect("https://kagi.com/search?q=", go).await
+    get_redirect(
+        "https://kagi.com/search?q=",
+        &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
+    )
+    .await
 }
 
 #[axum::debug_handler]
