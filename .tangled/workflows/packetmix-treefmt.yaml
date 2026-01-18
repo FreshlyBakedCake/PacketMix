@@ -42,7 +42,7 @@ steps:
       set -e
 
       treefmt=$(nix build \
-        -f ./ci.nix packages.treefmt.result.x86_64-linux \
+        -f ./ci.nix packages.packetmix-treefmt.result.x86_64-linux \
         --store 'ssh-ng://remoteBuilds@midnight?ssh-key=/tmp/key-ssh-remote-build' \
         --eval-store auto \
         --show-trace --print-out-paths)

@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.scriptfs = {
+  config.packages.packetmix-scriptfs = {
     systems = [ "x86_64-linux" ];
 
     package =

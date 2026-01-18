@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 {
-  config.packages.openlinkhub = {
+  config.packages.packetmix-openlinkhub = {
     systems = [ "x86_64-linux" ];
     package =
       { openlinkhub, ... }:

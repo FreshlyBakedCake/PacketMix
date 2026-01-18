@@ -10,7 +10,7 @@
 {
   services.bluesky-pds = {
     enable = true;
-    package = project.packages.bluesky-pds.result.${system};
+    package = project.packages.packetmix-bluesky-pds.result.${system};
     settings = {
       PDS_HOSTNAME = "pds.freshly.space";
       PDS_PORT = 1033;

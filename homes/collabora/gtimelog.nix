@@ -6,7 +6,7 @@
 { project, system, ... }:
 {
   home.packages = [
-    project.packages.collabora-gtimelog.result.${system}
+    project.packages.packetmix-collabora-gtimelog.result.${system}
   ];
 
   clicks.storage.impermanence.persist.directories = [

@@ -19,7 +19,7 @@
 
   config =
     let
-      pkg = project.packages.openlinkhub.result.${system};
+      pkg = project.packages.packetmix-openlinkhub.result.${system};
     in
     {
       users.groups.openlinkhub = { };

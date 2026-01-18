@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 { config, ... }:
 {
-  config.packages.josh = {
+  config.packages.packetmix-josh = {
     systems = [ "x86_64-linux" ];
     package =
       { stdenv, rustPlatform, ... }:

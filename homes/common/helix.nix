@@ -12,7 +12,7 @@
   programs.helix = {
     enable = true;
 
-    package = project.packages.helix.result.${system};
+    package = project.packages.packetmix-helix.result.${system};
 
     settings = {
       editor = {

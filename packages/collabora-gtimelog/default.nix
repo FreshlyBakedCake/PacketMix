@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.collabora-gtimelog = {
+  config.packages.packetmix-collabora-gtimelog = {
     systems = [ "x86_64-linux" ];
 
     settings.pkgs = config.inputs.nixos-prev.result;

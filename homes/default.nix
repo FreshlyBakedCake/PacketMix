@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 {
-  config.homes."maya:x86_64-linux" = {
+  config.homes."packetmix-maya:x86_64-linux" = {
     modules = [
       {
         home.stateVersion = "24.11";
@@ -25,7 +25,7 @@
       system = "x86_64-linux";
     };
   };
-  config.homes."minion:x86_64-linux" = {
+  config.homes."packetmix-minion:x86_64-linux" = {
     modules = [
       {
         home.stateVersion = "24.11";
@@ -46,7 +46,7 @@
       system = "x86_64-linux";
     };
   };
-  config.homes."minion@redhead:x86_64-linux" = {
+  config.homes."packetmix-minion@redhead:x86_64-linux" = {
     modules = [
       {
         home.stateVersion = "24.11";
@@ -68,7 +68,7 @@
       system = "x86_64-linux";
     };
   };
-  config.homes."coded:x86_64-linux" = {
+  config.homes."packetmix-coded:x86_64-linux" = {
     modules = [
       {
         home.stateVersion = "25.05";

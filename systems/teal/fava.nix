@@ -151,9 +151,9 @@ in
       let
         fava = pkgs.fava.overrideAttrs (prevAttrs: {
           propagatedBuildInputs = prevAttrs.propagatedBuildInputs ++ [
-            project.packages.beancount-autobean.result.${system}
-            project.packages.beancount-beancount_share.result.${system}
-            project.packages.beancount-smart_importer.result.${system}
+            project.packages.packetmix-beancount-autobean.result.${system}
+            project.packages.packetmix-beancount-beancount_share.result.${system}
+            project.packages.packetmix-beancount-smart_importer.result.${system}
           ];
         });
       in

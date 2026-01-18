@@ -4,5 +4,5 @@
 
 { project, ... }:
 {
-  home.packages = [ project.packages.vs-launcher.result."x86_64-linux" ];
+  home.packages = [ project.packages.packetmix-vs-launcher.result."x86_64-linux" ];
 }

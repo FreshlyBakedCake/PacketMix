@@ -25,6 +25,12 @@
               ]
               ++ (if ingredientExists submodule.name then [ submodule.name ] else [ ])
               ++ (
+                if ingredientExists (nilla.lib.strings.removePrefix "packetmix-" submodule.name) then
+                  [ (nilla.lib.strings.removePrefix "packetmix-" submodule.name) ]
+                else
+                  [ ]
+              )
+              ++ (
                 let
                   homeNames = builtins.attrNames submodule.config.homes;
                   homeNamesParts = map (

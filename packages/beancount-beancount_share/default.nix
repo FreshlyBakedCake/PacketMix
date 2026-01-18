@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.beancount-beancount_share = {
+  config.packages.packetmix-beancount-beancount_share = {
     systems = [ "x86_64-linux" ];
     package =
       {
@@ -25,7 +25,7 @@
 
         propagatedBuildInputs = [
           python3.pkgs.beancount
-          config.packages.beancount-beancount_plugin_utils.result.${stdenv.hostPlatform.system}
+          config.packages.packetmix-beancount-beancount_plugin_utils.result.${stdenv.hostPlatform.system}
         ];
 
         buildInputs = [

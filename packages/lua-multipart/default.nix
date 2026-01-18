@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.lua-multipart = {
+  config.packages.packetmix-lua-multipart = {
     systems = [ "x86_64-linux" ];
 
     package =

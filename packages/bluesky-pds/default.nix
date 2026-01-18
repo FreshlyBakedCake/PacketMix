@@ -5,7 +5,7 @@
 
 { config, ... }:
 {
-  config.packages.bluesky-atproto-pds = {
+  config.packages.packetmix-bluesky-atproto-pds = {
     systems = [ "x86_64-linux" ];
     package =
       {
@@ -74,7 +74,7 @@
         '';
       });
   };
-  config.packages.bluesky-pds = {
+  config.packages.packetmix-bluesky-pds = {
     systems = [ "x86_64-linux" ];
     package =
       {
@@ -88,7 +88,7 @@
           rm -r $atproto_pds_dir
           mkdir -p $atproto_pds_dir
           ln -s ${
-            config.packages.bluesky-atproto-pds.result.${stdenv.hostPlatform.system}
+            config.packages.packetmix-bluesky-atproto-pds.result.${stdenv.hostPlatform.system}
           }/lib $atproto_pds_dir/node_modules
         '';
       };

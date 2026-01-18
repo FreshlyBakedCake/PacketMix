@@ -19,7 +19,9 @@
   ];
 
   config = {
-    packages.allNixOSSystems = {
+    name = "packetmix";
+
+    packages.packetmix-allNixOSSystems = {
       systems = [ "x86_64-linux" ];
 
       package =
@@ -40,7 +42,7 @@
         };
     };
 
-    packages.allHomes = {
+    packages.packetmix-allHomes = {
       systems = [ "x86_64-linux" ];
 
       package =
@@ -62,7 +64,7 @@
         };
     };
 
-    packages.helix = {
+    packages.packetmix-helix = {
       systems = [ "x86_64-linux" ];
 
       package =
@@ -79,13 +81,9 @@
         );
     };
 
-    # With a package set defined, we can create a shell.
-    shells.default = config.shells.packetmix;
     shells.packetmix = {
-      # Declare what systems the shell can be used on.
       systems = [ "x86_64-linux" ];
 
-      # Define our shell environment.
       shell =
         {
           pkgs,
@@ -113,8 +111,8 @@
             config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${stdenv.hostPlatform.system}
             config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.quickshell
             config.inputs.nixpkgs.result.${stdenv.hostPlatform.system}.deadnix
-            config.packages.nilla-fmt.result.${stdenv.hostPlatform.system}
-            config.packages.treefmt.result.${stdenv.hostPlatform.system}
+            config.packages.packetmix-nilla-fmt.result.${stdenv.hostPlatform.system}
+            config.packages.packetmix-treefmt.result.${stdenv.hostPlatform.system}
             (config.inputs.npins.result {
               inherit pkgs;
               inherit (stdenv.hostPlatform) system;

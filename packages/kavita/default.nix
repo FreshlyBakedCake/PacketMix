@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 {
-  config.packages.kavita = {
+  config.packages.packetmix-kavita = {
     systems = [ "x86_64-linux" ];
     package =
       {

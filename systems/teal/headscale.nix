@@ -95,7 +95,7 @@ in
   services.headscale = {
     enable = true;
 
-    package = project.packages.headscale.result.x86_64-linux;
+    package = project.packages.packetmix-headscale.result.x86_64-linux;
 
     address = "127.0.0.1";
     port = 1024;

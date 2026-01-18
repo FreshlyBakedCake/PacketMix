@@ -10,7 +10,7 @@
   ...
 }:
 let
-  josh = project.packages.josh.result.${pkgs.stdenv.hostPlatform.system};
+  josh = project.packages.packetmix-josh.result.${pkgs.stdenv.hostPlatform.system};
 in
 {
   users.users.git = {

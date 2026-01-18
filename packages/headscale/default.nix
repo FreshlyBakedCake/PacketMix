@@ -5,7 +5,7 @@
 
 { config, ... }:
 {
-  config.packages.headscale = {
+  config.packages.packetmix-headscale = {
     systems = [ "x86_64-linux" ];
     package =
       {

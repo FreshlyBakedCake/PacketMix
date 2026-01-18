@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.beancount-beancount_plugin_utils = {
+  config.packages.packetmix-beancount-beancount_plugin_utils = {
     systems = [ "x86_64-linux" ];
     package =
       {

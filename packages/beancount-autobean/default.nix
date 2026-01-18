@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.beancount-autobean = {
+  config.packages.packetmix-beancount-autobean = {
     systems = [ "x86_64-linux" ];
     package =
       {

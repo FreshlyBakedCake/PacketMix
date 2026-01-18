@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 { config, ... }:
 {
-  config.packages.opensearch = {
+  config.packages.packetmix-opensearch = {
     systems = [ "x86_64-linux" ];
     package =
       {

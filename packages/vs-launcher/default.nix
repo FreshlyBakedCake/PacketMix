@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 { config, ... }:
 {
-  config.packages.vs-launcher = {
+  config.packages.packetmix-vs-launcher = {
     systems = [ "x86_64-linux" ];
 
     package =

@@ -16,7 +16,7 @@
 
   services.kavita = {
     enable = true;
-    package = project.packages.kavita.result."x86_64-linux";
+    package = project.packages.packetmix-kavita.result."x86_64-linux";
     tokenKeyFile = "/secrets/kavita/tokenKeyFile";
     settings = {
       Port = 1034;

@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.beancount-smart_importer = {
+  config.packages.packetmix-beancount-smart_importer = {
     systems = [ "x86_64-linux" ];
     package =
       {

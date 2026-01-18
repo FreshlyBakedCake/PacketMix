@@ -5,7 +5,8 @@
 { config, lib }:
 {
   config = {
-    packages.default = config.packages.menu;
+    name = "menu";
+
     packages.menu = {
       systems = [
         "x86_64-linux"
@@ -40,7 +41,6 @@
         };
     };
 
-    shells.default = config.shells.menu;
     shells.menu = {
       systems = [ "x86_64-linux" ];
 
@@ -62,8 +62,8 @@
             bacon
             config.inputs.nilla-cli.result.packages.nilla-cli.result.${stdenv.hostPlatform.system}
             config.inputs.nixpkgs.result.${stdenv.hostPlatform.system}.deadnix
-            # config.packages.nilla-fmt.result.${stdenv.hostPlatform.system}
-            # config.packages.treefmt.result.${stdenv.hostPlatform.system}
+            config.packages.packetmix-nilla-fmt.result.${stdenv.hostPlatform.system}
+            config.packages.packetmix-treefmt.result.${stdenv.hostPlatform.system}
             (config.inputs.npins.result {
               inherit pkgs;
               inherit (stdenv.hostPlatform) system;

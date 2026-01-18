@@ -11,7 +11,7 @@ let
   nixpkgs = config.inputs.nixpkgs.result;
 in
 {
-  config.systems.nixos."redhead" = {
+  config.systems.nixos."packetmix-redhead" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
@@ -22,9 +22,11 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "minion@redhead:x86_64-linux"; };
+    homes = {
+      "minion@redhead:x86_64-linux" = config.homes."packetmix-minion@redhead:x86_64-linux";
+    };
   };
-  config.systems.nixos."emden" = {
+  config.systems.nixos."packetmix-emden" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
@@ -34,9 +36,11 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "minion:x86_64-linux"; };
+    homes = {
+      "minion:x86_64-linux" = config.homes."packetmix-minion:x86_64-linux";
+    };
   };
-  config.systems.nixos."marbled" = {
+  config.systems.nixos."packetmix-marbled" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "javelin"
@@ -47,9 +51,12 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "maya:x86_64-linux" "minion:x86_64-linux"; };
+    homes = {
+      "maya:x86_64-linux" = config.homes."packetmix-maya:x86_64-linux";
+      "minion:x86_64-linux" = config.homes."packetmix-minion:x86_64-linux";
+    };
   };
-  config.systems.nixos."ocicat" = {
+  config.systems.nixos."packetmix-ocicat" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "personal"
@@ -59,9 +66,11 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "coded:x86_64-linux"; };
+    homes = {
+      "coded:x86_64-linux" = config.homes."packetmix-coded:x86_64-linux";
+    };
   };
-  config.systems.nixos."shorthair" = {
+  config.systems.nixos."packetmix-shorthair" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "corsair"
@@ -71,9 +80,11 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = { inherit (config.homes) "coded:x86_64-linux"; };
+    homes = {
+      "coded:x86_64-linux" = config.homes."packetmix-coded:x86_64-linux";
+    };
   };
-  config.systems.nixos."midnight" = {
+  config.systems.nixos."packetmix-midnight" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"
@@ -85,7 +96,7 @@ in
       project = config;
     };
   };
-  config.systems.nixos."teal" = {
+  config.systems.nixos."packetmix-teal" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"
@@ -97,7 +108,7 @@ in
       project = config;
     };
   };
-  config.systems.nixos."umber" = {
+  config.systems.nixos."packetmix-umber" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
       "freshlybakedcake"

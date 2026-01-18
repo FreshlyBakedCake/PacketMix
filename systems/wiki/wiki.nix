@@ -340,7 +340,7 @@
     services.opensearch = {
       # needed for cirrussearch
       enable = true;
-      package = project.packages.opensearch.result.${system};
+      package = project.packages.packetmix-opensearch.result.${system};
       settings = {
         "http.port" = 1037;
         "path.data" = "/var/lib/private/opensearch/data";

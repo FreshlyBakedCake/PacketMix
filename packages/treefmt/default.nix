@@ -4,7 +4,7 @@
 
 { config, ... }:
 {
-  config.packages.treefmt = {
+  config.packages.packetmix-treefmt = {
     systems = [ "x86_64-linux" ];
 
     package =
@@ -25,7 +25,7 @@
       };
   };
 
-  config.packages.nilla-fmt = {
+  config.packages.packetmix-nilla-fmt = {
     systems = [ "x86_64-linux" ];
 
     package =
@@ -33,7 +33,7 @@
       stdenv.mkDerivation {
         name = "nilla-fmt";
 
-        src = config.packages.treefmt.result.${stdenv.hostPlatform.system};
+        src = config.packages.packetmix-treefmt.result.${stdenv.hostPlatform.system};
 
         dontBuild = true;
 

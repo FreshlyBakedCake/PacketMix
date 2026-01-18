@@ -158,7 +158,7 @@
       lua_package_path "${
         "${pkgs.luaPackages.lua-resty-core}/lib/lua/5.2/?.lua;"
         + "${pkgs.luaPackages.lua-resty-lrucache}/lib/lua/5.2/?.lua;"
-        + "${project.packages.lua-multipart.result.x86_64-linux}/share/lua/5.2/?.lua;;"
+        + "${project.packages.packetmix-lua-multipart.result.x86_64-linux}/share/lua/5.2/?.lua;;"
       }"; # The double-semicolon makes the default search paths also be included
     '';
     services.nginx.virtualHosts."files.freshly.space" = {
