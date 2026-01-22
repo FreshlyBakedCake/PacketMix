@@ -543,6 +543,22 @@
       "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.1948.c6f52ebd45e5/nixexprs.tar.xz",
       "hash": "sha256-Rgx3RPys4DTsfZPBbJa2QpJGbjnWVC7V2Rlviyp4qMI="
     },
+    "nmtui-go": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "doeixd",
+        "repo": "nmtui-go"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.2.5",
+      "revision": "bdc79db47d9292d62a1a17c0c7a5f7d2e7bcd1b4",
+      "url": "https://api.github.com/repos/doeixd/nmtui-go/tarball/refs/tags/v0.2.5",
+      "hash": "sha256-NYQg7hiDUxCGjXeUPmi/rycTultSFDSNmf/F6ngnAmY="
+    },
     "npins": {
       "type": "Git",
       "repository": {

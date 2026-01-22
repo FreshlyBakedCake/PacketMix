@@ -14,6 +14,7 @@
     ./josh
     ./kavita
     ./lua-multipart
+    ./nmtui-go
     ./OpenLinkHub
     ./opensearch
     ./scriptfs
