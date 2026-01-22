@@ -1,8 +1,14 @@
 # SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+# SPDX-FileCopyrightText: 2026 Collabora Productivity Limited
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   systemd.user.services.ssh-agent-add = {
     Unit = {
@@ -28,5 +34,47 @@
     Install = {
       WantedBy = [ "ssh-agent.service" ];
     };
+  };
+
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    matchBlocks =
+      let
+        freshly = {
+          identityFile = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident";
+        }; # TODO: expand this to work for emden/other security keys
+
+        systems = {
+          "eu.nixbuild.net" = {
+            hostname = "eu.nixbuild.net";
+            extraOptions = {
+              WarnWeakCrypto = "no";
+            };
+          };
+          "git.freshlybakedca.ke" = {
+            forwardAgent = true;
+            hostname = "teal";
+            user = "git";
+          };
+          "tangled.dev.redhead.starrysky.fyi" = {
+            hostname = "localhost";
+            port = 2222;
+            user = "git";
+          };
+          freshly-midnight = freshly // {
+            hostname = "midnight";
+          };
+          freshly-teal = freshly // {
+            hostname = "teal";
+          };
+        };
+      in
+      systems
+      // {
+        midnight = systems.freshly-midnight;
+        nixbuild = systems."eu.nixbuild.net";
+        teal = systems.freshly-teal;
+      };
   };
 }
