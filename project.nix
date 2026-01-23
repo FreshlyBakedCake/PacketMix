@@ -36,7 +36,8 @@
           ''
           + (builtins.concatStringsSep "\n" (
             config.lib.attrs.mapToList (
-              name: value: ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"''
+              name: value:
+              builtins.trace "Evaluating the system ${name}" ''ln -s "${value.result.config.system.build.toplevel}" "$out/${name}"''
             ) config.systems.nixos
           ));
         };
@@ -58,7 +59,9 @@
           + (builtins.concatStringsSep "\n" (
             config.lib.attrs.mapToList (
               name: value:
-              ''ln -s "${value.result.${stdenv.hostPlatform.system}.activationPackage}" "$out/${name}"''
+              builtins.trace "Evaluating the home ${name}" ''ln -s "${
+                value.result.${stdenv.hostPlatform.system}.activationPackage
+              }" "$out/${name}"''
             ) (config.lib.attrs.filter (_: value: value.result ? ${stdenv.hostPlatform.system}) config.homes)
           ));
         };
