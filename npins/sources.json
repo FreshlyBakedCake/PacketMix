@@ -606,13 +606,13 @@
       "type": "Git",
       "repository": {
         "type": "Git",
-        "url": "https://tangled.sh/freshlybakedca.ke/core"
+        "url": "https://tangled.org/tangled.org/core"
       },
-      "branch": "private/minion/push-pyxzxvyxylmx",
+      "branch": "master",
       "submodules": false,
-      "revision": "acc63d3522b0c9b92ef3ab9214102bedaa944faf",
+      "revision": "ee6667a64e2cb91b9d4d8fc61e1b3802b7a85d83",
       "url": null,
-      "hash": "sha256-DwlweCkrVRga1dZY/gne7DDsFdLsQ8vlgpWegXAbrLY="
+      "hash": "sha256-MaJyvfHh52nFI8qgROh5nmTaEHPwBzpcEuQD9s40mog="
     },
     "treefmt-nix": {
       "type": "Git",
