@@ -572,6 +572,19 @@
       "url": "https://github.com/andir/npins/archive/0d6aaa4b3dcd1d8badbed2b66e0c50867330a86e.tar.gz",
       "hash": "sha256-9N14/tliOiA49Us2uFUWHcrhYN8AmJjR+bnwzcxejgs="
     },
+    "plate": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "TheCodedProf",
+        "repo": "plate"
+      },
+      "branch": "private/coded/push-vortltwxtupv",
+      "submodules": false,
+      "revision": "d0e3bf200c635427878b71f26b3189797312fa99",
+      "url": "https://github.com/TheCodedProf/plate/archive/d0e3bf200c635427878b71f26b3189797312fa99.tar.gz",
+      "hash": "sha256-bvD/S6qMaq7ee8CXH1GljOmSuoRtUt8gSAeLySMOnnE="
+    },
     "quickshell": {
       "type": "GitRelease",
       "repository": {
