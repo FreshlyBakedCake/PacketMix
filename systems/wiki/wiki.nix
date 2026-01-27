@@ -281,6 +281,10 @@
 
         $wgExternalLinkTarget = '_blank';
 
+        $wgStrictFileExtensions = false;
+
+        $wgMaxUploadSize = 1024 * 1024 * 1024;
+
         $wgShowExceptionDetails = true;
         $wgDevelopmentWarnings = true;
       '';
@@ -299,6 +303,12 @@
 
       passwordFile = "/secrets/mediawiki/initial_admin_password.txt";
     };
+
+    services.phpfpm.pools.mediawiki.phpOptions = ''
+      upload_max_filesize = 1G
+      post_max_size = 1G
+      memory_limit = 2G
+    '';
 
     services.postgresql = {
       enable = true;
