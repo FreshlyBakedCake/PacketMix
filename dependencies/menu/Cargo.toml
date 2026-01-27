@@ -21,3 +21,5 @@ tower = "0.5.2"
 tower-http = { version = "0.6.8", features = ["fs", "normalize-path"] }
 tower-layer = "0.3.3"
 tower-serve-static = "0.1.1"
+tower-sessions = "0.14.0"
+uuid = { version = "1.20.0", features = ["v4", "serde"] }

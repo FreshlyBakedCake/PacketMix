@@ -13,6 +13,8 @@ use include_dir::{Dir, include_dir};
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
 use regex::Captures;
 use sqlx::{Connection, PgConnection};
+use tower_sessions::{MemoryStore, Session, SessionManagerLayer};
+use uuid::Uuid;
 
 #[cfg(debug_assertions)]
 use std::fs;
@@ -30,6 +32,8 @@ static PUBLIC_DIR: Dir<'static> = include_dir!("src/html/public");
 
 #[cfg(debug_assertions)]
 static DEVELOPMENT: OnceLock<bool> = OnceLock::new();
+
+const TOKEN_KEY: &str = "token";
 
 #[derive(Clone)]
 enum AnyString<'a> {
@@ -149,10 +153,11 @@ async fn get_redirect_search(go: &str) -> Redirect {
 
 #[axum::debug_handler]
 async fn handle_index(
+    session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::Index, &params, &headers).await
+    handle_static_page(StaticPageType::Index, session, &params, &headers).await
 }
 
 async fn handle_base(Path(go): Path<String>) -> Redirect {
@@ -186,6 +191,7 @@ enum StaticPageType {
 
 async fn handle_static_page<'a>(
     page_type: StaticPageType,
+    session: Session,
     params: &'a HashMap<String, String>,
     headers: &'a HeaderMap,
 ) -> Result<Html<String>> {
@@ -255,6 +261,17 @@ async fn handle_static_page<'a>(
         Box::new(move || username.and_then(|name| Some(AnyString::Ref(name)))),
     );
 
+    let token: String = {
+        let maybe_token = session.get(TOKEN_KEY).await.unwrap();
+        if let Some(token) = maybe_token {
+            token
+        } else {
+            let new_token = Uuid::new_v4().to_string();
+            session.insert(TOKEN_KEY, &new_token).await.unwrap();
+            new_token
+        }
+    };
+
     if matches!(page_type, StaticPageType::Index) {
         let links_query = sqlx::query_as!(
             Link,
@@ -291,7 +308,7 @@ async fn handle_static_page<'a>(
                     <td><a href="{from_attribute}">{from}</a></td>
                     <td><a href="{to_attribute}">{to}</a></td>
                     <td>{owner}</td>
-                    <td>(<a href="/_/create?from={from_url}&to={to_url}&current={to_url}">edit</a>) (<a href="/_/delete/do?from={from_url}&current={to_url}">delete</a>)</td>
+                    <td>(<a href="/_/create?from={from_url}&to={to_url}&current={to_url}">edit</a>) (<a href="/_/delete/do?from={from_url}&current={to_url}&token={token}">delete</a>)</td>
                 </tr>"#,
             ));
         }
@@ -303,53 +320,86 @@ async fn handle_static_page<'a>(
         );
     }
 
+    replacements.insert(
+        "token",
+        Box::new(move || Some(AnyString::Owned(token.clone()))),
+    );
+
     let result = template_html(html, replacements);
     Ok(Html(result))
 }
 
 async fn handle_create_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::Create, &params, &headers).await
+    handle_static_page(StaticPageType::Create, session, &params, &headers).await
 }
 async fn handle_create_success_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::CreateSuccess, &params, &headers).await
+    handle_static_page(StaticPageType::CreateSuccess, session, &params, &headers).await
 }
 async fn handle_create_conflict_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::CreateConflict, &params, &headers).await
+    handle_static_page(StaticPageType::CreateConflict, session, &params, &headers).await
 }
 async fn handle_create_failure_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<impl IntoResponse> {
-    handle_static_page(StaticPageType::CreateFailure, &params, &headers)
+    handle_static_page(StaticPageType::CreateFailure, session, &params, &headers)
         .await
         .and_then(|html| Ok((StatusCode::INTERNAL_SERVER_ERROR, html)))
 }
 async fn handle_delete_success_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::DeleteSuccess, &params, &headers).await
+    handle_static_page(StaticPageType::DeleteSuccess, session, &params, &headers).await
 }
 async fn handle_delete_failure_page(
+    session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::DeleteFailure, &params, &headers).await
+    handle_static_page(StaticPageType::DeleteFailure, session, &params, &headers).await
 }
 
 struct NotAuthenticated;
 impl IntoResponse for NotAuthenticated {
     fn into_response(self) -> axum::response::Response {
         return (StatusCode::UNAUTHORIZED, "Access over Tailscale only").into_response();
+    }
+}
+
+struct MissingToken;
+impl IntoResponse for MissingToken {
+    fn into_response(self) -> axum::response::Response {
+        return (
+            StatusCode::FORBIDDEN,
+            "There's no session here - try going back and trying again?",
+        )
+            .into_response();
+    }
+}
+
+struct InvalidToken;
+impl IntoResponse for InvalidToken {
+    fn into_response(self) -> axum::response::Response {
+        return (
+            StatusCode::FORBIDDEN,
+            "This session is invalid - possible CSRF?",
+        )
+            .into_response();
     }
 }
 
@@ -376,11 +426,34 @@ fn ensure_authenticated<'a>(
     Err(NotAuthenticated {}.into())
 }
 
+async fn ensure_token<'a>(
+    session: &Session,
+    params: &'a HashMap<String, String>,
+) -> Result<(), ErrorResponse> {
+    let maybe_token: Option<String> = session.get(TOKEN_KEY).await.unwrap();
+
+    let Some(token) = maybe_token else {
+        return Err(MissingToken {}.into());
+    };
+
+    if token == "" {
+        return Err(MissingToken {}.into());
+    }
+
+    if params.get("token").is_some_and(|val| *val == token) {
+        return Ok(());
+    }
+
+    Err(InvalidToken {}.into())
+}
+
 #[axum::debug_handler]
 async fn handle_create_do(
+    session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Response<Body>> {
+    ensure_token(&session, &params).await?;
     let owner = ensure_authenticated(
         &headers,
         #[cfg(debug_assertions)]
@@ -447,9 +520,11 @@ async fn handle_create_do(
 
 #[axum::debug_handler]
 async fn handle_delete_do(
+    session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
 ) -> Result<Response<Body>> {
+    ensure_token(&session, &params).await?;
     ensure_authenticated(
         &headers,
         #[cfg(debug_assertions)]
@@ -534,6 +609,11 @@ async fn main() {
             .expect("Failed to connect to database defined in $DATABASE_URL after 3 retries")
     };
 
+    let session_layer = {
+        let session_store = MemoryStore::default();
+        SessionManagerLayer::new(session_store).with_secure(false) // must be false for go:// support
+    };
+
     sqlx::migrate!()
         .run(&mut connection)
         .await
@@ -578,7 +658,7 @@ async fn main() {
         .route("/_/search", get(handle_search))
         .route("/_/{*route}", get(handle_404))
         .route("/{*go}", get(handle_base));
-    let app = NormalizePathLayer::trim_trailing_slash().layer(router);
+    let app = NormalizePathLayer::trim_trailing_slash().layer(router.layer(session_layer));
 
     let listener = tokio::net::TcpListener::bind(
         env::var("BIND_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string()),
