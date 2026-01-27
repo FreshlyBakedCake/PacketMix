@@ -35,6 +35,7 @@ let
         import-config = builtins.toString ./fava/minion/truelayer.py;
         import-dirs = "/var/lib/private/fava/minion/";
       };
+      extraFiles = [ "/var/lib/private/fava/minion-archive-2024.beancount" ];
       extraConfig = ''
         plugin "fava.plugins.tag_discovered_documents"
         plugin "fava.plugins.link_documents"
@@ -122,7 +123,14 @@ let
           ${beancountOptions}
           ${userConfig.extraConfig or ""}
 
-          include "${userConfig.favaOptions.default-file}"
+          ${builtins.concatStringsSep "\n" (
+            map (file: ''include "${file}"'') (
+              [
+                userConfig.favaOptions.default-file
+              ]
+              ++ (userConfig.extraFiles or [ ])
+            )
+          )}
         ''
       )
     ))
@@ -161,10 +169,21 @@ in
 
     preStart =
       let
-        userConfigToCreationScript = userConfig: ''
-          ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "${userConfig.favaOptions.default-file}")"
-          ${pkgs.coreutils}/bin/touch -a ${userConfig.favaOptions.default-file}
-        '';
+        userConfigToCreationScript =
+          userConfig:
+          builtins.concatStringsSep "\n" (
+            map
+              (file: ''
+                ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "${file}")"
+                ${pkgs.coreutils}/bin/touch -a ${file}
+              '')
+              (
+                [
+                  userConfig.favaOptions.default-file
+                ]
+                ++ (userConfig.extraFiles or [ ])
+              )
+          );
       in
       lib.trivial.pipe userConfigs [
         (map userConfigToCreationScript)
