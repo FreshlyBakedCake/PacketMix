@@ -28,24 +28,24 @@
 
         settings = {
           i = "127.0.0.1"; # ip
-          p = 1030; # port
+          p = "1030"; # port
 
           # we'll be using nginx for this...
           http-only = true;
           no-crt = true;
 
-          idp-store = 3;
+          idp-store = "3";
           idp-h-usr = "X-Webauth-Login";
           idp-adm = admins;
-          have-idp-hdrs = 1; # https://github.com/9001/copyparty/issues/849
+          have-idp-hdrs = "1"; # https://github.com/9001/copyparty/issues/849
 
           shr = "/share";
           shr-db = "/var/lib/copyparty/shares.db";
           shr-adm = admins;
 
           # as we might have private directories, better to be a bit conservative about permissions...
-          chmod-f = 700;
-          chmod-d = 700;
+          chmod-f = "700";
+          chmod-d = "700";
 
           magic = true; # "enable filetype detection on nameless uploads"
 
@@ -65,7 +65,7 @@
           xm = "aw,f,j,t3600,${project.inputs.copyparty.src}/bin/hooks/wget.py"; # download URLs that are pasted into the message box
 
           xff-src = "127.0.0.1";
-          rproxy = 1;
+          rproxy = "1";
 
           exp = true;
         };

@@ -291,10 +291,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.19.20",
-      "revision": "450cd86dc1e98b98ab131fc9417c83289165a507",
-      "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.19.20",
-      "hash": "sha256-/Wm8hZvdGfYWdTOF+dgTPX8DGuSKLhGw4qC4crf1dAo="
+      "version": "v1.20.4",
+      "revision": "c249ee457b575a1a1a0898544afda7f7304ce03a",
+      "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.20.4",
+      "hash": "sha256-OX07f7Mn0a+ty4s0NGwcJx0aWUWnMFXJfXKqQFZn4wc="
     },
     "fenix": {
       "type": "Git",
@@ -318,9 +318,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "21af106f68fa38f37d80c9ac91a336a4f53bc074",
-      "url": "https://github.com/juanfont/headscale/archive/21af106f68fa38f37d80c9ac91a336a4f53bc074.tar.gz",
-      "hash": "sha256-EGLIiL/80bf6e5P5oDcG7zw7fMpOK5jIALd8rmu6Jv8="
+      "revision": "2e180d2587c56d0bc3e03daf1aa6807ff2587431",
+      "url": "https://github.com/juanfont/headscale/archive/2e180d2587c56d0bc3e03daf1aa6807ff2587431.tar.gz",
+      "hash": "sha256-TcCRVD+2fC85jQjfGgZv2ZyOSMQN4EFVEUG5vFw7I10="
     },
     "home-manager": {
       "type": "Git",
