@@ -1,25 +1,24 @@
 // SPDX-FileCopyrightText: 2026 Freshly Baked Cake
 //
 // SPDX-License-Identifier: MIT
+mod auth;
+mod direct;
+mod static_html;
+
 use axum::{
     Router, ServiceExt,
     body::Body,
     extract::{Path, Query, Request},
     http::{HeaderMap, Response, StatusCode},
-    response::{ErrorResponse, Html, IntoResponse, Redirect, Result},
+    response::{Html, IntoResponse, Redirect, Result},
     routing::get,
 };
 use include_dir::{Dir, include_dir};
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
-use regex::Captures;
 use sqlx::{Connection, PgConnection};
 use tower_sessions::{MemoryStore, Session, SessionManagerLayer};
-use uuid::Uuid;
 
-#[cfg(debug_assertions)]
-use std::fs;
-
-use std::{collections::HashMap, env, ops::DerefMut, sync::OnceLock};
+use std::{collections::HashMap, env, sync::OnceLock};
 use tokio::{
     sync::Mutex,
     time::{Duration, sleep},
@@ -28,68 +27,15 @@ use tower_http::{self, normalize_path::NormalizePathLayer};
 use tower_layer::Layer;
 use tower_serve_static;
 
+use crate::{
+    auth::{ensure_authenticated, ensure_token},
+    static_html::{StaticPageType, handle_static_page},
+};
+
 static PUBLIC_DIR: Dir<'static> = include_dir!("src/html/public");
 
 #[cfg(debug_assertions)]
 static DEVELOPMENT: OnceLock<bool> = OnceLock::new();
-
-const TOKEN_KEY: &str = "token";
-
-#[derive(Clone)]
-enum AnyString<'a> {
-    Owned(String),
-    Ref(&'a str),
-}
-
-fn template_html<'a>(
-    html: String,
-    replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>>,
-) -> String {
-    let re = regex_static::static_regex!(r"\{([a-z_]+)(?::([a-z_]+))?\}");
-    re.replace_all(&html, |captures: &Captures| {
-        let replacement_name = &captures[1];
-        let replacement = replacements
-            .get(replacement_name)
-            .and_then(|maybe_replacement| maybe_replacement())
-            .unwrap_or_else(|| AnyString::Ref(""))
-            .clone();
-        let replacement_owned = match replacement {
-            AnyString::Owned(owned) => owned,
-            AnyString::Ref(str) => str.to_string(),
-        };
-
-        match captures.get(2).and_then(|m| Some(m.as_str())) {
-            Some("dangerous_raw") => replacement_owned,
-            Some("attribute") => {
-                html_escape::encode_quoted_attribute(&replacement_owned).to_string()
-            }
-            Some("url") => utf8_percent_encode(&replacement_owned, NON_ALPHANUMERIC).to_string(),
-            None => html_escape::encode_text(&replacement_owned).to_string(),
-            Some(_) => "UNKNOWN_MATCH_TYPE".to_string(),
-        }
-    })
-    .to_string()
-}
-
-/// include_str, but if DEVELOPMENT then the string is dynamically fetched for easy reloading
-/// to support this, the string is *always* owned.
-#[cfg(debug_assertions)]
-macro_rules! include_String_dynamic {
-    ($file:expr $(,)?) => {
-        if (*DEVELOPMENT.get().unwrap()) {
-            fs::read_to_string("src/".to_string() + $file)
-                .expect(format!("Unable to read file {}", $file).as_str())
-        } else {
-            include_str!($file).to_owned()
-        }
-    };
-}
-#[cfg(not(debug_assertions))]
-macro_rules! include_String_dynamic {
-    ($file:expr $(,)?) => {
-        include_str!($file).to_owned()
-    };
-}
 
 #[derive(Debug)]
 struct State {
@@ -112,31 +58,8 @@ fn clean_host(provided_host: &str) -> &str {
     return "go";
 }
 
-async fn get_redirect(default_location: &str, go: &str) -> Redirect {
-    let redirect = sqlx::query!(
-        r#"SELECT ("to") FROM direct WHERE "from" = $1 LIMIT 1"#,
-        go.to_lowercase()
-    )
-    .fetch_one(
-        STATE
-            .get()
-            .expect("Server must be initialized before processing connections")
-            .sqlx_connection
-            .lock()
-            .await
-            .deref_mut(),
-    )
-    .await;
-
-    if let Ok(record) = redirect {
-        Redirect::temporary(&record.to)
-    } else {
-        Redirect::temporary(&("".to_string() + default_location + go))
-    }
-}
-
 async fn get_redirect_base(go: &str) -> Redirect {
-    get_redirect(
+    direct::get_redirect(
         "/_/create?from=",
         &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
     )
@@ -144,7 +67,7 @@ async fn get_redirect_base(go: &str) -> Redirect {
 }
 
 async fn get_redirect_search(go: &str) -> Redirect {
-    get_redirect(
+    direct::get_redirect(
         "https://kagi.com/search?q=",
         &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
     )
@@ -172,161 +95,16 @@ async fn handle_search(Query(params): Query<HashMap<String, String>>) -> Redirec
     }
 }
 
-struct Link {
-    from: String,
-    to: String,
-    owner: String,
+enum CreationResult {
+    Success,
+    Conflict(String),
+    Failure,
 }
 
-#[derive(Clone)]
-enum StaticPageType {
-    Create,
-    CreateConflict,
-    CreateFailure,
-    CreateSuccess,
-    DeleteFailure,
-    DeleteSuccess,
-    Index,
-}
-
-async fn handle_static_page<'a>(
-    page_type: StaticPageType,
-    session: Session,
-    params: &'a HashMap<String, String>,
-    headers: &'a HeaderMap,
-) -> Result<Html<String>> {
-    let auth_required = match page_type {
-        _ => true,
-    };
-
-    let html = match page_type {
-        StaticPageType::Create => include_String_dynamic!("./html/create.html"),
-        StaticPageType::CreateConflict => include_String_dynamic!("./html/create/conflict.html"),
-        StaticPageType::CreateFailure => include_String_dynamic!("./html/create/failure.html"),
-        StaticPageType::CreateSuccess => include_String_dynamic!("./html/create/success.html"),
-        StaticPageType::DeleteFailure => include_String_dynamic!("./html/delete/failure.html"),
-        StaticPageType::DeleteSuccess => include_String_dynamic!("./html/delete/success.html"),
-        StaticPageType::Index => include_String_dynamic!("./html/index.html"),
-    };
-
-    let username = if auth_required {
-        Some(ensure_authenticated(
-            headers,
-            #[cfg(debug_assertions)]
-            params,
-        )?)
-    } else {
-        None
-    };
-
-    let mut replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>> =
-        HashMap::new();
-    replacements.insert(
-        "host",
-        Box::new(|| {
-            Some(AnyString::Ref(clean_host(
-                headers
-                    .get("host")
-                    .and_then(|header| Some(header.to_str().unwrap_or_else(|_| "go")))
-                    .unwrap_or_else(|| "go"),
-            )))
-        }),
-    );
-    replacements.insert(
-        "from",
-        Box::new(|| {
-            params
-                .get("from")
-                .and_then(|from| Some(AnyString::Ref(from.as_str())))
-        }),
-    );
-    replacements.insert(
-        "to",
-        Box::new(|| {
-            params
-                .get("to")
-                .and_then(|to| Some(AnyString::Ref(to.as_str())))
-        }),
-    );
-    replacements.insert(
-        "current",
-        Box::new(|| {
-            params
-                .get("current")
-                .and_then(|current| Some(AnyString::Ref(current.as_str())))
-        }),
-    );
-    replacements.insert(
-        "username",
-        Box::new(move || username.and_then(|name| Some(AnyString::Ref(name)))),
-    );
-
-    let token: String = {
-        let maybe_token = session.get(TOKEN_KEY).await.unwrap();
-        if let Some(token) = maybe_token {
-            token
-        } else {
-            let new_token = Uuid::new_v4().to_string();
-            session.insert(TOKEN_KEY, &new_token).await.unwrap();
-            new_token
-        }
-    };
-
-    if matches!(page_type, StaticPageType::Index) {
-        let links_query = sqlx::query_as!(
-            Link,
-            r#"SELECT "from", "to", "owner" FROM direct ORDER BY direct."from" ASC"#,
-        )
-        .fetch_all(
-            STATE
-                .get()
-                .expect("Server must be initialized before processing connections")
-                .sqlx_connection
-                .lock()
-                .await
-                .deref_mut(),
-        )
-        .await;
-
-        let Ok(links) = links_query else {
-            return Err("Failed to query database".into());
-        };
-
-        let mut rows = vec![];
-
-        for link in links {
-            let from_attribute = html_escape::encode_quoted_attribute(&link.from);
-            let from = html_escape::encode_text(&link.from);
-            let from_url = utf8_percent_encode(&link.from, NON_ALPHANUMERIC);
-            let to_attribute = html_escape::encode_quoted_attribute(&link.to);
-            let to = html_escape::encode_text(&link.to);
-            let to_url = utf8_percent_encode(&link.to, NON_ALPHANUMERIC);
-            let owner = html_escape::encode_text(&link.owner);
-
-            rows.push(format!(
-                r#"<tr>
-                    <td><a href="{from_attribute}">{from}</a></td>
-                    <td><a href="{to_attribute}">{to}</a></td>
-                    <td>{owner}</td>
-                    <td>(<a href="/_/create?from={from_url}&to={to_url}&current={to_url}">edit</a>) (<a href="/_/delete/do?from={from_url}&current={to_url}&token={token}">delete</a>)</td>
-                </tr>"#,
-            ));
-        }
-
-        let link_table = rows.join("\n");
-        replacements.insert(
-            "links",
-            Box::new(move || Some(AnyString::Owned(link_table.clone()))),
-        );
-    }
-
-    replacements.insert(
-        "token",
-        Box::new(move || Some(AnyString::Owned(token.clone()))),
-    );
-
-    let result = template_html(html, replacements);
-    Ok(Html(result))
+enum DeletionResult {
+    Success,
+    NotFound,
+    Failure,
 }
 
 async fn handle_create_page(
@@ -374,79 +152,6 @@ async fn handle_delete_failure_page(
     handle_static_page(StaticPageType::DeleteFailure, session, &params, &headers).await
 }
 
-struct NotAuthenticated;
-impl IntoResponse for NotAuthenticated {
-    fn into_response(self) -> axum::response::Response {
-        return (StatusCode::UNAUTHORIZED, "Access over Tailscale only").into_response();
-    }
-}
-
-struct MissingToken;
-impl IntoResponse for MissingToken {
-    fn into_response(self) -> axum::response::Response {
-        return (
-            StatusCode::FORBIDDEN,
-            "There's no session here - try going back and trying again?",
-        )
-            .into_response();
-    }
-}
-
-struct InvalidToken;
-impl IntoResponse for InvalidToken {
-    fn into_response(self) -> axum::response::Response {
-        return (
-            StatusCode::FORBIDDEN,
-            "This session is invalid - possible CSRF?",
-        )
-            .into_response();
-    }
-}
-
-fn ensure_authenticated<'a>(
-    headers: &'a HeaderMap,
-    #[cfg(debug_assertions)] params: &'a HashMap<String, String>,
-) -> Result<&'a str, ErrorResponse> {
-    if let Some(user) = headers
-        .get("X-Webauth-Login")
-        .and_then(|header| header.to_str().ok())
-    {
-        return Ok(user);
-    }
-
-    #[cfg(debug_assertions)]
-    {
-        if *DEVELOPMENT.get().unwrap() {
-            if let Some(user) = params.get("dev_auth_as") {
-                return Ok(user);
-            }
-        }
-    }
-
-    Err(NotAuthenticated {}.into())
-}
-
-async fn ensure_token<'a>(
-    session: &Session,
-    params: &'a HashMap<String, String>,
-) -> Result<(), ErrorResponse> {
-    let maybe_token: Option<String> = session.get(TOKEN_KEY).await.unwrap();
-
-    let Some(token) = maybe_token else {
-        return Err(MissingToken {}.into());
-    };
-
-    if token == "" {
-        return Err(MissingToken {}.into());
-    }
-
-    if params.get("token").is_some_and(|val| *val == token) {
-        return Ok(());
-    }
-
-    Err(InvalidToken {}.into())
-}
-
 #[axum::debug_handler]
 async fn handle_create_do(
     session: Session,
@@ -463,58 +168,26 @@ async fn handle_create_do(
     let from = params.get("from").ok_or("Missing from query")?;
     let to = params.get("to").ok_or("Missing to query")?;
 
-    println!("Attempting to make go/{} -> {}", from, to);
-
-    let create_call = sqlx::query!(
-        r#"
-        WITH insertion AS (
-            INSERT INTO direct ("from", "to", "owner")
-                VALUES ($1, $2, $3)
-                ON CONFLICT ("from")
-                DO UPDATE SET "to" = EXCLUDED.to, "owner" = EXCLUDED.owner WHERE direct.to = $4
-                RETURNING direct.from
-        )
-        SELECT direct.to FROM direct
-        WHERE direct.from NOT IN (SELECT insertion.from FROM insertion) AND direct.from = $1
-        "#, // Insert our URL, return a row with the same from that weren't updated (i.e. a conflict)
-        from.to_lowercase(),
-        to,
-        owner,
-        params.get("current"),
-    )
-    .fetch_optional(
-        STATE
-            .get()
-            .expect("Server must be initialized before processing connections")
-            .sqlx_connection
-            .lock()
-            .await
-            .deref_mut(),
-    )
-    .await;
-
-    if let Ok(None) = &create_call {
-        Ok(Redirect::to(&format!(
+    match direct::create(from, to, owner, params.get("current")).await {
+        CreationResult::Success => Ok(Redirect::to(&format!(
             "/_/create/success?from={}&to={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
         ))
-        .into_response())
-    } else if let Ok(Some(conflict)) = create_call {
-        Ok(Redirect::to(&format!(
+        .into_response()),
+        CreationResult::Conflict(conflict) => Ok(Redirect::to(&format!(
             "/_/create/conflict?from={}&to={}&current={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
-            utf8_percent_encode(&conflict.to, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&conflict, NON_ALPHANUMERIC).to_string(),
         ))
-        .into_response())
-    } else {
-        Ok(Redirect::to(&format!(
+        .into_response()),
+        CreationResult::Failure => Ok(Redirect::to(&format!(
             "/_/create/failure?from={}&to={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
         ))
-        .into_response())
+        .into_response()),
     }
 }
 
@@ -534,40 +207,19 @@ async fn handle_delete_do(
     let from = params.get("from").ok_or("Missing from query")?;
     let current = params.get("current").ok_or("Missing current query")?;
 
-    println!("Attempting to delete go/{} -> {}", from, current);
-
-    let delete_call = sqlx::query!(
-        r#"DELETE FROM direct WHERE direct.from = $1 AND direct.to = $2"#,
-        from.to_lowercase(),
-        current,
-    )
-    .execute(
-        STATE
-            .get()
-            .expect("Server must be initialized before processing connections")
-            .sqlx_connection
-            .lock()
-            .await
-            .deref_mut(),
-    )
-    .await;
-
-    if let Ok(delete_result) = &delete_call
-        && delete_result.rows_affected() > 0
-    {
-        Ok(Redirect::to(&format!(
+    match direct::delete(from, current).await {
+        DeletionResult::Success => Ok(Redirect::to(&format!(
             "/_/delete/success?from={}&current={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&current, NON_ALPHANUMERIC).to_string(),
         ))
-        .into_response())
-    } else {
-        Ok(Redirect::to(&format!(
+        .into_response()),
+        _ => Ok(Redirect::to(&format!(
             "/_/delete/failure?from={}&to={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&current, NON_ALPHANUMERIC).to_string(),
         ))
-        .into_response())
+        .into_response()),
     }
 }
 
