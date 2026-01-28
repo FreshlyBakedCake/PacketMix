@@ -1,0 +1,32 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \"from\", \"to\", \"owner\" FROM regex ORDER BY regex.\"from\" ASC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "from",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 1,
+        "name": "to",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "owner",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "25a4aa6f9b3625e5fdc1edde3719982241c29d68352236e71bd9e87059e7012d"
+}

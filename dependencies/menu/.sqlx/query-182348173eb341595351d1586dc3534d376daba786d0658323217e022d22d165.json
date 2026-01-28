@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH insertion AS (\n            INSERT INTO regex (\"from\", \"to\", \"owner\")\n                VALUES ($1, $2, $3)\n                ON CONFLICT (\"from\")\n                DO UPDATE SET \"to\" = EXCLUDED.to, \"owner\" = EXCLUDED.owner WHERE regex.to = $4\n                RETURNING regex.from\n        )\n        SELECT regex.to FROM regex\n        WHERE regex.from NOT IN (SELECT insertion.from FROM insertion) AND regex.from = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "to",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "182348173eb341595351d1586dc3534d376daba786d0658323217e022d22d165"
+}

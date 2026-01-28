@@ -40,9 +40,11 @@ enum AnyString<'a> {
 #[derive(Clone)]
 pub(crate) enum StaticPageType {
     Create,
-    CreateConflict,
+    CreateDirectConflict,
+    CreateRegexConflict,
     CreateFailure,
-    CreateSuccess,
+    CreateDirectSuccess,
+    CreateRegexSuccess,
     DeleteFailure,
     DeleteSuccess,
     Index,
@@ -60,9 +62,19 @@ pub(crate) async fn handle_static_page<'a>(
 
     let html = match page_type {
         StaticPageType::Create => include_String_dynamic!("./html/create.html"),
-        StaticPageType::CreateConflict => include_String_dynamic!("./html/create/conflict.html"),
+        StaticPageType::CreateDirectConflict => {
+            include_String_dynamic!("./html/create/conflict/direct.html")
+        }
+        StaticPageType::CreateRegexConflict => {
+            include_String_dynamic!("./html/create/conflict/regex.html")
+        }
         StaticPageType::CreateFailure => include_String_dynamic!("./html/create/failure.html"),
-        StaticPageType::CreateSuccess => include_String_dynamic!("./html/create/success.html"),
+        StaticPageType::CreateDirectSuccess => {
+            include_String_dynamic!("./html/create/success/direct.html")
+        }
+        StaticPageType::CreateRegexSuccess => {
+            include_String_dynamic!("./html/create/success/regex.html")
+        }
         StaticPageType::DeleteFailure => include_String_dynamic!("./html/delete/failure.html"),
         StaticPageType::DeleteSuccess => include_String_dynamic!("./html/delete/success.html"),
         StaticPageType::Index => include_String_dynamic!("./html/index.html"),
@@ -116,17 +128,32 @@ pub(crate) async fn handle_static_page<'a>(
         }),
     );
     replacements.insert(
+        "format",
+        Box::new(|| {
+            params
+                .get("format")
+                .and_then(|format| Some(AnyString::Ref(format.as_str())))
+        }),
+    );
+    replacements.insert(
         "username",
         Box::new(move || username.and_then(|name| Some(AnyString::Ref(name)))),
     );
 
     let token = get_token(&session).await;
     if matches!(page_type, StaticPageType::Index) {
-        let link_table = direct::get_link_table(&token).await?;
+        let direct_link_table = direct::get_link_table(&token).await?;
 
         replacements.insert(
-            "links",
-            Box::new(move || Some(AnyString::Owned(link_table.clone()))),
+            "direct_links",
+            Box::new(move || Some(AnyString::Owned(direct_link_table.clone()))),
+        );
+
+        let regex_link_table = crate::regex::get_link_table(&token).await?;
+
+        replacements.insert(
+            "regex_links",
+            Box::new(move || Some(AnyString::Owned(regex_link_table.clone()))),
         );
     }
 
@@ -143,7 +170,7 @@ fn template_html<'a>(
     html: String,
     replacements: HashMap<&str, Box<dyn 'a + Send + Fn() -> Option<AnyString<'a>>>>,
 ) -> String {
-    let re = regex_static::static_regex!(r"\{([a-z_]+)(?::([a-z_]+))?\}");
+    let re = regex_static::static_regex!(r"\{([a-z_]+)(?::([a-z_]+)(?::(.*))?)?\}");
     re.replace_all(&html, |captures: &Captures| {
         let replacement_name = &captures[1];
         let replacement = replacements
@@ -162,6 +189,30 @@ fn template_html<'a>(
                 html_escape::encode_quoted_attribute(&replacement_owned).to_string()
             }
             Some("url") => utf8_percent_encode(&replacement_owned, NON_ALPHANUMERIC).to_string(),
+            Some("if") => {
+                let Some(params) = captures.get(3) else {
+                    return "MISSING_IF_PARAMS".to_string();
+                };
+
+                let (cond_type, cond_arg, if_true, if_false) =
+                    match params.as_str().split(':').collect::<Vec<_>>()[..] {
+                        [cond_type, cond_arg, if_true, if_false] => {
+                            (cond_type, cond_arg, if_true, if_false)
+                        }
+                        [cond_type, cond_arg, if_true] => (cond_type, cond_arg, if_true, ""),
+                        _ => return "INVALID_IF_PARAMS".to_string(),
+                    };
+
+                match cond_type {
+                    "equal" => if cond_arg == replacement_owned {
+                        if_true
+                    } else {
+                        if_false
+                    }
+                    .to_string(),
+                    _ => return "INVALID_IF_COND_TYPE".to_string(),
+                }
+            }
             None => html_escape::encode_text(&replacement_owned).to_string(),
             Some(_) => "UNKNOWN_MATCH_TYPE".to_string(),
         }

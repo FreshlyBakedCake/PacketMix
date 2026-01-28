@@ -21,7 +21,14 @@ SPDX-License-Identifier: MIT
         </div>
         <div>
           ...<label for="to">send me to </label>
-          <input type="url" name="to" id="to" value="{to:attribute}" placeholder="https://kagi.com" required />
+          <input type="url" name="to" id="to" value="{to:attribute}" placeholder="https://kagi.com" required />...
+        </div>
+        <div>
+          ...<label for="">and match with </label>
+          <select name="format" id="format" required>
+            <option value="direct" {format:if:equal:direct:selected}>direct</option>
+            <option value="regex" {format:if:equal:regex:selected}>regex</option>
+          </select> matching...
         </div>
       </div>
       <input type="hidden" name="current" id="current" value="{current:attribute}" />

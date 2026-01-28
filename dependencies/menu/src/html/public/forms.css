@@ -18,7 +18,7 @@ form > div > div {
   padding: 0.1em;
 }
 
-input {
+input, select {
   border: 0.1em solid black;
   border-radius: 0.25em;
   height: 1.5em;

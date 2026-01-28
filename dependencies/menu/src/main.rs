@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 mod auth;
 mod direct;
+mod regex;
 mod static_html;
 
 use axum::{
@@ -58,20 +59,34 @@ fn clean_host(provided_host: &str) -> &str {
     return "go";
 }
 
+async fn get_redirect(go: &str) -> Option<Redirect> {
+    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
+
+    if let Some(redirect) = direct::get_redirect(go).await {
+        return Some(redirect);
+    }
+
+    if let Some(redirect) = regex::get_redirect(go).await {
+        return Some(redirect);
+    }
+
+    None
+}
+
 async fn get_redirect_base(go: &str) -> Redirect {
-    direct::get_redirect(
-        "/_/create?from=",
-        &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
-    )
-    .await
+    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
+
+    get_redirect(go)
+        .await
+        .unwrap_or_else(|| Redirect::temporary(&("/_/create?format=direct&from=".to_string() + go)))
 }
 
 async fn get_redirect_search(go: &str) -> Redirect {
-    direct::get_redirect(
-        "https://kagi.com/search?q=",
-        &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string(),
-    )
-    .await
+    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
+
+    get_redirect(go)
+        .await
+        .unwrap_or_else(|| Redirect::temporary(&("https://kagi.com/search?q=".to_string() + go)))
 }
 
 #[axum::debug_handler]
@@ -119,14 +134,54 @@ async fn handle_create_success_page(
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::CreateSuccess, session, &params, &headers).await
+    match params.get("format").and_then(|s| Some(s.as_str())) {
+        Some("direct") => {
+            handle_static_page(
+                StaticPageType::CreateDirectSuccess,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        Some("regex") => {
+            handle_static_page(
+                StaticPageType::CreateRegexSuccess,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        _ => Err("Invalid format".into()),
+    }
 }
 async fn handle_create_conflict_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::CreateConflict, session, &params, &headers).await
+    match params.get("format").and_then(|s| Some(s.as_str())) {
+        Some("direct") => {
+            handle_static_page(
+                StaticPageType::CreateDirectConflict,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        Some("regex") => {
+            handle_static_page(
+                StaticPageType::CreateRegexConflict,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        _ => Err("Invalid format".into()),
+    }
 }
 async fn handle_create_failure_page(
     session: Session,
@@ -167,25 +222,35 @@ async fn handle_create_do(
 
     let from = params.get("from").ok_or("Missing from query")?;
     let to = params.get("to").ok_or("Missing to query")?;
+    let format = params.get("format").ok_or("Missing format query")?;
 
-    match direct::create(from, to, owner, params.get("current")).await {
+    let create_response = match format.as_str() {
+        "direct" => direct::create(from, to, owner, params.get("current")).await,
+        "regex" => regex::create(from, to, owner, params.get("current")).await,
+        _ => return Err(format!("Invalid format {}", format).into_response().into()),
+    };
+
+    match create_response {
         CreationResult::Success => Ok(Redirect::to(&format!(
-            "/_/create/success?from={}&to={}",
+            "/_/create/success?from={}&to={}&format={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&format, NON_ALPHANUMERIC).to_string(),
         ))
         .into_response()),
         CreationResult::Conflict(conflict) => Ok(Redirect::to(&format!(
-            "/_/create/conflict?from={}&to={}&current={}",
+            "/_/create/conflict?from={}&to={}&current={}&format={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&conflict, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&format, NON_ALPHANUMERIC).to_string(),
         ))
         .into_response()),
         CreationResult::Failure => Ok(Redirect::to(&format!(
-            "/_/create/failure?from={}&to={}",
+            "/_/create/failure?from={}&to={}&format={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&to, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&format, NON_ALPHANUMERIC).to_string(),
         ))
         .into_response()),
     }
@@ -206,18 +271,27 @@ async fn handle_delete_do(
 
     let from = params.get("from").ok_or("Missing from query")?;
     let current = params.get("current").ok_or("Missing current query")?;
+    let format = params.get("format").ok_or("Missing format query")?;
 
-    match direct::delete(from, current).await {
+    let delete_result = match format.as_str() {
+        "direct" => direct::delete(from, current).await,
+        "regex" => regex::delete(from, current).await,
+        _ => return Err(format!("Invalid format {}", format).into_response().into()),
+    };
+
+    match delete_result {
         DeletionResult::Success => Ok(Redirect::to(&format!(
-            "/_/delete/success?from={}&current={}",
+            "/_/delete/success?from={}&current={}&format={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&current, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&format, NON_ALPHANUMERIC).to_string(),
         ))
         .into_response()),
         _ => Ok(Redirect::to(&format!(
-            "/_/delete/failure?from={}&to={}",
+            "/_/delete/failure?from={}&to={}&format={}",
             utf8_percent_encode(&from, NON_ALPHANUMERIC).to_string(),
             utf8_percent_encode(&current, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&format, NON_ALPHANUMERIC).to_string(),
         ))
         .into_response()),
     }

@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM regex WHERE regex.from = $1 AND regex.to = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "cbc8750d6e1de27fb56dabc10e35731327faa8aa030fdcc109ce3a08c98adb11"
+}

@@ -1,0 +1,26 @@
+<!--
+SPDX-FileCopyrightText: 2026 Freshly Baked Cake
+
+SPDX-License-Identifier: MIT
+-->
+
+<html>
+  <head>
+    <title>Add shortlink</title>
+    <link rel="stylesheet" href="/_/public/logo.css"/>
+    <link rel="stylesheet" href="/_/public/colors.css"/>
+    <link rel="stylesheet" href="/_/public/actions.css"/>
+  </head>
+
+  <body>
+    <div id="logo"><div><span><span class="success">Created</span> shortlink</span><img src="/_/public/logo.svg"></div></div>
+    <p>Your new shortlink is up!</p>
+    <p><code>/{from}/i</code> now goes to <code>{to}</code></p>
+    <ul>
+      <li><a href="/_/create">Create another one</a></li>
+      <li><a href="/_/create?from={from:url}&to={to:url}&current={to:url}&format={format:url}">Edit it</a></li>
+      <li><a href="/_/delete/do?from={from:url}&current={to:url}&token={token:url}&format={format:url}">Delete it</a></li>
+      <li><a href="/">All shortlinks</a></li>
+    </ul>
+  </body>
+</html>

@@ -14,7 +14,8 @@ SPDX-License-Identifier: MIT
 
   <body>
     <div id="logo"><div><span>Menu</span><img src="/_/public/logo.svg"></div></div>
-    <span class="actions">(<a href="/_/create">New link</a>) (<a href="/menu">Learn more</a>)</span>
+    <h2>Direct</h2>
+    <span class="actions">(<a href="/_/create?format=direct">New link</a>) (<a href="/menu">Learn more</a>)</span>
     <table class="autogrid links">
       <tr>
         <th>From</th>
@@ -22,8 +23,20 @@ SPDX-License-Identifier: MIT
         <th>Owner</th>
         <th>Actions</th>
       </tr>
-      {links:dangerous_raw}
+      {direct_links:dangerous_raw}
     </table>
-    <span class="actions">(<a href="/_/create">New link</a>) (<a href="/menu">Learn more</a>)</span>
+    <span class="actions">(<a href="/_/create?format=direct">New link</a>) (<a href="/menu">Learn more</a>)</span>
+    <h2>Regex</h2>
+    <span class="actions">(<a href="/_/create?format=regex">New link</a>) (<a href="/menu">Learn more</a>)</span>
+    <table class="autogrid links">
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Owner</th>
+        <th>Actions</th>
+      </tr>
+      {regex_links:dangerous_raw}
+    </table>
+    <span class="actions">(<a href="/_/create?format=regex">New link</a>) (<a href="/menu">Learn more</a>)</span>
   </body>
 </html>

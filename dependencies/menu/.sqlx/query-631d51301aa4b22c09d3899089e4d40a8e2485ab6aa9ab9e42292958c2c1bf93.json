@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \"from\", \"to\" FROM regex WHERE $1 ~* ('^' || \"from\" || '$') LIMIT 1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "from",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 1,
+        "name": "to",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "631d51301aa4b22c09d3899089e4d40a8e2485ab6aa9ab9e42292958c2c1bf93"
+}

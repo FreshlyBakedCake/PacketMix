@@ -14,8 +14,9 @@ SPDX-License-Identifier: MIT
 
   <body>
     <div id="logo"><div><span><span class="failure">Couldn't create</span> shortlink</span><img src="/_/public/logo.svg"></div></div>
-    <p>There was an internal error when creating your shortlink. You may try again. If you keep experiencing this error, please contact Minion or Coded.</p>
+    <p>You can't create a link from <code>/{from}/i</code> to <code>{to}</code> because <code>/{from}/i</code> already goes to <code>{current}</code>.</p>
     <ul>
+      <li><a href="/_/create/do?from={from:url}&to={to:url}&current={current:url}&token={token:url}&format={format:url}">Overwrite it</a></li>
       <li><a href="/_/create?from={from:url}&to={to:url}&format={format:url}">Back to editor</a></li>
       <li><a href="/">All shortlinks</a></li>
     </ul>
