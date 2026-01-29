@@ -17,7 +17,7 @@ struct Link {
 
 pub(crate) async fn get_redirect(go: &str) -> Option<Redirect> {
     let redirect = sqlx::query!(
-        r#"SELECT "from", "to" FROM regex WHERE $1 ~* ('^' || "from" || '$') LIMIT 1"#,
+        r#"SELECT "from", "to" FROM regex WHERE $1 ~* ('^(?:' || "from" || ')$') LIMIT 1"#,
         go.to_lowercase()
     )
     .fetch_one(
@@ -32,7 +32,7 @@ pub(crate) async fn get_redirect(go: &str) -> Option<Redirect> {
     .await;
 
     if let Ok(record) = redirect {
-        let re = RegexBuilder::new(&format!("^{}$", record.from))
+        let re = RegexBuilder::new(&format!("^(?:{})$", record.from))
             .case_insensitive(true)
             .build()
             .unwrap();
@@ -87,18 +87,6 @@ pub(crate) async fn get_link_table(token: &str) -> Result<String> {
     Ok(link_table)
 }
 
-fn trim_prefix(s: &str, prefix: char) -> &str {
-    if s.starts_with(prefix) { &s[1..] } else { s }
-}
-
-fn trim_suffix(s: &str, suffix: char) -> &str {
-    if s.starts_with(suffix) {
-        &s[..s.len() - 1]
-    } else {
-        s
-    }
-}
-
 pub(crate) async fn create(
     from: &str,
     to: &str,
@@ -106,8 +94,6 @@ pub(crate) async fn create(
     current: Option<&String>,
 ) -> CreationResult {
     println!("Attempting to make go/{} -> {}", from, to);
-
-    let from = trim_suffix(trim_prefix(from, '^'), '$'); // I think this is maybe broken with |
 
     let create_call = sqlx::query!(
         r#"
