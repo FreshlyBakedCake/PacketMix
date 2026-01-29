@@ -191,7 +191,27 @@ async fn handle_delete_success_page(
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
 ) -> Result<Html<String>> {
-    handle_static_page(StaticPageType::DeleteSuccess, session, &params, &headers).await
+    match params.get("format").and_then(|s| Some(s.as_str())) {
+        Some("direct") => {
+            handle_static_page(
+                StaticPageType::DeleteDirectSuccess,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        Some("regex") => {
+            handle_static_page(
+                StaticPageType::DeleteRegexSuccess,
+                session,
+                &params,
+                &headers,
+            )
+            .await
+        }
+        _ => Err("Invalid format".into()),
+    }
 }
 async fn handle_delete_failure_page(
     session: Session,

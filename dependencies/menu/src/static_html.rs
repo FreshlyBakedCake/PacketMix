@@ -46,7 +46,8 @@ pub(crate) enum StaticPageType {
     CreateDirectSuccess,
     CreateRegexSuccess,
     DeleteFailure,
-    DeleteSuccess,
+    DeleteDirectSuccess,
+    DeleteRegexSuccess,
     Index,
 }
 
@@ -76,7 +77,12 @@ pub(crate) async fn handle_static_page<'a>(
             include_String_dynamic!("./html/create/success/regex.html")
         }
         StaticPageType::DeleteFailure => include_String_dynamic!("./html/delete/failure.html"),
-        StaticPageType::DeleteSuccess => include_String_dynamic!("./html/delete/success.html"),
+        StaticPageType::DeleteDirectSuccess => {
+            include_String_dynamic!("./html/delete/success/direct.html")
+        }
+        StaticPageType::DeleteRegexSuccess => {
+            include_String_dynamic!("./html/delete/success/regex.html")
+        }
         StaticPageType::Index => include_String_dynamic!("./html/index.html"),
     };
 
