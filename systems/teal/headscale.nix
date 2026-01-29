@@ -20,6 +20,7 @@ let
       different permission level. Servers can only access other servers
     */
     "group:users" = [
+      "celestial_starfruit@"
       "coded@"
       "hyperneutrino@"
       "matei@"
