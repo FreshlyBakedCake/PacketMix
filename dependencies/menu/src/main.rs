@@ -60,8 +60,6 @@ fn clean_host(provided_host: &str) -> &str {
 }
 
 async fn get_redirect(go: &str) -> Option<Redirect> {
-    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
-
     if let Some(redirect) = direct::get_redirect(go).await {
         return Some(redirect);
     }
@@ -74,19 +72,15 @@ async fn get_redirect(go: &str) -> Option<Redirect> {
 }
 
 async fn get_redirect_base(go: &str) -> Redirect {
-    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
-
     get_redirect(go)
         .await
-        .unwrap_or_else(|| Redirect::temporary(&("/_/create?format=direct&from=".to_string() + go)))
+        .unwrap_or_else(|| Redirect::temporary(&("/_/create?format=direct&from=".to_string() + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string())))
 }
 
 async fn get_redirect_search(go: &str) -> Redirect {
-    let go = &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string();
-
     get_redirect(go)
         .await
-        .unwrap_or_else(|| Redirect::temporary(&("https://kagi.com/search?q=".to_string() + go)))
+        .unwrap_or_else(|| Redirect::temporary(&("https://kagi.com/search?q=".to_string() + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string())))
 }
 
 #[axum::debug_handler]
