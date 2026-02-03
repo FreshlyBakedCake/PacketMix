@@ -1,0 +1,17 @@
+<!--
+SPDX-FileCopyrightText: 2026 Freshly BakedCake
+
+SPDX-License-Identifier: MIT
+-->
+
+<OpenSearchDescription
+  xmlns="http://a9.com/-/spec/opensearch/1.1/"
+  xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>Menu {name}</ShortName>
+  <Description>Menu {name} - Resolve shortlinks before searching</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image type="image/x-icon">/_/public/favicon.ico</Image>
+  <Image type="image/png">/_/public/favicon.png</Image>
+  <Url type="text/html" template="https://menu.freshlybakedca.ke/_/search?engine={engine:url}&amp;q={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="https://menu.freshlybakedca.ke/_/suggest?engine={engine:url}&amp;q={searchTerms}"/>
+</OpenSearchDescription>

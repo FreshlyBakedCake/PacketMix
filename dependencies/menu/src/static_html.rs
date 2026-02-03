@@ -1,7 +1,10 @@
 // SPDX-FileCopyrightText: 2026 Freshly Baked Cake
 //
 // SPDX-License-Identifier: MIT
-use axum::{http::HeaderMap, response::Html, response::Result};
+use axum::{
+    http::{HeaderMap, header::CONTENT_TYPE},
+    response::{Html, IntoResponse, Response, Result},
+};
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
 use regex::Captures;
 use std::collections::HashMap;
@@ -49,6 +52,7 @@ pub(crate) enum StaticPageType {
     DeleteDirectSuccess,
     DeleteRegexSuccess,
     Index,
+    OpenSearch,
 }
 
 pub(crate) async fn handle_static_page<'a>(
@@ -56,7 +60,7 @@ pub(crate) async fn handle_static_page<'a>(
     session: Session,
     params: &'a HashMap<String, String>,
     headers: &'a HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     let auth_required = match page_type {
         _ => true,
     };
@@ -84,6 +88,7 @@ pub(crate) async fn handle_static_page<'a>(
             include_String_dynamic!("./html/delete/success/regex.html")
         }
         StaticPageType::Index => include_String_dynamic!("./html/index.html"),
+        StaticPageType::OpenSearch => include_String_dynamic!("./html/opensearch.xml"),
     };
 
     let username = if auth_required {
@@ -161,6 +166,40 @@ pub(crate) async fn handle_static_page<'a>(
             "regex_links",
             Box::new(move || Some(AnyString::Owned(regex_link_table.clone()))),
         );
+
+        let search_engines = crate::get_search_engines();
+
+        replacements.insert(
+            "search_engines",
+            Box::new(move || Some(AnyString::Owned(search_engines.clone()))),
+        );
+    }
+
+    if matches!(page_type, StaticPageType::OpenSearch) {
+        replacements.insert(
+            "shortname",
+            Box::new(|| {
+                params
+                    .get("shortname")
+                    .and_then(|name| Some(AnyString::Ref(name.as_str())))
+            }),
+        );
+        replacements.insert(
+            "name",
+            Box::new(|| {
+                params
+                    .get("name")
+                    .and_then(|name| Some(AnyString::Ref(name.as_str())))
+            }),
+        );
+        replacements.insert(
+            "engine",
+            Box::new(|| {
+                params
+                    .get("engine")
+                    .and_then(|engine| Some(AnyString::Ref(engine.as_str())))
+            }),
+        );
     }
 
     replacements.insert(
@@ -169,7 +208,14 @@ pub(crate) async fn handle_static_page<'a>(
     );
 
     let result = template_html(html, replacements);
-    Ok(Html(result))
+    match page_type {
+        StaticPageType::OpenSearch => {
+            let mut headers = HeaderMap::new();
+            headers.insert(CONTENT_TYPE, "application/xml".parse().unwrap());
+            Ok((headers, result).into_response())
+        }
+        _ => Ok(Html(result).into_response()),
+    }
 }
 
 fn template_html<'a>(

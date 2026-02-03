@@ -8,14 +8,14 @@ mod static_html;
 
 use axum::{
     Router, ServiceExt,
-    body::Body,
     extract::{Path, Query, Request},
-    http::{HeaderMap, Response, StatusCode},
-    response::{Html, IntoResponse, Redirect, Result},
+    http::{HeaderMap, StatusCode},
+    response::{IntoResponse, Redirect, Response, Result},
     routing::get,
 };
 use include_dir::{Dir, include_dir};
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
+use phf::phf_map;
 use sqlx::{Connection, PgConnection};
 use tower_sessions::{MemoryStore, Session, SessionManagerLayer};
 
@@ -51,6 +51,34 @@ const ALLOWED_HOSTS: &'static [&'static str] = &[
     "starry.sk",
 ];
 
+const SEARCH_ENGINES: phf::Map<&'static str, [&'static str; 3]> = phf_map! {
+    "kagi" => [
+        "Kagi",
+        "https://kagi.com/search?q=",
+        "https://kagi.com/api/autosuggest?q=",
+    ],
+    "google" => [
+        "Google",
+        "https://www.google.com/search?q=",
+        "https://www.google.com/complete/search?q=",
+    ],
+    "udm14" => [
+        "Google+UDM14",
+        "https://www.google.com/search?udm=14&q=",
+        "https://www.google.com/complete/search?q=",
+    ],
+    "ddg" => [
+        "DuckDuckGo",
+        "https://duckduckgo.com?q=",
+        "https://duckduckgo.com/ac/?q=",
+    ],
+    "noai" => [
+        "DuckDuckGo+NoAI",
+        "https://noai.duckduckgo.com?q=",
+        "https://noai.duckduckgo.com/ac/?q=",
+    ]
+};
+
 fn clean_host(provided_host: &str) -> &str {
     if ALLOWED_HOSTS.contains(&provided_host) {
         return provided_host;
@@ -72,15 +100,92 @@ async fn get_redirect(go: &str) -> Option<Redirect> {
 }
 
 async fn get_redirect_base(go: &str) -> Redirect {
-    get_redirect(go)
-        .await
-        .unwrap_or_else(|| Redirect::temporary(&("/_/create?format=direct&from=".to_string() + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string())))
+    get_redirect(go).await.unwrap_or_else(|| {
+        Redirect::temporary(
+            &("/_/create?format=direct&from=".to_string()
+                + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string()),
+        )
+    })
 }
 
-async fn get_redirect_search(go: &str) -> Redirect {
+struct InvalidSearchEngine {
+    engine: String,
+}
+impl IntoResponse for InvalidSearchEngine {
+    fn into_response(self) -> Response {
+        return (
+            StatusCode::NOT_FOUND,
+            format!("Invalid Search Engine {}", self.engine),
+        )
+            .into_response();
+    }
+}
+
+async fn handle_search_suggest(Query(params): Query<HashMap<String, String>>) -> Result<String> {
+    if let Some(q) = params.get("q") {
+        let Some(search_engine_metadata) = (match params.get("engine") {
+            Some(e) => SEARCH_ENGINES.get(e),
+            None => SEARCH_ENGINES.get("kagi"), // This is the default for historical reasons ...
+        }) else {
+            return Err(InvalidSearchEngine {
+                engine: params
+                    .get("engine")
+                    .and_then(|e| Some(e.as_str()))
+                    .unwrap_or("null")
+                    .to_owned(),
+            }
+            .into());
+        };
+
+        Ok(reqwest::get(
+            &(search_engine_metadata[2].to_owned()
+                + &utf8_percent_encode(q, NON_ALPHANUMERIC).to_string()),
+        )
+        .await
+        .map_err(|_e| StatusCode::INTERNAL_SERVER_ERROR)?
+        .text()
+        .await
+        .map_err(|_e| StatusCode::INTERNAL_SERVER_ERROR)?)
+    } else {
+        Err(StatusCode::BAD_REQUEST.into())
+    }
+}
+
+async fn get_redirect_search(go: &str, engine: Option<&str>) -> Result<Redirect> {
     get_redirect(go)
         .await
-        .unwrap_or_else(|| Redirect::temporary(&("https://kagi.com/search?q=".to_string() + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string())))
+        .and_then(|r| Some(Ok(r)))
+        .unwrap_or_else(|| {
+            let Some(search_engine_metadata) = (match engine {
+                Some(e) => SEARCH_ENGINES.get(e),
+                None => SEARCH_ENGINES.get("kagi"), // This is the default for historical reasons ...
+            }) else {
+                return Err(InvalidSearchEngine {
+                    engine: engine.unwrap_or("null").to_owned(),
+                }
+                .into());
+            };
+
+            Ok(Redirect::temporary(
+                &(search_engine_metadata[1].to_owned()
+                    + &utf8_percent_encode(go, NON_ALPHANUMERIC).to_string()),
+            ))
+        })
+}
+
+fn get_search_engines() -> String {
+    let mut result = "".to_owned();
+    for (engine, meta) in SEARCH_ENGINES.entries() {
+        let engine_url = utf8_percent_encode(engine, NON_ALPHANUMERIC).to_string();
+        let name_attr = html_escape::encode_quoted_attribute(meta[0]);
+        let name_url = utf8_percent_encode(meta[0], NON_ALPHANUMERIC).to_string();
+
+        result += format!(
+            r#"<link rel="search" type="application/opensearchdescription+xml" title="Menu {name_attr}" href="/_/opensearch.xml?name={name_url}&engine={engine_url}" />"#
+        ).as_str();
+    }
+
+    result
 }
 
 #[axum::debug_handler]
@@ -88,7 +193,7 @@ async fn handle_index(
     session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     handle_static_page(StaticPageType::Index, session, &params, &headers).await
 }
 
@@ -96,11 +201,11 @@ async fn handle_base(Path(go): Path<String>) -> Redirect {
     get_redirect_base(&go).await
 }
 
-async fn handle_search(Query(params): Query<HashMap<String, String>>) -> Redirect {
+async fn handle_search(Query(params): Query<HashMap<String, String>>) -> Result<Redirect> {
     if let Some(go) = params.get("q") {
-        get_redirect_search(&go).await
+        get_redirect_search(&go, params.get("engine").and_then(|s| Some(s.as_str()))).await
     } else {
-        Redirect::temporary("/")
+        Ok(Redirect::temporary("/"))
     }
 }
 
@@ -120,14 +225,14 @@ async fn handle_create_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     handle_static_page(StaticPageType::Create, session, &params, &headers).await
 }
 async fn handle_create_success_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     match params.get("format").and_then(|s| Some(s.as_str())) {
         Some("direct") => {
             handle_static_page(
@@ -154,7 +259,7 @@ async fn handle_create_conflict_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     match params.get("format").and_then(|s| Some(s.as_str())) {
         Some("direct") => {
             handle_static_page(
@@ -190,7 +295,7 @@ async fn handle_delete_success_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     match params.get("format").and_then(|s| Some(s.as_str())) {
         Some("direct") => {
             handle_static_page(
@@ -217,8 +322,15 @@ async fn handle_delete_failure_page(
     session: Session,
     Query(params): Query<HashMap<String, String>>,
     headers: HeaderMap,
-) -> Result<Html<String>> {
+) -> Result<Response> {
     handle_static_page(StaticPageType::DeleteFailure, session, &params, &headers).await
+}
+async fn handle_opensearch_xml_page(
+    session: Session,
+    Query(params): Query<HashMap<String, String>>,
+    headers: HeaderMap,
+) -> Result<Response> {
+    handle_static_page(StaticPageType::OpenSearch, session, &params, &headers).await
 }
 
 #[axum::debug_handler]
@@ -226,7 +338,7 @@ async fn handle_create_do(
     session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
-) -> Result<Response<Body>> {
+) -> Result<Response> {
     ensure_token(&session, &params).await?;
     let owner = ensure_authenticated(
         &headers,
@@ -275,7 +387,7 @@ async fn handle_delete_do(
     session: Session,
     headers: HeaderMap,
     Query(params): Query<HashMap<String, String>>,
-) -> Result<Response<Body>> {
+) -> Result<Response> {
     ensure_token(&session, &params).await?;
     ensure_authenticated(
         &headers,
@@ -396,6 +508,8 @@ async fn main() {
         .route("/_/delete/success", get(handle_delete_success_page))
         .route("/_/delete/failure", get(handle_delete_failure_page))
         .route("/_/search", get(handle_search))
+        .route("/_/suggest", get(handle_search_suggest))
+        .route("/_/opensearch.xml", get(handle_opensearch_xml_page))
         .route("/_/{*route}", get(handle_404))
         .route("/{*go}", get(handle_base));
     let app = NormalizePathLayer::trim_trailing_slash().layer(router.layer(session_layer));
