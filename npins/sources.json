@@ -627,6 +627,18 @@
       "url": null,
       "hash": "sha256-MaJyvfHh52nFI8qgROh5nmTaEHPwBzpcEuQD9s40mog="
     },
+    "tranquil-pds": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://tangled.org/tranquil.farm/tranquil-pds"
+      },
+      "branch": "feat/nix-module",
+      "submodules": false,
+      "revision": "e6b4698735918c5c6ee2572ef7d4fd29f791f219",
+      "url": null,
+      "hash": "sha256-7r113ZJ0Y7inOHPlfRldItrh2DMC/RuxyeDw3ZMSJfE="
+    },
     "treefmt-nix": {
       "type": "Git",
       "repository": {
