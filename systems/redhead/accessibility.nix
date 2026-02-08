@@ -7,7 +7,7 @@
   services.orca.enable = true;
 
   systemd.user.services.orca = {
-    wantedBy = lib.mkForce [ "niri.service" ];
+    wantedBy = lib.mkForce [ ];
     after = [ "niri.service" ];
   };
 }
