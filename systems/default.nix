@@ -26,20 +26,6 @@ in
       "minion@redhead:x86_64-linux" = config.homes."packetmix-minion@redhead:x86_64-linux";
     };
   };
-  config.systems.nixos."packetmix-emden" = {
-    pkgs = nixpkgs.x86_64-linux;
-    ingredients = [
-      "javelin"
-      "personal"
-    ];
-    args = {
-      system = "x86_64-linux";
-      project = config;
-    };
-    homes = {
-      "minion:x86_64-linux" = config.homes."packetmix-minion:x86_64-linux";
-    };
-  };
   config.systems.nixos."packetmix-marbled" = {
     pkgs = nixpkgs.x86_64-linux;
     ingredients = [
