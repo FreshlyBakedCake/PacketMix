@@ -1,0 +1,77 @@
+# SPDX-FileCopyrightText: 2026 FreshlyBakedCake
+#
+# SPDX-License-Identifier: MIT
+
+{
+  config,
+  project,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  home.packages = [ pkgs.playerctl ];
+  programs.niri.settings.binds."Mod+D".action.spawn = [
+    "${config.programs.vicinae.package}/bin/vicinae"
+    "toggle"
+  ];
+  programs.vicinae = {
+    enable = true;
+    systemd.enable = true;
+
+    settings = {
+      closeOnFocusLoss = true;
+      considerPreedit = true;
+      faviconService = "twenty";
+
+      theme = lib.mkIf config.catppuccin.enable {
+        name = "catppuccin-${config.catppuccin.flavor}";
+      };
+    };
+
+    extensions = [
+      # Short to install list: github, xkcd, systemd, bitwarden
+      # Vicinae Extensions
+      (config.lib.vicinae.mkExtension {
+        name = "nix";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/nix";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "wifi-commander";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/wifi-commander";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "bluetooth";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/bluetooth";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "player-pilot";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/player-pilot";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "brotab";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/brotab";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "niri";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/niri";
+      })
+      (config.lib.vicinae.mkExtension {
+        name = "it-tools";
+        src = "${project.inputs.vicinaeExtensions.src}/extensions/it-tools";
+      })
+
+      # RayCast Extensions
+      (config.lib.vicinae.mkRayCastExtension {
+        name = "pdsls";
+        rev = "9b5cbcb7204b895e478f58db1485559b7f7d28d8";
+        sha256 = "sha256-ARrEyBSqw0RSSoRZBCLoiN3Bg1OSKC+uPkwfO29KkfA=";
+      })
+      (config.lib.vicinae.mkRayCastExtension {
+        name = "kagi-search";
+        rev = "9b5cbcb7204b895e478f58db1485559b7f7d28d8";
+        sha256 = "sha256-0JbHFJjc14BgwXSqHpnXeZ08fhALS9qpKsBjSyuSJmE=";
+      })
+    ];
+  };
+}
