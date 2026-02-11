@@ -45,6 +45,7 @@ struct State {
 static STATE: OnceLock<State> = OnceLock::new();
 
 const ALLOWED_HOSTS: &'static [&'static str] = &[
+    "cakeme.nu",
     "go",
     "go.search.freshly.space",
     "menu.freshlybakedca.ke",

@@ -46,6 +46,12 @@
 
   services.headscale.settings.dns.extra_records = [
     {
+      # cakeme.nu -> teal
+      name = "cakeme.nu";
+      type = "A";
+      value = "100.64.0.5";
+    }
+    {
       # go.search.freshly.space -> teal
       name = "go.search.freshly.space";
       type = "A";
@@ -76,6 +82,7 @@
     acmeRoot = null;
 
     serverAliases = [
+      "cakeme.nu"
       "go.search.freshly.space"
       "starry.sk"
     ];
@@ -102,6 +109,7 @@
     serverName = "menu.freshlybakedca.ke";
 
     serverAliases = [
+      "cakeme.nu"
       "go.search.freshly.space"
       "starry.sk"
     ];
