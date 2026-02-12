@@ -17,7 +17,10 @@
   ];
   programs.vicinae = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      autoStart = true;
+    };
 
     settings = {
       closeOnFocusLoss = true;
@@ -74,4 +77,8 @@
       })
     ];
   };
+
+  systemd.user.services.vicinae.Unit.After = [ "niri.service" ];
+  systemd.user.services.vicinae.Install.WandedBy = lib.mkForce [ "niri.service" ];
+  systemd.user.services.vicinae.Unit.PartOf = lib.mkForce [ ];
 }
