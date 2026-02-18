@@ -296,6 +296,18 @@
       "url": "https://api.github.com/repos/9001/copyparty/tarball/refs/tags/v1.20.4",
       "hash": "sha256-OX07f7Mn0a+ty4s0NGwcJx0aWUWnMFXJfXKqQFZn4wc="
     },
+    "extra-container": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/erikarvstedt/extra-container"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "b450bdb24fca1076973c852d87bcb49b8eb5fd49",
+      "url": null,
+      "hash": "sha256-XGp4HHH6D6ZKiO5RnMzqYJYnZB538EnEflvlTsOKpvo="
+    },
     "fenix": {
       "type": "Git",
       "repository": {
