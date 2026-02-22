@@ -89,7 +89,7 @@ in
 {
   disabledModules = [ "services/networking/headscale.nix" ];
   imports = [
-    "${project.inputs.nixos-unstable.src}/nixos/modules/services/networking/headscale.nix"
+    project.inputs.headscale.result.nixosModules.headscale
   ];
 
   # Headscale service

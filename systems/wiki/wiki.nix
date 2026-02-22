@@ -75,52 +75,69 @@
         Cite = null;
         CiteThisPage = null;
         CirrusSearch = "${
-          pkgs.php.buildComposerProject {
-            pname = "CirrusSearch";
-            version = "0.0.3665";
-            src = project.inputs.CirrusSearch.src;
-            vendorHash = "sha256-MLD/3hvzX1aqR4knajJ1amb6K5SVtxlfy+UZWoSi1Bk=";
-            composerLock = ./wiki/CirrusSearch.composer.lock;
-          }
+          (lib.warnIf (project.inputs.CirrusSearch.src.revision != "3c2e45e3d8675e77809ad545a7cf0567e2d1b62b")
+            "The composerLock file and vendorHash for CirrusSearch were last updated in a different revision. Please verify that it's still correct and update"
+          )
+            pkgs.php.buildComposerProject
+            {
+              pname = "CirrusSearch";
+              version = "0.0.3665";
+              src = project.inputs.CirrusSearch.src;
+              vendorHash = "sha256-V7Mn0mr2+OWvrfTM7izMIBI8BfCqW+GiIKvcApE/FvI=";
+              composerLock = ./wiki/CirrusSearch.composer.lock;
+            }
         }/share/php/CirrusSearch"; # needed for advancedsearch
         CodeEditor = null;
         DiscussionTools = null;
         Echo = null;
         EditNotify = project.inputs.EditNotify.src;
         Elastica = "${
-          pkgs.php.buildComposerProject {
-            pname = "Elastica";
-            version = "0.0.3665";
-            src = project.inputs.Elastica.src;
-            vendorHash = "sha256-4kp8njLTqPeFCREnGharCB/pmYBnXLJR4TdD6EH6WCI=";
-            composerLock = ./wiki/Elastica.composer.lock;
-          }
+          (lib.warnIf (project.inputs.Elastica.src.revision != "c6908ef7864a70e6893c52a60f49f01867d7cb21")
+            "The composerLock file and vendorHash for Elastica were last updated in a different revision. Please verify that it's still correct and update"
+          )
+            pkgs.php.buildComposerProject
+            {
+              pname = "Elastica";
+              version = "0.0.3665";
+              src = project.inputs.Elastica.src;
+              vendorHash = "sha256-4kp8njLTqPeFCREnGharCB/pmYBnXLJR4TdD6EH6WCI=";
+              composerLock = ./wiki/Elastica.composer.lock;
+            }
         }/share/php/Elastica"; # needed for cirrussearch
         Linter = null;
         Math = null;
         MobileFrontend = project.inputs.MobileFrontend.src;
         NamespacePreload = project.inputs.NamespacePreload.src;
         Network = "${
-          config.services.phpfpm.pools.mediawiki.phpPackage.buildComposerProject {
-            pname = "Network";
-            version = "0.0.3665";
-            src = project.inputs.Network.src;
-            vendorHash = "sha256-JHa6PW5xO3pcwn/2jbGXM0wGhr6UmtqFdxaGCgpaYb0=";
-            composerLock = ./wiki/Network.composer.lock;
-          }
+          (lib.warnIf (project.inputs.Network.src.version != "4.0.1")
+            "The composerLock file and vendorHash for Network were last updated in a different version. Please verify that it's still correct and update"
+          )
+            config.services.phpfpm.pools.mediawiki.phpPackage.buildComposerProject
+            {
+              pname = "Network";
+              version = "0.0.3665";
+              src = project.inputs.Network.src;
+              vendorHash = "sha256-2lSL9gGPx6Ref8dY7XQwbwXNPCZ7wC6XyDoTTXDkwoA=";
+              composerLock = ./wiki/Network.composer.lock;
+            }
         }/share/php/Network"; # for page connection graphs
         OpenIDConnect = lib.mkIf config.ingredient.wiki.wiki.enablePublicInternet "${
-          pkgs.php.buildComposerProject {
-            pname = "OpenIDConnect";
-            version = "0.0.3665";
-            src = project.inputs.OpenIDConnect.src;
-            vendorHash = "sha256-DjxyOK21tbBEj6hFfhVNDxeNu4a26hvMRHgD/u24ZT0=";
-            composerLock = ./wiki/OpenIDConnect.composer.lock;
+          (lib.warnIf
+            (project.inputs.OpenIDConnect.src.revision != "2b1e863db957c5a5c0e6d2d11075ff4815f2f010")
+            "The composerLock file and vendorHash for OpenIDConnect were last updated in a different revision. Please verify that it's still correct and update"
+          )
+            pkgs.php.buildComposerProject
+            {
+              pname = "OpenIDConnect";
+              version = "0.0.3665";
+              src = project.inputs.OpenIDConnect.src;
+              vendorHash = "sha256-vTn4+v2Xx6tbQOYdSgzO8cXVpHaFwGRXsbycYkwCgOk=";
+              composerLock = ./wiki/OpenIDConnect.composer.lock;
 
-            postInstall = ''
-              cat sql/postgres/ChangePrimaryKey.sql | sed 's/DROP  INDEX "primary"/ALTER TABLE openid_connect DROP CONSTRAINT openid_connect_pkey/' > $out/share/php/OpenIDConnect/sql/postgres/ChangePrimaryKey.sql
-            '';
-          }
+              postInstall = ''
+                cat sql/postgres/ChangePrimaryKey.sql | sed 's/DROP  INDEX "primary"/ALTER TABLE openid_connect DROP CONSTRAINT openid_connect_pkey/' > $out/share/php/OpenIDConnect/sql/postgres/ChangePrimaryKey.sql
+              '';
+            }
         }/share/php/OpenIDConnect";
         ParserFunctions = null;
         PluggableAuth = lib.mkIf config.ingredient.wiki.wiki.enablePublicInternet project.inputs.PluggableAuth.src; # needed for OIDC

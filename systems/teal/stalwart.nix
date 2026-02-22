@@ -28,18 +28,18 @@ let
 in
 {
   disabledModules = [ "services/mail/stalwart-mail.nix" ];
-  imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart-mail.nix" ];
+  imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart.nix" ];
 
   config = {
-    services.stalwart-mail = {
+    services.stalwart = {
       enable = true;
       openFirewall = true;
 
       package =
         if project.lib.ci then
-          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail
+          project.inputs.nixos-unstable.result.x86_64-linux.stalwart
         else
-          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-mail-enterprise;
+          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-enterprise;
 
       settings = {
         config.local-keys = [
@@ -140,7 +140,7 @@ in
       };
     };
 
-    systemd.services.stalwart-mail = {
+    systemd.services.stalwart = {
       requires = [ "postgresql.service" ];
       wants = [
         "acme-mail.freshly.space.service"
@@ -199,14 +199,14 @@ in
               "autodiscover.${domain}"
               "mta-sts.${domain}"
             ];
-            reloadServices = [ "stalwart-mail.service" ];
+            reloadServices = [ "stalwart.service" ];
           };
         }))
         builtins.listToAttrs
       ])
       // {
         "mail.freshly.space" = {
-          reloadServices = [ "stalwart-mail.service" ];
+          reloadServices = [ "stalwart.service" ];
           group = "nginx+stalwart-mail";
         };
       };

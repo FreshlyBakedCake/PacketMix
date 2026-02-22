@@ -4,9 +4,5 @@
 
 { project, ... }:
 {
-  imports = [
-    project.inputs.impermanence.result.homeManagerModules.impermanence
-  ];
-
   clicks.storage.impermanence.enable = true;
 }

@@ -21,36 +21,49 @@
 
     database.createLocally = true;
 
-    nginx.enable = true;
-
     settings = {
-      SERVER_HOST = "127.0.0.1";
-      SERVER_PORT = 1039;
+      server = {
+        host = "127.0.0.1";
+        port = 1039;
 
-      PDS_HOSTNAME = "at.freshly.space";
+        hostname = "at.freshly.space";
 
-      MAIL_FROM_NAME = "Freshly PDS";
-      MAIL_FROM_ADDRESS = "pds@freshly.space";
-      SENDMAIL_PATH = "${pkgs.msmtp}/bin/sendmail";
+        available_user_domains = [
+          "at.freshly.space"
+          "at.freshlybakedca.ke"
+        ];
 
-      VALKEY_URL = "unix://${config.services.redis.servers.tranquil-pds.unixSocket}";
+        age_assurance_override = true;
+      };
 
-      BACKUP_ENABLED = "true";
+      email = {
+        from_name = "Freshly PDS";
+        from_address = "pds@freshly.space";
+        sendmail_path = "${pkgs.msmtp}/bin/sendmail";
+      };
 
-      ACCEPTING_REPO_IMPORTS = "true";
+      cache.valkey_url = "unix://${config.services.redis.servers.tranquil-pds.unixSocket}";
 
-      INVITE_CODE_REQUIRED = "true";
-      AVAILABLE_USER_DOMAINS = "at.freshly.space,at.freshlybakedca.ke";
-      ENABLE_SELF_HOSTED_DID_WEB = "false";
-
-      PDS_AGE_ASSURANCE_OVERRIDE = "true";
       # Our PDS is private
       # Therefore, we have verified the age of everyone on the service is over the age of majority - and we didn't need KWS to do it!
 
-      SSO_OIDC_ENABLED = "true";
-      SSO_OIDC_CLIENT_ID = "pds";
-      SSO_OIDC_ISSUER = "https://idm.freshly.space/oauth2/openid/pds/";
-      SSO_OIDC_NAME = "Freshly IDM";
+      sso.oidc = {
+        enabled = true;
+        client_id = "pds";
+        client_secret = ""; # Specified in an environment variable - tranquil makes us put it here anyway..?
+        issuer = "https://idm.freshly.space/oauth2/openid/pds/";
+        display_name = "Freshly IDM";
+      };
+
+      firehose.crawlers = [
+        "https://bsky.network"
+        "https://relay.fire.hose.cam"
+        "https://relay3.fr.hose.cam"
+        "https://relay.upcloud.world"
+        "https://atproto.africa"
+        "https://relay1.us-east.bsky.network"
+        "https://relay1.us-west.bsky.network"
+      ];
     };
   };
 

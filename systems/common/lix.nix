@@ -13,7 +13,13 @@
     (import "${project.inputs.lix-module.result}/module.nix" { lix = project.inputs.lix.src; })
   ];
 
-  nix.settings.experimental-features = [ "nix-command" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" ];
+    deprecated-features = [
+      "broken-string-escape"
+      "or-as-identifier"
+    ];
+  };
 
   nix.gc = {
     automatic = true;

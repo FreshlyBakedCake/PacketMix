@@ -7,6 +7,14 @@ let
   cfg = config.clicks.storage.impermanence;
 in
 {
+  options.home.persistence = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        freeformType = lib.types.anything;
+      }
+    );
+  };
+
   options.clicks.storage.impermanence = {
     enable = lib.mkEnableOption "Enable impermanent home files, this requires you to be using the NixOS to home connection";
 
@@ -41,8 +49,7 @@ in
 
   config = {
     home = lib.optionalAttrs cfg.enable {
-      persistence."/persist/${cfg.volumes.persistent_data}/${config.home.homeDirectory}" = {
-        allowOther = true;
+      persistence."/persist/${cfg.volumes.persistent_data}" = {
         inherit (cfg.persist) directories files;
       };
     };

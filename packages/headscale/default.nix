@@ -14,7 +14,7 @@
         ...
       }:
       let
-        vendorHash = "sha256-VOi4PGZ8I+2MiwtzxpKc/4smsL5KcH/pHVkjJfAFPJ0=";
+        vendorHash = "sha256-jkeB9XUTEGt58fPOMpE4/e3+JQoMQTgf0RlthVBmfG0=";
         commitHash = config.inputs.headscale.src.revision;
         headscaleVersion = commitHash;
       in
