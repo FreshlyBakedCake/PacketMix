@@ -113,7 +113,11 @@
             # General Keybinds
             "${mod}+Q".action.close-window = [ ];
             "${mod}+Shift+Q".action.quit = [ ];
-            "${mod}+Return".action.spawn = "${pkgs.ghostty}/bin/ghostty";
+            "${mod}+Return".action.spawn = [
+              "/usr/bin/env"
+              "GTK_IM_MODULE=simple"
+              "${pkgs.ghostty}/bin/ghostty"
+            ];
             "${mod}+L".action.spawn = [
               "sh"
               "-c"
