@@ -37,7 +37,7 @@
     lockCommand = lib.mkOption {
       type = lib.types.str;
       description = "The command run when you lock your computer, or when it is locked automatically";
-      default = ''${config.programs.niri.package}/bin/niri msg action do-screen-transition && ${pkgs.swaylock}/bin/swaylock -i ${config.ingredient.niri.niri.lockscreen} -s fill -f'';
+      default = "${config.programs.niri.package}/bin/niri msg action do-screen-transition && ${pkgs.swaylock}/bin/swaylock -i ${config.ingredient.niri.niri.lockscreen} -s fill -f";
     };
     overviewBackground = lib.mkOption {
       type = lib.types.path;

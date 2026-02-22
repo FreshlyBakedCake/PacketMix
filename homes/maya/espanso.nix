@@ -67,11 +67,11 @@
         replace = "productivity: r&d-productivity: tea-time-training: tea-time-training: ";
       }
       {
-        trigger = '':tah'';
+        trigger = ":tah";
         replace = "productivity: r&d-productivity: project-admin: internal-meeting: all hands meeting";
       }
       {
-        trigger = '':tcwm'';
+        trigger = ":tcwm";
         replace = "productivity: r&d-productivity: project-admin: internal-meeting: cool-weekly-meeting";
       }
     ];
