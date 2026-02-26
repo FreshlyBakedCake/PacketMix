@@ -456,9 +456,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "aa042dbd9152c99e5a8db51bcf87306737423b9e",
-      "url": "https://github.com/nilla-nix/cli/archive/aa042dbd9152c99e5a8db51bcf87306737423b9e.tar.gz",
-      "hash": "sha256-cPdYYXhCsDllVgq+gs5Wqhb41bFtKWHlkTvjOJv7its="
+      "revision": "7bd8639687567e3629471d952b6b732691c0890b",
+      "url": "https://github.com/nilla-nix/cli/archive/7bd8639687567e3629471d952b6b732691c0890b.tar.gz",
+      "hash": "sha256-lNxeYMSLTbe/yp4ElIujaP1bB0BfhGLt+6xgV2XWUtE="
     },
     "nilla-home": {
       "type": "Git",
