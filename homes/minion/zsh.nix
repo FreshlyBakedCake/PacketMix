@@ -20,7 +20,6 @@
   clicks.storage.impermanence.persist.directories = [
     ".cache/antidote"
     ".cache/zsh4humans"
-    ".gtimelog"
     ".terminfo"
   ];
 }
