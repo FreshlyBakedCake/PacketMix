@@ -18,6 +18,9 @@ in
       "personal"
       "portable"
     ];
+    modules = [
+      "${config.inputs.nixos-hardware.src}/framework/13-inch/12th-gen-intel"
+    ];
     args = {
       system = "x86_64-linux";
       project = config;

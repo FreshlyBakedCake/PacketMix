@@ -537,6 +537,18 @@
       "url": "https://github.com/ners/nix-monitored/archive/60f3baa4701d58eab86c2d1d9c3d7e820074d461.tar.gz",
       "hash": "sha256-Z8PknjkmIr/8ZCH+dmc2Pc+UltiOr7/oKg37PXuVvuU="
     },
+    "nixos-hardware": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/NixOS/nixos-hardware"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "41c6b421bdc301b2624486e11905c9af7b8ec68e",
+      "url": null,
+      "hash": "sha256-qwcDBtrRvJbrrnv1lf/pREQi8t2hWZxVAyeMo7/E9sw="
+    },
     "nixos-prev": {
       "type": "Channel",
       "name": "nixos-25.05",
