@@ -1,0 +1,34 @@
+From 8e258fb34e8127ec0ebe7d4ac277abcc33dea638 Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sun, 8 Mar 2026 05:13:07 +0530
+Subject: [PATCH] multilogging: part-7: get TimeWindow totals for each section
+
+---
+ src/gtimelog/timelog.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/src/gtimelog/timelog.py b/src/gtimelog/timelog.py
+index 5a99142..51c2990 100644
+--- a/src/gtimelog/timelog.py
++++ b/src/gtimelog/timelog.py
+@@ -378,6 +378,17 @@ class TimeWindow(object):
+                 total_work += duration
+         return total_work, total_slacking
+ 
++    def totals_by_section(self):
++        total_work = dict()
++        for start, stop, duration, entry in self.all_entries():
++            if ':' in entry:
++                section = entry.split(':')[0]
++                if section in total_work:
++                    total_work[section] += duration
++                else:
++                    total_work[section] = duration
++        return total_work
++
+     def icalendar(self, output):
+         """Create an iCalendar file with activities."""
+         output.write("BEGIN:VCALENDAR\n")
+-- 
+GitLab
+

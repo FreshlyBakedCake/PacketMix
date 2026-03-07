@@ -1,0 +1,152 @@
+From 6e5b82bec08dca255385c83ecbd4a13ff232558e Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sun, 8 Mar 2026 05:16:50 +0530
+Subject: [PATCH] multilogging: part-8: have a clean footer with d/w/m logs per
+ section
+
+---
+ src/gtimelog/main.py | 119 +++++++++----------------------------------
+ 1 file changed, 23 insertions(+), 96 deletions(-)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index 72be57d..91a34e9 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -614,103 +614,30 @@ class MainWindow(object):
+         buffer = self.log_buffer
+         self.footer_mark = buffer.create_mark('footer', buffer.get_end_iter(),
+                                               True)
+-        total_work, total_slacking = self.timelog.window.totals()
+-        weekly_window = self.weekly_window()
+-        week_total_work, week_total_slacking = weekly_window.totals()
+-        work_days_this_week = weekly_window.count_days()
+-
+-        self.w('\n')
+-        self.w('Total work done today: ')
+-        self.w(format_duration(total_work), 'duration')
+-        self.w(' (')
+-        self.w(format_duration(week_total_work), 'duration')
+-        self.w(' this week')
+-        if work_days_this_week:
+-            per_diem = week_total_work / work_days_this_week
+-            self.w(', ')
+-            self.w(format_duration(per_diem), 'duration')
+-            self.w(' per day')
+-        self.w(')\n')
+-        self.w('Total slacking today: ')
+-        self.w(format_duration(total_slacking), 'duration')
+-        self.w(' (')
+-        self.w(format_duration(week_total_slacking), 'duration')
+-        self.w(' this week')
+-        if work_days_this_week:
+-            per_diem = week_total_slacking / work_days_this_week
+-            self.w(', ')
+-            self.w(format_duration(per_diem), 'duration')
+-            self.w(' per day')
+-        self.w(')\n')
+-        time_left = self.time_left_at_work(total_work)
+-        if time_left is not None:
+-            time_to_leave = datetime.datetime.now(TZOffset()) + time_left
+-            if time_left < datetime.timedelta(0):
+-                time_left = datetime.timedelta(0)
+-            self.w('Time left at work today: ')
+-            self.w(format_duration(time_left), 'duration')
+-            self.w(' (till ')
+-            self.w(time_to_leave.strftime('%H:%M'), 'time')
+-            self.w(')\n')
+-        week_time_left = self.week_time_left_at_work(week_total_work)
+-        hours_per_week = datetime.timedelta(hours=self.settings.hours)
+-        if week_time_left is not None and \
+-                week_time_left <= hours_per_week:
+-            time_to_leave = datetime.datetime.now(TZOffset()) + week_time_left
+-            if week_time_left < datetime.timedelta(0):
+-                week_time_left = datetime.timedelta(0)
+-            self.w('Time left at work for the week: ')
+-            self.w(format_duration(week_time_left), 'duration')
+-            self.w(' (till ')
+-            self.w(time_to_leave.strftime('%H:%M'), 'time')
+-            self.w(')\n')
+-
+-        if True:
+-            """If you work under 35 hours some weeks and catch up in future
+-            weeks, you should be ashamed of yourself, but you might find this
+-            useful."""
+-            monthly_window = self.monthly_window()
+-            month_total_work, _ = monthly_window.totals()
+-
+-            (d, h) = divmod(as_hours(month_total_work), self.settings.hours)
+-            h_delta = datetime.timedelta(seconds=(h * 60 * 60))
+-
+-            self.w('Time worked this month: ')
+-            self.w('%d days %s' % (d, format_duration(h_delta)), 'duration')
+-            # TODO: it'd be nice if this fetched holidays from Chronophage, but
+-            # I have no idea if there's API for that.
+-            self.w(' (out of ')
+-            self.w('%d' % self.weekdays_in_month(), 'time')
+-            self.w(' days)\n')
+-
+-            # Find out the last day of the previous month.
+-            first_of_current = self.timelog.day.replace(day=1)
+-            month_ago = first_of_current - datetime.timedelta(days=1)
+-
+-            monthly_window = self.monthly_window(month_ago)
+-            month_total_work, _ = monthly_window.totals()
+-            (d, h) = divmod(as_hours(month_total_work), self.settings.hours)
+-            h_delta = datetime.timedelta(hours=h)
+-            self.w('Time worked last month: ')
+-            self.w('%d days %s' % (d, format_duration(h_delta)), 'duration')
+-            self.w(' (out of ')
+-            self.w('%d' % self.weekdays_in_month(month_ago), 'time')
+-            self.w(' days)')
++        weekly_window    = self.weekly_window()
++        monthly_window   = self.monthly_window()
+ 
+-        if self.settings.show_office_hours:
+-            self.w('\nAt office today: ')
+-            hours = datetime.timedelta(hours=self.settings.hours)
+-            total = total_slacking + total_work
+-            self.w("%s " % format_duration(total), 'duration')
+-            self.w('(')
+-            if total > hours:
+-                self.w(format_duration(total - hours), 'duration')
+-                self.w(' overtime')
+-            else:
+-                self.w(format_duration(hours - total), 'duration')
+-                self.w(' left')
+-            self.w(')')
+ 
++        if self.settings.show_office_hours:
++            total_work       = self.timelog.window.totals_by_section()
++            week_total_work  = weekly_window.totals_by_section()
++            month_total_work = monthly_window.totals_by_section()
++
++            self.w('\n')
++            for section in month_total_work:
++                self.w(section + ': ' + '( ')
++                section_daily_work = total_work[section] if section in total_work else datetime.timedelta(0)
++                section_weekly_work = week_total_work[section] if section in week_total_work else datetime.timedelta(0)
++                section_monthly_work = month_total_work[section] if section in month_total_work else datetime.timedelta(0)
++                self.w(format_duration(section_daily_work), 'duration')
++                self.w('  ..  ')
++                self.w(format_duration(section_weekly_work), 'duration')
++                self.w('  ..  ')
++                self.w(format_duration(section_monthly_work), 'duration')
++                self.w(' )')
++                self.w('\n')
++
++        weekly_hours, _ = weekly_window.totals()
+         # We poke the user about having last week's logging fixed up
+         # at the beginning of each week, unless we're about to start a
+         # new month, in which case we poke the user about last month.
+@@ -726,7 +653,7 @@ class MainWindow(object):
+             self.push_reminder(msg, self.ack_monthly_reminder,
+                                "Edit timelog", self.edit_timelog)
+             self.monthly_report_reminder_set = True
+-        elif (as_hours(week_total_work) > 3
++        elif (as_hours(weekly_hours) > 3
+                 and not self.weekly_report_reminder_set
+                 and not self.weekly_report_reminder_acked
+                 and not self.monthly_report_reminder_set):
+-- 
+GitLab
+

@@ -1,0 +1,66 @@
+From 3fe14901eec20089b12b3f1b051d07557a507a22 Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:39:45 +0530
+Subject: [PATCH] multilogging: part-3: use section properties in SubmitWindow
+
+We won't be submitting for all the sections "at the same time", so we
+make the SubmitWindow class 'section specific' i.e. one SubmitWindow
+will submit the logs for one section, therefore it gets all the
+required variables like server_cert, auth_header... etc from the
+section which it represents.
+
+As gtimelog starts, MainWindow creates a SubmitWindow object for the
+'submittable' section.
+---
+ src/gtimelog/main.py | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index 1d6abf7..cdc8bc3 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -1700,15 +1700,17 @@ COL_ERROR_MSG = 7
+ class SubmitWindow(object):
+     """The window for submitting reports over the http interface"""
+ 
+-    def __init__(self, tree, settings, application=None):
+-        self.settings = settings
++    def __init__(self, tree, section, application=None):
++        self.section = section
+         self.progress_window = tree.get_object("progress_window")
+         self.progressbar = tree.get_object("progressbar")
+         tree.get_object("hide_button").connect(
+             "clicked", self.hide_progress_window)
+         self.window = tree.get_object("submit_window")
+         self.main_window = tree.get_object("main_window")
+-        self.report_url = settings.report_to_url
++        self.report_url = section['report_to_url']
++        self.server_cert = section['server_cert']
++        self.auth_header = section['auth_header']
+ 
+         tree.get_object("submit_report").connect(
+             "clicked", self.on_submit_report)
+@@ -1862,16 +1864,16 @@ class SubmitWindow(object):
+             )
+             return
+ 
+-        if self.settings.server_cert and not os.path.exists(self.settings.server_cert):
++        if self.server_cert and not os.path.exists(self.server_cert):
+             print("Server certificate file '%s' not found" %
+-                  self.settings.server_cert)
++                  self.server_cert)
+ 
+         message = Soup.Message.new('POST', self.report_url)
+         message.get_request_headers().set_content_type(
+             'application/x-www-form-urlencoded', None)
+ 
+-        if self.settings.auth_header:
+-            message.get_request_headers().append('Authorization', self.settings.auth_header)
++        if self.auth_header:
++            message.get_request_headers().append('Authorization', self.auth_header)
+ 
+         from gi.repository import GLib
+         body_bytes = GLib.Bytes.new(urlencode(data).encode())
+-- 
+GitLab
+

@@ -1,0 +1,171 @@
+From 8ae1b751a1ce0b571969c80968455afc0584c9f2 Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:14:28 +0530
+Subject: [PATCH] multilogging: part-1: add multiple sections with different
+ settings
+
+Before this change, we had a single [gtimelog] section in the
+gtimelogrc with abilities to report to a single server. Any entry
+which didn't match the tasks in the remote tasks file was considered
+an errorneous, that broke the nice "submit my report to the server"
+workflow.
+
+            [gtimelog]
+            list-email = activity-list@example.com
+            mailer = st -e nvim %s
+            name = John Doe
+            task_list_expiry = 1 day
+            task_list_url = https://example.com/api/tasks
+            report_to_url = https://example.com/api/timesheet
+            auth_header = Token 12344321123443212344321
+            server_cert = /etc/ssl/certs/ca-certificates.crt
+            edit_task_list_cmd = st -e nvim %s
+            spreadsheet = oocalc %s
+            editor = st -e nvim %s
+            virtual_midnight = 04:00
+            hours = 08
+            show_office_hours = True
+            gtk-completion = False
+            remind_idle = 10 minutes
+
+Here we are introducing the concept of sections i.e. there will be the
+[gtimelog] section with the common config & then there are various
+sections like [office] or [studies] or [dailies]. These sections define
+the remaining properties from the original config, ones which specify
+the task_list_url, the report_to_url etc..
+
+            [gtimelog]
+            list-email = activity-list@example.com
+            mailer = st -e nvim %s
+            name = John Doe
+            edit_task_list_cmd = st -e nvim %s
+            spreadsheet = oocalc %s
+            editor = st -e nvim %s
+            virtual_midnight = 04:00
+            hours = 08
+            show_office_hours = True
+            gtk-completion = False
+            remind_idle = 10 minutes
+            autoarrival = True
+            submittable = office <----------- (important)
+
+            [office]
+            task_list_expiry = 1 day
+            task_list_url = https://example.com/api/tasks
+            report_to_url = https://example.com/api/timesheet
+            auth_header = Token 12344321123443212344321
+            server_cert = /etc/ssl/certs/ca-certificates.crt
+
+            [studies]
+            task_list_expiry =
+            task_list_url =
+            report_to_url =
+            auth_header =
+            server_cert =
+
+            [dailies]
+            task_list_expiry =
+            task_list_url =
+            report_to_url =
+            auth_header =
+            server_cert =
+
+            ....
+
+If, like the last sections in the above config, the task_list_url is
+not defined, then gtimelog looks for a ${section_name}.txt file in
+~/.gtimelog or GTIMELOG_HOME (if that's set).
+
+Take note of the `submittable` property in the [gtimelog] section. it
+specifies the name of the section which would be submittable. so you can
+have one official section (for work) & have others as private. or you
+can change it based on which section you want to submit logs for. We did
+it this way in order to keep the ui unchanged.
+---
+ src/gtimelog/settings.py | 50 +++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
+
+diff --git a/src/gtimelog/settings.py b/src/gtimelog/settings.py
+index d18ad0d..265fc1b 100644
+--- a/src/gtimelog/settings.py
++++ b/src/gtimelog/settings.py
+@@ -29,17 +29,18 @@ class Settings(object):
+ 
+     hours = 8
+     virtual_midnight = datetime.time(2, 0, tzinfo=TZOffset())
+-
+-    task_list_url = ''
+-    task_list_expiry = '24 hours'
+-
+     show_office_hours = True
+-
+-    report_to_url = ""
+-
+     remind_idle = '10 minutes'
+-    server_cert = ''
+-    auth_header = ''  # optional Authorization header for back-end calls (e.g: 'Bearer token')
++    # we are defining some constraints. `submittable` means that only one
++    # section can be submittable at a time. that is, you can have multiple
++    # local sections for time logging and one remote section which you can
++    # submit to & fetch from.
++    # this requires minimal changes. and if we want to make a different section
++    # submittable, we can do that by changing the submittable value in the config.
++    # or if we want all of them to be submittable, we can simply loop over all the
++    # sections, make them submittable & complete the submittion process one 
++    # section at a time.
++    submittable = 'office'
+ 
+     # Should we create '-automatic arrival-' marks in the log?
+     autoarrival = True
+@@ -59,15 +60,8 @@ class Settings(object):
+         config.set('gtimelog', 'hours', str(self.hours))
+         config.set('gtimelog', 'virtual_midnight',
+                    self.virtual_midnight.strftime('%H:%M'))
+-        config.set('gtimelog', 'task_list_url', self.task_list_url)
+-        config.set('gtimelog', 'task_list_expiry', self.task_list_expiry)
+-        config.set('gtimelog', 'show_office_hours',
+-                   str(self.show_office_hours))
+-        config.set('gtimelog', 'report_to_url', self.report_to_url)
+-        config.set('gtimelog', 'remind_idle', self.remind_idle)
+-        config.set('gtimelog', 'server_cert', self.server_cert)
+-        config.set('gtimelog', 'autoarrival', str(self.autoarrival))
+-        config.set('gtimelog', 'auth_header', self.auth_header)
++        config.set('gtimelog', 'show_office_hours', str(self.show_office_hours))
++        config.set('gtimelog', 'submittable', self.submittable)
+ 
+         return config
+ 
+@@ -86,16 +80,24 @@ class Settings(object):
+         self.hours = config.getfloat('gtimelog', 'hours')
+         self.virtual_midnight = parse_time(config.get('gtimelog',
+                                                       'virtual_midnight'))
+-        self.task_list_url = config.get('gtimelog', 'task_list_url')
+-        self.task_list_expiry = parse_timedelta(config.get('gtimelog', 'task_list_expiry'))
+         self.show_office_hours = config.getboolean('gtimelog',
+                                                    'show_office_hours')
+-        self.report_to_url = config.get('gtimelog', 'report_to_url')
+         self.remind_idle = parse_timedelta(config.get('gtimelog', 'remind_idle'))
+-
+-        self.server_cert = os.path.expanduser(config.get('gtimelog', 'server_cert'))
+         self.autoarrival = config.getboolean('gtimelog', 'autoarrival')
+-        self.auth_header = config.get('gtimelog', 'auth_header')
++        self.submittable = config.get('gtimelog', 'submittable')
++        self.sections = dict()
++
++        for section in config.sections():
++            if (section == 'gtimelog') or (section in self.sections):
++                continue
++            self.sections[section] = dict()
++            self.sections[section]['name'] = section
++            self.sections[section]['task_list_url'] = config.get(section, 'task_list_url')
++            self.sections[section]['task_list_expiry'] = parse_timedelta(config.get(section, 'task_list_expiry'))
++            self.sections[section]['report_to_url'] = config.get(section, 'report_to_url')
++            self.sections[section]['auth_header'] = config.get(section, 'auth_header')
++            self.sections[section]['server_cert'] = config.get(section, 'server_cert')
++
+         # Anything shorter than 2 minutes will tick every minute
+         # if self.remind_idle > datetime.timedelta (0, 120):
+         #    self.remind_idle = datetime.timedelta (0, 120)
+-- 
+GitLab
+

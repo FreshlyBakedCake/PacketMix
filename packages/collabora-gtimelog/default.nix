@@ -21,11 +21,24 @@
         harfbuzz,
         lib,
         libsecret,
-        libsoup_2_4,
+        libsoup_3,
         pango,
       }:
       (gtimelog.overrideAttrs (oldAttrs: {
         src = config.inputs.collabora-gtimelog.src;
+
+        patches = (oldAttrs.patches or [ ]) ++ [
+          ./printfdebugging/gtimelog-home.patch
+          ./printfdebugging/multilogging/1-multiple-configs.patch
+          ./printfdebugging/multilogging/2-task-section-properties.patch
+          ./printfdebugging/multilogging/3-submit-sections.patch
+          ./printfdebugging/multilogging/4-section-logs.patch
+          ./printfdebugging/multilogging/5-submittable-sections.patch
+          ./printfdebugging/multilogging/6-multiple-tasklists.patch
+          ./printfdebugging/multilogging/7-section-totals.patch
+          ./printfdebugging/multilogging/8-section-footer.patch
+        ];
+
         makeWrapperArgs = [
           "--set GIO_MODULE_DIR ${
             lib.makeSearchPathOutput "out" "lib/gio/modules" ([
@@ -40,9 +53,7 @@
               gtk3
               harfbuzz
               libsecret
-              (libsoup_2_4.overrideAttrs {
-                meta.knownVulnerabilities = [ ]; # FIXME: update libsoup to _3
-              })
+              libsoup_3
               pango
             ]
           }"

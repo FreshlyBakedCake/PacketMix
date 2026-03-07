@@ -1,0 +1,60 @@
+From 3c1f75d896661232d5ff94d166523aabf649cb45 Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:49:51 +0530
+Subject: [PATCH] multilogging: part-5: use the submittable section's
+ properties by default
+
+---
+ src/gtimelog/main.py | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index a0cef9a..fd83d47 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -267,7 +267,7 @@ class MainWindow(object):
+         self.calendar.connect("day_selected_double_click",
+                               self.on_calendar_day_selected_double_click)
+         self.submit_window = SubmitWindow(
+-            builder, self.settings, application=self)
++                builder, self.settings.sections[self.settings.submittable], application=self)
+         self.main_window = builder.get_object("main_window")
+         self.main_window.connect("delete_event", self.delete_event)
+         self.main_window.set_icon_from_file(ICON_FILE)
+@@ -1220,7 +1220,8 @@ class MainWindow(object):
+         self.set_up_history()
+         self.populate_log()
+ 
+-        if self.settings.report_to_url == "":
++        report_to_url = self.settings.sections[self.settings.submittable]['report_to_url']
++        if report_to_url == "":
+             dialog = Gtk.MessageDialog(
+                 self.main_window,
+                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+@@ -1233,8 +1234,8 @@ class MainWindow(object):
+                 "which is necessary for timesheet uploading.')
+             dialog.connect('response', lambda d, i: dialog.destroy())
+             dialog.run()
+-        elif not self.settings.report_to_url.strip().startswith("https") and \
+-                "localhost" not in self.settings.report_to_url:
++        elif not report_to_url and \
++                "localhost" not in report_to_url:
+             dialog = Gtk.MessageDialog(
+                 self.main_window,
+                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+@@ -2100,9 +2101,10 @@ class Application(Gtk.Application):
+             settings.save(settings_file)
+         else:
+             settings.load(settings_file)
+-            if settings.server_cert and os.path.exists(settings.server_cert):
++            server_cert = settings.sections[settings.submittable]['server_cert']
++            if server_cert and os.path.exists(server_cert):
+                 try:
+-                    tls_db = Gio.TlsFileDatabase.new(settings.server_cert)
++                    tls_db = Gio.TlsFileDatabase.new(server_cert)
+                     soup_session.set_property('tls-database', tls_db)
+                 except GLib.Error as e:
+                     log.error("Failed to set SSL certificate: %s", e)
+-- 
+GitLab
+

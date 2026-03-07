@@ -1,0 +1,39 @@
+From 8ca25d3b1532903fa62d7571299a24a5389c307f Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:43:41 +0530
+Subject: [PATCH] multilogging: part-4: identify section specific logs & skip
+ the rest
+
+Now identify the logs which belong to this section and remove the
+prefixed section name so that we can send them to the server in the
+form which it expects them to be.
+---
+ src/gtimelog/main.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index cdc8bc3..a0cef9a 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -1943,7 +1943,18 @@ class SubmitWindow(object):
+         date_dict = {}
+ 
+         regex = re.compile(r': +')
++        section_name = self.section['name']
+         for (start, finish, duration, entry) in self.timewindow.all_entries():
++            """
++                when something is logged, the first tag is the section's name. it
++                marks various log entries with the section they belog to. since a
++                SubmitWindow belongs to a particular section, we only count the
++                entries which belong to the section.
++            """
++            if not entry.startswith(section_name):
++                continue
++
++            entry = entry.removeprefix(section_name + ': ')
+             # Trim multiple spaces after separators
+             entry = regex.sub(': ', entry).strip()
+             # Neatly store the things under the day on which they started
+-- 
+GitLab
+

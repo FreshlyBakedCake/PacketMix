@@ -1,0 +1,130 @@
+From 5a260f340048a669379efbf77bad867ff8c958e3 Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:51:33 +0530
+Subject: [PATCH] multilogging: part-6: store multiple tasklists
+
+Since now we have multiple sections, we need multiple tasklists,
+one per section.
+---
+ src/gtimelog/main.py | 60 ++++++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 24 deletions(-)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index fd83d47..72be57d 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -202,11 +202,11 @@ class MainWindow(object):
+     # URL to use for Help -> Online Documentation
+     help_url = "https://gtimelog.org"
+ 
+-    def __init__(self, timelog, settings, tasks):
++    def __init__(self, timelog, settings, tasklist):
+         """Create the main window."""
+         self.timelog = timelog
+         self.settings = settings
+-        self.tasks = tasks
++        self.tasklist = tasklist
+         self.tray_icon = None
+         self.last_tick = None
+         self.footer_mark = None
+@@ -282,9 +282,10 @@ class MainWindow(object):
+             self.task_pane.hide()
+         self.task_pane_info_label = builder.get_object("task_pane_info_label")
+         self.task_pane_spinner = builder.get_object("task_pane_spinner")
+-        self.tasks.loading_callback = self.task_list_loading
+-        self.tasks.loaded_callback = self.task_list_loaded
+-        self.tasks.error_callback = self.task_list_error
++        for tasks in self.tasklist:
++            tasks.loading_callback = self.task_list_loading
++            tasks.loaded_callback = self.task_list_loaded
++            tasks.error_callback = self.task_list_error
+         self.task_list = builder.get_object("task_list")
+         self.task_store = Gtk.TreeStore(str, str, bool)
+         task_filter = builder.get_object("task_filter")
+@@ -838,16 +839,17 @@ class MainWindow(object):
+     def update_tasks_dict(self):
+         task_list = {}
+         self.task_store.clear()
+-        for item in self.tasks.items:
+-            parent = task_list
+-            for pos in (s.strip() for s in item.split(":")):
+-                # Prevent blank labels caused by :: in config
+-                if not pos:
+-                    continue
+-                if pos not in parent:
+-                    parent[pos] = {}
+-                parent = parent[pos]
+-        self.tasks_dict = task_list
++        for tasks in self.tasklist:
++            for item in tasks.items:
++                parent = task_list
++                for pos in (s.strip() for s in item.split(":")):
++                    # Prevent blank labels caused by :: in config
++                    if not pos:
++                        continue
++                    if pos not in parent:
++                        parent[pos] = {}
++                    parent = parent[pos]
++            self.tasks_dict = task_list
+ 
+     def set_up_task_list(self):
+         """Set up a fully hierarchical task list
+@@ -1492,7 +1494,8 @@ class MainWindow(object):
+             return False
+ 
+     def on_task_list_reload(self, event):
+-        self.tasks.reload()
++        for tasks in self.tasklist:
++            tasks.reload()
+         self.set_up_task_list()
+ 
+     def task_list_loading(self):
+@@ -1667,8 +1670,9 @@ class MainWindow(object):
+                         self.resume_from_idle()
+ 
+         # Reload task list if necessary
+-        if self.tasks.check_reload():
+-            self.set_up_task_list()
++        for tasks in self.tasklist:
++            if tasks.check_reload():
++                self.set_up_task_list()
+ 
+         self.last_tick = now
+         last_time = self.timelog.window.last_time()
+@@ -2086,6 +2090,13 @@ class Application(Gtk.Application):
+ 
+         self.connect('activate', Application._activate)
+ 
++    def get_tasks_for_section(self,section_name, section):
++        if section['task_list_url']:
++            tasks = RemoteTaskList(section_name, section)
++        else:
++            tasks = TaskList(section_name, section)
++        return tasks
++
+     def _activate(self):
+         if self.main_window is not None:
+             self.main_window.main_window.present()
+@@ -2110,12 +2121,13 @@ class Application(Gtk.Application):
+                     log.error("Failed to set SSL certificate: %s", e)
+         timelog = TimeLog(os.path.join(configdir, 'timelog.txt'),
+                           settings.virtual_midnight, settings.autoarrival)
+-        if settings.task_list_url:
+-            tasks = RemoteTaskList(settings,
+-                                   os.path.join(configdir, 'remote-tasks.txt'))
+-        else:
+-            tasks = TaskList(os.path.join(configdir, 'tasks.txt'))
+-        self.main_window = MainWindow(timelog, settings, tasks)
++        tasklist = []
++        for section in settings.sections:
++            tasks = self.get_tasks_for_section(section, settings.sections[section])
++            tasklist.append(tasks)
++
++        self.main_window = MainWindow(timelog, settings, tasklist)
++
+         self.add_window(self.main_window.main_window)
+ 
+         self.tray_icon = TrayIcon(self.main_window)
+-- 
+GitLab
+

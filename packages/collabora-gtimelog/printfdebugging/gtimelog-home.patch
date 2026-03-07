@@ -1,0 +1,30 @@
+From dd016a24054c9aba6fda596a6f2dc033a77688ec Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Fri, 6 Mar 2026 16:24:46 +0530
+Subject: [PATCH] gtimelogrc: check GTIMELOG_HOME for a different config
+ directory
+
+---
+ src/gtimelog/main.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/gtimelog/main.py b/src/gtimelog/main.py
+index 4611079..1d6abf7 100755
+--- a/src/gtimelog/main.py
++++ b/src/gtimelog/main.py
+@@ -95,7 +95,11 @@ mark_time("gtimelog imports done")
+ log = logging.getLogger('gtimelog')
+ 
+ # Where we store configuration and other interesting files.
+-configdir = os.path.expanduser('~/.gtimelog')
++gtimelog_home = os.environ.get("GTIMELOG_HOME")
++if gtimelog_home is not None:
++    configdir = os.path.expanduser(gtimelog_home)
++else:
++    configdir = os.path.expanduser('~/.gtimelog')
+ 
+ # This is for distribution packages
+ if not os.path.exists(UI_FILE):
+-- 
+GitLab
+

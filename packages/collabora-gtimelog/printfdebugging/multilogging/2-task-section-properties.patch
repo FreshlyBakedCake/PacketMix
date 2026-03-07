@@ -1,0 +1,101 @@
+From 6c9e6dd4d9811031ad297a6a1ce92d835ba5dbee Mon Sep 17 00:00:00 2001
+From: Sahil Gautam <printfdebugging@gmail.com>
+Date: Sat, 7 Mar 2026 00:29:55 +0530
+Subject: [PATCH] multilogging: part-2: use section properties in tasklists
+
+The TaskList and RemoteTaskList now use section properties to load their
+section specific tasks. By default the tasks are specified in 4 parts
+separated by ':'. As those tasks are being loaded, we prepend the line
+with a 'section_name: ', in a way marking the tasks by the section's
+name they belong to.
+
+This adds all the section's tasks (the treeview) under a root entry
+with the section's name. This way the tasks don't mix up on the side
+panel.
+---
+ src/gtimelog/collabora.py | 15 +++++++--------
+ src/gtimelog/timelog.py   | 14 +++++++++++---
+ 2 files changed, 18 insertions(+), 11 deletions(-)
+
+diff --git a/src/gtimelog/collabora.py b/src/gtimelog/collabora.py
+index 25895ef..a0520f5 100644
+--- a/src/gtimelog/collabora.py
++++ b/src/gtimelog/collabora.py
+@@ -24,13 +24,12 @@ class RemoteTaskList(TaskList):
+     Keeps a cached copy of the list in a local file, so you can use it offline.
+     """
+ 
+-    def __init__(self, settings, cache_filename):
+-        self.url = settings.task_list_url
+-        TaskList.__init__(self, cache_filename)
+-        self.settings = settings
++    def __init__(self, section_name, section):
++        self.url = section['task_list_url']
++        TaskList.__init__(self, section_name, section)
+ 
+         # Even better would be to use the Expires: header on the list itself I suppose...
+-        self.max_age = settings.task_list_expiry
++        self.max_age = section['task_list_expiry']
+ 
+         mtime = self.get_mtime()
+         if mtime:
+@@ -78,13 +77,13 @@ class RemoteTaskList(TaskList):
+         if self.loading_callback:
+             self.loading_callback()
+ 
+-        if self.settings.server_cert and not os.path.exists(self.settings.server_cert):
++        if self.section['server_cert'] and not os.path.exists(self.section['server_cert']):
+             print("Server certificate file not found")
+ 
+         message = Soup.Message.new('GET', self.url)
+ 
+-        if self.settings.auth_header:
+-            message.get_request_headers().append('Authorization', self.settings.auth_header)
++        if self.section['auth_header']:
++            message.get_request_headers().append('Authorization', self.section['auth_header'])
+ 
+         message.connect('authenticate', authenticator.http_auth_cb)
+         soup_session.send_and_read_async(
+diff --git a/src/gtimelog/timelog.py b/src/gtimelog/timelog.py
+index 341465e..5a99142 100644
+--- a/src/gtimelog/timelog.py
++++ b/src/gtimelog/timelog.py
+@@ -10,6 +10,12 @@ import re
+ 
+ from .tzoffset import TZOffset
+ 
++# todo: find a better way to do  this
++gtimelog_home = os.environ.get("GTIMELOG_HOME")
++if gtimelog_home is not None:
++    configdir = os.path.expanduser(gtimelog_home)
++else:
++    configdir = os.path.expanduser('~/.gtimelog')
+ 
+ def as_minutes(duration):
+     """Convert a datetime.timedelta to an integer number of minutes."""
+@@ -735,9 +741,11 @@ class TaskList(object):
+     loaded_callback = None
+     error_callback = None
+ 
+-    def __init__(self, filename):
++    def __init__(self, section_name, section):
+         """Construct from a filename with tasks."""
+-        self.filename = filename
++        self.section_name = section_name
++        self.section = section
++        self.filename = os.path.join(configdir, section_name + '.txt')
+         self.load()
+ 
+     def check_reload(self):
+@@ -771,7 +779,7 @@ class TaskList(object):
+                 for line in f:
+                     line = line.strip()
+                     if line and not line.startswith("#"):
+-                        self.items.add(line)
++                        self.items.add(self.section_name + ': ' + line)
+         except FileNotFoundError:
+             msg = "No existing tasks found at '{}'; starting with empty list"
+             print(msg.format(self.filename))
+-- 
+GitLab
+
