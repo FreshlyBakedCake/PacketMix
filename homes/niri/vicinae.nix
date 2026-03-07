@@ -103,4 +103,8 @@
   systemd.user.services.vicinae.Unit.After = [ "niri.service" ];
   systemd.user.services.vicinae.Install.WandedBy = lib.mkForce [ "niri.service" ];
   systemd.user.services.vicinae.Unit.PartOf = lib.mkForce [ ];
+
+  clicks.storage.impermanence.persist.directories = [
+    ".local/share/vicinae"
+  ];
 }
