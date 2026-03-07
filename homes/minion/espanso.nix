@@ -17,6 +17,10 @@
         trigger = "SJIC";
         replace = "St John's Innovation Center";
       }
+      {
+        trigger = "sg@c";
+        replace = "skyler.grey@collabora.com";
+      }
     ];
   };
   xdg.configFile."espanso/match/collabora-timesheets.yml".text = builtins.toJSON {
@@ -76,6 +80,10 @@
       {
         trigger = '':tcwm'';
         replace = "collabora: productivity: r&d-productivity: project-admin: internal-meeting: cool-weekly-meeting";
+      }
+      {
+        trigger = ":tidoc";
+        replace = "collabora: collabora: internal: communications: wiki: documentation writing";
       }
     ];
   };
