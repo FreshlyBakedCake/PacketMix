@@ -23,12 +23,10 @@
         "1035:3000"
       ];
 
-      image = "plate-container";
+      image = "plate";
       imageFile = project.inputs.plate.result.packages.container.result."x86_64-linux";
-
-      extraOptions = [
-        "--network=host"
-        "--mount type=bind,src=/run/postgres,dst=/mnt/postgres"
+      volumes = [
+        "/run/postgresql:/mnt/postgres"
       ];
 
       environmentFiles = [
@@ -38,13 +36,13 @@
   };
 
   services.nginx.enable = true;
-  services.nginx.virtualHosts."plate.thecoded.prof" = {
+  services.nginx.virtualHosts."plate.today" = {
     addSSL = true;
     enableACME = true;
     acmeRoot = null;
 
     locations."/" = {
-      proxyPass = "localhost:1035";
+      proxyPass = "http://localhost:1035";
       recommendedProxySettings = true;
       proxyWebsockets = true;
     };
