@@ -22,7 +22,8 @@
       "submodules": false,
       "revision": "12fb5f6d1a4bcfd1741b02fd60ec3c9ff6ec5faa",
       "url": null,
-      "hash": "sha256-yks79QtWndY2+ESKFcO2EPlj886TDLV+DldK+GpiMXI="
+      "hash": "sha256-yks79QtWndY2+ESKFcO2EPlj886TDLV+DldK+GpiMXI=",
+      "frozen": true
     },
     "AutoCreateCategoryPages": {
       "type": "GitRelease",
