@@ -7,6 +7,25 @@
   lib,
   ...
 }:
+let
+  inputs = {
+    # If we don't specify which inputs we want to link, we'll end up linking a lot of stuff that's functionally useless - even on systems that wouldn't otherwise download it!
+    inherit (project.inputs)
+      fenix
+      home-manager
+      home-manager-unstable
+      lix
+      nilla
+      nilla-cli
+      nilla-home
+      nilla-nixos
+      nixos-prev
+      nixos-unstable
+      nixpkgs
+      npins
+      ;
+  };
+in
 {
   nix = {
     channel.enable = false;
@@ -26,5 +45,5 @@
         builtins.storePath value.result
       else
         builtins.storePath value.src;
-  }) (lib.attrsets.filterAttrs (n: _: n != "__functor") project.inputs);
+  }) inputs;
 }
