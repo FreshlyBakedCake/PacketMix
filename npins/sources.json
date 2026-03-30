@@ -602,6 +602,18 @@
       "url": "https://git.outfoxxed.me/api/v1/repos/quickshell/quickshell/archive/v0.2.0.tar.gz",
       "hash": "sha256-vqkSDvh7hWhPvNjMjEDV4KbSCv2jyl2Arh73ZXe274k="
     },
+    "raycastExtensions": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/raycast/extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "dbe912e73157d9c53a7dc53f96f1b0f925b9f9db",
+      "url": null,
+      "hash": "sha256-BQTvdjPxgYGY3SAX+/lm0nZnRgA/GGlXdKL5AEfISrA="
+    },
     "scriptfs": {
       "type": "Git",
       "repository": {

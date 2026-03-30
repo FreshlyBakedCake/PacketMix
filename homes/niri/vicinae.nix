@@ -65,16 +65,38 @@
       })
 
       # RayCast Extensions
-      (config.lib.vicinae.mkRayCastExtension {
-        name = "pdsls";
-        rev = "9b5cbcb7204b895e478f58db1485559b7f7d28d8";
-        sha256 = "sha256-ARrEyBSqw0RSSoRZBCLoiN3Bg1OSKC+uPkwfO29KkfA=";
-      })
-      (config.lib.vicinae.mkRayCastExtension {
-        name = "kagi-search";
-        rev = "9b5cbcb7204b895e478f58db1485559b7f7d28d8";
-        sha256 = "sha256-0JbHFJjc14BgwXSqHpnXeZ08fhALS9qpKsBjSyuSJmE=";
-      })
+      (
+        (config.lib.vicinae.mkExtension {
+          name = "pdsls";
+          src = "${project.inputs.raycastExtensions.src}/extensions/pdsls";
+        }).overrideAttrs
+        {
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp -r /build/.config/raycast/extensions/pdsls/* $out/
+
+            runHook postInstall
+          '';
+        }
+      )
+      (
+        (config.lib.vicinae.mkExtension {
+          name = "kagi-search";
+          src = "${project.inputs.raycastExtensions.src}/extensions/kagi-search";
+        }).overrideAttrs
+        {
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp -r /build/.config/raycast/extensions/kagi-search/* $out/
+
+            runHook postInstall
+          '';
+        }
+      )
     ];
   };
 
