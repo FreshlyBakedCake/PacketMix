@@ -89,12 +89,25 @@
   };
 
   services.nginx.virtualHosts."at.freshly.space" = {
+    enableACME = true;
     acmeRoot = null;
+    onlySSL = true;
 
     serverAliases = lib.mkForce [
       "*.at.freshlybakedca.ke"
       "*.at.freshly.space"
     ];
+
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:1039";
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+
+    };
+
+    extraConfig = ''
+      client_max_body_size 10G;
+    '';
   };
 
   services.nginx.virtualHosts."pds.freshly.space" = {
