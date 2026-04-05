@@ -20,7 +20,7 @@
     ];
   };
 
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
   users.users.minion = {
     isNormalUser = true;
     description = "Skyler Grey";
@@ -35,7 +35,7 @@
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOhzJ0p9bFRSURUjV05rrt5jCbxPXke7juNbEC9ZJXS/AAAAGXNzaDp0aW55X3l1YmlrZXlfcmVzaWRlbnQ= tiny_yubikey_resident"
     ];
 
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   users.users.pinea = {

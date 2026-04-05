@@ -315,10 +315,10 @@
       fi
     '';
 
-    programs.zsh.profileExtra = lib.mkBefore ''
-      if [ -z $WAYLAND_DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+    programs.fish.loginShellInit = lib.mkBefore ''
+      if [ -z $WAYLAND_DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]
         exec ${config.programs.niri.package}/bin/niri-session -l
-      fi
+      end
     '';
 
     systemd.user.services.niri = {
