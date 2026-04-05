@@ -63,40 +63,6 @@
         name = "it-tools";
         src = "${project.inputs.vicinaeExtensions.src}/extensions/it-tools";
       })
-
-      # RayCast Extensions
-      (
-        (config.lib.vicinae.mkExtension {
-          name = "pdsls";
-          src = "${project.inputs.raycastExtensions.src}/extensions/pdsls";
-        }).overrideAttrs
-        {
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp -r /build/.config/raycast/extensions/pdsls/* $out/
-
-            runHook postInstall
-          '';
-        }
-      )
-      (
-        (config.lib.vicinae.mkExtension {
-          name = "kagi-search";
-          src = "${project.inputs.raycastExtensions.src}/extensions/kagi-search";
-        }).overrideAttrs
-        {
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp -r /build/.config/raycast/extensions/kagi-search/* $out/
-
-            runHook postInstall
-          '';
-        }
-      )
     ];
   };
 
