@@ -3,5 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 {
-  programs.ghostty.enable = true;
+  programs.ghostty = {
+    enable = true;
+    settings.window-inherit-working-directory = false;
+  };
 }
