@@ -88,10 +88,23 @@
     ]; # Not created automatically by tranquil for some reason...
   };
 
+  # Special handling for an allowlist of repos to un-break anisota proxying. May cause issues elsewhere on atproto, and we want to avoid fixing this for anisota dev who also has an account on our PDS...
+  services.nginx.commonHttpConfig = ''
+    map $arg_repo $pds_anisota_proxy_header {
+      "did%3Aplc%3Auuyqs6y3pwtbteet4swt5i5y" "";
+      ~. $http_atproto_proxy;
+    }
+  '';
+
   services.nginx.virtualHosts."at.freshly.space" = {
     enableACME = true;
     acmeRoot = null;
     onlySSL = true;
+
+    listenAddresses = [
+      "0.0.0.0"
+      "[::0]"
+    ];
 
     serverAliases = lib.mkForce [
       "*.at.freshlybakedca.ke"
@@ -102,7 +115,26 @@
       proxyPass = "http://127.0.0.1:1039";
       recommendedProxySettings = true;
       proxyWebsockets = true;
+    };
 
+    locations."/xrpc/com.atproto.repo.listRecords" = {
+      proxyPass = "http://127.0.0.1:1039";
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+
+      extraConfig = ''
+        proxy_set_header "atproto-proxy" $pds_anisota_proxy_header;
+      '';
+    };
+
+    locations."/xrpc/com.atproto.repo.getRecord" = {
+      proxyPass = "http://127.0.0.1:1039";
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+
+      extraConfig = ''
+        proxy_set_header "atproto-proxy" $pds_anisota_proxy_header;
+      '';
     };
 
     extraConfig = ''
