@@ -130,6 +130,22 @@
               gid = "974";
             };
           };
+          "/groups/media" = {
+            path = "/var/lib/media";
+
+            access = {
+              A = [
+                "coded"
+                "minion"
+              ];
+            };
+
+            flags = {
+              chmod_f = "770";
+              chmod_d = "770";
+              gid = "975";
+            };
+          };
         };
       };
 
@@ -146,7 +162,13 @@
             builtins.attrValues
             (map (mount: mount.path))
             (map (lib.removePrefix "/var/lib/"))
-            (builtins.filter (name: !(builtins.elem name [ "libraries" ]))) # For shared directories we can't afford for systemd to change permissions on us...
+            (builtins.filter (
+              name:
+              !(builtins.elem name [
+                "libraries"
+                "media"
+              ])
+            )) # For shared directories we can't afford for systemd to change permissions on us...
             (lib.concatStringsSep " ")
           ]);
       };
@@ -300,6 +322,14 @@
       ];
     };
 
+    users.groups."copyparty+jellyfin" = {
+      gid = 975;
+      members = [
+        "copyparty"
+        "jellyfin"
+      ];
+    };
+
     clicks.storage.impermanence.persist.directories = [
       "/var/lib/copyparty"
       {
@@ -309,6 +339,15 @@
         defaultPerms = {
           mode = "0770";
           group = "copyparty+kavita";
+        };
+      }
+      {
+        directory = "/var/lib/media";
+        mode = "0770";
+        group = "copyparty+jellyfin";
+        defaultPerms = {
+          mode = "0770";
+          group = "copyparty+jellyfin";
         };
       }
     ];
