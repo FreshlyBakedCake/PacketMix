@@ -4,6 +4,7 @@
 
 {
   # Set your time zone.
+  services.automatic-timezoned.enable = false;
   time.timeZone = "Etc/UTC";
 
   # Select internationalisation properties.

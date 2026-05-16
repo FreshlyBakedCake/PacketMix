@@ -1,11 +1,8 @@
-# SPDX-FileCopyrightText: 2025 FreshlyBakedCake
+# SPDX-FileCopyrightText: 2026 FreshlyBakedCake
 #
 # SPDX-License-Identifier: MIT
 
 {
-  # Set your time zone.
-  time.timeZone = "Etc/UTC";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
