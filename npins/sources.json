@@ -323,6 +323,22 @@
       "url": "https://github.com/nix-community/fenix/archive/380f1969f440e683333af5746caac76811b4a1a8.tar.gz",
       "hash": "sha256-QuPn+EN/097aBLeSqbQ7vOwc5TSOb68bAxg1+mknfmw="
     },
+    "flake-compat": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nilla-nix",
+        "repo": "flake-compat"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.2",
+      "revision": "2653659fb5d86f2853caae1b6475e63e8c23439c",
+      "url": "https://api.github.com/repos/nilla-nix/flake-compat/tarball/refs/tags/v0.0.2",
+      "hash": "sha256-drL2fVdcowCdRauFVfqWWUfGEGVDqui5Ul240kyivZg="
+    },
     "headscale": {
       "type": "GitRelease",
       "repository": {
@@ -406,6 +422,23 @@
       "revision": "2fe211d9c0e2320ce23dc995a3f93666ca149d9a",
       "url": "https://api.github.com/repos/nix-community/lanzaboote/tarball/refs/tags/v1.0.0",
       "hash": "sha256-RJmgVDzjRI18BWVogG6wpsl1UCuV6ui8qr4DJ1LfWZ8="
+    },
+    "lib": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Forgejo",
+        "server": "https://git.auxolotl.org/",
+        "owner": "auxolotl",
+        "repo": "lib"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.0.1",
+      "revision": "5158499e95b69dfbaa48baadd2e8e25568938657",
+      "url": "https://git.auxolotl.org/api/v1/repos/auxolotl/lib/archive/v1.0.1.tar.gz",
+      "hash": "sha256-xfEIYhQzCPzo9SWs7uSAw8SnkwAwCZusDCgyzNFCmZ8="
     },
     "lix": {
       "type": "Git",
