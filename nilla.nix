@@ -5,7 +5,7 @@
 let
   pins = import ./npins;
 
-  nilla = import pins.nilla;
+  nilla = import ./dependencies/nilla;
 
   settings = config: {
     nixpkgs = {

@@ -484,57 +484,6 @@
       "url": "https://api.github.com/repos/Kong/lua-multipart/tarball/refs/tags/0.5.12-1",
       "hash": "sha256-2AGugtnbYWIPC7hku7GnWBDecYIiB4Wh2IVBLWSUp6k="
     },
-    "nilla": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nilla-nix",
-        "repo": "nilla"
-      },
-      "branch": "private/minion/push-swlstmwvzvkr",
-      "submodules": false,
-      "revision": "1a45420c0b579aea97d834d04e6eec773a8391b1",
-      "url": "https://github.com/nilla-nix/nilla/archive/1a45420c0b579aea97d834d04e6eec773a8391b1.tar.gz",
-      "hash": "sha256-4jqikEAkh5GUKGDkGAtWRWZexN25Rzt0yIsnilhA77U="
-    },
-    "nilla-cli": {
-      "type": "Git",
-      "repository": {
-        "type": "Git",
-        "url": "https://github.com/nilla-nix/cli.git"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "7bd8639687567e3629471d952b6b732691c0890b",
-      "url": null,
-      "hash": "sha256-lNxeYMSLTbe/yp4ElIujaP1bB0BfhGLt+6xgV2XWUtE="
-    },
-    "nilla-home": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nilla-nix",
-        "repo": "home"
-      },
-      "branch": "private/minion/push-ovknmuuuxzul",
-      "submodules": false,
-      "revision": "dcdd3d11f55933cf1d2a9c01a7cbec3c0db4cb15",
-      "url": "https://github.com/nilla-nix/home/archive/dcdd3d11f55933cf1d2a9c01a7cbec3c0db4cb15.tar.gz",
-      "hash": "sha256-GcKBQgKVPR/Y+c3j9KLATNrOuG9U94MAm98f1zqoL4s="
-    },
-    "nilla-nixos": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nilla-nix",
-        "repo": "nixos"
-      },
-      "branch": "private/minion/push-yxkmmnpurumu",
-      "submodules": false,
-      "revision": "c851cfd1e9555ab2372fd4ce48e1094059eed561",
-      "url": "https://github.com/nilla-nix/nixos/archive/c851cfd1e9555ab2372fd4ce48e1094059eed561.tar.gz",
-      "hash": "sha256-Mj5DQKDql1IxXsd13zpjJBitjz0ZD6Wr7Q3ASgUFXQY="
-    },
     "niri": {
       "type": "Git",
       "repository": {

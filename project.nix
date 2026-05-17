@@ -10,11 +10,11 @@
 }:
 {
   includes = [
+    ./dependencies/nilla/nixos/modules/nixos.nix # We can't use attributes from config here without infinitely-recursing
     ./homes
     ./modules
     ./packages
     ./systems
-    "${pins.nilla-nixos}/modules/nixos.nix" # We can't use config.inputs here without infinitely-recursing
   ];
 
   config = {
