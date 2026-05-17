@@ -10,7 +10,12 @@
 }:
 {
   includes = [
-    ./dependencies/nilla/nixos/modules/nixos.nix # We can't use attributes from config here without infinitely-recursing
+    (
+      if builtins.pathExists ./dependencies/nilla then
+        ./dependencies/nilla/nixos/modules/nixos.nix
+      else
+        ../nilla/nixos/modules/nixos.nix
+    ) # We can't use attributes from config here without infinitely-recursing
     ./homes
     ./modules
     ./packages
