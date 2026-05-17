@@ -1,5 +1,6 @@
 ::.tangled/
 ::LICENSES/
+dependencies/lib = :/lib
 dependencies/menu = :/menu
 ::npins/
 ::nilla.nix=projects/nilla.nix

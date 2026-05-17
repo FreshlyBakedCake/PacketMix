@@ -11,7 +11,6 @@
 {
   includes = [
     ./homes
-    ./lib
     ./modules
     ./packages
     ./systems
