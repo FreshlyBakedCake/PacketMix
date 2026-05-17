@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 {
-  includes = [
+  includes = builtins.filter builtins.pathExists [
     ./cli/project.nix
     ./home/project.nix
-    ./nixos/project.nix    
+    ./nixos/project.nix
   ];
 }
