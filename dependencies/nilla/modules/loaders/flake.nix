@@ -1,6 +1,14 @@
 { lib }:
 let
-  pins = import ../../npins;
+  pins = (
+    if builtins.pathExists ../../npins then
+      import ../../npins # When we are accessing this in the nilla project
+    else if builtins.pathExists ../../../npins then
+      import ../../../npins # When we are accessing this in the toplevel project
+    else
+      import ../../../../npins # When we are accessing this as a dependency for another project
+  );
+
   compat = import pins.flake-compat;
 in
 {
