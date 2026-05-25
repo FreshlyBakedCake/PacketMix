@@ -135,6 +135,7 @@
 
             access = {
               A = [
+                "celestial_starfruit"
                 "coded"
                 "minion"
               ];
