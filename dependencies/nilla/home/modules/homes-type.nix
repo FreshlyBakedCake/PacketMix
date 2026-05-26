@@ -6,10 +6,9 @@
 let
   inherit (config) inputs;
 
-  ingredientModules = nilla.config.lib.ingredients.collectIngredientsModules ../../homes {
+  ingredientModules = nilla.config.lib.ingredients.collectIngredientsModules config.homesDir {
     project = nilla.config;
   };
-  ingredientExists = nilla.config.lib.ingredients.ingredientExists ../../homes;
 in
 lib.types.attrs.of (
   lib.types.submodules.portable ({
@@ -117,15 +116,16 @@ lib.types.attrs.of (
         config = {
           ingredients = [
             "common"
-          ]
-          ++ (if ingredientExists username then [ username ] else [ ])
-          ++ (if hostnameProvided && ingredientExists hostname then [ hostname ] else [ ]);
+            username
+            hostname
+          ];
           modules =
             defaultModules
             ++ ingredientModules
-            ++ (map (ingredient: {
-              config.ingredient.${ingredient}.enable = true;
-            }) submodule.config.ingredients); # Provided down here rather than as a default so they don't get overriden when a user specifies additional modules
+            ++ (nilla.config.lib.ingredients.getIngredientsEnableModules nilla.config.homesDir
+              submodule.config.ingredients
+              true
+            ); # Provided down here rather than as a default so they don't get overriden when a user specifies additional modules
         };
       };
   })

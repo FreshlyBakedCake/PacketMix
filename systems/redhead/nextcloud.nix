@@ -18,7 +18,7 @@
 
     hostName = "nextcloud.dev.redhead.starrysky.fyi";
 
-    package = pkgs.nextcloud32;
+    package = pkgs.nextcloud33;
 
     poolSettings = {
       pm = "dynamic";

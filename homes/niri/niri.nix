@@ -107,7 +107,7 @@
                 workspaceNumber
               ];
             };
-            joinAttrsetList = listOfAttrsets: lib.fold (a: b: a // b) { } listOfAttrsets;
+            joinAttrsetList = listOfAttrsets: lib.foldr (a: b: a // b) { } listOfAttrsets;
           in
           {
             # General Keybinds

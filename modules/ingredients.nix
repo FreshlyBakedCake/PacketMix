@@ -14,61 +14,74 @@
         nilla.lib.types.submodule (
           { config, name, ... }@submodule:
           {
-            options.ingredients = nilla.lib.options.create {
-              description = "Ingredients to activate for the system. Defaults to the common ingredient, as well as the ingredient named as the system's hostname if it exists";
-              type = nilla.lib.types.list.of nilla.lib.types.string;
+            options = {
+              ingredients = nilla.lib.options.create {
+                description = "Ingredients to activate for the system. Defaults to the common ingredient, the ingredient named as the system's hostname, any ingredients named after users on the system and any ingredients used in homes";
+                type = nilla.lib.types.list.of (
+                  nilla.lib.types.either nilla.lib.types.string nilla.lib.types.attrs.any
+                );
+              };
+
+              specialisedIngredients = nilla.lib.options.create {
+                description = "Ingredients to activate for specific specialisations. Note the spelling is British English to match NixOS. There is a special 'unspecialised' value to add ingredients to the default system (i.e. the one which doesn't have any specialisations)";
+                type = nilla.lib.types.attrs.of (
+                  nilla.lib.types.list.of (nilla.lib.types.either nilla.lib.types.string nilla.lib.types.attrs.any)
+                );
+              };
             };
 
             config = {
               ingredients = [
                 "common"
-              ]
-              ++ (if ingredientExists submodule.name then [ submodule.name ] else [ ])
-              ++ (
-                if ingredientExists (nilla.lib.strings.removePrefix "packetmix-" submodule.name) then
-                  [ (nilla.lib.strings.removePrefix "packetmix-" submodule.name) ]
-                else
-                  [ ]
-              )
-              ++ (
-                let
-                  homeNames = builtins.attrNames submodule.config.homes;
-                  homeNamesParts = map (
-                    homeName: builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" homeName
-                  ) homeNames;
-                  usernames = map (homeNameParts: builtins.elemAt homeNameParts 0) homeNamesParts;
-                  validUsernameIngredients = builtins.filter ingredientExists usernames;
-                in
-                validUsernameIngredients
+                submodule.name
+                (nilla.lib.strings.removePrefix "packetmix-" submodule.name)
+                {
+                  _type = "_homesIngredients";
+                  homes = submodule.config.homes;
+                }
+              ];
+              specialisedIngredients = builtins.zipAttrsWith (_: nilla.lib.lists.flatten) (
+                [
+                  {
+                    unspecialised = [ "unspecialised" ];
+                  }
+                ]
+                ++ (nilla.lib.attrs.mapToList (specialisation: homes: {
+                  ${specialisation} = [
+                    {
+                      _type = "_homesIngredients";
+                      homes = homes;
+                    }
+                  ];
+                }) submodule.config.specialisedHomes)
               );
+
               modules =
                 ingredientModules
-                ++ (map (ingredient: {
-                  config.ingredient.${ingredient}.enable = true;
-                }) submodule.config.ingredients)
-                ++ [
-                  (
+                ++ (nilla.config.lib.ingredients.getIngredientsEnableModules ../systems submodule.config.ingredients
+                  true
+                )
+                ++ nilla.lib.attrs.mapToList (
+                  specialisation: ingredients:
+                  if specialisation != "unspecialised" then
                     {
-                      system,
-                      ...
-                    }:
-                    let
-                      homeIngredientModules = lib.attrs.mapToList (
-                        _: value: value.result.${system}.config.ingredient
-                      ) submodule.config.homes;
-                      homeIngredients = lib.lists.flatten (
-                        map (lib.attrs.mapToList (
-                          name: value: if value.enable && ingredientExists name then [ name ] else [ ]
-                        )) homeIngredientModules
-                      );
-                      homeIngredientEnables = map (ingredient: {
-                        config.ingredient.${ingredient}.enable = true;
-                      }) homeIngredients;
-                      allHomeIngredientEnables = builtins.foldl' lib.attrs.mergeRecursive { } homeIngredientEnables;
-                    in
-                    allHomeIngredientEnables
-                  )
-                ];
+                      config.specialisation.${specialisation}.configuration.imports =
+                        nilla.config.lib.ingredients.getIngredientsEnableModules ../systems ingredients
+                          true;
+                    }
+                  else
+                    (
+                      { lib, config, ... }@nixos:
+                      {
+                        imports = nilla.config.lib.ingredients.getIngredientsEnableModules ../systems ingredients (
+                          nixos.lib.mkIf (
+                            nixos.config.specialisation != { }
+                            || submodule.config.specialisedIngredients == { unspecialised = [ "unspecialised" ]; }
+                          ) true
+                        );
+                      }
+                    )
+                ) submodule.config.specialisedIngredients;
             };
           }
         )

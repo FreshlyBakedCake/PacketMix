@@ -22,14 +22,18 @@
       };
 
       keys.normal = {
-        space.E = {
-          command = "@mip<space>e";
-          label = "Hard-wrap (rEflow) current paragraph";
-        };
-        space.e = {
-          command = ":reflow";
-          label = "Hard-wrap (rEflow) selected text";
-        };
+        space.E =
+          {
+            command = "@mip<space>e";
+            label = "Hard-wrap (rEflow) current paragraph";
+          }
+          .command; # FIXME: the patch to add these labels doesn't work, so we just grab the command...
+        space.e =
+          {
+            command = ":reflow";
+            label = "Hard-wrap (rEflow) selected text";
+          }
+          .command; # FIXME: the patch to add these labels doesn't work, so we just grab the command...
       };
     };
 
@@ -38,7 +42,7 @@
         {
           name = "nix";
           formatter = {
-            command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+            command = "${pkgs.nixfmt}/bin/nixfmt";
           };
         }
         {

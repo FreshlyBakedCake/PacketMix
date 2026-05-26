@@ -9,14 +9,11 @@
   lib,
   ...
 }:
-let
-  josh = project.packages.packetmix-josh.result.${pkgs.stdenv.hostPlatform.system};
-in
 {
   users.users.git = {
     isSystemUser = true;
     group = "git";
-    shell = "${josh}/bin/josh-ssh-shell";
+    shell = "${pkgs.josh}/bin/josh-ssh-shell";
     createHome = true;
     home = "/var/lib/josh/home";
   };
@@ -68,7 +65,7 @@ in
     };
 
     script =
-      "${josh}/bin/josh-proxy"
+      "${pkgs.josh}/bin/josh-proxy"
       + " --local /var/lib/josh/local"
       + " --remote https://tangled.org/@freshlybakedca.ke"
       + " --remote ssh://git@tangled.org/freshlybakedca.ke"

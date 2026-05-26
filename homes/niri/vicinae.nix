@@ -23,13 +23,20 @@
     };
 
     settings = {
-      closeOnFocusLoss = true;
-      considerPreedit = true;
-      faviconService = "twenty";
+      close_on_focus_loss = true;
+      consider_preedit = true;
+      favicon_service = "twenty";
 
       theme = lib.mkIf config.catppuccin.enable {
-        name = "catppuccin-${config.catppuccin.flavor}";
+        dark = {
+          name = "catppuccin-${config.catppuccin.flavor}";
+        };
+        light = {
+          name = "catppuccin-${config.catppuccin.flavor}";
+        };
       };
+
+      telemetry.system_info = lib.mkDefault false;
     };
 
     extensions = [

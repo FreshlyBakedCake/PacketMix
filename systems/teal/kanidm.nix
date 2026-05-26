@@ -5,9 +5,12 @@
 { pkgs, ... }:
 {
   services.kanidm = {
-    package = pkgs.kanidm_1_9;
+    package = pkgs.kanidm_1_10;
     enableServer = true;
-    enableClient = true;
+    client = {
+      enable = true;
+      settings.uri = "https://idm.freshly.space";
+    };
     serverSettings = {
       version = "2";
 
@@ -23,8 +26,6 @@
         "127.0.0.0/8"
       ];
     };
-
-    clientSettings.uri = "https://idm.freshly.space";
   };
 
   services.nginx.enable = true;

@@ -15,7 +15,7 @@
       package =
         {
           fenix,
-          makeRustPlatform,
+          stdenv,
           lib,
           installShellFiles,
           ...
@@ -25,7 +25,7 @@
 
           manifest = (lib.importTOML ./Cargo.toml).package;
 
-          platform = makeRustPlatform {
+          platform = config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.makeRustPlatform {
             cargo = toolchain;
             rustc = toolchain;
           };

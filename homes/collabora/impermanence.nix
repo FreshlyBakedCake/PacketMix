@@ -3,8 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 {
-  clicks.storage.impermanence.persist.directories = [
-    ".config/jj"
-    ".ssh"
+  home.persistence."/persist/collabora".directories = [
+    "Code"
   ];
 }

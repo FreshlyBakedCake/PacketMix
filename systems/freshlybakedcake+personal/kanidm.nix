@@ -5,11 +5,13 @@
 { pkgs, lib, ... }:
 {
   services.kanidm = {
-    enableClient = true;
+    client = {
+      enable = true;
+      settings.uri = "https://idm.freshly.space";
+    };
 
-    package = lib.lowPrio pkgs.kanidm_1_9; # lowPrio because otherwise `orca` ("Orca Load Testing Utility") from kanidm overrides `orca` the screen reader...
+    package = lib.lowPrio pkgs.kanidm_1_10; # lowPrio because otherwise `orca` ("Orca Load Testing Utility") from kanidm overrides `orca` the screen reader...
 
-    clientSettings.uri = "https://idm.freshly.space";
   };
 
 }

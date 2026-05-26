@@ -39,34 +39,32 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks =
+    settings =
       let
         freshly = {
-          identityFile = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident";
+          IdentityFile = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident";
         }; # TODO: expand this to work for emden/other security keys
 
         systems = {
           "eu.nixbuild.net" = {
-            hostname = "eu.nixbuild.net";
-            extraOptions = {
-              WarnWeakCrypto = "no";
-            };
+            HostName = "eu.nixbuild.net";
+            WarnWeakCrypto = "no";
           };
           "git.freshlybakedca.ke" = {
-            forwardAgent = true;
-            hostname = "teal";
-            user = "git";
+            ForwardAgent = true;
+            HostName = "teal";
+            User = "git";
           };
           "tangled.dev.redhead.starrysky.fyi" = {
-            hostname = "localhost";
-            port = 2222;
-            user = "git";
+            HostName = "localhost";
+            Port = 2222;
+            User = "git";
           };
           freshly-midnight = freshly // {
-            hostname = "midnight";
+            HostName = "midnight";
           };
           freshly-teal = freshly // {
-            hostname = "teal";
+            HostName = "teal";
           };
         };
       in

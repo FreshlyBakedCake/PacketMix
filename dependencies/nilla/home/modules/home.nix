@@ -2,7 +2,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-{ lib, config }:
+{
+  lib,
+  config,
+  homesDir,
+}:
 let
   homes-type = import ./homes-type.nix { inherit lib config; };
 in

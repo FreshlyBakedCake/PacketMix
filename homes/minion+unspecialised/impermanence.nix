@@ -4,7 +4,6 @@
 
 {
   clicks.storage.impermanence.persist.directories = [
-    ".config/jj"
-    ".ssh"
+    "Code"
   ];
 }

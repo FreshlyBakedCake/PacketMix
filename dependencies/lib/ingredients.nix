@@ -8,6 +8,11 @@ let
   this = nilla.config.lib.ingredients;
 in
 {
+  options.homesDir = lib.options.create {
+    description = "Directory where your home ingredients are stored";
+    type = nilla.lib.types.path;
+  };
+
   config.lib.ingredients = {
     # Normalizes a potentially-shorthand module attrset to pull its config into a config attribute
     #
@@ -201,5 +206,61 @@ in
     # exists: {boolean} whether that ingredient exists
     ingredientExists =
       ingredientsDirectory: name: builtins.elem name (this.getIngredientsNames ingredientsDirectory);
+
+    # Get a module which enables all passed in ingredients, provided they exist
+    #
+    # this: {ingredientsDirectory -> ingredients -> value -> module}
+    # ingredientsDirectory: {path} the path in which your ingredients reside
+    # ingredients: {string[]} a list of ingredients to enable
+    # value: {bool} the value to set the modules to -- probably you want 'true', but you might also want an expression for more complex conditions
+    # module: {module[]} a list of NixOS modules which enable all passed in ingredients which exist in your system
+    getIngredientsEnableModules =
+      ingredientsDirectory: ingredients: value:
+      let
+        ingredientEnableModules = map (
+          ingredient:
+          if builtins.typeOf ingredient == "set" && ingredient._type == "_homesIngredients" then
+            { system, ... }:
+            {
+              imports =
+                this.getIngredientsEnableModules ingredientsDirectory
+                  (this.getHomesIngredients ingredient.homes system)
+                  value;
+            }
+          else if this.ingredientExists ingredientsDirectory ingredient then
+            {
+              config.ingredient.${ingredient}.enable = value;
+            }
+          else
+            { }
+        ) ingredients;
+      in
+      lib.lists.flatten ingredientEnableModules;
+
+    # Get a list of ingredients used in your homes
+    #
+    # this: {homes -> ingredients}
+    #
+    # homes: {homes-type} an attrset of homes, traditionally from '[system].config.homes'
+    # system: {string} the system your homes are beinng evaluated against
+    # ingredients: {string[]} a list of ingredients which are enabled in your homes. If an ingredient is enabled for multiple homes it may be included multiple times
+    getHomesIngredients =
+      homes: system:
+      let
+        homeIngredientModules = lib.attrs.mapToList (
+          _: value: value.result.${system}.config.ingredient
+        ) homes;
+        homeIngredients = lib.lists.flatten (
+          map (lib.attrs.mapToList (
+            name: value: if value.enable then [ name ] else [ ]
+          )) homeIngredientModules
+        );
+        homeNames = builtins.attrNames homes;
+        homeNamesParts = map (
+          homeName: builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" homeName
+        ) homeNames;
+        usernames = map (homeNameParts: builtins.elemAt homeNameParts 0) homeNamesParts;
+      in
+      homeIngredients ++ usernames;
   };
 }

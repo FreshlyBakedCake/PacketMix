@@ -7,58 +7,54 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks =
+    settings =
       let
         base = {
-          user = "collabora";
-          setEnv = {
+          User = "collabora";
+          SetEnv = {
             TERM = "xterm-256color";
           };
-          identityFile = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident"; # TODO: make this work with different YubiKeys
-          extraOptions = {
-            WarnWeakCrypto = "no";
-          };
+          IdentityFile = "~/.ssh/id_ed25519_sk_rk_tiny_yubikey_resident"; # TODO: make this work with different YubiKeys
+          WarnWeakCrypto = "no";
         };
 
         headscale = {
-          proxyCommand = "nc -X 5 -x localhost:1055 %h %p";
+          ProxyCommand = "nc -X 5 -x localhost:1055 %h %p";
         };
 
         incus = name: {
-          extraOptions = {
-            RemoteCommand = "incus shell ${name}";
-            RequestTTY = "yes";
-            WarnWeakCrypto = "no";
-          };
+          RemoteCommand = "incus shell ${name}";
+          RequestTTY = "yes";
+          WarnWeakCrypto = "no";
         };
 
         bee-vm = {
-          proxyCommand = "ssh -o 'ForwardAgent yes' collabora-bee 'ssh-add ~/.ssh/collabora-build-key && nc %h %p'";
-          identityFile = "~/.ssh/id_collabora_rsa"; # Does not accept -sk keys...
+          ProxyCommand = "ssh -o 'ForwardAgent yes' collabora-bee 'ssh-add ~/.ssh/collabora-build-key && nc %h %p'";
+          IdentityFile = "~/.ssh/id_collabora_rsa"; # Does not accept -sk keys...
         };
 
         mac = {
-          user = "releng";
+          User = "releng";
         };
 
         mersenne = {
-          hostname = "mersenne.hs.collaboradmins.com";
+          HostName = "mersenne.hs.collaboradmins.com";
         };
 
         systems = {
-          collabora-almalinux8 = base // bee-vm // { hostname = "10.0.3.153"; };
+          collabora-almalinux8 = base // bee-vm // { HostName = "10.0.3.153"; };
           collabora-almalinux8-a = incus "almalinux8-a" // base // headscale // mersenne;
           collabora-almalinux8-b = incus "almalinux8-b" // base // headscale // mersenne;
           collabora-almalinux8-c = incus "almalinux8-c" // base // headscale // mersenne;
-          collabora-bee = base // headscale // { hostname = "bee.hs.collaboradmins.com"; };
-          collabora-debian10android = base // bee-vm // { hostname = "10.0.3.163"; };
-          collabora-eve = base // headscale // mac // { hostname = "eve.hs.collaboradmins.com"; };
-          collabora-fermat = base // headscale // { hostname = "fermat.hs.collaboradmins.com"; };
-          collabora-fox = base // headscale // mac // { hostname = "fox.hs.collaboradmins.com"; };
+          collabora-bee = base // headscale // { HostName = "bee.hs.collaboradmins.com"; };
+          collabora-debian10android = base // bee-vm // { HostName = "10.0.3.163"; };
+          collabora-eve = base // headscale // mac // { HostName = "eve.hs.collaboradmins.com"; };
+          collabora-fermat = base // headscale // { HostName = "fermat.hs.collaboradmins.com"; };
+          collabora-fox = base // headscale // mac // { HostName = "fox.hs.collaboradmins.com"; };
           collabora-mersenne = base // headscale // mersenne;
-          collabora-prime = base // headscale // { hostname = "prime.hs.collaboradmins.com"; };
-          collabora-ron = base // headscale // mac // { hostname = "ron.hs.collaboradmins.com"; };
-          collabora-woz = base // headscale // mac // { hostname = "woz.hs.collaboradmins.com"; };
+          collabora-prime = base // headscale // { HostName = "prime.hs.collaboradmins.com"; };
+          collabora-ron = base // headscale // mac // { HostName = "ron.hs.collaboradmins.com"; };
+          collabora-woz = base // headscale // mac // { HostName = "woz.hs.collaboradmins.com"; };
         };
       in
       systems

@@ -22,7 +22,10 @@
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
     ghostty
-    (project.inputs.npins.result { inherit pkgs system; })
+    (project.inputs.npins.result {
+      inherit system;
+      pkgs = project.inputs.nixos-unstable.result.${system};
+    })
     wl-clipboard
   ];
 

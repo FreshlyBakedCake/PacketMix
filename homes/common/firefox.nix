@@ -5,7 +5,5 @@
 {
   programs.firefox.enable = true;
 
-  clicks.storage.impermanence.persist.directories = [
-    ".mozilla/firefox"
-  ];
+  programs.firefox.configPath = ".mozilla/firefox"; # FIXME: The Firefox default config path changed, but we have state at a specific place already... maybe we should make a systemd oneshot unit to move stuff?
 }

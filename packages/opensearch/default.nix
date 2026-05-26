@@ -7,11 +7,11 @@
     systems = [ "x86_64-linux" ];
     package =
       {
-        opensearch,
+        stdenv,
         jdk11_headless,
         ...
       }:
-      (opensearch.override {
+      (config.inputs.nixos-prev.result.${stdenv.hostPlatform.system}.opensearch.override {
         jre_headless = jdk11_headless;
       }).overrideAttrs
         {

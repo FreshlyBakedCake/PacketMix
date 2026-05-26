@@ -9,18 +9,27 @@
   ...
 }:
 {
-  includes = [
+  includes =
     (
       if builtins.pathExists ./dependencies/nilla then
-        ./dependencies/nilla/nixos/modules/nixos.nix
+        [
+          ./dependencies/nilla/home/modules/home.nix
+          ./dependencies/nilla/home/modules/nixos.nix
+          ./dependencies/nilla/nixos/modules/nixos.nix
+        ]
       else
-        ../nilla/nixos/modules/nixos.nix
+        [
+          ../nilla/home/modules/home.nix
+          ../nilla/home/modules/nixos.nix
+          ../nilla/nixos/modules/nixos.nix
+        ]
     ) # We can't use attributes from config here without infinitely-recursing
-    ./homes
-    ./modules
-    ./packages
-    ./systems
-  ];
+    ++ [
+      ./homes
+      ./modules
+      ./packages
+      ./systems
+    ];
 
   config = {
     name = "packetmix";
@@ -113,9 +122,9 @@
               ];
 
           packages = [
-            config.inputs.nilla-cli.result.packages.nilla-cli.result.${stdenv.hostPlatform.system}
-            config.inputs.nilla-home.result.packages.nilla-home.result.${stdenv.hostPlatform.system}
-            config.inputs.nilla-nixos.result.packages.nilla-nixos.result.${stdenv.hostPlatform.system}
+            config.packages.nilla-cli.result.${stdenv.hostPlatform.system}
+            config.packages.nilla-home.result.${stdenv.hostPlatform.system}
+            config.packages.nilla-nixos.result.${stdenv.hostPlatform.system}
             config.inputs.nixos-unstable.result.${stdenv.hostPlatform.system}.quickshell
             config.inputs.nixpkgs.result.${stdenv.hostPlatform.system}.deadnix
             config.packages.packetmix-nilla-fmt.result.${stdenv.hostPlatform.system}

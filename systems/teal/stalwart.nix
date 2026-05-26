@@ -4,6 +4,7 @@
 
 {
   project,
+  pkgs,
   config,
   lib,
   ...
@@ -27,19 +28,14 @@ let
   ];
 in
 {
-  disabledModules = [ "services/mail/stalwart-mail.nix" ];
-  imports = [ "${project.inputs.nixos-unstable.src}/nixos/modules/services/mail/stalwart.nix" ];
-
   config = {
     services.stalwart = {
+      stateVersion = config.system.stateVersion;
+
       enable = true;
       openFirewall = true;
 
-      package =
-        if project.lib.ci then
-          project.inputs.nixos-unstable.result.x86_64-linux.stalwart
-        else
-          project.inputs.nixos-unstable.result.x86_64-linux.stalwart-enterprise;
+      package = if project.lib.ci then pkgs.stalwart else pkgs.stalwart-enterprise;
 
       settings = {
         config.local-keys = [

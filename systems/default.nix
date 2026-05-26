@@ -25,8 +25,11 @@ in
       system = "x86_64-linux";
       project = config;
     };
-    homes = {
-      "minion@redhead:x86_64-linux" = config.homes."packetmix-minion@redhead:x86_64-linux";
+    specialisedHomes = {
+      collabora."minion@redhead-collabora:x86_64-linux" =
+        config.homes."packetmix-minion@redhead-collabora:x86_64-linux";
+      unspecialised."minion@redhead-unspecialised:x86_64-linux" =
+        config.homes."packetmix-minion@redhead-unspecialised:x86_64-linux";
     };
   };
   config.systems.nixos."packetmix-marbled" = {
@@ -42,7 +45,7 @@ in
     };
     homes = {
       "maya:x86_64-linux" = config.homes."packetmix-maya:x86_64-linux";
-      "minion:x86_64-linux" = config.homes."packetmix-minion:x86_64-linux";
+      "minion:x86_64-linux" = config.homes."packetmix-minion@collabora:x86_64-linux";
     };
   };
   config.systems.nixos."packetmix-ocicat" = {

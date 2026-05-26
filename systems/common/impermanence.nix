@@ -75,27 +75,47 @@ in
   };
   config = lib.mkIf cfg.enable (
     {
-      boot.initrd.postDeviceCommands = lib.mkAfter ''
-        mkdir /impermanent_fs
-        mount ${cfg.devices.root} /impermanent_fs
-        if [[ -e /impermanent_fs/${cfg.volumes.mount} ]]; then
-            mkdir -p /impermanent_fs/${cfg.volumes.old_roots}
-            timestamp=$(date --date="@$(stat -c %Y /impermanent_fs/${cfg.volumes.mount})" "+%Y-%m-%-d_%H:%M:%S")
-            mv /impermanent_fs/${cfg.volumes.mount} "/impermanent_fs/${cfg.volumes.old_roots}/$timestamp"
-        fi
-        delete_subvolume_recursively() {
-            IFS=$'\n'
-            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                delete_subvolume_recursively "/impermanent_fs/$i"
+      boot.initrd.systemd.services.impermanence =
+        let
+          cfg = config.clicks.storage.impermanence;
+        in
+        {
+          wantedBy = [
+            "initrd.target"
+          ];
+          before = [
+            "sysroot.mount"
+          ];
+          requires = [
+            "dev-disk-by\\x2did-dm\\x2dname\\x2dredhead\\x2dpersist.device"
+          ];
+          after = [
+            "dev-disk-by\\x2did-dm\\x2dname\\x2dredhead\\x2dpersist.device"
+          ];
+          unitConfig.DefaultDependencies = "no";
+          serviceConfig.Type = "oneshot";
+          script = ''
+            mkdir /impermanent_fs
+            mount ${cfg.devices.root} /impermanent_fs
+            if [[ -e /impermanent_fs/${cfg.volumes.mount} ]]; then
+                mkdir -p /impermanent_fs/${cfg.volumes.old_roots}
+                timestamp=$(date --date="@$(stat -c %Y /impermanent_fs/${cfg.volumes.mount})" "+%Y-%m-%-d_%H:%M:%S")
+                mv /impermanent_fs/${cfg.volumes.mount} "/impermanent_fs/${cfg.volumes.old_roots}/$timestamp"
+            fi
+            delete_subvolume_recursively() {
+                IFS=$'\n'
+                for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                    delete_subvolume_recursively "/impermanent_fs/$i"
+                done
+                btrfs subvolume delete "$1"
+            }
+            for i in $(find /impermanent_fs/${cfg.volumes.old_roots}/ -maxdepth 1 -mtime +${builtins.toString cfg.delete_days}); do
+                delete_subvolume_recursively "$i"
             done
-            btrfs subvolume delete "$1"
-        }
-        for i in $(find /impermanent_fs/${cfg.volumes.old_roots}/ -maxdepth 1 -mtime +${builtins.toString cfg.delete_days}); do
-            delete_subvolume_recursively "$i"
-        done
-        btrfs subvolume create /impermanent_fs/${cfg.volumes.mount}
-        umount /impermanent_fs
-      '';
+            btrfs subvolume create /impermanent_fs/${cfg.volumes.mount}
+            umount /impermanent_fs
+          '';
+        };
       fileSystems."/" = {
         device = cfg.devices.root;
         fsType = "btrfs";

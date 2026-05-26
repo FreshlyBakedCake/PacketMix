@@ -15,11 +15,6 @@ let
       home-manager
       home-manager-unstable
       lix
-      nilla
-      nilla-cli
-      nilla-home
-      nilla-nixos
-      nixos-prev
       nixos-unstable
       nixpkgs
       npins
