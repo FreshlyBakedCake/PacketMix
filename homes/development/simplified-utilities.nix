@@ -13,7 +13,8 @@
   };
 
   home.packages = [
-    pkgs.sd
+    pkgs.doggo
     pkgs.fd
+    pkgs.sd
   ];
 }
