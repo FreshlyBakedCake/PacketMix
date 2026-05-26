@@ -1,13 +1,22 @@
-{ lib, config }:
+# SPDX-FileCopyrightText: 2025 Nilla Home contributors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+{ lib, config }@nilla:
 let
   inherit (config) inputs;
+
+  ingredientModules = nilla.config.lib.ingredients.collectIngredientsModules ../../homes {
+    project = nilla.config;
+  };
+  ingredientExists = nilla.config.lib.ingredients.ingredientExists ../../homes;
 in
 lib.types.attrs.of (
   lib.types.submodules.portable ({
     name = "home";
     description = "A home-manager home";
     module =
-      { config }:
+      { config, name }@submodule:
       let
         home_name = config.__module__.args.dynamic.name;
         home_name_parts = builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" home_name;
@@ -33,8 +42,10 @@ lib.types.attrs.of (
         );
 
         username = builtins.elemAt home_name_parts 0;
+        hostname = builtins.elemAt home_name_parts 2;
         system = builtins.elemAt home_name_parts 4;
 
+        hostnameProvided = hostname != null;
         systemProvided = system != null;
 
         defaultModules = [
@@ -86,16 +97,35 @@ lib.types.attrs.of (
             type = lib.types.list.of lib.types.raw;
           };
 
+          ingredients = nilla.lib.options.create {
+            description = "Ingredients to activate for the home. Defaults to the common ingredient, as well as one or more of the ingredients named as the username and the hostname if they are set in the home name and the ingredients exist";
+            type = nilla.lib.types.list.of nilla.lib.types.string;
+          };
+
           result = lib.options.create {
             description = "The created Home Manager home for each of the systems.";
             type = lib.types.attrs.of lib.types.raw;
             writable = false;
-            default.value = result;
+            default.value =
+              if builtins.isNull config.pkgs then
+                "A Nixpkgs instance is required for the home-manager home \"${name}\", but none was provided and \"inputs.nixpkgs\" does not exist."
+              else
+                result;
           };
         };
 
         config = {
-          modules = defaultModules; # Provided down here rather than as a default so they don't get overriden when a user specifies additional modules
+          ingredients = [
+            "common"
+          ]
+          ++ (if ingredientExists username then [ username ] else [ ])
+          ++ (if hostnameProvided && ingredientExists hostname then [ hostname ] else [ ]);
+          modules =
+            defaultModules
+            ++ ingredientModules
+            ++ (map (ingredient: {
+              config.ingredient.${ingredient}.enable = true;
+            }) submodule.config.ingredients); # Provided down here rather than as a default so they don't get overriden when a user specifies additional modules
         };
       };
   })

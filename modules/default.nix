@@ -5,7 +5,5 @@
 {
   includes = [
     ./ingredients.nix
-    ./nilla-home/home.nix
-    ./nilla-home/nixos.nix
   ];
 }

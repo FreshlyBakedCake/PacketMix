@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Nilla Home contributors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 { config, lib }@global:
 let
   inherit (global.config) inputs;
@@ -26,7 +30,6 @@ in
 
             config.modules =
               let
-                system = submodule.config.pkgs.system;
                 warn' = builtins.warn or builtins.trace; # builtins.warn doesn't exist on some versions of nix/lix
                 warnIf =
                   condition: message: value:
@@ -34,16 +37,46 @@ in
                 homeManager = submodule.config.home-manager;
               in
               (lib.fp.pipe [
+                (
+                  value:
+                  if builtins.isNull homeManager && value != [ ] then
+                    builtins.throw "A home-manager instance is required to enable homes for the NixOS system \"${name}\", but none was provided and \"inputs.home-manager\" does not exist."
+                  else
+                    value
+                )
                 (lib.attrs.mapToList (
                   homeName: home:
                   let
                     homeNameParts = builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" homeName;
                     username = builtins.elemAt homeNameParts 0;
+                    homeHasHomeManager = !(builtins.isNull home.home-manager);
+                    homeIsValidForSystem =
+                      home ? result.${config.pkgs.stdenv.hostPlatform.system or config.pkgs.system};
                   in
-                  {
-                    inherit home homeName username;
-                  }
+                  if !homeHasHomeManager then
+                    builtins.throw "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it needs a home-manager instance, none was provided and \"inputs.home-manager\" does not exist."
+                  else if !homeIsValidForSystem then
+                    builtins.throw "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it isn't valid for \"${
+                      config.pkgs.stdenv.hostPlatform.system or config.pkgs.system
+                    }\" systems."
+                  else
+                    {
+                      inherit home homeName username;
+                    }
                 ))
+                (
+                  values:
+                  let
+                    existingUsernames = map (value: value.username) (
+                      builtins.filter (value: value.username != null) values
+                    );
+                    uniqueUsernames = lib.lists.unique existingUsernames;
+                  in
+                  if existingUsernames != uniqueUsernames then
+                    builtins.throw "There are multiple homes for a single user in the NixOS system \"${name}\". Please make sure you've only enabled a single home per user."
+                  else
+                    values
+                )
                 (builtins.map (
                   {
                     home,
@@ -90,70 +123,5 @@ in
         )
       );
     };
-  };
-
-  config = {
-    assertions = lib.lists.flatten (
-      lib.attrs.mapToList (
-        name: value:
-        let
-          hasNixpkgs = !(builtins.isNull value.pkgs);
-          requestedHomes = value.homes != [ ];
-          hasHomeManager = !(builtins.isNull value.home-manager);
-        in
-        [
-          {
-            assertion = hasNixpkgs;
-            message = "A Nixpkgs instance is required for the NixOS system \"${name}\", but none was provided and \"inputs.nixpkgs\" does not exist.";
-          }
-          {
-            assertion = !requestedHomes || hasHomeManager;
-            message = "A home-manager instance is required to enable homes for the NixOS system \"${name}\", but none was provided and \"inputs.home-manager\" does not exist.";
-          }
-          (lib.attrs.mapToList (
-            homeName: home:
-            let
-              homeHasHomeManager = !(builtins.isNull home.home-manager);
-              homeIsValidForSystem = home ? result.${value.pkgs.system};
-            in
-            [
-              {
-                assertion = homeHasHomeManager;
-                message = "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it needs a home-manager instance, none was provided and \"inputs.home-manager\" does not exist.";
-              }
-              {
-                assertion = !homeHasHomeManager || !hasNixpkgs || homeIsValidForSystem;
-                message = "You've asked for the home \"${homeName}\" to be activated in the NixOS system \"${name}\", but it isn't valid for \"${value.pkgs.system}\" systems.";
-              }
-            ]
-          ) value.homes)
-          (
-            let
-              usernames = lib.attrs.mapToList (
-                homeName: home:
-                let
-                  homeHasHomeManager = !(builtins.isNull home.home-manager);
-                  homeIsValidForSystem = home ? result.${value.pkgs.system};
-                in
-                if homeHasHomeManager && hasNixpkgs && homeIsValidForSystem then
-                  let
-                    homeNameParts = builtins.match "([a-z][-a-z0-9]*)(@([-A-Za-z0-9]+))?(:([-_A-Za-z0-9]+))?" homeName;
-                    username = builtins.elemAt homeNameParts 0;
-                  in
-                  username
-                else
-                  null
-              ) value.homes;
-              existingUsernames = builtins.filter (username: username != null) usernames;
-              uniqueUsernames = lib.lists.unique existingUsernames;
-            in
-            {
-              assertion = !hasNixpkgs || (existingUsernames == uniqueUsernames);
-              message = "There are multiple homes for a single user in the NixOS system \"${name}\". Please make sure you've only enabled a single home per user.";
-            }
-          )
-        ]
-      ) global.config.systems.nixos
-    );
   };
 }
