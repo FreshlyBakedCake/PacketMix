@@ -165,7 +165,7 @@ in
           ];
         });
       in
-      "${fava}/bin/fava ${builtins.concatStringsSep " " userFiles}";
+      "${fava}/bin/fava --read-only ${builtins.concatStringsSep " " userFiles}";
 
     preStart =
       let
