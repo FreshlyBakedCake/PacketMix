@@ -34,7 +34,8 @@ in
         default = { };
       };
 
-      load = input:
+      load =
+        input:
         let
           value = compat.load {
             src = builtins.dirOf "${input.src}/${input.settings.target}";

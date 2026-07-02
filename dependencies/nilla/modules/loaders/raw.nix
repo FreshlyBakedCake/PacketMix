@@ -8,8 +8,7 @@
         default = { };
       };
 
-      load = input:
-        input.src;
+      load = input: input.src;
     };
   };
 }

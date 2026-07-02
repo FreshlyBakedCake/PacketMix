@@ -3,8 +3,9 @@ let
 
   nilla = import "${root}/default.nix";
 
-  result =
-    nilla.create ({ lib, config }: {
+  result = nilla.create (
+    { lib, config }:
+    {
       config = {
         inputs = {
           dep = {
@@ -13,10 +14,12 @@ let
               extend = {
                 modules = [
                   {
-                    config.inputs.nixpkgs.src = lib.modules.overrides.force (builtins.fetchTarball {
-                      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-                      sha256 = "sha256-3e+AVBczosP5dCLQmMoMEogM57gmZ2qrVSrmq9aResQ=";
-                    });
+                    config.inputs.nixpkgs.src = lib.modules.overrides.force (
+                      builtins.fetchTarball {
+                        url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+                        sha256 = "sha256-3e+AVBczosP5dCLQmMoMEogM57gmZ2qrVSrmq9aResQ=";
+                      }
+                    );
                   }
                 ];
               };
@@ -24,9 +27,9 @@ let
           };
         };
 
-        shells.default =
-          config.inputs.dep.result.shells.default;
+        shells.default = config.inputs.dep.result.shells.default;
       };
-    });
+    }
+  );
 in
 result

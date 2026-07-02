@@ -48,20 +48,20 @@
         default = { };
       };
 
-      load = input:
+      load =
+        input:
         let
-          pkgs =
-            lib.attrs.generate
-              input.settings.systems
-              (system:
-                import input.src {
-                  inherit system;
-                  inherit (input.settings) overlays;
-                  config = input.settings.configuration;
-                }
-              );
+          pkgs = lib.attrs.generate input.settings.systems (
+            system:
+            import input.src {
+              inherit system;
+              inherit (input.settings) overlays;
+              config = input.settings.configuration;
+            }
+          );
         in
-        pkgs // {
+        pkgs
+        // {
           lib = import "${input.src}/lib";
         };
     };

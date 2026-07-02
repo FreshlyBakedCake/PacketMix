@@ -1,6 +1,8 @@
 { lib }:
 let
-  empty = { __empty__ = true; };
+  empty = {
+    __empty__ = true;
+  };
 in
 {
   config = {
@@ -30,7 +32,8 @@ in
         default = { };
       };
 
-      load = input:
+      load =
+        input:
         let
           value = import "${input.src}/${input.settings.target}";
 

@@ -2,19 +2,22 @@
 let
   cfg = config.shells;
 
-  builders = lib.attrs.mapToList
-    (name: builder: builder // {
+  builders = lib.attrs.mapToList (
+    name: builder:
+    builder
+    // {
       inherit name;
-    })
-    config.builders;
+    }
+  ) config.builders;
 in
 {
   options.shells = lib.options.create {
     description = "The shells for this Nilla project.";
     default.value = { };
-    type = lib.types.attrs.lazy
-      (lib.types.submodules.portable {
-        module = ({ config, name }:
+    type = lib.types.attrs.lazy (
+      lib.types.submodules.portable {
+        module = (
+          { config, name }:
           let
             shell = {
               inherit name;
@@ -23,9 +26,7 @@ in
               package = config.shell;
             };
 
-            matching = builtins.filter
-              (builder: shell.builder == builder.name)
-              builders;
+            matching = builtins.filter (builder: shell.builder == builder.name) builders;
 
             first = builtins.head matching;
 
@@ -34,7 +35,8 @@ in
                 null
               else if builtins.length matching > 1 then
                 builtins.trace "[🍦 Nilla] ⚠️ Warning: Multiple builders found for shell \"${name}\", using first available: \"${first.name}\"" first
-              else first;
+              else
+                first;
 
             settings =
               if !(builtins.isNull builder) && builder.settings.type.check shell.settings then
@@ -54,11 +56,7 @@ in
               else
                 null;
 
-            result =
-              if builtins.isNull validity then
-                builder.build shell
-              else
-                { };
+            result = if builtins.isNull validity then builder.build shell else { };
           in
           {
             options = {
@@ -89,11 +87,13 @@ in
                       value = true;
                       message = "";
                     }
-                  else {
-                    value = false;
-                    message = validity.message or
-                      "shell \"${name}\" failed to build due to either invalid settings or an invalid builder.";
-                  };
+                  else
+                    {
+                      value = false;
+                      message =
+                        validity.message
+                          or "shell \"${name}\" failed to build due to either invalid settings or an invalid builder.";
+                    };
               };
 
               shell = lib.options.create {
@@ -107,12 +107,12 @@ in
                 description = "The built shell for each of its systems.";
                 type = lib.types.attrs.of lib.types.derivation;
                 writable = false;
-                default.value = if !config.valid.value
-                                then config.valid.message
-                                else result;
+                default.value = if !config.valid.value then config.valid.message else result;
               };
             };
-          });
-      });
+          }
+        );
+      }
+    );
   };
 }

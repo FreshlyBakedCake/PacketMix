@@ -2,27 +2,24 @@
 let
   variantNames = builtins.attrNames config.modules;
 
-  variants = builtins.foldl'
-    (acc: variant:
-      let
-        modules = config.modules.${variant};
-      in
-      acc // {
-        "modules.${variant}" = {
-          name = "Modules (${variant})";
-          description = "Modules which are available from this Nilla project to use with ${variant}.";
+  variants = builtins.foldl' (
+    acc: variant:
+    let
+      modules = config.modules.${variant};
+    in
+    acc
+    // {
+      "modules.${variant}" = {
+        name = "Modules (${variant})";
+        description = "Modules which are available from this Nilla project to use with ${variant}.";
 
-          data = {
-            columns = [ "Name" ];
-            rows = lib.attrs.mapToList
-              (name: module: [ name ])
-              modules;
-          };
+        data = {
+          columns = [ "Name" ];
+          rows = lib.attrs.mapToList (name: module: [ name ]) modules;
         };
-      }
-    )
-    { }
-    variantNames;
+      };
+    }
+  ) { } variantNames;
 
   all = {
     name = "Modules";

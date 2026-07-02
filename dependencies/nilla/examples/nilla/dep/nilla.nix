@@ -1,8 +1,9 @@
 let
   nilla = import ../../../default.nix;
 
-  result =
-    nilla.create ({ config }: {
+  result = nilla.create (
+    { config }:
+    {
       config = {
         inputs = {
           nixpkgs = {
@@ -25,7 +26,13 @@ let
 
           };
 
-          shell = { pkgs, mkShell, hello, ... }:
+          shell =
+            {
+              pkgs,
+              mkShell,
+              hello,
+              ...
+            }:
             mkShell {
               packages = [ hello ];
 
@@ -33,6 +40,7 @@ let
             };
         };
       };
-    });
+    }
+  );
 in
 result

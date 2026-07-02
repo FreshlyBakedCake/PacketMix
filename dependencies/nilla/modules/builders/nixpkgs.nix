@@ -25,21 +25,21 @@ in
         default = { };
       };
 
-      build = package:
+      build =
+        package:
         if builtins.isNull package.settings.pkgs then
           builtins.throw "[🍦 Nilla] ❌ No package set provided for package \"${package.name}\"."
         else
-          lib.attrs.generate
-            package.systems
-            (system:
-              let
-                pkgs = package.settings.pkgs.${system};
-              in
-              if !(package.settings.pkgs ? ${system}) then
-                builtins.throw "[🍦 Nilla] ❌ No package set for system \"${system}\" provided for package \"${package.name}\"."
-              else
-                pkgs.callPackage package.package package.settings.args
-            );
+          lib.attrs.generate package.systems (
+            system:
+            let
+              pkgs = package.settings.pkgs.${system};
+            in
+            if !(package.settings.pkgs ? ${system}) then
+              builtins.throw "[🍦 Nilla] ❌ No package set for system \"${system}\" provided for package \"${package.name}\"."
+            else
+              pkgs.callPackage package.package package.settings.args
+          );
     };
   };
 }

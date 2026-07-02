@@ -22,7 +22,8 @@
         default = { };
       };
 
-      load = input:
+      load =
+        input:
         let
           value = import "${input.src}/${input.settings.target}";
 
@@ -33,15 +34,13 @@
               let
                 customized = value.extend input.settings.extend;
               in
-              customized.config // {
+              customized.config
+              // {
                 extend = customized.extend;
               };
         in
         if
-          !(builtins.isAttrs result)
-          || !(result ? extend)
-          || !(result ? nilla)
-          || !(result.nilla ? version)
+          !(builtins.isAttrs result) || !(result ? extend) || !(result ? nilla) || !(result.nilla ? version)
         then
           builtins.throw "[🍦 Nilla] Failed to load a valid Nilla project from source \"${input.src}\"."
         else

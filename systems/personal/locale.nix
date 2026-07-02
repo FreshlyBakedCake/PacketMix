@@ -2,7 +2,12 @@
 #
 # SPDX-License-Identifier: MIT
 
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   services.automatic-timezoned.enable = lib.mkDefault true;
   boot.postBootCommands = lib.mkIf config.services.automatic-timezoned.enable ''

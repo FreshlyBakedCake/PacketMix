@@ -1,7 +1,8 @@
 {
   description = "Nixos support for Nilla.";
 
-  outputs = inputs:
+  outputs =
+    inputs:
     let
       project = import ./nilla.nix;
     in

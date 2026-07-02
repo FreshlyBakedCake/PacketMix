@@ -1,6 +1,7 @@
 { config, lib }:
 let
-  getLicense = license:
+  getLicense =
+    license:
     if builtins.isString license then
       license
     else if builtins.isAttrs license then
@@ -10,7 +11,8 @@ let
     else
       "Unknown";
 
-  getShellInfo = name: shell:
+  getShellInfo =
+    name: shell:
     let
       systems = shell.systems;
       system = builtins.head systems;
@@ -20,7 +22,12 @@ let
       description = pkg.meta.description or "";
     in
     {
-      inherit name version license description;
+      inherit
+        name
+        version
+        license
+        description
+        ;
       systems = builtins.concatStringsSep ", " systems;
     };
 
@@ -29,40 +36,49 @@ let
     description = "Shells are development environments which can be used with `nilla shell`.";
 
     data = {
-      columns = [ "Name" "Systems" ];
-      rows = lib.attrs.mapToList
-        (name: shell:
-          let
-            info = getShellInfo name shell;
-          in
-          [
-            info.name
-            info.systems
-          ]
-        )
-        config.shells;
+      columns = [
+        "Name"
+        "Systems"
+      ];
+      rows = lib.attrs.mapToList (
+        name: shell:
+        let
+          info = getShellInfo name shell;
+        in
+        [
+          info.name
+          info.systems
+        ]
+      ) config.shells;
     };
   };
 
-  individual = builtins.foldl'
-    (result: name:
-      let
-        shell = config.shells.${name};
-        info = getShellInfo name shell;
-      in
-      result // {
-        "shells.${name}" = {
-          inherit (info) name description;
+  individual = builtins.foldl' (
+    result: name:
+    let
+      shell = config.shells.${name};
+      info = getShellInfo name shell;
+    in
+    result
+    // {
+      "shells.${name}" = {
+        inherit (info) name description;
 
-          data = {
-            columns = [ "Name" "Systems" ];
-            rows = [ [ info.name info.systems ] ];
-          };
+        data = {
+          columns = [
+            "Name"
+            "Systems"
+          ];
+          rows = [
+            [
+              info.name
+              info.systems
+            ]
+          ];
         };
-      }
-    )
-    { }
-    (builtins.attrNames config.shells);
+      };
+    }
+  ) { } (builtins.attrNames config.shells);
 in
 {
   config.explain = individual // {
