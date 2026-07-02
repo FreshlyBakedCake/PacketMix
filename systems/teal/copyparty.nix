@@ -138,6 +138,7 @@
                 "celestial_starfruit"
                 "coded"
                 "minion"
+                "vivi"
               ];
             };
 

@@ -29,6 +29,7 @@ let
       "pinea@"
       "zanderp25@"
       "testminion@"
+      "vivi@"
     ];
 
     /**
