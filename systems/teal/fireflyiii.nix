@@ -57,6 +57,36 @@
     locations."/".proxyPass = "http://127.0.0.1";
   };
 
+  services.nginx.virtualHosts."share.accounting.freshly.space" = {
+    listenAddresses = [ "localhost.tailscale" ];
+
+    forceSSL = true;
+    enableACME = true;
+    acmeRoot = null;
+
+    locations."/" = {
+      proxyPass = "http://127.0.0.1";
+
+      recommendedProxySettings = false;
+
+      extraConfig = ''
+        proxy_redirect          off;
+        proxy_connect_timeout   ${config.services.nginx.proxyTimeout};
+        proxy_send_timeout      ${config.services.nginx.proxyTimeout};
+        proxy_read_timeout      ${config.services.nginx.proxyTimeout};
+        proxy_http_version      1.1;
+        proxy_set_header Connection         "";
+        proxy_set_header X-Webauth-Login    "freshlybakedcake";
+        proxy_set_header Host               "accounting.freshly.space";
+        proxy_set_header X-Real-IP          $remote_addr;
+        proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto  $scheme;
+        proxy_set_header X-Forwarded-Host   $host;
+        proxy_set_header X-Forwarded-Server $hostname;
+      ''; # Basically recommendedProxySettings, but with a static Host header that is notably not the actual hostname... -> the links do not seem to be wrong, but I am slightly worried about if somewhere we'll find something which brings us back to the main instance...
+    };
+  };
+
   containers.minion-firefly-iii-data-importer = {
     autoStart = true;
 
