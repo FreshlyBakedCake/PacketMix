@@ -95,6 +95,7 @@
     bindMounts."/secrets/fireflyiii/minion-data-importer-token.txt".isReadOnly = true;
     bindMounts."/var/lib/firefly-iii-data-importer/minion" = {
       isReadOnly = false;
+      hostPath = "/var/lib/firefly-iii-data-importer/minion";
       mountPoint = "/var/lib/firefly-iii-data-importer";
     };
 
@@ -136,6 +137,7 @@
     bindMounts."/secrets/fireflyiii/coded-data-importer-token.txt".isReadOnly = true;
     bindMounts."/var/lib/firefly-iii-data-importer/coded" = {
       isReadOnly = false;
+      hostPath = "/var/lib/firefly-iii-data-importer/coded";
       mountPoint = "/var/lib/firefly-iii-data-importer";
     };
 
@@ -246,6 +248,7 @@
 
   clicks.storage.impermanence.persist.directories = [
     "/var/lib/firefly-iii"
-    "/var/lib/firefly-iii-data-importer"
+    "/var/lib/firefly-iii-data-importer/coded"
+    "/var/lib/firefly-iii-data-importer/minion"
   ];
 }
