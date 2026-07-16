@@ -45,6 +45,10 @@
   services.nginx.virtualHosts."local.accounting.freshly.space" = {
     listenAddresses = [ "localhost" ];
     serverName = "accounting.freshly.space";
+
+    locations."~ \\.php$".extraConfig = ''
+      fastcgi_read_timeout 30m;
+    ''; # Set very high due to importing batch transactions sometimes taking a very long time...
   };
 
   services.nginx.virtualHosts."accounting.freshly.space" = {
