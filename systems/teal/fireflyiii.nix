@@ -98,6 +98,11 @@
       hostPath = "/var/lib/firefly-iii-data-importer/minion";
       mountPoint = "/var/lib/firefly-iii-data-importer";
     };
+    bindMounts."/secrets/fireflyiii/data-import/minion" = {
+      isReadOnly = false;
+      hostPath = "/secrets/fireflyiii/data-import/minion";
+      mountPoint = "/var/lib/firefly-iii-data-importer-config";
+    };
 
     config = {
       users.users."firefly-iii-data-importer".uid = 999;
@@ -117,6 +122,50 @@
           VANITY_URL = "https://accounting.freshly.space";
 
           FIREFLY_III_ACCESS_TOKEN_FILE = "/secrets/fireflyiii/minion-data-importer-token.txt";
+
+          IMPORT_DIR_ALLOWLIST = "/var/lib/firefly-iii-data-importer-config";
+          CAN_POST_AUTOIMPORT = true;
+          AUTO_IMPORT_SECRET_FILE = "/secrets/fireflyiii/data-importer-auto-secret.txt";
+
+          ENABLE_BANKING_APP_ID_FILE = "/var/lib/firefly-iii-data-importer-config/enable-banking-app-id.txt";
+          ENABLE_BANKING_PRIVATE_KEY_FILE = "/var/lib/firefly-iii-data-importer-config/enable-banking-private-key.pem";
+        };
+      };
+
+      systemd.services.firefly-iii-generate-auto-import-secret = {
+        wantedBy = [ "firefly-iii-data-importer-setup.service" ];
+        before = [ "firefly-iii-data-importer-setup.service" ];
+        script = ''
+          tr -dc A-Za-z0-9 </dev/urandom | head -c 16 > /secrets/fireflyiii/data-importer-auto-secret.txt
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = false;
+        };
+      };
+
+      systemd.services.firefly-iii-auto-import = {
+        wants = [
+          "phpfpm-firefly-iii-data-importer.service"
+          "firefly-iii-data-importer-setup.service"
+        ];
+        script = ''
+          ${config.services.firefly-iii-data-importer.package.phpPackage}/bin/php ${config.services.firefly-iii-data-importer.package}/artisan importer:import /var/lib/firefly-iii-data-importer-config/*.json
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = false;
+          JoinsNamespaceOf = [ "phpfpm-firefly-iii-data-importer.service" ];
+          User = "firefly-iii-data-importer";
+        };
+      };
+
+      systemd.timers.firefly-iii-auto-import = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "* *-*-* 02:00:00 Etc/UTC";
+          Persistent = false;
+          Unit = "firefly-iii-auto-import.service";
         };
       };
 
