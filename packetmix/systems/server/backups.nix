@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   services.borgbackup.jobs.persist = {
     paths = "/persist/data";
     encryption = {
