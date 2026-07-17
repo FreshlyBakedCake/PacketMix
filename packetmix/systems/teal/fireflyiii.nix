@@ -167,8 +167,8 @@
       systemd.timers.firefly-iii-auto-import = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = "* *-*-* 02:00:00 Etc/UTC";
-          Persistent = false;
+          OnCalendar = "*-*-* 02:00:00 Etc/UTC";
+          Persistent = true;
           Unit = "firefly-iii-auto-import.service";
         };
       };

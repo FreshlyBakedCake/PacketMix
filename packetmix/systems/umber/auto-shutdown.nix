@@ -7,7 +7,7 @@
   systemd.timers."auto-shutdown" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "* *-*-* 23:55:00 Etc/UTC";
+      OnCalendar = "*-*-* 23:55:00 Etc/UTC";
       Persistent = false;
       Unit = "auto-shutdown.service";
     };
