@@ -117,8 +117,15 @@ lib.types.attrs.of (
           ingredients = [
             "common"
             username
-            hostname
-          ];
+          ]
+          ++ (
+            if hostnameProvided then
+              [
+                hostname
+              ]
+            else
+              [ ]
+          );
           modules =
             defaultModules
             ++ ingredientModules
