@@ -14,6 +14,7 @@
       "${pkgs.tailscale}/bin/tailscaled"
       + " -tun=userspace-networking"
       + " -socks5-server=localhost:1055"
+      + " -outbound-http-proxy-listen=localhost:1055"
       + " -socket=/var/run/tailscale/tailscaled-collabora.sock"
       + " -statedir=/var/lib/tailscale/collabora";
   };

@@ -57,6 +57,7 @@
               pango
             ]
           }"
+          "--set HTTP_PROXY http://localhost:1055"
         ];
         postInstall = ''
           install -Dm644 gtimelog.desktop $out/share/applications/gtimelog.desktop
