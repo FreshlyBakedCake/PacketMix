@@ -14,6 +14,8 @@
     ./josh
     ./kavita
     ./lua-multipart
+    ./nilla-init
+    ./npins
     ./nmtui-go
     ./OpenLinkHub
     ./opensearch

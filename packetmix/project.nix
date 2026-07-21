@@ -129,10 +129,7 @@
             config.inputs.nixpkgs.result.${stdenv.hostPlatform.system}.deadnix
             config.packages.packetmix-nilla-fmt.result.${stdenv.hostPlatform.system}
             config.packages.packetmix-treefmt.result.${stdenv.hostPlatform.system}
-            (config.inputs.npins.result {
-              inherit pkgs;
-              inherit (stdenv.hostPlatform) system;
-            })
+            config.packages.packetmix-npins.result.${stdenv.hostPlatform.system}
             kdePackages.qtdeclarative
             reuse
           ];
